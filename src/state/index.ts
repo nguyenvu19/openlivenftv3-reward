@@ -8,9 +8,12 @@ import { updateVersion } from './global/actions'
 import multicall from './multicall/reducer'
 import farmsReducer from './farms'
 import poolsReducer from './pools'
+import infoReducer from './info'
+import mint from './mint/reducer'
 import swap from './swap/reducer'
 import transactions from './transactions/reducer'
 import user from './user/reducer'
+import limitOrders from './limitOrders/reducer'
 
 const PERSISTED_KEYS: string[] = ['user', 'transactions']
 
@@ -27,11 +30,15 @@ const persistedReducer = persistReducer(
   combineReducers({
     farms: farmsReducer,
     pools: poolsReducer,
+    info: infoReducer,
+
+    limitOrders,
 
     // Exchange
     user,
     transactions,
     swap,
+    mint,
     burn,
     multicall,
   }),
