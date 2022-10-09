@@ -15,11 +15,27 @@ export interface LinkStatus {
   color: keyof Colors;
 }
 
+export interface PushedProps {
+  isPushed: boolean;
+  pushNav: (isPushed: boolean) => void;
+}
+
+export interface PanelProps {
+  isDark: boolean;
+  toggleTheme: (isDark: boolean) => void;
+  cakePriceUsd?: number;
+  currentLang: string;
+  langs: Language[];
+  setLang: (lang: Language) => void;
+  linksPanel: any[];
+}
+
 export interface NavProps {
   linkComponent?: ElementType;
   rightSide?: ReactNode;
   banner?: ReactElement;
   links: Array<MenuItemsType>;
+  linksPanel: any[];
   subLinks: Array<SubMenuItemsType>;
   footerLinks: Array<FooterLinkType>;
   activeItem: string;

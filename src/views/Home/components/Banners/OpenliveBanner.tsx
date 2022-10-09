@@ -9,7 +9,6 @@ import * as S from './Styled'
 const WBanner = styled.div`
   width: 100%;
   min-height: 300px;
-  margin-top: 40px;
   position: relative;
 `
 const RightWrapper = styled.div`

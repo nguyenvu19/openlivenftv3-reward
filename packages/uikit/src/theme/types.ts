@@ -9,6 +9,7 @@ export type MediaQueries = {
   lg: string;
   xl: string;
   xxl: string;
+  nav: string;
 };
 
 export type Spacing = number[];

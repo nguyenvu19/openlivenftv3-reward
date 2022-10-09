@@ -40,7 +40,7 @@ export const Wrapper = styled.div`
 export const Inner = styled(Flex)`
   max-width: 1000px;
   margin: 0 auto;
-  padding: 24px;
+  padding: 0 24px;
 `
 
 export const LeftWrapper = styled(Flex)`

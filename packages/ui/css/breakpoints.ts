@@ -14,6 +14,7 @@ export const mediaQueries = {
   lg: `@media screen and (min-width: ${breakpoints.lg}px)`,
   xl: `@media screen and (min-width: ${breakpoints.xl}px)`,
   xxl: `@media screen and (min-width: ${breakpoints.xxl}px)`,
+  nav: `@media screen and (min-width: ${breakpoints.lg}px)`,
 }
 
 export type Breakpoint = keyof typeof breakpoints
