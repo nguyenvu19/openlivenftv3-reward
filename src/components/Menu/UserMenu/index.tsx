@@ -66,17 +66,6 @@ const UserMenu = () => {
           {hasPendingTransactions && <RefreshIcon spin />}
         </UserMenuItem>
         <UserMenuDivider />
-        <NextLink href={`/profile/${account?.toLowerCase()}`} passHref>
-          <UserMenuItem as="a" disabled={isWrongNetwork || chainId !== ChainId.BSC}>
-            {t('Your NFTs')}
-          </UserMenuItem>
-        </NextLink>
-        <ProfileUserMenuItem
-          isLoading={isLoading}
-          hasProfile={hasProfile}
-          disabled={isWrongNetwork || chainId !== ChainId.BSC}
-        />
-        <UserMenuDivider />
         <UserMenuItem as="button" onClick={logout}>
           <Flex alignItems="center" justifyContent="space-between" width="100%">
             {t('Disconnect')}
@@ -89,7 +78,13 @@ const UserMenu = () => {
 
   if (account) {
     return (
-      <UIKitUserMenu account={account} avatarSrc={avatarSrc} text={userMenuText} variant={userMenuVariable}>
+      <UIKitUserMenu
+        placement="bottom-start"
+        account={account}
+        avatarSrc={avatarSrc}
+        text={userMenuText}
+        variant={userMenuVariable}
+      >
         {({ isOpen }) => (isOpen ? <UserMenuItems /> : null)}
       </UIKitUserMenu>
     )
@@ -97,7 +92,7 @@ const UserMenu = () => {
 
   if (isWrongNetwork) {
     return (
-      <UIKitUserMenu text={t('Network')} variant="danger">
+      <UIKitUserMenu placement="bottom-start" text={t('Network')} variant="danger">
         {({ isOpen }) => (isOpen ? <UserMenuItems /> : null)}
       </UIKitUserMenu>
     )

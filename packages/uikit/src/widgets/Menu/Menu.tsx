@@ -116,7 +116,7 @@ const Menu: React.FC<React.PropsWithChildren<NavProps>> = ({
   buyCakeLabel,
   children,
 }) => {
-  const { isMobile, isMd } = useMatchBreakpoints();
+  const { isMobile } = useMatchBreakpoints();
   const [isPushed, setIsPushed] = useState(!isMobile);
   const [showMenu] = useState(true);
 
@@ -142,15 +142,8 @@ const Menu: React.FC<React.PropsWithChildren<NavProps>> = ({
               <Flex width="100%" height="fit-content" alignItems="center" justifyContent="space-between">
                 <Flex>
                   <Logo isDark={isDark} href={homeLink?.href ?? "/"} />
-                  {/* {!isMobile && <MenuItems items={links} activeItem={activeItem} activeSubItem={activeSubItem} ml="24px" />} */}
                 </Flex>
                 <Flex alignItems="center" height="100%">
-                  {!isMobile && !isMd && (
-                    <Box mr="12px">
-                      <CakePrice showSkeleton={false} cakePriceUsd={cakePriceUsd} />
-                    </Box>
-                  )}
-
                   {rightSide}
                   <Box mt="4px">
                     <LangSelector

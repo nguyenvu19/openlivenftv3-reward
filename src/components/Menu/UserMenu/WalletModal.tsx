@@ -46,24 +46,11 @@ const WalletModal: React.FC<React.PropsWithChildren<WalletModalProps>> = ({
   initialView = WalletView.WALLET_INFO,
   onDismiss,
 }) => {
-  const [view, setView] = useState(initialView)
+  const [view] = useState(initialView)
   const { t } = useTranslation()
   const { account } = useWeb3React()
   const { data, isFetched } = useBalance({ addressOrName: account })
   const hasLowNativeBalance = isFetched && data && data.value.lte(LOW_BNB_BALANCE)
-
-  const handleClick = (newIndex: number) => {
-    setView(newIndex)
-  }
-
-  const TabsComponent: React.FC<React.PropsWithChildren> = () => (
-    <Tabs>
-      <ButtonMenu scale="sm" variant="subtle" onItemClick={handleClick} activeIndex={view} fullWidth>
-        <ButtonMenuItem>{t('Wallet')}</ButtonMenuItem>
-        <ButtonMenuItem>{t('Transactions')}</ButtonMenuItem>
-      </ButtonMenu>
-    </Tabs>
-  )
 
   return (
     <ModalContainer title={t('Welcome!')} $minWidth="360px">
@@ -75,7 +62,6 @@ const WalletModal: React.FC<React.PropsWithChildren<WalletModalProps>> = ({
           <CloseIcon width="24px" color="text" />
         </IconButton>
       </ModalHeader>
-      {view !== WalletView.WRONG_NETWORK && <TabsComponent />}
       <ModalBody p="24px" width="100%">
         {view === WalletView.WALLET_INFO && (
           <WalletInfo hasLowNativeBalance={hasLowNativeBalance} onDismiss={onDismiss} />

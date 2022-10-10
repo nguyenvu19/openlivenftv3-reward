@@ -11,14 +11,15 @@ const MenuIconWrapper = styled.div<{ borderColor: keyof Colors }>`
   border-color: ${({ theme, borderColor }) => theme.colors[borderColor]};
   border-radius: 50%;
   border-style: solid;
-  border-width: 2px;
+  border-width: 1px;
   display: flex;
-  height: 32px;
   justify-content: center;
-  left: 0;
   position: absolute;
-  top: 0;
-  width: 32px;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  width: 52px;
+  height: 52px;
   z-index: 102;
 `;
 
@@ -57,22 +58,7 @@ export const DangerMenuIcon: React.FC<React.PropsWithChildren> = () => (
   </MenuIconWrapper>
 );
 
-const MenuIcon: React.FC<React.PropsWithChildren<{ avatarSrc?: string; variant: Variant }>> = ({
-  avatarSrc,
-  variant,
-}) => {
-  if (variant === variants.DANGER) {
-    return <DangerMenuIcon />;
-  }
-
-  if (variant === variants.WARNING) {
-    return <WarningMenuIcon />;
-  }
-
-  if (variant === variants.PENDING) {
-    return <PendingMenuIcon />;
-  }
-
+const MenuIcon: React.FC<React.PropsWithChildren<{ avatarSrc?: string }>> = ({ avatarSrc }) => {
   if (!avatarSrc) {
     return <NoProfileMenuIcon />;
   }

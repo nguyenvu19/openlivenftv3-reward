@@ -2,19 +2,14 @@ import React, { useEffect, useState } from "react";
 import { usePopper } from "react-popper";
 import styled from "styled-components";
 import { Box, Flex } from "../../../../components/Box";
-import { ChevronDownIcon } from "../../../../components/Svg";
 import { UserMenuProps, variants } from "./types";
 import MenuIcon from "./MenuIcon";
 import { UserMenuItem } from "./styles";
 
 export const StyledUserMenu = styled(Flex)`
   align-items: center;
-  background-color: ${({ theme }) => theme.colors.tertiary};
-  border-radius: 16px;
-  box-shadow: inset 0px -2px 0px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   display: inline-flex;
-  height: 32px;
   padding-left: 32px;
   padding-right: 8px;
   position: relative;
@@ -112,9 +107,11 @@ const UserMenu: React.FC<UserMenuProps> = ({
           setIsOpen((s) => !s);
         }}
       >
-        <MenuIcon avatarSrc={avatarSrc} variant={variant} />
-        <LabelText title={typeof text === "string" ? text || account : account}>{text || accountEllipsis}</LabelText>
-        {!disabled && <ChevronDownIcon color="text" width="24px" />}
+        <MenuIcon avatarSrc={avatarSrc} />
+        <Flex flexDirection="column" pl="16px">
+          <LabelText title={typeof text === "string" ? text || account : account}>OPENLIVENFT</LabelText>
+          <LabelText title={typeof text === "string" ? text || account : account}>{text || accountEllipsis}</LabelText>
+        </Flex>
       </StyledUserMenu>
       {!disabled && (
         <Menu style={styles.popper} ref={setTooltipRef} {...attributes.popper} isOpen={isOpen}>
