@@ -75,13 +75,7 @@ const UserMenu = () => {
 
   if (account) {
     return (
-      <UIKitUserMenu
-        placement="auto"
-        account={account}
-        avatarSrc={avatarSrc}
-        text={userMenuText}
-        variant={userMenuVariable}
-      >
+      <UIKitUserMenu account={account} avatarSrc={avatarSrc} text={userMenuText} variant={userMenuVariable}>
         {({ isOpen }) => (isOpen ? <UserMenuItems /> : null)}
       </UIKitUserMenu>
     )
@@ -89,7 +83,7 @@ const UserMenu = () => {
 
   if (isWrongNetwork) {
     return (
-      <UIKitUserMenu placement="auto" text={t('Network')} variant="danger">
+      <UIKitUserMenu text={t('Network')} variant="danger">
         {({ isOpen }) => (isOpen ? <UserMenuItems /> : null)}
       </UIKitUserMenu>
     )

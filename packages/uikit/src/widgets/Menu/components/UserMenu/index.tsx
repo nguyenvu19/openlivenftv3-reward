@@ -107,8 +107,8 @@ const UserMenu: React.FC<UserMenuProps> = ({
       >
         <MenuIcon avatarSrc={avatarSrc} />
         <Flex flexDirection="column">
-          <LabelText title={typeof text === "string" ? text || account : account}>OPENLIVENFT</LabelText>
-          <LabelText title={typeof text === "string" ? text || account : account}>{text || accountEllipsis}</LabelText>
+          <LabelText>OPENLIVENFT</LabelText>
+          <LabelText>{text || accountEllipsis}</LabelText>
         </Flex>
       </StyledUserMenu>
       {!disabled && (
