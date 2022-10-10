@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ElementType } from "react";
 import { Colors } from "../../theme";
 import { BoxProps } from "../Box";
 
@@ -40,6 +40,7 @@ export interface DropdownMenuItems {
   href?: string;
   onClick?: () => void;
   image?: string;
+  icon?: ElementType<any>;
   type?: DropdownMenuItemType;
   status?: LinkStatus;
   disabled?: boolean;

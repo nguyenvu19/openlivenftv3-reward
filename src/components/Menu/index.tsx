@@ -15,109 +15,12 @@ import { getActiveMenuItem, getActiveSubMenuItem } from './utils'
 import { footerLinks } from './config/footerConfig'
 import { SettingsMode } from './GlobalSettings/types'
 
-export const linksPanel = [
-  // {
-  //   label: "POOLS",
-  //   icon: "PoolIcon",
-  //   href: "#",
-  //   att: "SOON",
-  //   initialOpenState: true,
-  //   calloutClass: 'rainbow',
-  // },
-  {
-    label: 'Home',
-    icon: 'HomeIcon',
-    href: '/',
-    calloutClass: 'rainbow',
-  },
-  {
-    label: 'Trade',
-    icon: 'TradeIcon',
-    initialOpenState: true,
-    items: [
-      {
-        label: 'Exchange',
-        href: '/swap',
-      },
-      {
-        label: 'Liquidity',
-        href: '/pool',
-      },
-    ],
-  },
-  {
-    label: 'Earning',
-    icon: 'EarningIcon',
-    att: 'SOON',
-    href: '#',
-  },
-  {
-    label: 'NFT Marketplace',
-    icon: 'NftIcon',
-    att: 'iconHot',
-    href: '#',
-  },
-  {
-    label: 'HORA Gallery',
-    icon: 'GalleryIcon',
-    att: 'SOON',
-    href: '#',
-  },
-  {
-    label: 'Sport NFT',
-    icon: 'SpotIcon',
-    href: '#',
-  },
-  {
-    label: 'Launchpad',
-    icon: 'LaunchpadIcon',
-    att: 'SOON',
-    href: '#',
-  },
-  {
-    label: 'Gamification',
-    icon: 'GamificationIcon',
-    att: 'iconHot',
-    href: '#',
-  },
-  {
-    label: 'ETH2.0',
-    icon: 'ETH2Icon',
-    att: 'SOON',
-    href: '#',
-  },
-  {
-    label: 'Info',
-    icon: 'InfoIcon',
-    att: 'SOON',
-    href: '#',
-  },
-  {
-    label: 'Contact',
-    icon: 'GroupsIcon',
-    items: [
-      {
-        label: 'Twitter',
-        href: '#',
-      },
-      {
-        label: 'Medium',
-        href: '#',
-      },
-      {
-        label: 'Telegram',
-        href: '#',
-      },
-    ],
-  },
-]
-
 const Menu = (props) => {
   const { isDark, setTheme } = useTheme()
   const cakePriceUsd = useCakeBusdPrice({ forceMainnet: true })
   const { currentLanguage, setLanguage, t } = useTranslation()
   const { pathname } = useRouter()
-  const [showPhishingWarningBanner] = usePhishingBannerManager()
+  // const [showPhishingWarningBanner] = usePhishingBannerManager()
 
   const menuItems = useMenuItems()
 
@@ -153,7 +56,7 @@ const Menu = (props) => {
         setLang={setLanguage}
         cakePriceUsd={cakePriceUsd}
         links={menuItems}
-        linksPanel={linksPanel}
+        linksPanel={menuItems}
         // subLinks={activeMenuItem?.hideSubNav || activeSubMenuItem?.hideSubNav ? [] : activeMenuItem?.items}
         footerLinks={getFooterLinks}
         activeItem={activeMenuItem?.href}

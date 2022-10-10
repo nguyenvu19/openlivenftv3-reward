@@ -48,6 +48,10 @@ const config = {
   async rewrites() {
     return [
       {
+        source: '/',
+        destination: '/home',
+      },
+      {
         source: '/info/token/:address',
         destination: '/info/tokens/:address',
       },

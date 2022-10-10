@@ -19,7 +19,9 @@ const rainbowAnimation = keyframes`
 `;
 
 const LinkLabel = styled.div<{ isPushed: boolean }>`
+  display: block;
   color: ${({ isPushed, theme }) => (isPushed ? theme.colors.textSubtle : "transparent")};
+  font-weight: ${({ isPushed }) => (isPushed ? "bold" : "default")};
   transition: color 0.4s;
   flex-grow: 1;
 `;
@@ -29,27 +31,50 @@ const MenuEntry = styled.div<Props>`
   display: flex;
   align-items: center;
   height: ${MENU_ENTRY_HEIGHT}px;
-  padding: ${({ secondary }) => (secondary ? "0 32px" : "0 16px")};
+  padding: ${({ secondary }) => (secondary ? "0 32px 0 0" : "0 16px 0 0")};
   font-size: ${({ secondary }) => (secondary ? "14px" : "16px")};
-  background-color: ${({ secondary, theme }) => (secondary ? theme.colors.background : "transparent")};
   color: ${({ theme }) => theme.colors.textSubtle};
-  box-shadow: ${({ isActive, theme }) => (isActive ? `inset 4px 0px 0px ${theme.colors.primary}` : "none")};
   position: relative;
   font-weight: 500;
 
   a {
+    font-weight: ${({ isActive }) => (isActive ? "bold" : "400")};
+  }
+
+  // left icon
+  .w-icon {
+    width: 46px;
+    height: 35px;
+    margin-right: 10px;
+  }
+  .w-sub-icon {
+    width: 42px;
+    height: 35px;
+  }
+  .w-icon,
+  .w-sub-icon {
     display: flex;
     align-items: center;
-    width: 100%;
-    height: 100%;
+    justify-content: center;
   }
-
-  svg {
-    fill: ${({ theme }) => theme.colors.textSubtle};
+  .w-icon svg {
+    fill: #fff;
   }
+  .w-sub-icon svg {
+    fill: ${({ theme }) => theme.colors.primary};
+  }
+  // active
+  .w-icon.active,
+  .w-sub-icon.active {
+    width: 50px;
+    height: 35px;
 
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.tertiary};
+    background: #1eaab2;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 0px 10px 10px 10px;
+  }
+  .w-sub-icon.active svg {
+    fill: #1eaab2;
   }
 
   // Safari fix

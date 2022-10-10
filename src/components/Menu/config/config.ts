@@ -7,9 +7,10 @@ import {
   EarnIcon,
   TrophyIcon,
   TrophyFillIcon,
-  NftIcon,
-  NftFillIcon,
+  LiquidityIcon,
   MoreIcon,
+  HomeIcon,
+  TradeIcon,
 } from '@pancakeswap/uikit'
 import { ContextApi } from '@pancakeswap/localization'
 import { perpLangMap } from 'utils/getPerpetualLanguageCode'
@@ -43,28 +44,39 @@ const config: (
 ) => ConfigMenuItemsType[] = (t, isDark, languageCode, chainId) =>
   [
     {
+      label: t('Home'),
+      icon: HomeIcon,
+      fillIcon: SwapFillIcon,
+      href: '/home',
+      items: [],
+    },
+    {
       label: t('Trade'),
-      icon: SwapIcon,
+      icon: TradeIcon,
       fillIcon: SwapFillIcon,
       href: '/swap',
       showItemsOnMobile: false,
       items: [
         {
           label: t('Swap'),
+          icon: SwapIcon,
           href: '/swap',
         },
         {
+          label: t('Liquidity'),
+          icon: LiquidityIcon,
+          href: '/liquidity',
+        },
+        {
           label: t('Limit'),
+          icon: SwapIcon,
           href: '/limit-orders',
           supportChainIds: SUPPORT_ONLY_BSC,
           image: '/images/decorations/3d-coin.png',
         },
         {
-          label: t('Liquidity'),
-          href: '/liquidity',
-        },
-        {
           label: t('Perpetual'),
+          icon: SwapIcon,
           href: `https://perp.pancakeswap.finance/${perpLangMap(languageCode)}/futures/BTCUSDT?theme=${perpTheme(
             isDark,
           )}`,
@@ -73,6 +85,7 @@ const config: (
         },
         {
           label: t('Bridge'),
+          icon: SwapIcon,
           href: 'https://bridge.pancakeswap.finance/',
           type: DropdownMenuItemType.EXTERNAL_LINK,
         },

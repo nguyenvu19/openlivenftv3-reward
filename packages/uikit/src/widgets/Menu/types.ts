@@ -4,6 +4,8 @@ import { MenuItemsType } from "../../components/MenuItems/types";
 import { SubMenuItemsType } from "../../components/SubMenuItems/types";
 import { Colors } from "../../theme/types";
 
+export type PanelItemVariant = "default" | "subMenu";
+
 export interface Language {
   code: string;
   language: string;
@@ -20,6 +22,13 @@ export interface PushedProps {
   pushNav: (isPushed: boolean) => void;
 }
 
+export type StyledPanelItemProps = {
+  $isActive?: boolean;
+  $isDisabled?: boolean;
+  $variant?: PanelItemVariant;
+  $statusColor?: keyof Colors;
+};
+
 export interface PanelProps {
   isDark: boolean;
   toggleTheme: (isDark: boolean) => void;
@@ -27,7 +36,9 @@ export interface PanelProps {
   currentLang: string;
   langs: Language[];
   setLang: (lang: Language) => void;
-  linksPanel: any[];
+  linksPanel: Array<MenuItemsType>;
+  activeItem: string;
+  activeSubItem: string;
 }
 
 export interface NavProps {
@@ -35,7 +46,7 @@ export interface NavProps {
   rightSide?: ReactNode;
   banner?: ReactElement;
   links: Array<MenuItemsType>;
-  linksPanel: any[];
+  linksPanel: Array<MenuItemsType>;
   subLinks: Array<SubMenuItemsType>;
   footerLinks: Array<FooterLinkType>;
   activeItem: string;

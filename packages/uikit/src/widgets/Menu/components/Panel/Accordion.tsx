@@ -1,17 +1,19 @@
-import React, { ReactNode, useState } from "react";
+import React, { ElementType, createElement, ReactNode, useContext, useState } from "react";
 import styled from "styled-components";
 import { LinkLabel, MenuEntry } from "./MenuEntry";
 import { PushedProps } from "../../types";
 import { MENU_ENTRY_HEIGHT } from "../../config";
 import { ArrowDropDownIcon, ArrowDropUpIcon } from "../../../../components/Svg";
+import { MenuContext } from "../../context";
 
 interface Props extends PushedProps {
   label: string;
-  icon: React.ReactElement;
+  href?: string;
+  icon?: ElementType<any>;
   initialOpenState?: boolean;
   className?: string;
-  children: ReactNode;
   isActive?: boolean;
+  children?: ReactNode;
 }
 
 const Container = styled.div`
@@ -19,6 +21,7 @@ const Container = styled.div`
   flex-direction: column;
   // Safari fix
   flex-shrink: 0;
+  box-shadow: ${({ theme }) => `inset 46px 0px 0px ${theme.colors.primary}`};
 `;
 
 const AccordionContent = styled.div<{ isOpen: boolean; isPushed: boolean; maxHeight: number }>`
@@ -28,17 +31,19 @@ const AccordionContent = styled.div<{ isOpen: boolean; isPushed: boolean; maxHei
   border-color: ${({ isOpen, isPushed }) => (isOpen && isPushed ? "rgba(133, 133, 133, 0.1)" : "transparent")};
   border-style: solid;
   border-width: 1px 0;
+  padding-left: 46px;
 `;
 
 const Accordion: React.FC<Props> = ({
   label,
   icon,
+  href,
   isPushed,
   pushNav,
   initialOpenState = false,
-  children,
   className,
   isActive,
+  children,
 }) => {
   const [isOpen, setIsOpen] = useState(initialOpenState);
 
@@ -51,20 +56,38 @@ const Accordion: React.FC<Props> = ({
     }
   };
 
+  const { linkComponent } = useContext(MenuContext);
+
+  const itemLinkProps: any = href
+    ? {
+        as: linkComponent,
+        href,
+      }
+    : {
+        as: "div",
+      };
+
+  const Icon = icon;
   return (
     <Container>
-      <MenuEntry onClick={handleClick} className={className} isActive={isActive}>
-        {icon}
-        <LinkLabel isPushed={isPushed}>{label}</LinkLabel>
-        {isOpen ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
+      <MenuEntry className={className} isActive={isActive} onClick={handleClick}>
+        <div className={`w-icon ${isActive ? "active" : ""}`}>
+          {icon && createElement(Icon as any, { color: isActive ? "secondary" : "textSubtle" })}
+        </div>
+        <LinkLabel {...itemLinkProps} isPushed={isPushed}>
+          {label}
+        </LinkLabel>
+        {children && <>{isOpen ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}</>}
       </MenuEntry>
-      <AccordionContent
-        isOpen={isOpen}
-        isPushed={isPushed}
-        maxHeight={React.Children.count(children) * MENU_ENTRY_HEIGHT}
-      >
-        {children}
-      </AccordionContent>
+      {children && (
+        <AccordionContent
+          isOpen={isOpen}
+          isPushed={isPushed}
+          maxHeight={React.Children.count(children) * MENU_ENTRY_HEIGHT}
+        >
+          {children}
+        </AccordionContent>
+      )}
     </Container>
   );
 };

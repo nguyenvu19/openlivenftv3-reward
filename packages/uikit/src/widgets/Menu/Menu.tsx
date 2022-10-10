@@ -22,7 +22,26 @@ import Panel from "./components/Panel/Panel";
 
 const Wrapper = styled.div`
   width: 100%;
-  background: #e7e2e2;
+  position: relative;
+  overflow: hidden;
+  .linear-block-1 {
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    right: 0;
+    width: 1200px;
+    transform: translate(30%, -60%);
+    animation: zoomInOut 42s linear infinite;
+  }
+  .linear-block-2 {
+    position: absolute;
+    pointer-events: none;
+    bottom: -100px;
+    left: 0;
+    width: 1000px;
+    transform: translate(-15%, 10%);
+    animation: zoomInOut2 40s linear infinite;
+  }
 `;
 const WrapperBody = styled.div`
   width: 100%;
@@ -114,6 +133,8 @@ const Menu: React.FC<React.PropsWithChildren<NavProps>> = ({
   return (
     <MenuContext.Provider value={{ linkComponent }}>
       <Wrapper>
+        <img className="linear-block-1" src="/images2/linear-block.png " alt="" />
+        <img className="linear-block-2" src="/images2/linear-block-1.png " alt="" />
         <WrapperBody>
           <FixedContainer showMenu={showMenu} height={totalTopMenuHeight}>
             {banner && <TopBannerContainer height={topBannerHeight}>{banner}</TopBannerContainer>}
@@ -159,6 +180,8 @@ const Menu: React.FC<React.PropsWithChildren<NavProps>> = ({
               cakePriceUsd={cakePriceUsd}
               pushNav={setIsPushed}
               linksPanel={linksPanel}
+              activeItem={activeItem}
+              activeSubItem={activeSubItem}
             />
 
             <Inner isPushed={isPushed} showMenu={showMenu}>
