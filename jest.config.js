@@ -9,7 +9,7 @@ const customJestConfig = {
   transform: {
     '^.+\\.(js|jsx|ts|tsx|mjs)$': ['babel-jest', { configFile: './babel-test.config.json' }],
   },
-  testPathIgnorePatterns: ['<rootDir>/apps/test/', '<rootDir>/src/config/__tests__/', '<rootDir>/packages'],
+  testPathIgnorePatterns: ['<rootDir>/src/config/__tests__/', '<rootDir>/packages'],
   moduleNameMapper: {
     '^@pancakeswap/uikit': '<rootDir>/packages/uikit/src',
     '^@pancakeswap/ui/(.*)$': '<rootDir>/packages/ui/$1',
