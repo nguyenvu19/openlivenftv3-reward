@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { usePopper } from "react-popper";
 import styled from "styled-components";
 import { Box, Flex } from "../../../../components/Box";
-import { UserMenuProps, variants } from "./types";
+import { UserMenuProps } from "./types";
 import MenuIcon from "./MenuIcon";
 import { UserMenuItem } from "./styles";
 
@@ -10,8 +10,7 @@ export const StyledUserMenu = styled(Flex)`
   align-items: center;
   cursor: pointer;
   display: inline-flex;
-  padding-left: 32px;
-  padding-right: 8px;
+  padding-left: 8px;
   position: relative;
 
   &:hover {
@@ -62,7 +61,6 @@ const UserMenu: React.FC<UserMenuProps> = ({
   account,
   text,
   avatarSrc,
-  variant = variants.DEFAULT,
   children,
   disabled,
   placement = "bottom-end",
@@ -108,7 +106,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
         }}
       >
         <MenuIcon avatarSrc={avatarSrc} />
-        <Flex flexDirection="column" pl="16px">
+        <Flex flexDirection="column">
           <LabelText title={typeof text === "string" ? text || account : account}>OPENLIVENFT</LabelText>
           <LabelText title={typeof text === "string" ? text || account : account}>{text || accountEllipsis}</LabelText>
         </Flex>

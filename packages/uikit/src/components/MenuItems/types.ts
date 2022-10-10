@@ -11,6 +11,7 @@ export type MenuItemsType = {
   items?: DropdownMenuItems[];
   disabled?: boolean;
   showOnMobile?: boolean;
+  hideOnMobile?: boolean;
   showItemsOnMobile?: boolean;
 };
 

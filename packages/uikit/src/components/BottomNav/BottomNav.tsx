@@ -13,13 +13,14 @@ const BottomNav: React.FC<React.PropsWithChildren<BottomNavProps>> = ({
   activeSubItem = "",
   ...props
 }) => {
+  const menuOnMobile = items.filter((item) => !item.hideOnMobile);
   const [menuOpenByIndex, setMenuOpenByIndex] = useState({});
   const isBottomMenuOpen = Object.values(menuOpenByIndex).some((acc) => acc);
   return (
     <>
       {isBottomMenuOpen && <Overlay />}
       <StyledBottomNav justifyContent="space-around" {...props}>
-        {items.map(
+        {menuOnMobile.map(
           (
             { label, items: menuItems, href, icon, fillIcon, showOnMobile = true, showItemsOnMobile = true, disabled },
             index

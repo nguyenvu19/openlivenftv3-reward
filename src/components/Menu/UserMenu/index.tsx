@@ -15,12 +15,10 @@ import ConnectWalletButton from 'components/ConnectWalletButton'
 import Trans from 'components/Trans'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import useAuth from 'hooks/useAuth'
-import NextLink from 'next/link'
 import { useEffect, useState } from 'react'
 import { useProfile } from 'state/profile/hooks'
 import { usePendingTransactions } from 'state/transactions/hooks'
 import { useAccount } from 'wagmi'
-import ProfileUserMenuItem from './ProfileUserMenuItem'
 import WalletModal, { WalletView } from './WalletModal'
 import WalletUserMenuItem from './WalletUserMenuItem'
 
@@ -34,7 +32,6 @@ const UserMenu = () => {
   const [onPresentWalletModal] = useModal(<WalletModal initialView={WalletView.WALLET_INFO} />)
   const [onPresentTransactionModal] = useModal(<WalletModal initialView={WalletView.TRANSACTIONS} />)
   const [onPresentWrongNetworkModal] = useModal(<WalletModal initialView={WalletView.WRONG_NETWORK} />)
-  const hasProfile = isInitialized && !!profile
   const avatarSrc = profile?.nft?.image?.thumbnail
   const [userMenuText, setUserMenuText] = useState<string>('')
   const [userMenuVariable, setUserMenuVariable] = useState<UserMenuVariant>('default')
@@ -79,7 +76,7 @@ const UserMenu = () => {
   if (account) {
     return (
       <UIKitUserMenu
-        placement="bottom-start"
+        placement="auto"
         account={account}
         avatarSrc={avatarSrc}
         text={userMenuText}
@@ -92,7 +89,7 @@ const UserMenu = () => {
 
   if (isWrongNetwork) {
     return (
-      <UIKitUserMenu placement="bottom-start" text={t('Network')} variant="danger">
+      <UIKitUserMenu placement="auto" text={t('Network')} variant="danger">
         {({ isOpen }) => (isOpen ? <UserMenuItems /> : null)}
       </UIKitUserMenu>
     )

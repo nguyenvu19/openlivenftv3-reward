@@ -25,9 +25,10 @@ const PanelBody: React.FC<Props> = ({ isPushed, pushNav, isMobile, linksPanel, a
   // Close the menu when a user clicks a link on mobile
   const handleClick = isMobile ? () => pushNav(false) : undefined;
 
+  const menuOnDesktop = linksPanel.filter((item) => item.label);
   return (
     <Container>
-      {linksPanel.map(({ label, href, icon, ...entry }) => {
+      {menuOnDesktop.map(({ label, href, icon, ...entry }) => {
         const isActive = activeItem === href;
         if (entry.items && entry.items.length > 0) {
           return (

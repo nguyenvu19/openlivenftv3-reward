@@ -54,13 +54,17 @@ const StyledNav = styled.nav`
   align-items: flex-end;
 
   width: 100%;
-  height: ${MENU_HEIGHT}px;
-  border-bottom: 1px solid #069cc9; // ${({ theme }) => theme.colors.cardBorder};
+  height: ${MENU_HEIGHT - 30}px;
+  border-bottom: 1px solid #069cc9;
   transform: translate3d(0, 0, 0);
 
   padding-left: 16px;
   padding-right: 16px;
   padding-bottom: 8px;
+
+  ${({ theme }) => theme.mediaQueries.lg} {
+    height: ${MENU_HEIGHT}px;
+  }
 `;
 
 const FixedContainer = styled.div<{ showMenu: boolean; height: number }>`
@@ -116,7 +120,7 @@ const Menu: React.FC<React.PropsWithChildren<NavProps>> = ({
   buyCakeLabel,
   children,
 }) => {
-  const { isMobile } = useMatchBreakpoints();
+  const { isMobile, isLg } = useMatchBreakpoints();
   const [isPushed, setIsPushed] = useState(!isMobile);
   const [showMenu] = useState(true);
 
@@ -144,7 +148,6 @@ const Menu: React.FC<React.PropsWithChildren<NavProps>> = ({
                   <Logo isDark={isDark} href={homeLink?.href ?? "/"} />
                 </Flex>
                 <Flex alignItems="center" height="100%">
-                  {rightSide}
                   <Box mt="4px">
                     <LangSelector
                       currentLang={currentLang}
@@ -155,28 +158,30 @@ const Menu: React.FC<React.PropsWithChildren<NavProps>> = ({
                       hideLanguage
                     />
                   </Box>
+                  {rightSide}
                 </Flex>
               </Flex>
             </StyledNav>
           </FixedContainer>
           <BodyWrapper pt={!subLinks ? `${totalTopMenuHeight + 30}px` : "0"}>
             {/* ========= Sidebar ========= */}
-            <Panel
-              isPushed={isPushed}
-              isMobile={isMobile}
-              showMenu={showMenu}
-              isDark={isDark}
-              toggleTheme={toggleTheme}
-              langs={langs}
-              setLang={setLang}
-              currentLang={currentLang}
-              cakePriceUsd={cakePriceUsd}
-              pushNav={setIsPushed}
-              linksPanel={linksPanel}
-              activeItem={activeItem}
-              activeSubItem={activeSubItem}
-            />
-
+            {!isLg && (
+              <Panel
+                isPushed={isPushed}
+                isMobile={isMobile}
+                showMenu={showMenu}
+                isDark={isDark}
+                toggleTheme={toggleTheme}
+                langs={langs}
+                setLang={setLang}
+                currentLang={currentLang}
+                cakePriceUsd={cakePriceUsd}
+                pushNav={setIsPushed}
+                linksPanel={linksPanel}
+                activeItem={activeItem}
+                activeSubItem={activeSubItem}
+              />
+            )}
             <Inner isPushed={isPushed} showMenu={showMenu}>
               {children}
               <Footer

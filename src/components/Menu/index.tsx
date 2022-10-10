@@ -42,7 +42,6 @@ const Menu = (props) => {
             <UserMenu />
           </>
         }
-        // banner={showPhishingWarningBanner && typeof window !== 'undefined' && <PhishingWarningBanner />}
         isDark={isDark}
         toggleTheme={toggleTheme}
         currentLang={currentLanguage.code}
@@ -51,7 +50,6 @@ const Menu = (props) => {
         cakePriceUsd={cakePriceUsd}
         links={menuItems}
         linksPanel={menuItems}
-        // subLinks={activeMenuItem?.hideSubNav || activeSubMenuItem?.hideSubNav ? [] : activeMenuItem?.items}
         footerLinks={getFooterLinks}
         activeItem={activeMenuItem?.href}
         activeSubItem={activeSubMenuItem?.href}
