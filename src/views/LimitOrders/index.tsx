@@ -313,12 +313,7 @@ const LimitOrders = () => {
   const isSideFooter = isChartExpanded || isChartDisplayed
 
   return (
-    <Page
-      removePadding={isChartExpanded}
-      hideFooterOnDesktop={isSideFooter}
-      noMinHeight
-      helpUrl={LIMIT_ORDERS_DOCS_URL}
-    >
+    <Page removePadding={isChartExpanded} noMinHeight>
       <ClaimWarning />
       <Flex
         width="100%"

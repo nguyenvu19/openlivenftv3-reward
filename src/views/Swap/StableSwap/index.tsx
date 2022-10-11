@@ -4,7 +4,7 @@ import { Field } from 'state/swap/actions'
 import StableSwapForm from './components/StableSwapForm'
 import useStableConfig, { StableConfigContext, useStableFarms } from './hooks/useStableConfig'
 
-const StableSwapFormContainer = ({ setIsChartDisplayed, isChartDisplayed }) => {
+const StableSwapFormContainer = () => {
   const stableFarms = useStableFarms()
 
   const { onCurrencySelection } = useSwapActionHandlers()
@@ -25,7 +25,7 @@ const StableSwapFormContainer = ({ setIsChartDisplayed, isChartDisplayed }) => {
 
   return stableTokenPair ? (
     <StableConfigContext.Provider value={{ stableSwapConfig, ...stableConfig }}>
-      <StableSwapForm setIsChartDisplayed={setIsChartDisplayed} isChartDisplayed={isChartDisplayed} />
+      <StableSwapForm />
     </StableConfigContext.Provider>
   ) : null
 }
