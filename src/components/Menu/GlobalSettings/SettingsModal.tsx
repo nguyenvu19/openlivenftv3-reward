@@ -1,17 +1,26 @@
 import { useState, useCallback } from 'react'
 import styled from 'styled-components'
-import { Text, PancakeToggle, Toggle, Flex, Modal, InjectedModalProps, ThemeSwitcher, Box } from '@pancakeswap/uikit'
 import {
-  useAudioModeManager,
-  useExpertModeManager,
+  Text,
+  // PancakeToggle,
+  Toggle,
+  Flex,
+  Modal,
+  InjectedModalProps,
+  ThemeSwitcher,
+  // Box
+} from '@pancakeswap/uikit'
+import {
+  // useAudioModeManager,
+  // useExpertModeManager,
   useSubgraphHealthIndicatorManager,
   useUserExpertModeAcknowledgementShow,
-  useUserSingleHopOnly,
-  useZapModeManager,
+  // useUserSingleHopOnly,
+  // useZapModeManager,
 } from 'state/user/hooks'
 import { ChainId } from '@pancakeswap/sdk'
-import { SUPPORT_ZAP } from 'config/constants/supportChains'
-import { useSwapActionHandlers } from 'state/swap/useSwapActionHandlers'
+// import { SUPPORT_ZAP } from 'config/constants/supportChains'
+// import { useSwapActionHandlers } from 'state/swap/useSwapActionHandlers'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { useTranslation } from '@pancakeswap/localization'
 import useTheme from 'hooks/useTheme'
@@ -57,12 +66,12 @@ export const withCustomOnDismiss =
 const SettingsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ onDismiss, mode }) => {
   const [showConfirmExpertModal, setShowConfirmExpertModal] = useState(false)
   const [showExpertModeAcknowledgement, setShowExpertModeAcknowledgement] = useUserExpertModeAcknowledgementShow()
-  const [expertMode, toggleExpertMode] = useExpertModeManager()
-  const [singleHopOnly, setSingleHopOnly] = useUserSingleHopOnly()
-  const [audioPlay, toggleSetAudioMode] = useAudioModeManager()
-  const [zapMode, toggleZapMode] = useZapModeManager()
+  // const [expertMode, toggleExpertMode] = useExpertModeManager()
+  // const [singleHopOnly, setSingleHopOnly] = useUserSingleHopOnly()
+  // const [audioPlay, toggleSetAudioMode] = useAudioModeManager()
+  // const [zapMode, toggleZapMode] = useZapModeManager()
   const [subgraphHealth, setSubgraphHealth] = useSubgraphHealthIndicatorManager()
-  const { onChangeRecipient } = useSwapActionHandlers()
+  // const { onChangeRecipient } = useSwapActionHandlers()
   const { chainId } = useActiveChainId()
 
   const { t } = useTranslation()
@@ -78,17 +87,17 @@ const SettingsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ 
     )
   }
 
-  const handleExpertModeToggle = () => {
-    if (expertMode) {
-      onChangeRecipient(null)
-      toggleExpertMode()
-    } else if (!showExpertModeAcknowledgement) {
-      onChangeRecipient(null)
-      toggleExpertMode()
-    } else {
-      setShowConfirmExpertModal(true)
-    }
-  }
+  // const handleExpertModeToggle = () => {
+  //   if (expertMode) {
+  //     onChangeRecipient(null)
+  //     toggleExpertMode()
+  //   } else if (!showExpertModeAcknowledgement) {
+  //     onChangeRecipient(null)
+  //     toggleExpertMode()
+  //   } else {
+  //     setShowConfirmExpertModal(true)
+  //   }
+  // }
 
   return (
     <Modal title={t('Settings')} headerBackground="gradientCardHeader" onDismiss={onDismiss}>
@@ -130,7 +139,7 @@ const SettingsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ 
         {mode === SettingsMode.SWAP_LIQUIDITY && (
           <>
             <Flex pt="3px" flexDirection="column">
-              <Text bold textTransform="uppercase" fontSize="18px" color="secondary" mb="24px">
+              <Text fontSize="18px" color="#000" fontWeight="700" mb="24px">
                 {t('Swaps & Liquidity')}
               </Text>
               <Flex justifyContent="space-between" alignItems="center" mb="24px">
@@ -138,7 +147,7 @@ const SettingsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ 
               </Flex>
               <TransactionSettings />
             </Flex>
-            {SUPPORT_ZAP.includes(chainId) && (
+            {/* {SUPPORT_ZAP.includes(chainId) && (
               <Flex justifyContent="space-between" alignItems="center" mb="24px">
                 <Flex alignItems="center">
                   <Text>{t('Zap (Beta)')}</Text>
@@ -169,8 +178,8 @@ const SettingsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ 
                   }}
                 />
               </Flex>
-            )}
-            <Flex justifyContent="space-between" alignItems="center" mb="24px">
+            )} */}
+            {/* <Flex justifyContent="space-between" alignItems="center" mb="24px">
               <Flex alignItems="center">
                 <Text>{t('Expert Mode')}</Text>
                 <QuestionHelper
@@ -210,7 +219,7 @@ const SettingsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ 
                 />
               </Flex>
               <PancakeToggle checked={audioPlay} onChange={toggleSetAudioMode} scale="md" />
-            </Flex>
+            </Flex> */}
           </>
         )}
       </ScrollableContainer>

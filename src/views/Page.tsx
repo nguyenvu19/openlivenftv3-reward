@@ -1,8 +1,6 @@
 import styled from 'styled-components'
-import { Box, Flex } from '@pancakeswap/uikit'
-import Footer from 'components/Menu/Footer'
+import { Flex } from '@pancakeswap/uikit'
 import { PageMeta } from 'components/Layout/Page'
-import { EXCHANGE_DOCS_URLS } from 'config/constants'
 
 const StyledPage = styled.div<{ $removePadding: boolean; $noMinHeight }>`
   display: flex;
@@ -12,7 +10,6 @@ const StyledPage = styled.div<{ $removePadding: boolean; $noMinHeight }>`
   padding: ${({ $removePadding }) => ($removePadding ? '0' : '16px')};
   padding-bottom: 0;
   min-height: ${({ $noMinHeight }) => ($noMinHeight ? 'initial' : 'calc(100vh - 64px)')};
-  background: ${({ theme }) => theme.colors.gradientBubblegum};
 
   ${({ theme }) => theme.mediaQueries.xs} {
     background-size: auto;
@@ -24,7 +21,7 @@ const StyledPage = styled.div<{ $removePadding: boolean; $noMinHeight }>`
   }
 
   ${({ theme }) => theme.mediaQueries.lg} {
-    padding: ${({ $removePadding }) => ($removePadding ? '0' : '32px')};
+    padding: ${({ $removePadding }) => ($removePadding ? '0' : '0 32px 32px')};
     padding-bottom: 0;
     min-height: ${({ $noMinHeight }) => ($noMinHeight ? 'initial' : 'calc(100vh - 100px)')};
   }
@@ -34,28 +31,16 @@ const Page: React.FC<
   React.PropsWithChildren<
     React.HTMLAttributes<HTMLDivElement> & {
       removePadding?: boolean
-      hideFooterOnDesktop?: boolean
       noMinHeight?: boolean
-      helpUrl?: string
     }
   >
-> = ({
-  children,
-  removePadding = false,
-  hideFooterOnDesktop = false,
-  noMinHeight = false,
-  helpUrl = EXCHANGE_DOCS_URLS,
-  ...props
-}) => {
+> = ({ children, removePadding = false, noMinHeight = false, ...props }) => {
   return (
     <>
       <PageMeta />
       <StyledPage $removePadding={removePadding} $noMinHeight={noMinHeight} {...props}>
         {children}
         <Flex flexGrow={1} />
-        {/* <Box display={['block', null, null, hideFooterOnDesktop ? 'none' : 'block']} width="100%">
-          <Footer helpUrl={helpUrl} />
-        </Box> */}
       </StyledPage>
     </>
   )

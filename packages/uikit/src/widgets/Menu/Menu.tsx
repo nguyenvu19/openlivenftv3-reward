@@ -22,6 +22,7 @@ import Panel from "./components/Panel/Panel";
 
 const Wrapper = styled.div`
   width: 100%;
+  min-height: 100vh;
   position: relative;
   overflow: hidden;
   .linear-block-1 {
@@ -182,17 +183,7 @@ const Menu: React.FC<React.PropsWithChildren<NavProps>> = ({
             />
             <Inner isPushed={isPushed} showMenu={showMenu}>
               {children}
-              <Footer
-                items={footerLinks}
-                isDark={isDark}
-                toggleTheme={toggleTheme}
-                langs={langs}
-                setLang={setLang}
-                currentLang={currentLang}
-                cakePriceUsd={cakePriceUsd}
-                buyCakeLabel={buyCakeLabel}
-                mb={[`${MOBILE_MENU_HEIGHT}px`, null, "0px"]}
-              />
+              {!isMobile && <Footer footerLinks={footerLinks} />}
             </Inner>
           </BodyWrapper>
           {isMobile && <BottomNav items={links} activeItem={activeItem} activeSubItem={activeSubItem} />}

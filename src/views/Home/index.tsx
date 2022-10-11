@@ -23,16 +23,9 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         <CardNftList />
       </Container>
 
-      <PageSection
-        innerProps={{ style: { margin: '0', width: '100%' } }}
-        containerProps={{
-          id: 'home-2',
-        }}
-        index={2}
-        hasCurvedDivider={false}
-      >
+      <Container>
         <MetricsSection />
-      </PageSection>
+      </Container>
     </>
   )
 }

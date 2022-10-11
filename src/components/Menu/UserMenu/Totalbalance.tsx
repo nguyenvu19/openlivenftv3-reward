@@ -7,7 +7,7 @@ const WTotalBalance = styled.div`
   align-items: center;
   justify-content: space-between;
 
-  height: 34px;
+  height: 32px;
   min-width: 130px;
   padding: 5px 20px;
   margin-right: 12px;

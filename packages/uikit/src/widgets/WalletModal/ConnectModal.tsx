@@ -2,10 +2,7 @@ import { useState } from "react";
 import styled, { useTheme } from "styled-components";
 import Box from "../../components/Box/Box";
 import Grid from "../../components/Box/Grid";
-import { Button } from "../../components/Button";
 import Heading from "../../components/Heading/Heading";
-import Text from "../../components/Text/Text";
-import EXTERNAL_LINK_PROPS from "../../util/externalLinkProps";
 import getThemeValue from "../../util/getThemeValue";
 import { ModalBody, ModalCloseButton, ModalContainer, ModalHeader, ModalTitle } from "../Modal";
 import { walletLocalStorageKey } from "./config";
@@ -21,7 +18,7 @@ interface Props<T> {
 }
 
 const WalletWrapper = styled(Box)`
-  border-bottom: 1px solid ${({ theme }) => theme.colors.cardBorder};
+  /* border-bottom: 1px solid ${({ theme }) => theme.colors.cardBorder}; */
 `;
 
 const getPriority = (priority: WalletConfig["priority"]) => (typeof priority === "function" ? priority() : priority);
@@ -87,20 +84,6 @@ function ConnectModal<T>({ login, onDismiss = () => null, displayCount = 3, t, w
             {!showMore && walletsToShow.length > 4 && <MoreWalletCard t={t} onClick={() => setShowMore(true)} />}
           </Grid>
         </WalletWrapper>
-        <Box p="24px">
-          <Text textAlign="center" color="textSubtle" as="p" mb="16px">
-            {t("Haven’t got a crypto wallet yet?")}
-          </Text>
-          <Button
-            as="a"
-            href="https://docs.pancakeswap.finance/get-started/connection-guide"
-            variant="subtle"
-            width="100%"
-            {...EXTERNAL_LINK_PROPS}
-          >
-            {t("Learn How to Connect")}
-          </Button>
-        </Box>
       </ModalBody>
     </ModalContainer>
   );
