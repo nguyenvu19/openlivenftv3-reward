@@ -1,5 +1,5 @@
-import { Box, Flex, Image, Text } from '@pancakeswap/uikit'
 import { useMemo } from 'react'
+import { Box, Flex, Image, Text } from '@pancakeswap/uikit'
 import styled from 'styled-components'
 import ImgDecoration01 from '../images/decoration01.png'
 import ImgDecoration02 from '../images/decoration02.png'
