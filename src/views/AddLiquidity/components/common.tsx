@@ -7,7 +7,7 @@ import { AutoColumn } from 'components/Layout/Column'
 import { AutoRow, RowBetween } from 'components/Layout/Row'
 import { Field } from 'state/burn/actions'
 import { DoubleCurrencyLogo, CurrencyLogo } from 'components/Logo'
-import { GreyCard } from 'components/Card'
+import { PrimaryCard } from 'components/Card'
 import { getLPSymbol } from 'utils/getLpSymbol'
 
 const Dot = styled(Box)<{ scale?: 'sm' | 'md' }>`
@@ -55,7 +55,7 @@ const CircleSvg = ({ percent = 1, ...props }: SvgProps & { percent?: number }) =
 
 const Subtitle: React.FC<React.PropsWithChildren> = ({ children }) => {
   return (
-    <Text fontSize="12px" textTransform="uppercase" bold color="secondary">
+    <Text fontSize="12px" bold color="#000">
       {children}
     </Text>
   )
@@ -146,7 +146,7 @@ export const AddLiquidityModalHeader = ({
     <AutoColumn gap="24px">
       <AutoColumn gap="8px">
         <Subtitle>{t('You will receive')}</Subtitle>
-        <GreyCard>
+        <PrimaryCard>
           <RowBetween>
             <AutoRow gap="4px">
               <DoubleCurrencyLogo
@@ -162,7 +162,7 @@ export const AddLiquidityModalHeader = ({
             </AutoRow>
             <Text ml="8px">{liquidityMinted?.toSignificant(6)}</Text>
           </RowBetween>
-        </GreyCard>
+        </PrimaryCard>
       </AutoColumn>
       <RowBetween>
         <Subtitle>{t('Your pool share')}</Subtitle>
