@@ -6,6 +6,10 @@ import ImgDecoration02 from '../images/decoration02.png'
 
 const WCardHoldNft = styled.div`
   padding: 30px 14px;
+  margin-bottom: 40px;
+  ${({ theme }) => theme.mediaQueries.md} {
+    margin-bottom: 60px;
+  }
 
   background: #f4f9ff;
   border: 3px solid #0a79f9;
