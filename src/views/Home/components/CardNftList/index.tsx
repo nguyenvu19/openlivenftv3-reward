@@ -78,7 +78,7 @@ const CardNftList = () => {
         partialVisible={isMobile || isMd}
       >
         {[1, 2, 3, 4, 5].map((item) => (
-          <NftItem item={item} />
+          <NftItem key={item} />
         ))}
       </Carousel>
     </WCardNftList>
