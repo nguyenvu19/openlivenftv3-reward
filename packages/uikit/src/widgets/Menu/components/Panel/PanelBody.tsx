@@ -26,9 +26,10 @@ const PanelBody: React.FC<Props> = ({ isPushed, pushNav, isMobile, linksPanel, a
   const handleClick = isMobile ? () => pushNav(false) : undefined;
 
   const menuOnDesktop = linksPanel.filter((item) => item.label);
+
   return (
     <Container>
-      {menuOnDesktop.map(({ label, href, icon, ...entry }) => {
+      {menuOnDesktop.map(({ label, href, icon, type, ...entry }) => {
         const isActive = activeItem === href;
         if (entry.items && entry.items.length > 0) {
           return (
@@ -36,16 +37,18 @@ const PanelBody: React.FC<Props> = ({ isPushed, pushNav, isMobile, linksPanel, a
               key={label}
               icon={icon}
               label={label}
+              href={href}
+              type={type}
               isActive={isActive}
               isPushed={isPushed}
               initialOpenState={isActive}
-              // className={calloutClass}
               pushNav={pushNav}
             >
               {isPushed &&
                 entry.items.map((item, index) => {
                   const isActiveSubItem = activeSubItem === item.href;
                   const SubIcon = item.icon;
+
                   return (
                     <MenuEntry
                       // eslint-disable-next-line react/no-array-index-key
@@ -58,7 +61,9 @@ const PanelBody: React.FC<Props> = ({ isPushed, pushNav, isMobile, linksPanel, a
                         {item.icon &&
                           createElement(SubIcon as any, { color: isActiveSubItem ? "secondary" : "textSubtle" })}
                       </div>
-                      <MenuLink href={item.href}>{item.label}</MenuLink>
+                      <MenuLink type={item.type} href={item.href}>
+                        {item.label}
+                      </MenuLink>
                     </MenuEntry>
                   );
                 })}
@@ -71,6 +76,7 @@ const PanelBody: React.FC<Props> = ({ isPushed, pushNav, isMobile, linksPanel, a
             icon={icon}
             label={label}
             href={href}
+            type={type}
             isActive={isActive}
             isPushed={isPushed}
             pushNav={pushNav}

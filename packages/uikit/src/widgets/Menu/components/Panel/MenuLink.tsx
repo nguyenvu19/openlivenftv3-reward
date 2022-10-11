@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { MenuItemProps } from "../../../../components/MenuItem/types";
 import { MenuContext } from "../../context";
 import { StyledPanelItemProps } from "../../types";
+import { DropdownMenuItemType } from "../../../../components/DropdownMenu/types";
 
 const StyledMenuItem = styled.a<StyledPanelItemProps>`
   position: relative;
@@ -35,6 +36,7 @@ const StyledMenuItem = styled.a<StyledPanelItemProps>`
 `;
 
 const MenuLink: React.FC<React.PropsWithChildren<MenuItemProps>> = ({
+  type,
   href,
   isActive = false,
   isDisabled = false,
@@ -46,6 +48,7 @@ const MenuLink: React.FC<React.PropsWithChildren<MenuItemProps>> = ({
     ? {
         as: linkComponent,
         href,
+        ...(type === DropdownMenuItemType.INTERNAL_LINK ? { target: "_blank" } : {}),
       }
     : {
         as: "div",

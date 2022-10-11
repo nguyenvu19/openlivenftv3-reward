@@ -115,11 +115,12 @@ const config: (
   },
   {
     label: t('Marketplace'),
-    href: '/marketplace',
+    href: 'https://openlivenft.io/',
     icon: EarnIcon,
     fillIcon: EarnFillIcon,
     image: '/images/decorations/pe2.png',
     supportChainIds: SUPPORT_ONLY_BSC,
+    type: DropdownMenuItemType.EXTERNAL_LINK,
     items: [],
     hideOnMobile: true,
   },

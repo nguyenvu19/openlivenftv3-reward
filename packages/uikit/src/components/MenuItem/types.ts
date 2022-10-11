@@ -6,6 +6,7 @@ export interface MenuItemProps {
   isActive?: boolean;
   isDisabled?: boolean;
   href?: string;
+  type?: number;
   variant?: MenuItemVariant;
   statusColor?: keyof Colors;
   scrollLayerRef?: React.RefObject<HTMLDivElement>;

@@ -24,6 +24,7 @@ import Menu from '../components/Menu'
 import Providers from '../Providers'
 import GlobalStyle from '../style/Global'
 import 'style/EmbedResponsive.css'
+import 'antd/dist/antd.css'
 import 'react-multi-carousel/lib/styles.css'
 
 const EasterEgg = dynamic(() => import('components/EasterEgg'), { ssr: false })

@@ -5,10 +5,12 @@ import { PushedProps } from "../../types";
 import { MENU_ENTRY_HEIGHT } from "../../config";
 import { ArrowDropDownIcon, ArrowDropUpIcon } from "../../../../components/Svg";
 import { MenuContext } from "../../context";
+import { DropdownMenuItemType } from "../../../../components/DropdownMenu/types";
 
 interface Props extends PushedProps {
   label: string;
   href?: string;
+  type?: number;
   icon?: ElementType<any>;
   initialOpenState?: boolean;
   className?: string;
@@ -38,6 +40,7 @@ const Accordion: React.FC<Props> = ({
   label,
   icon,
   href,
+  type,
   isPushed,
   pushNav,
   initialOpenState = false,
@@ -62,6 +65,7 @@ const Accordion: React.FC<Props> = ({
     ? {
         as: linkComponent,
         href,
+        ...(type === DropdownMenuItemType.INTERNAL_LINK ? { target: "_blank" } : {}),
       }
     : {
         as: "div",
