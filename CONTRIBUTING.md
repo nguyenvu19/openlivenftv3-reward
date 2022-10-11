@@ -1,7 +1,7 @@
-# Contributing to the Pancake ecosystem 🥞
+# Contributing
 
 Thanks for taking the time to contribute !
-You can start by reading our [Contribution guidelines](https://docs.pancakeswap.finance/code/contributing) first.
+You can start by reading our [Contribution guidelines](https://github.com/TTS-BLOCKCHAIN/openlivenftv3-dapp/blob/development/CONTRIBUTING.md) first.
 
 ## Setup
 

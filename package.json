@@ -1,16 +1,16 @@
 {
-  "name": "pancake-frontend",
+  "name": "openlivenft",
   "version": "0.1.0",
   "private": true,
   "workspaces": [
-    "apps/*",
-    "packages/*",
-    "apis/*"
+    "packages/*"
   ],
   "scripts": {
     "analyze": "ANALYZE=true yarn build",
     "dev": "next dev",
     "build": "next build",
+    "build:dev": "env-cmd -f .env.development next build",
+    "build:prod": "env-cmd -f .env.production next build",
     "start": "next start",
     "test": "jest && yarn turbo run test",
     "test:watch": "jest --watch",
@@ -79,13 +79,13 @@
     "next-axiom": "^0.13.0",
     "next-themes": "^0.2.0",
     "numeral": "^2.0.6",
-    "react-multi-carousel": "^2.8.0",
     "react": "^18.2.0",
     "react-countup": "^6.3.0",
     "react-datepicker": "^4.8.0",
     "react-device-detect": "^2.1.2",
     "react-dom": "^18.2.0",
     "react-markdown": "^6.0.2",
+    "react-multi-carousel": "^2.8.0",
     "react-redux": "^8.0.2",
     "react-transition-group": "^4.4.5",
     "react-window": "^1.8.7",
@@ -119,6 +119,7 @@
     "@types/simplemde": "^1.11.7",
     "@types/styled-components": "^5.1.26",
     "@vanilla-extract/babel-plugin": "^1.2.0",
+    "env-cmd": "^10.1.0",
     "eslint": "^7.26.0",
     "eslint-plugin-cypress": "^2.11.3",
     "eslint-plugin-lodash": "^7.4.0",

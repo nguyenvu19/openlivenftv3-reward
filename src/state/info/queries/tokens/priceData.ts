@@ -47,7 +47,7 @@ const fetchTokenPriceData = async (
     time += interval
   }
   try {
-    const blocks = await getBlocksFromTimestamps(timestamps, 'asc', 500, chainName)
+    const blocks = await getBlocksFromTimestamps(timestamps, 'asc', 500)
     if (!blocks || blocks.length === 0) {
       console.error('Error fetching blocks for timestamps', timestamps)
       return {

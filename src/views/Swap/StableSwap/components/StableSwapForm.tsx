@@ -67,13 +67,7 @@ const SwitchIconButton = styled(IconButton)`
   }
 `
 
-interface StableSwapForm {
-  isChartExpanded: boolean
-  isChartDisplayed: boolean
-  setIsChartDisplayed: Dispatch<SetStateAction<boolean>>
-}
-
-export default function StableSwapForm({ setIsChartDisplayed, isChartDisplayed }) {
+export default function StableSwapForm() {
   const { t } = useTranslation()
   const { refreshBlockNumber, isLoading } = useRefreshBlockNumberID()
   const { account } = useActiveWeb3React()
@@ -214,8 +208,6 @@ export default function StableSwapForm({ setIsChartDisplayed, isChartDisplayed }
           </Flex>
         }
         subtitle={t('Trade tokens in an instant')}
-        setIsChartDisplayed={setIsChartDisplayed}
-        isChartDisplayed={isChartDisplayed}
         hasAmount={hasAmount}
         onRefreshPrice={onRefreshPrice}
       />

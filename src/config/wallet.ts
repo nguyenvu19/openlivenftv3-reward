@@ -1,18 +1,19 @@
 import {
   MetamaskIcon,
-  WalletConnectIcon,
+  // WalletConnectIcon,
   TrustWalletIcon,
-  MathWalletIcon,
-  TokenPocketIcon,
-  BinanceChainIcon,
-  SafePalIcon,
-  Coin98Icon,
-  BraveIcon,
-  BloctoIcon,
-  CoinbaseWalletIcon,
-  OperaIcon,
+  // MathWalletIcon,
+  // TokenPocketIcon,
+  // BinanceChainIcon,
+  // SafePalIcon,
+  // Coin98Icon,
+  // BraveIcon,
+  // BloctoIcon,
+  // CoinbaseWalletIcon,
+  // OperaIcon,
   WalletConfig,
 } from '@pancakeswap/uikit'
+import { APP_URL } from 'config'
 
 export enum ConnectorNames {
   MetaMask = 'metaMask',
@@ -30,7 +31,7 @@ export const wallets: WalletConfig<ConnectorNames>[] = [
     installed: typeof window !== 'undefined' && Boolean(window.ethereum?.isMetaMask),
     connectorId: ConnectorNames.MetaMask,
     priority: 1,
-    href: 'https://metamask.app.link/dapp/pancakeswap.finance/',
+    href: `https://metamask.app.link/dapp/${APP_URL.slice(8)}/`,
   },
   // {
   //   title: 'Binance Wallet',
@@ -55,7 +56,7 @@ export const wallets: WalletConfig<ConnectorNames>[] = [
         // @ts-ignore
         Boolean(window.ethereum?.isTrustWallet)),
     priority: 2,
-    href: 'https://link.trustwallet.com/open_url?coin_id=20000714&url=https://pancakeswap.finance/',
+    href: `https://link.trustwallet.com/open_url?coin_id=20000714&url=${APP_URL}/`,
     downloadLink: {
       desktop: 'https://chrome.google.com/webstore/detail/trust-wallet/egjidjbpglichdcondbcbdnbeeppgdph/related',
     },

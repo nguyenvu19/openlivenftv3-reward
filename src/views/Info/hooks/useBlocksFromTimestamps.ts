@@ -28,7 +28,7 @@ export const useBlocksFromTimestamps = (
   useEffect(() => {
     const fetchData = async () => {
       const timestampsArray = JSON.parse(timestampsString)
-      const result = await getBlocksFromTimestamps(timestampsArray, sortDirection, skipCount, chainName)
+      const result = await getBlocksFromTimestamps(timestampsArray, sortDirection, skipCount)
       if (result.length === 0) {
         setError(true)
       } else {
@@ -56,7 +56,7 @@ export const useBlockFromTimeStampSWR = (
   const timestampsString = JSON.stringify(timestamps)
   const timestampsArray = JSON.parse(timestampsString)
   const { data } = useSWRImmutable([`info/blocks/${timestampsString}`, chainName], () =>
-    getBlocksFromTimestamps(timestampsArray, sortDirection, skipCount, chainName),
+    getBlocksFromTimestamps(timestampsArray, sortDirection, skipCount),
   )
   return { blocks: data }
 }

@@ -1,4 +1,4 @@
-import { SetStateAction, useCallback, useEffect, useState, Dispatch, useMemo } from 'react'
+import { useCallback, useEffect, useState, useMemo } from 'react'
 import styled from 'styled-components'
 import { Currency, CurrencyAmount, Percent } from '@pancakeswap/sdk'
 import { Button, Text, ArrowDownIcon, Box, IconButton, ArrowUpDownIcon, Skeleton } from '@pancakeswap/uikit'
