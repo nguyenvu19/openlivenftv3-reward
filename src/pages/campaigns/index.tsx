@@ -1,4 +1,4 @@
-import Campaigns from '../views/Campaigns'
+import Campaigns from '../../views/Campaigns'
 
 const CampaignsPage = () => {
   return <Campaigns />

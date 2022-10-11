@@ -9,6 +9,7 @@ const WCardNftVertical = styled.div`
   background: #eefbff;
   border: 1px solid rgba(67, 108, 255, 0.3);
   border-radius: 24px;
+  cursor: pointer;
 
   display: flex;
   flex-flow: row wrap;
@@ -89,7 +90,7 @@ const WCountDown = styled.div`
   display: flex;
   align-items: center;
 `
-const CardNftVertical = () => {
+const CardNftVertical = (props) => {
   const renderCountdownCard = useMemo(() => {
     return (
       <WCountDown>
@@ -137,7 +138,7 @@ const CardNftVertical = () => {
     )
   }, [])
   return (
-    <WCardNftVertical>
+    <WCardNftVertical {...props}>
       <div className="card-nft-cover-left">
         <MediaCard fileUrl="abc.mp4" />
       </div>

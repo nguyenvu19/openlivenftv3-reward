@@ -1,5 +1,6 @@
 import { Flex, Heading } from '@pancakeswap/uikit'
 import { FlexGap } from 'components/Layout/Flex'
+import { useRouter } from 'next/router'
 import styled from 'styled-components'
 import CardNftVertical from '../CardNftVertical'
 
@@ -8,6 +9,7 @@ const WLiveAndUpComing = styled.div`
 `
 
 const LiveAndUpComing = () => {
+  const router = useRouter()
   return (
     <WLiveAndUpComing>
       <Flex justifyContent="center" mb="40px">
@@ -16,7 +18,7 @@ const LiveAndUpComing = () => {
         </Heading>
       </Flex>
       <FlexGap gap="30px" flexDirection="column">
-        <CardNftVertical />
+        <CardNftVertical onClick={() => router.push(`${router.pathname}/claim`)} />
         <CardNftVertical />
       </FlexGap>
     </WLiveAndUpComing>
