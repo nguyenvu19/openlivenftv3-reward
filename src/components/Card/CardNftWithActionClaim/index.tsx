@@ -1,4 +1,4 @@
-import { Flex, Text } from '@pancakeswap/uikit'
+import { Button, Flex, Text } from '@pancakeswap/uikit'
 import { FlexGap } from 'components/Layout/Flex'
 import MediaCard from 'components/MediaCard'
 import styled from 'styled-components'
@@ -20,6 +20,10 @@ const WCardNftWithActionClaim = styled.div`
 
   .card-nft-body {
     padding: 24px;
+  }
+
+  .card-nft-footer {
+    padding: 0 12px 12px;
   }
 `
 
@@ -47,6 +51,14 @@ const CardNftWithActionClaim = () => {
             <Text fontWeight="bold">(auto by seccond)</Text>
           </Flex>
         </FlexGap>
+      </div>
+      <div className="card-nft-footer">
+        <Flex justifyContent="center">
+          <Button scale="sm">CLAIM NOW</Button>
+          <Button scale="sm" disabled>
+            CLAIMED
+          </Button>
+        </Flex>
       </div>
     </WCardNftWithActionClaim>
   )
