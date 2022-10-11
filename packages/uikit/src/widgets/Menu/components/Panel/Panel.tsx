@@ -28,6 +28,11 @@ const StyledPanel = styled.div<{ isPushed: boolean; showMenu: boolean }>`
   ${({ theme }) => theme.mediaQueries.nav} {
     width: ${({ isPushed }) => `${isPushed ? SIDEBAR_WIDTH_FULL : SIDEBAR_WIDTH_REDUCED}px`};
   }
+
+  display: none;
+  ${({ theme }) => theme.mediaQueries.lg} {
+    display: flex;
+  }
 `;
 
 const Panel: React.FC<Props> = (props) => {

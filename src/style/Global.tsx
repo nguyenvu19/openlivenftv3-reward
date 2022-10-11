@@ -8,7 +8,7 @@ declare module 'styled-components' {
 
 const GlobalStyle = createGlobalStyle`
   * {
-    font-family: 'Kanit', sans-serif;
+    font-family: 'Open Sans', sans-serif;
   }
   body {
     background-color: ${({ theme }) => theme.colors.background};
@@ -18,6 +18,8 @@ const GlobalStyle = createGlobalStyle`
       max-width: 100%;
     }
   }
+
+  
 `
 
 export default GlobalStyle

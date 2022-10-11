@@ -3,19 +3,25 @@ import { NextLinkFromReactRouter } from 'components/NextLink'
 import Image from 'next/image'
 import { memo } from 'react'
 import styled from 'styled-components'
-import { lotteryImage, lotteryMobileImage } from './images'
+import { lotteryImage } from './images'
 import * as S from './Styled'
 
 const WBanner = styled.div`
   width: 100%;
-  min-height: 300px;
+  height: 100%;
+  max-height: 370px;
   position: relative;
+  margin-bottom: 40px;
+  ${({ theme }) => theme.mediaQueries.md} {
+    margin-bottom: 60px;
+  }
 `
-const RightWrapper = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
+const WBannerMobile = styled.div`
+  padding: 30px 14px;
+  background: #f4f9ff;
+  border: 3px solid #0a79f9;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 32px;
 `
 
 export const StyledSubheading = styled(Heading)`
@@ -33,41 +39,25 @@ export const StyledSubheading = styled(Heading)`
   margin-bottom: 8px;
 `
 const OpenliveBanner = () => {
-  const { isMobile, isDesktop } = useMatchBreakpoints()
+  const { isMobile } = useMatchBreakpoints()
   return (
-    <S.Wrapper>
-      <S.Inner>
-        <WBanner>
-          {isMobile && (
-            <S.LeftWrapper>
-              <S.StyledSubheading>Hold more NFTs take more values</S.StyledSubheading>
-              <S.StyledHeading scale="xl">OPENLIVENFT</S.StyledHeading>
-              <NextLinkFromReactRouter to="/lottery">
-                <Button>
-                  <Text color="invertedContrast" bold fontSize="16px" mr="4px">
-                    Join Now
-                  </Text>
-                </Button>
-              </NextLinkFromReactRouter>
-            </S.LeftWrapper>
-          )}
-          <RightWrapper>
-            {isDesktop ? (
-              <Image src={lotteryImage} alt="LotteryBanner" placeholder="blur" />
-            ) : (
-              <Image
-                className="mobile"
-                src={lotteryMobileImage}
-                alt="LotteryBanner"
-                width={190}
-                height={144}
-                placeholder="blur"
-              />
-            )}
-          </RightWrapper>
-        </WBanner>
-      </S.Inner>
-    </S.Wrapper>
+    <WBanner>
+      {isMobile ? (
+        <WBannerMobile>
+          <S.StyledSubheading>Hold more NFTs take more values</S.StyledSubheading>
+          <S.StyledHeading scale="xl">OPENLIVENFT</S.StyledHeading>
+          <NextLinkFromReactRouter to="/lottery">
+            <Button>
+              <Text color="invertedContrast" bold fontSize="16px" mr="4px">
+                Join Now
+              </Text>
+            </Button>
+          </NextLinkFromReactRouter>
+        </WBannerMobile>
+      ) : (
+        <Image src={lotteryImage} alt="LotteryBanner" placeholder="blur" />
+      )}
+    </WBanner>
   )
 }
 

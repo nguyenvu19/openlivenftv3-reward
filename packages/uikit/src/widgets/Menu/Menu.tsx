@@ -120,7 +120,7 @@ const Menu: React.FC<React.PropsWithChildren<NavProps>> = ({
   buyCakeLabel,
   children,
 }) => {
-  const { isMobile, isLg } = useMatchBreakpoints();
+  const { isMobile } = useMatchBreakpoints();
   const [isPushed, setIsPushed] = useState(!isMobile);
   const [showMenu] = useState(true);
 
@@ -163,25 +163,23 @@ const Menu: React.FC<React.PropsWithChildren<NavProps>> = ({
               </Flex>
             </StyledNav>
           </FixedContainer>
-          <BodyWrapper pt={!subLinks ? `${totalTopMenuHeight + 30}px` : "0"}>
+          <BodyWrapper pt={!subLinks ? `${isMobile ? totalTopMenuHeight : totalTopMenuHeight + 30}px` : "0"}>
             {/* ========= Sidebar ========= */}
-            {!isLg && (
-              <Panel
-                isPushed={isPushed}
-                isMobile={isMobile}
-                showMenu={showMenu}
-                isDark={isDark}
-                toggleTheme={toggleTheme}
-                langs={langs}
-                setLang={setLang}
-                currentLang={currentLang}
-                cakePriceUsd={cakePriceUsd}
-                pushNav={setIsPushed}
-                linksPanel={linksPanel}
-                activeItem={activeItem}
-                activeSubItem={activeSubItem}
-              />
-            )}
+            <Panel
+              isPushed={isPushed}
+              isMobile={isMobile}
+              showMenu={showMenu}
+              isDark={isDark}
+              toggleTheme={toggleTheme}
+              langs={langs}
+              setLang={setLang}
+              currentLang={currentLang}
+              cakePriceUsd={cakePriceUsd}
+              pushNav={setIsPushed}
+              linksPanel={linksPanel}
+              activeItem={activeItem}
+              activeSubItem={activeSubItem}
+            />
             <Inner isPushed={isPushed} showMenu={showMenu}>
               {children}
               <Footer
