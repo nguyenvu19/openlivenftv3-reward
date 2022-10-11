@@ -3,7 +3,7 @@ import { FlexGap } from 'components/Layout/Flex'
 import MediaCard from 'components/MediaCard'
 import styled from 'styled-components'
 
-const WCardNftWithInfo = styled.div`
+const WCardNftWithActionClaim = styled.div`
   background: #eefbff;
   border: 1px solid #00438e;
   box-shadow: 8px 10px 4px rgba(0, 0, 0, 0.25);
@@ -23,33 +23,33 @@ const WCardNftWithInfo = styled.div`
   }
 `
 
-const CardNftWithInfo = () => {
+const CardNftWithActionClaim = () => {
   return (
-    <WCardNftWithInfo>
+    <WCardNftWithActionClaim>
       <div className="card-nft-cover">
         <MediaCard fileUrl="abc.mp4" />
       </div>
       <div className="card-nft-body">
         <Text fontSize={[20]} fontWeight="bold" mb="14px">
-          HEMATITE
+          NFT By: ID
         </Text>
         <FlexGap flexDirection="column" rowGap="10px">
           <Flex justifyContent="space-between">
-            <Text>Price:</Text>
-            <Text fontWeight="bold">500 USDT</Text>
+            <Text>Total Reward By:</Text>
+            <Text fontWeight="bold">NFT ID</Text>
           </Flex>
           <Flex justifyContent="space-between">
-            <Text>Reward:</Text>
+            <Text>Total Claimed:</Text>
             <Text fontWeight="bold">500 OPV</Text>
           </Flex>
           <Flex justifyContent="space-between">
-            <Text>Dividend:</Text>
-            <Text fontWeight="bold">0%</Text>
+            <Text>Avaible Claim:</Text>
+            <Text fontWeight="bold">(auto by seccond)</Text>
           </Flex>
         </FlexGap>
       </div>
-    </WCardNftWithInfo>
+    </WCardNftWithActionClaim>
   )
 }
 
-export default CardNftWithInfo
+export default CardNftWithActionClaim
