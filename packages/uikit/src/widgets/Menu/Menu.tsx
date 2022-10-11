@@ -147,6 +147,7 @@ const Menu: React.FC<React.PropsWithChildren<NavProps>> = ({
               <Flex width="100%" height="fit-content" alignItems="center" justifyContent="space-between">
                 <Flex>
                   <Logo isDark={isDark} href={homeLink?.href ?? "/"} />
+                  {/* {!isMobile && <MenuItems items={links} activeItem={activeItem} activeSubItem={activeSubItem} ml="24px" />} */}
                 </Flex>
                 <Flex alignItems="center" height="100%">
                   <Box mt="4px">
