@@ -11,7 +11,7 @@ const DropDownHeader = styled.div`
   padding: 0px 16px;
   box-shadow: ${({ theme }) => theme.shadows.inset};
   border: 1px solid ${({ theme }) => theme.colors.inputSecondary};
-  border-radius: 16px;
+  border-radius: 8px;
   background: ${({ theme }) => theme.colors.input};
   transition: border-radius 0.15s;
 `
@@ -39,7 +39,7 @@ const DropDownContainer = styled(Box)<{ isOpen: boolean }>`
   width: 100%;
   position: relative;
   background: ${({ theme }) => theme.colors.input};
-  border-radius: 16px;
+  border-radius: 8px;
   height: 40px;
   min-width: 136px;
   user-select: none;
@@ -55,7 +55,7 @@ const DropDownContainer = styled(Box)<{ isOpen: boolean }>`
       ${DropDownHeader} {
         border-bottom: 1px solid ${({ theme }) => theme.colors.inputSecondary};
         box-shadow: ${({ theme }) => theme.tooltip.boxShadow};
-        border-radius: 16px 16px 0 0;
+        border-radius: 8px 8px 0 0;
       }
 
       ${DropDownListContainer} {
@@ -74,6 +74,9 @@ const DropDownContainer = styled(Box)<{ isOpen: boolean }>`
     right: 16px;
     top: 50%;
     transform: translateY(-50%);
+    path {
+      fill: #006573;
+    }
   }
 `
 
@@ -151,7 +154,11 @@ const Select: React.FunctionComponent<React.PropsWithChildren<SelectProps>> = ({
   return (
     <DropDownContainer isOpen={isOpen} {...props}>
       <DropDownHeader onClick={toggling}>
-        <Text color={!optionSelected && placeHolderText ? 'text' : undefined}>
+        <Text
+          color={!optionSelected && placeHolderText ? 'text' : undefined}
+          fontSize={['14px', null, null, '16px']}
+          fontWeight="700"
+        >
           {!optionSelected && placeHolderText ? placeHolderText : options[selectedOptionIndex].label}
         </Text>
       </DropDownHeader>
