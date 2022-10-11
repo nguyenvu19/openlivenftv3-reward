@@ -1,15 +1,5 @@
 import styled from 'styled-components'
-import {
-  ChartIcon,
-  Flex,
-  Heading,
-  HistoryIcon,
-  IconButton,
-  NotificationDot,
-  Text,
-  useModal,
-  ChartDisableIcon,
-} from '@pancakeswap/uikit'
+import { Flex, Heading, HistoryIcon, IconButton, NotificationDot, Text, useModal } from '@pancakeswap/uikit'
 import TransactionsModal from 'components/App/Transactions/TransactionsModal'
 import GlobalSettings from 'components/Menu/GlobalSettings'
 import { useExpertModeManager } from 'state/user/hooks'
@@ -21,8 +11,6 @@ interface Props {
   title: string | ReactElement
   subtitle: string
   noConfig?: boolean
-  setIsChartDisplayed?: React.Dispatch<React.SetStateAction<boolean>>
-  isChartDisplayed?: boolean
   hasAmount: boolean
   onRefreshPrice: () => void
 }
@@ -32,40 +20,32 @@ const CurrencyInputContainer = styled(Flex)`
   align-items: center;
   padding: 24px;
   width: 100%;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.cardBorder};
-`
 
-const ColoredIconButton = styled(IconButton)`
-  color: ${({ theme }) => theme.colors.textSubtle};
+  position: relative;
+  .setting-absolute {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  }
 `
 
 const CurrencyInputHeader: React.FC<React.PropsWithChildren<Props>> = ({
   title,
   subtitle,
-  setIsChartDisplayed,
-  isChartDisplayed,
   hasAmount,
   onRefreshPrice,
 }) => {
   const [expertMode] = useExpertModeManager()
-  const toggleChartDisplayed = () => {
-    setIsChartDisplayed((currentIsChartDisplayed) => !currentIsChartDisplayed)
-  }
   const [onPresentTransactionsModal] = useModal(<TransactionsModal />)
   const handleOnClick = useCallback(() => onRefreshPrice?.(), [onRefreshPrice])
 
   return (
     <CurrencyInputContainer>
       <Flex width="100%" alignItems="center" justifyContent="space-between">
-        {setIsChartDisplayed && (
-          <ColoredIconButton onClick={toggleChartDisplayed} variant="text" scale="sm">
-            {isChartDisplayed ? <ChartDisableIcon color="textSubtle" /> : <ChartIcon width="24px" color="textSubtle" />}
-          </ColoredIconButton>
-        )}
-        <Flex flexDirection="column" alignItems="flex-end" width="100%" mr={18}>
+        <Flex flexDirection="column" alignItems="center" width="100%" mb="10px">
           <Heading as="h2">{title}</Heading>
         </Flex>
-        <Flex>
+        <Flex className="setting-absolute">
           <NotificationDot show={expertMode}>
             <GlobalSettings color="textSubtle" mr="0" mode={SettingsMode.SWAP_LIQUIDITY} />
           </NotificationDot>
@@ -78,7 +58,7 @@ const CurrencyInputHeader: React.FC<React.PropsWithChildren<Props>> = ({
         </Flex>
       </Flex>
       <Flex alignItems="center">
-        <Text color="textSubtle" fontSize="14px">
+        <Text color="#000" fontSize="14px" fontWeight="bold">
           {subtitle}
         </Text>
       </Flex>

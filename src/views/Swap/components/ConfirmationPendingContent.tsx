@@ -10,7 +10,7 @@ const Wrapper = styled.div`
 `
 
 const ConfirmedIcon = styled(ColumnCenter)`
-  padding: 24px 0;
+  padding: 0 0 24px;
 `
 
 function ConfirmationPendingContent({ trade }: { trade: Trade<Currency, Currency, TradeType> | StableTrade }) {
