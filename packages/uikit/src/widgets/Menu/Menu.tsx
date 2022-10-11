@@ -22,6 +22,7 @@ import Panel from "./components/Panel/Panel";
 
 const Wrapper = styled.div`
   width: 100%;
+  min-height: 100vh;
   position: relative;
   overflow: hidden;
   .linear-block-1 {

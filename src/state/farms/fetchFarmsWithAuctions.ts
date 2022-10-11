@@ -5,7 +5,6 @@ import { multicallv2 } from 'utils/multicall'
 import { ethersToBigNumber } from 'utils/bigNumber'
 import { BSC_BLOCK_TIME } from 'config'
 import { add, sub } from 'date-fns'
-import { sortAuctionBidders } from '../../views/FarmAuction/helpers'
 
 const fetchFarmsWithAuctions = async (
   currentBlock: number,
@@ -34,7 +33,7 @@ const fetchFarmsWithAuctions = async (
     if (secondsSinceEnd > FARM_AUCTION_HOSTING_IN_SECONDS) {
       return { winnerFarms: [], auctionHostingEndDate: null }
     }
-    const sortedBidders = sortAuctionBidders(auctionBidders)
+    const sortedBidders = auctionBidders
     const leaderboardThreshold = ethersToBigNumber(auctionData.leaderboardThreshold)
     const winnerFarms = sortedBidders
       .filter((bidder) => bidder.amount.gt(leaderboardThreshold))
