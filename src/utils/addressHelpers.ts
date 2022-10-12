@@ -1,4 +1,5 @@
 import { ChainId } from '@pancakeswap/sdk'
+import { CONTRACT_ADDRESS } from 'config'
 import addresses from 'config/constants/contracts'
 import { Address } from 'config/constants/types'
 import { VaultKey } from 'state/types'
@@ -119,4 +120,9 @@ export const getBCakeFarmBoosterAddress = () => {
 
 export const getBCakeFarmBoosterProxyFactoryAddress = () => {
   return getAddress(addresses.bCakeFarmBoosterProxyFactory)
+}
+
+// new
+export const getCampaignsAddress = () => {
+  return CONTRACT_ADDRESS
 }

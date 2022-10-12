@@ -1,7 +1,15 @@
 import { getFullDecimalMultiplier } from 'utils/getFullDecimalMultiplier'
 
+// Constants config env file
 export const APP_URL = process.env.NEXT_PUBLIC_APP_URL
+export const APP_USER_URL = process.env.NEXT_PUBLIC_APP_USER_URL
+export const APP_USER_API = process.env.NEXT_PUBLIC_APP_USER_API
 
+export const TOKEN_ADDRESS = process.env.NEXT_PUBLIC_TOKEN_ADDRESS
+export const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS
+export const NFT_ADDRESS = process.env.NEXT_PUBLIC_NFT_ADDRESS
+
+//  Others
 export const BSC_BLOCK_TIME = 3
 
 // CAKE_PER_BLOCK details
