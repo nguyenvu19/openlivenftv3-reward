@@ -1,92 +1,1189 @@
-// import React, { useEffect, useState } from 'react';
-// import { Table } from 'antd';
-// import qs from 'qs';
+import { Table } from 'antd'
+import type { ColumnsType, TablePaginationConfig } from 'antd/es/table'
+import type { FilterValue, SorterResult } from 'antd/es/table/interface'
+import React, { useEffect, useState } from 'react'
+import styled from 'styled-components'
 
-// const columns = [
-//   {
-//     title: 'Name',
-//     dataIndex: 'name',
-//     sorter: true,
-//     render: (name) => `${name.first} ${name.last}`,
-//     width: '20%',
-//   },
-//   {
-//     title: 'Gender',
-//     dataIndex: 'gender',
-//     filters: [
-//       {
-//         text: 'Male',
-//         value: 'male',
-//       },
-//       {
-//         text: 'Female',
-//         value: 'female',
-//       },
-//     ],
-//     width: '20%',
-//   },
-//   {
-//     title: 'Email',
-//     dataIndex: 'email',
-//   },
-// ];
+interface DataType {
+  action: string
+  amount: string
+  event: string
+  status: string
+  from: string
+  to: string
+  txh: string
+}
 
-// const getRandomuserParams = (params) => ({
-//   results: params.pagination?.pageSize,
-//   page: params.pagination?.current,
-//   ...params,
-// });
+interface TableParams {
+  pagination?: TablePaginationConfig
+  sortField?: string
+  sortOrder?: string
+  filters?: Record<string, FilterValue>
+}
 
-// const App = () => {
-//   const [data, setData] = useState();
-//   const [loading, setLoading] = useState(false);
-//   const [tableParams, setTableParams] = useState({
-//     pagination: {
-//       current: 1,
-//       pageSize: 10,
-//     },
-//   });
+const columns: ColumnsType<DataType> = [
+  {
+    title: 'Amount',
+    dataIndex: 'amount',
+    width: '20%',
+    render: (text, record) => (
+      <div className="table-history-amount">
+        <p data-amount={record.action}> {text} </p>
+        <p>2 minutes ago</p>
+      </div>
+    ),
+  },
+  {
+    title: 'Event',
+    dataIndex: 'event',
+    width: '20%',
+    render: (text) => <p style={{ fontWeight: 700 }}>{text}</p>,
+  },
+  {
+    title: 'Status',
+    dataIndex: 'status',
+    render: (text) => (
+      <p data-status={text} className="table-history-status">
+        {text}
+      </p>
+    ),
+  },
+  {
+    title: 'From',
+    dataIndex: 'from',
+  },
+  {
+    title: 'To',
+    dataIndex: 'to',
+  },
+  {
+    title: 'Txh',
+    dataIndex: 'txh',
+  },
+]
 
-//   const fetchData = () => {
-//     setLoading(true);
-//     fetch(`https://randomuser.me/api?${qs.stringify(getRandomuserParams(tableParams))}`)
-//       .then((res) => res.json())
-//       .then(({ results }) => {
-//         setData(results);
-//         setLoading(false);
-//         setTableParams({
-//           ...tableParams,
-//           pagination: {
-//             ...tableParams.pagination,
-//             total: 200, // 200 is mock data, you should read it from server
-//             // total: data.totalCount,
-//           },
-//         });
-//       });
-//   };
+const getRandomuserParams = (params: TableParams) => ({
+  results: params.pagination?.pageSize,
+  page: params.pagination?.current,
+  ...params,
+})
 
-//   useEffect(() => {
-//     fetchData();
-//   }, [JSON.stringify(tableParams)]);
+const dataSource2: DataType[] = [
+  {
+    action: 'deposit',
+    amount: '+500 USDT',
+    event: 'Buy',
+    status: 'Completed',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'deposit',
+    amount: '+500 USDT',
+    event: 'Buy',
+    status: 'Completed',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'deposit',
+    amount: '+500 USDT',
+    event: 'Buy',
+    status: 'Completed',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'deposit',
+    amount: '+500 USDT',
+    event: 'Buy',
+    status: 'Completed',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'deposit',
+    amount: '+500 USDT',
+    event: 'Buy',
+    status: 'Completed',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'deposit',
+    amount: '+500 USDT',
+    event: 'Buy',
+    status: 'Completed',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'deposit',
+    amount: '+500 USDT',
+    event: 'Buy',
+    status: 'Completed',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'deposit',
+    amount: '+500 USDT',
+    event: 'Buy',
+    status: 'Completed',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'deposit',
+    amount: '+500 USDT',
+    event: 'Buy',
+    status: 'Completed',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+  {
+    action: 'withdraw',
+    amount: '-500 USDT',
+    event: 'Bonus',
+    status: 'Pending',
+    from: '0x4dF...9c700',
+    to: '0x4dF...9c700',
+    txh: '10 Downing Street',
+  },
+]
 
-//   const handleTableChange = (pagination, filters, sorter) => {
-//     setTableParams({
-//       pagination,
-//       filters,
-//       ...sorter,
-//     });
-//   };
+const WHistoryTableNftDetail = styled.div`
+  .ant-table-wrapper {
+    .ant-table {
+      border-radius: 8px;
+      .ant-table-container {
+        .ant-table-content {
+          > table {
+            background: rgba(238, 251, 255, 0.4);
+            border: 1px solid #0aadad;
+            padding: 16px 32px;
+            border-radius: 8px;
+            .ant-table-thead {
+              > tr th {
+                background: transparent;
+                border-bottom: 2px solid rgba(0, 124, 162, 0.3);
+                text-align: center;
+                color: #007ca2;
+                font-weight: 700;
+                &:before {
+                  display: none;
+                }
+              }
+            }
+            .ant-table-tbody {
+              > tr td {
+                text-align: center;
+                border-bottom: none;
+                .table-history-amount {
+                  p {
+                    &[data-amount='deposit'] {
+                      font-weight: 700;
+                      color: green;
+                    }
+                    &[data-amount='withdraw'] {
+                      font-weight: 700;
+                      color: red;
+                    }
+                  }
+                }
+                .table-history-status {
+                  &[data-status='Completed'] {
+                    background: #008d0e;
+                  }
+                  &[data-status='Pending'] {
+                    background: #ebc500;
+                  }
+                  color: #ffffff;
+                  font-weight: 700;
+                  font-size: 16px;
+                  line-height: 140%;
+                  border-radius: 4px;
+                  width: 103px;
+                  height: 30px;
+                  padding: 4px 8px;
+                }
+                .table-history-transaction {
+                  display: flex;
+                  align-items: center;
+                  .table-history-transaction-img {
+                    width: 34px;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    ul.ant-pagination {
+      li.ant-pagination-prev,
+      .ant-pagination-next {
+        button {
+          background: #007ca2;
+          border: none;
+          border-radius: 50%;
+          color: #fff;
+        }
+      }
+      .ant-pagination-jump-prev,
+      .ant-pagination-jump-next {
+        .ant-pagination-item-link-icon {
+          color: #007ca2;
+        }
+      }
+      .ant-pagination-item {
+        background: transparent;
+        border: none;
+        &:hover {
+          a {
+            color: #000000;
+          }
+        }
+      }
+      .ant-pagination-options {
+        .ant-select-selector {
+          border: 2px solid #08a7b7;
+          border-radius: 4px;
+        }
+        .ant-select-arrow {
+          color: #08a7b7;
+        }
+      }
+      .ant-pagination-item-active {
+        border: 2px solid #08a7b7;
+        background: #eefbff;
+        border-radius: 4px;
+        font-weight: 700;
+        > a {
+          color: #000000;
+        }
+      }
+    }
+  }
+`
 
-//   return (
-//     <Table
-//       columns={columns}
-//       rowKey={(record) => record.login.uuid}
-//       dataSource={data}
-//       pagination={tableParams.pagination}
-//       loading={loading}
-//       onChange={handleTableChange}
-//     />
-//   );
-// };
+const App: React.FC = () => {
+  const [loading, setLoading] = useState(false)
+  const [tableParams, setTableParams] = useState<TableParams>({
+    pagination: {
+      current: 1,
+      pageSize: 10,
+    },
+  })
 
-// export default App;
+  const handleTableChange = (pagination: TablePaginationConfig) => {
+    setTableParams({
+      pagination,
+    })
+  }
+
+  return (
+    <WHistoryTableNftDetail>
+      <Table
+        columns={columns}
+        dataSource={dataSource2}
+        pagination={tableParams.pagination}
+        loading={loading}
+        onChange={handleTableChange}
+      />
+    </WHistoryTableNftDetail>
+  )
+}
+
+export default App
