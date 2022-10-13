@@ -9,7 +9,7 @@ const WCardNftWithID = styled.div`
   border: 1px solid #00438e;
   box-shadow: 8px 10px 4px rgb(0 0 0 / 25%);
   overflow: hidden;
-  border-radius: 8px;
+  border-radius: 20px;
   margin-top: 16px;
   .card-nft-cover {
     width: 100%;
@@ -32,7 +32,7 @@ const CardNftWithID = () => {
     <WCardNftWithID>
       <Flex flexDirection="column" justifyContent="center" alignItems="center">
         <div className="card-nft-cover">
-          <MediaCard fileUrl="abc.mp4" />
+          <MediaCard fileUrl="https://s3.ap-southeast-1.amazonaws.com/openlivenft/investPackage/HEMATITE.mp4" />
         </div>
         <div className="investment-item-content">
           <Text fontSize={[16, , 32]} fontWeight="bold" mt={['16px', null, null, '32']} color="#292929">
