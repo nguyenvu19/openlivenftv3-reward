@@ -1,10 +1,12 @@
 import { Button, Heading, Text, useMatchBreakpoints } from '@pancakeswap/uikit'
 import { NextLinkFromReactRouter } from 'components/NextLink'
+import { APP_USER_URL } from 'config'
 import { memo } from 'react'
 import styled from 'styled-components'
 import * as S from './Styled'
 
 const WBanner = styled.div`
+  display: block;
   width: 100%;
   height: 100%;
   max-height: 370px;
@@ -39,7 +41,7 @@ export const StyledSubheading = styled(Heading)`
 const OpenliveBanner = () => {
   const { isMobile } = useMatchBreakpoints()
   return (
-    <WBanner>
+    <WBanner as="a" href={APP_USER_URL} target="_blank">
       {isMobile ? (
         <WBannerMobile>
           <S.StyledSubheading>Hold more NFTs take more values</S.StyledSubheading>

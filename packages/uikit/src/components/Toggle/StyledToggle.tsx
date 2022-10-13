@@ -38,7 +38,8 @@ const getScale =
   };
 
 export const Handle = styled.div<HandleProps>`
-  background-color: ${({ theme }) => theme.toggle.handleBackground};
+  background: linear-gradient(90deg, #b8fffb 2.38%, #0936aa 100%);
+  /* background-color: ${({ theme }) => theme.toggle.handleBackground}; */
   border-radius: 50%;
   cursor: pointer;
   height: ${getScale("handleHeight")};
@@ -75,14 +76,20 @@ const StyledToggle = styled.div<StyleToggleProps>`
   align-items: center;
   background-color: ${({ theme, $checked, $checkedColor, $defaultColor }) =>
     theme.colors[$checked ? $checkedColor : $defaultColor]};
-  border-radius: 24px;
   box-shadow: ${({ theme }) => theme.shadows.inset};
+  border-radius: 24px;
   cursor: pointer;
   display: inline-flex;
   height: ${getScale("toggleHeight")};
   position: relative;
   transition: background-color 200ms;
   width: ${getScale("toggleWidth")};
+
+  ${({ $checked }) =>
+    $checked
+      ? `background: rgba(15, 137, 164, 0.2);
+  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25)`
+      : ``};
 `;
 
 export default StyledToggle;

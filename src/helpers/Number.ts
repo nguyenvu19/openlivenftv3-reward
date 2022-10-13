@@ -49,7 +49,18 @@ export const getFirstThreeNonZeroDecimals = (value) => value.toFixed(9).match(/^
  * @param isInteger - if true the values will contain decimal part only if the amount is > 1000
  * @returns formatted string ready to be displayed
  */
-export const formatAmount = (amount, options) => {
+export const formatAmount = (
+  amount,
+  options?: {
+    notation?: string
+    displayThreshold?: number
+    tokenPrecision?: boolean
+    isInteger?: boolean
+    roundUp?: boolean
+    decimals?: number
+    scale?: number
+  },
+) => {
   const {
     notation = 'compact',
     displayThreshold,

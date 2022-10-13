@@ -1,6 +1,6 @@
 import Container from 'components/Layout/Container'
 import { usePollCoreCampaignsData, useCampaigns } from 'state/campaigns/hooks'
-import { useOtherCurrencyList } from 'state/currency/hooks'
+import { useOtherCurrencyList } from 'state/otherCurrency/hooks'
 import MetricsSection from './components/MetricsSection'
 import OpenliveBanner from './components/Banners/OpenliveBanner'
 import CardHoldNft from './components/CardHoldNft'

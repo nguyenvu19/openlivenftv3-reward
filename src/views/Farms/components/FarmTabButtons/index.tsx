@@ -1,48 +1,43 @@
 import styled from 'styled-components'
-import { ButtonMenu, ButtonMenuItem, NotificationDot } from '@pancakeswap/uikit'
-import { useTranslation } from '@pancakeswap/localization'
-import { useRouter } from 'next/router'
-import { NextLinkFromReactRouter } from 'components/NextLink'
+import { NotificationDot } from '@pancakeswap/uikit'
 
 interface FarmTabButtonsProps {
-  hasStakeInFinishedFarms: boolean
+  value?: string
+  tabs: {
+    label: string
+    value: string
+    hasStakeInFinishedFarms?: boolean
+  }[]
+  onChange?: (p: any) => void
 }
 
-const FarmTabButtons: React.FC<React.PropsWithChildren<FarmTabButtonsProps>> = ({ hasStakeInFinishedFarms }) => {
-  const router = useRouter()
-  const { t } = useTranslation()
-
-  let activeIndex
-  switch (router.pathname) {
-    case '/farms':
-      activeIndex = 0
-      break
-    case '/farms/history':
-      activeIndex = 1
-      break
-    case '/_mp/farms/history':
-      activeIndex = 1
-      break
-    case '/farms/archived':
-      activeIndex = 2
-      break
-    default:
-      activeIndex = 0
-      break
-  }
-
+const FarmTabButtons: React.FC<React.PropsWithChildren<FarmTabButtonsProps>> = ({ value, tabs, onChange }) => {
   return (
     <Wrapper>
-      <ButtonMenu activeIndex={activeIndex} scale="sm" variant="subtle">
-        <ButtonMenuItem as={NextLinkFromReactRouter} to="/farms">
-          {t('Live')}
-        </ButtonMenuItem>
-        <NotificationDot show={hasStakeInFinishedFarms}>
-          <ButtonMenuItem as={NextLinkFromReactRouter} to="/farms/history" id="finished-farms-button">
-            {t('Finished')}
-          </ButtonMenuItem>
-        </NotificationDot>
-      </ButtonMenu>
+      {tabs.map((tab) => {
+        if (!tab.hasStakeInFinishedFarms) {
+          return (
+            <div
+              className={`btn-tab-farm btn-live ${tab.value === value && 'active'}`}
+              onClick={() => onChange && onChange(tab)}
+              role="presentation"
+            >
+              <div>{tab.label}</div>
+            </div>
+          )
+        }
+        return (
+          <NotificationDot show>
+            <div
+              className={`btn-tab-farm btn-finish ${tab.value === value && 'active'}`}
+              onClick={() => onChange && onChange(tab)}
+              role="presentation"
+            >
+              <div>{tab.label}</div>
+            </div>
+          </NotificationDot>
+        )
+      })}
     </Wrapper>
   )
 }
@@ -54,12 +49,37 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
 
-  a {
-    padding-left: 12px;
-    padding-right: 12px;
+  padding: 10px 20px;
+
+  background: #eefbff;
+  border: 1px solid rgba(67, 108, 255, 0.3);
+  border-radius: 16px;
+
+  .btn-tab-farm {
+    color: rgba(0, 0, 0, 0.2);
+    font-weight: bold;
+    text-align: center;
+
+    min-width: 100px;
+    padding: 12px;
+    cursor: pointer;
+
+    -webkit-transform: skew(30deg);
+    -moz-transform: skew(30deg);
+    -o-transform: skew(30deg);
+    transform: skew(30deg);
+
+    & > * {
+      -webkit-transform: skew(-30deg) !important;
+      -moz-transform: skew(-30deg) !important;
+      -o-transform: skew(-30deg) !important;
+      transform: skew(-30deg) !important;
+    }
   }
 
-  ${({ theme }) => theme.mediaQueries.sm} {
-    margin-left: 16px;
+  .btn-tab-farm.active {
+    color: ${({ theme }) => theme.colors.secondary};
+    background: #dcf2ff;
+    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.25);
   }
 `

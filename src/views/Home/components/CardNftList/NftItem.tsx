@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import CardNftWithInfo from 'components/Card/CardNftWithInfo'
 import { InvestPackageType } from 'state/invest/types'
 import { APP_USER_URL } from 'config'
-import { OtherCurrencyType } from 'state/currency/types'
+import { OtherCurrencyType } from 'state/otherCurrency/types'
 
 const WNftItem = styled.div``
 

@@ -28,7 +28,14 @@ const Stats = () => {
               OPV on Coinmarketcap
             </Text>
             <Flex alignItems="center" justifyContent="center">
-              <Text as="a" href="/" color="#347FF0" fontWeight="bold" textAlign="center">
+              <Text
+                as="a"
+                color="#347FF0"
+                fontWeight="bold"
+                textAlign="center"
+                href="https://coinmarketcap.com/vi/currencies/openlive-nft/"
+                target="_blank"
+              >
                 Via Coinmarketcap
               </Text>
               <Box width="16px" height="16px" ml="4px">
@@ -43,7 +50,14 @@ const Stats = () => {
               OPV on Mexc
             </Text>
             <Flex alignItems="center" justifyContent="center">
-              <Text as="a" color="#347FF0" fontWeight="bold" textAlign="center">
+              <Text
+                as="a"
+                href="https://www.mexc.com/exchange/OPV_USDT"
+                color="#347FF0"
+                fontWeight="bold"
+                textAlign="center"
+                target="_blank"
+              >
                 Via Mexc
               </Text>
               <Box width="16px" height="16px" ml="4px">
@@ -58,7 +72,7 @@ const Stats = () => {
               OPV on Pancake
             </Text>
             <Flex alignItems="center" justifyContent="center">
-              <Text as="a" color="#347FF0" fontWeight="bold" textAlign="center">
+              <Text as="a" href="" color="#347FF0" fontWeight="bold" textAlign="center" target="_blank">
                 Via Pancake
               </Text>
               <Box width="16px" height="16px" ml="4px">
