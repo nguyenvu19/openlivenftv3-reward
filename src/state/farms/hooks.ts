@@ -31,47 +31,6 @@ export function useFarmsLength() {
   })
 }
 
-export const usePollFarmsWithUserData = () => {
-  const dispatch = useAppDispatch()
-  const { account, chainId } = useActiveWeb3React()
-  const {
-    proxyAddress,
-    proxyCreated,
-    isLoading: isProxyContractLoading,
-  } = useBCakeProxyContractAddress(account, chainId)
-  const farmFlag = useFeatureFlag(featureFarmApiAtom)
-
-  useSWRImmutable(
-    chainId ? ['publicFarmData', chainId] : null,
-    async () => {
-      const farmsConfig = await getFarmConfig(chainId)
-      const pids = farmsConfig.map((farmToFetch) => farmToFetch.pid)
-      dispatch(fetchFarmsPublicDataAsync({ pids, chainId, flag: farmFlag }))
-    },
-    {
-      refreshInterval: farmFlag === 'api' ? 50 * 1000 : SLOW_INTERVAL,
-    },
-  )
-
-  const name = proxyCreated
-    ? ['farmsWithUserData', account, proxyAddress, chainId]
-    : ['farmsWithUserData', account, chainId]
-
-  useSWRImmutable(
-    account && chainId && !isProxyContractLoading ? name : null,
-    async () => {
-      const farmsConfig = await getFarmConfig(chainId)
-      const pids = farmsConfig.map((farmToFetch) => farmToFetch.pid)
-      const params = proxyCreated ? { account, pids, proxyAddress, chainId } : { account, pids, chainId }
-
-      dispatch(fetchFarmUserDataAsync(params))
-    },
-    {
-      refreshInterval: SLOW_INTERVAL,
-    },
-  )
-}
-
 /**
  * Fetches the "core" farm data used globally
  * 2 = CAKE-BNB LP

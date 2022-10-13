@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import Carousel from 'react-multi-carousel'
 import { useMatchBreakpoints } from '@pancakeswap/uikit'
 import { useInvestPackageList } from 'state/invest/hooks'
-import { useOtherCurrencyList } from 'state/currency/hooks'
+import { useOtherCurrencyList } from 'state/otherCurrency/hooks'
 import NftItem from './NftItem'
 
 const WCardNftList = styled.div`

@@ -1,16 +1,7 @@
-import { useRef, useMemo } from 'react'
-import { latinise } from 'utils/latinise'
 import styled from 'styled-components'
-import { RowType } from '@pancakeswap/uikit'
 import BigNumber from 'bignumber.js'
-import { getBalanceNumber } from 'utils/formatBalance'
-import { BIG_ZERO } from 'utils/bigNumber'
-import { useRouter } from 'next/router'
-import { getDisplayApr } from '../getDisplayApr'
-
-import Row, { RowProps } from './Row'
-import { DesktopColumnSchema, FarmWithStakedValue } from '../types'
-import ProxyFarmContainer from '../YieldBooster/components/ProxyFarmContainer'
+import Dots from 'components/Loader/Dots'
+import FarmItem from './FarmItem'
 
 export interface ITableProps {
   farms: FarmWithStakedValue[]
@@ -19,174 +10,138 @@ export interface ITableProps {
   sortColumn?: string
 }
 
-const Container = styled.div`
+const Container = styled.div<{ showBorder?: boolean }>`
   width: 100%;
-  background: ${({ theme }) => theme.card.background};
-  border-radius: 16px;
   margin: 16px 0px;
-  border: 1px solid ${({ theme }) => theme.colors.cardBorder};
+  background: ${({ theme }) => theme.card.background};
+  border: ${({ theme, showBorder }) => (showBorder ? `1px solid ${theme.colors.cardBorder}` : 'unset')};
+  border-radius: 16px;
 `
 
-const TableWrapper = styled.div`
-  overflow: visible;
-  scroll-margin-top: 64px;
+const CenterStyled = styled.div`
+  text-align: center;
 
-  &::-webkit-scrollbar {
-    display: none;
-  }
-`
-
-const StyledTable = styled.table`
-  border-collapse: collapse;
-  font-size: 14px;
-  border-radius: 4px;
-  margin-left: auto;
-  margin-right: auto;
   width: 100%;
-`
+  height: 100%;
+  min-height: 400px;
+  padding: 0 8px 40px;
 
-const TableBody = styled.tbody`
-  & tr {
-    td {
-      font-size: 16px;
-      vertical-align: middle;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+
+  z-index: 1;
+
+  .empty-text {
+    color: #5f440f91;
+    font-family: iCiel Cadena;
+    font-size: 5vw;
+    font-weight: 900;
+    white-space: nowrap;
+
+    ${({ theme }) => theme.mediaQueries.md} {
+      font-size: 3vw;
     }
   }
-`
 
-const TableContainer = styled.div`
-  position: relative;
+  button {
+    margin-top: 28px;
+    border-radius: 13px;
+  }
 `
 
 const FarmTable: React.FC<React.PropsWithChildren<ITableProps>> = ({ farms, cakePrice, userDataReady }) => {
-  const tableWrapperEl = useRef<HTMLDivElement>(null)
-  const { query } = useRouter()
+  const data: any = [
+    {
+      poolId: 2,
+      name: 'OPV-BNB LPs',
+      symbol1: 'OPV',
+      symbol2: 'BNB',
+      logo1: 'https://meta-config.ukadoge.com/userfiles/images/udoge.png',
+      logo2: 'https://meta-config.ukadoge.com/userfiles/images/bnb.png',
+      tokenAddress1: '0x698111b771363B81D1179AD102e3d8B9cD093a11',
+      tokenAddress2: '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c',
+      contract: '0x8e8f0A118A3aFbA9C1daC22A869A2D3D7f7F8Bd8',
+      lpToken: '0x64f659d8692d0355fac70c8f1da59d967b0fdb34',
+      startTime: 1656550800000,
+      endTime: 1666918800000,
+      poolEnded: false,
+      poolStatus: 'live',
+      dailyRewards: 10368000000,
+      userInfo: { amount: 0, rewardDebt: '0', tmpTotalUserDividendsAllPool: 0, userDividends: 0 },
+      poolInfo: {
+        accCakePerShare: '2636363227059622152',
+        allocPoint: 1244160000000,
+        startBlock: 1656550800000,
+        endBlock: 1666918800000,
+        lastRewardBlock: '1664976758',
+        lpToken: '0x64f659D8692d0355faC70c8F1DA59D967B0fdb34',
+        totalLpSupply: 171713.62512376718,
+        isLocked: true,
+      },
+    },
+    {
+      poolId: 3,
+      name: 'OPV-BNB LPs',
+      symbol1: 'OPV',
+      symbol2: 'BNB',
+      logo1: 'https://meta-config.ukadoge.com/userfiles/images/udoge.png',
+      logo2: 'https://meta-config.ukadoge.com/userfiles/images/bnb.png',
+      tokenAddress1: '0x698111b771363B81D1179AD102e3d8B9cD093a11',
+      tokenAddress2: '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c',
+      contract: '0x8e8f0A118A3aFbA9C1daC22A869A2D3D7f7F8Bd8',
+      lpToken: '0x64f659d8692d0355fac70c8f1da59d967b0fdb34',
+      startTime: 1659510000000,
+      endTime: 1691046000000,
+      poolEnded: false,
+      poolStatus: 'live',
+      dailyRewards: 10368000000,
+      userInfo: { amount: 0, rewardDebt: '0', tmpTotalUserDividendsAllPool: 0, userDividends: 0 },
+      poolInfo: {
+        accCakePerShare: '4597104524929008975',
+        allocPoint: 3784320000000,
+        startBlock: 1659510000000,
+        endBlock: 1691046000000,
+        lastRewardBlock: '1665508143',
+        lpToken: '0x64f659D8692d0355faC70c8F1DA59D967B0fdb34',
+        totalLpSupply: 182623.12509073922,
+        isLocked: true,
+      },
+    },
+  ]
 
-  const columns = useMemo(
-    () =>
-      DesktopColumnSchema.map((column) => ({
-        id: column.id,
-        name: column.name,
-        label: column.label,
-        sort: (a: RowType<RowProps>, b: RowType<RowProps>) => {
-          switch (column.name) {
-            case 'farm':
-              return b.id - a.id
-            case 'apr':
-              if (a.original.apr.value && b.original.apr.value) {
-                return Number(a.original.apr.value) - Number(b.original.apr.value)
-              }
-
-              return 0
-            case 'earned':
-              return a.original.earned.earnings - b.original.earned.earnings
-            default:
-              return 1
-          }
-        },
-        sortable: column.sortable,
-      })),
-    [],
-  )
-
-  const getFarmEarnings = (farm) => {
-    let earnings = BIG_ZERO
-    const existingEarnings = new BigNumber(farm.userData.earnings)
-
-    if (farm.boosted) {
-      const proxyEarnings = new BigNumber(farm.userData?.proxy?.earnings)
-
-      earnings = proxyEarnings.gt(0) ? proxyEarnings : existingEarnings
-    } else {
-      earnings = existingEarnings
-    }
-
-    return getBalanceNumber(earnings)
+  const infoTokenLPs = {
+    balance: 0,
+    symbol: 'Cake-LP',
+    name: 'Pancake LPs',
+    decimals: '18',
+    address: '0x64f659D8692d0355faC70c8F1DA59D967B0fdb34',
   }
-
-  const generateRow = (farm) => {
-    const { token, quoteToken } = farm
-    const tokenAddress = token.address
-    const quoteTokenAddress = quoteToken.address
-    const lpLabel = farm.lpSymbol && farm.lpSymbol.split(' ')[0].toUpperCase().replace('PANCAKE', '')
-    const lowercaseQuery = latinise(typeof query?.search === 'string' ? query.search.toLowerCase() : '')
-    const initialActivity = latinise(lpLabel?.toLowerCase()) === lowercaseQuery
-    const row: RowProps = {
-      apr: {
-        value: getDisplayApr(farm.apr, farm.lpRewardsApr),
-        pid: farm.pid,
-        multiplier: farm.multiplier,
-        lpLabel,
-        lpSymbol: farm.lpSymbol,
-        lpTokenPrice: farm.lpTokenPrice,
-        tokenAddress,
-        quoteTokenAddress,
-        cakePrice,
-        lpRewardsApr: farm.lpRewardsApr,
-        originalValue: farm.apr,
-      },
-      farm: {
-        label: lpLabel,
-        pid: farm.pid,
-        token: farm.token,
-        quoteToken: farm.quoteToken,
-        isReady: farm.multiplier !== undefined,
-        isStable: farm.isStable,
-      },
-      earned: {
-        earnings: getFarmEarnings(farm),
-        pid: farm.pid,
-      },
-      liquidity: {
-        liquidity: farm?.liquidity,
-      },
-      multiplier: {
-        multiplier: farm.multiplier,
-      },
-      type: farm.isCommunity ? 'community' : 'core',
-      details: farm,
-      initialActivity,
-    }
-
-    return row
-  }
-
-  const rowData = farms.map((farm) => generateRow(farm))
-
-  const generateSortedRow = (row) => {
-    // @ts-ignore
-    const newRow: RowProps = {}
-    columns.forEach((column) => {
-      if (!(column.name in row)) {
-        throw new Error(`Invalid row data, ${column.name} not found`)
-      }
-      newRow[column.name] = row[column.name]
-    })
-    newRow.initialActivity = row.initialActivity
-    return newRow
-  }
-
-  const sortedRows = rowData.map(generateSortedRow)
-
+  const priceToken = 1.4690381679507757e-9
+  const priceTokenLPs = 0.0013243180860025663
   return (
-    <Container id="farms-table">
-      <TableContainer id="table-container">
-        <TableWrapper ref={tableWrapperEl}>
-          <StyledTable>
-            <TableBody>
-              {sortedRows.map((row) => {
-                return row?.details?.boosted ? (
-                  <ProxyFarmContainer key={`table-row-${row.farm.pid}`} farm={row.details}>
-                    <Row {...row} userDataReady={userDataReady} />
-                  </ProxyFarmContainer>
-                ) : (
-                  <Row {...row} userDataReady={userDataReady} key={`table-row-${row.farm.pid}`} />
-                )
-              })}
-            </TableBody>
-          </StyledTable>
-        </TableWrapper>
-      </TableContainer>
+    <Container showBorder={data.length <= 0}>
+      {data ? (
+        data.length > 0 ? (
+          data.map((item) => (
+            <FarmItem
+              key={item.poolId}
+              filterBy={{}}
+              infoPool={item}
+              infoTokenLPs={infoTokenLPs}
+              priceToken={priceToken}
+              priceTokenLPs={priceTokenLPs}
+            />
+          ))
+        ) : (
+          <CenterStyled>No Data</CenterStyled>
+        )
+      ) : (
+        <CenterStyled>
+          <Dots>loading</Dots>
+        </CenterStyled>
+      )}
     </Container>
   )
 }

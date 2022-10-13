@@ -8,7 +8,7 @@ import { setOtherCurrencyList } from './actions'
 import { OtherCurrencyType } from './types'
 
 export const useSelectorOtherCurrencyList = (): OtherCurrencyType[] | null | undefined => {
-  return useSelector((state: AppState) => state.currency.otherCurrencyList)
+  return useSelector((state: AppState) => state.otherCurrency.otherCurrencyList)
 }
 
 interface ResponseOtherCurrencyList extends ResponseApiType {

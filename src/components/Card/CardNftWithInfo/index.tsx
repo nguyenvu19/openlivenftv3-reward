@@ -5,7 +5,7 @@ import MediaCard from 'components/MediaCard'
 import { InvestPackageType } from 'state/invest/types'
 import styled from 'styled-components'
 import { isNumber, roundNumber } from 'helpers'
-import { OtherCurrencyType } from 'state/currency/types'
+import { OtherCurrencyType } from 'state/otherCurrency/types'
 
 const WCardNftWithInfo = styled.div`
   display: block;
