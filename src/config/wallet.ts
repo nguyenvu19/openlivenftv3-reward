@@ -31,7 +31,7 @@ export const wallets: WalletConfig<ConnectorNames>[] = [
     installed: typeof window !== 'undefined' && Boolean(window.ethereum?.isMetaMask),
     connectorId: ConnectorNames.MetaMask,
     priority: 1,
-    href: `https://metamask.app.link/dapp/${APP_URL.slice(8)}/`,
+    href: `https://metamask.app.link/dapp/${APP_URL ? APP_URL.slice(8) : ''}/`,
   },
   // {
   //   title: 'Binance Wallet',
