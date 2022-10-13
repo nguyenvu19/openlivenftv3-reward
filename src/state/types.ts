@@ -14,6 +14,7 @@ import {
   Team,
   TranslatableText,
 } from 'config/constants/types'
+import { CampaignsItem } from './campaigns/types'
 
 export enum GAS_PRICE {
   default = '5',
@@ -262,6 +263,14 @@ export interface PoolsState {
   cakeVault: SerializedLockedCakeVault
   cakeFlexibleSideVault: SerializedCakeVault
   userDataLoaded: boolean
+}
+
+export interface CampaignsState {
+  data: CampaignsItem[]
+}
+
+export interface InvestState {
+  list: any
 }
 
 export type TeamsById = {
@@ -698,11 +707,12 @@ export interface PotteryWithdrawAbleData {
 }
 
 // Global state
-
 export interface State {
   farms: SerializedFarmsState
   farmsV1: SerializedFarmsState
   pools: PoolsState
+  campaigns: CampaignsState
+  invest: InvestState
   predictions: PredictionsState
   lottery: LotteryState
   pottery: PotteryState

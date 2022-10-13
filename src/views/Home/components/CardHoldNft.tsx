@@ -1,6 +1,9 @@
 import { useMemo } from 'react'
-import { Box, Flex, Image, Text } from '@pancakeswap/uikit'
+import { useRouter } from 'next/router'
+import { Box, Flex, Image, Skeleton, Text } from '@pancakeswap/uikit'
+import CurrencyFormat from 'react-currency-format'
 import styled from 'styled-components'
+import useCountTime, { STEEP_COUNT } from 'hooks/useCountTime'
 import ImgDecoration01 from '../images/decoration01.png'
 import ImgDecoration02 from '../images/decoration02.png'
 
@@ -114,14 +117,23 @@ const WCountDown = styled.div`
   display: flex;
   align-items: center;
 `
-const CardHoldNft = () => {
+const CardHoldNft = ({ campaignNew }) => {
+  const router = useRouter()
+  const { weekdays, days, hours, minutes, seconds, step } = useCountTime(campaignNew?.start, campaignNew?.finish)
+
   const renderCountdownCard = useMemo(() => {
     return (
       <WCountDown>
         <Flex alignItems="center">
-          <Box background="#529BF0" borderRadius="10px" padding="2px 8px">
+          <Box
+            background="#529BF0"
+            borderRadius="10px"
+            padding="2px 8px"
+            minWidth={['10px', , '40px']}
+            style={{ textAlign: 'center' }}
+          >
             <Text color="#fff" fontSize={[10, , 24]} fontWeight={700}>
-              10
+              {weekdays * 7 + days}
             </Text>
           </Box>
           <Text fontSize={[10, , 13]} ml="3px">
@@ -129,9 +141,15 @@ const CardHoldNft = () => {
           </Text>
         </Flex>
         <Flex ml="4px" alignItems="center">
-          <Box background="#529BF0" borderRadius="10px" padding="2px 8px">
+          <Box
+            background="#529BF0"
+            borderRadius="10px"
+            padding="2px 8px"
+            minWidth={['10px', , '40px']}
+            style={{ textAlign: 'center' }}
+          >
             <Text color="#fff" fontSize={[10, , 24]} fontWeight={700}>
-              12
+              {hours}
             </Text>
           </Box>
           <Text fontSize={[10, , 13]} ml="3px">
@@ -139,9 +157,15 @@ const CardHoldNft = () => {
           </Text>
         </Flex>
         <Flex ml="4px" alignItems="center">
-          <Box background="#529BF0" borderRadius="10px" padding="2px 8px">
+          <Box
+            background="#529BF0"
+            borderRadius="10px"
+            padding="2px 8px"
+            minWidth={['10px', , '40px']}
+            style={{ textAlign: 'center' }}
+          >
             <Text color="#fff" fontSize={[10, , 24]} fontWeight={700}>
-              16
+              {minutes}
             </Text>
           </Box>
           <Text fontSize={[10, , 13]} ml="3px">
@@ -149,9 +173,15 @@ const CardHoldNft = () => {
           </Text>
         </Flex>
         <Flex ml="4px" alignItems="center">
-          <Box background="#529BF0" borderRadius="10px" padding="2px 8px">
+          <Box
+            background="#529BF0"
+            borderRadius="10px"
+            padding="2px 8px"
+            minWidth={['10px', , '40px']}
+            style={{ textAlign: 'center' }}
+          >
             <Text color="#fff" fontSize={[10, , 24]} fontWeight={700}>
-              22
+              {seconds}
             </Text>
           </Box>
           <Text fontSize={[10, , 13]} ml="3px">
@@ -160,9 +190,17 @@ const CardHoldNft = () => {
         </Flex>
       </WCountDown>
     )
-  }, [])
+  }, [weekdays, days, hours, minutes, seconds])
+
+  if (!campaignNew) {
+    return (
+      <WCardHoldNft style={{ cursor: 'not-allowed' }}>
+        <Skeleton height={['160px', , '230px']} />
+      </WCardHoldNft>
+    )
+  }
   return (
-    <WCardHoldNft>
+    <WCardHoldNft style={{ cursor: 'pointer' }} onClick={() => router.push('/campaigns')}>
       <img className="condition-left" src={ImgDecoration01.src} alt="" />
       <img className="condition-right" src={ImgDecoration02.src} alt="" />
       <div className="card-hold-nft-header">
@@ -176,7 +214,17 @@ const CardHoldNft = () => {
           </Text>
           <Flex alignItems="center">
             <Text fontSize={[16, , 24]} fontWeight={700}>
-              100,000
+              {campaignNew !== undefined ? (
+                <CurrencyFormat
+                  value={campaignNew?.totalPool}
+                  displayType="text"
+                  thousandSeparator
+                  suffix={` USDT`}
+                  renderText={(t) => t}
+                />
+              ) : (
+                '--'
+              )}
             </Text>
             <Box width="20px" ml="6px">
               <Image width={30} height={30} src="/images2/opvIcon.png" />
@@ -188,12 +236,16 @@ const CardHoldNft = () => {
             Durations:
           </Text>
           <Text fontSize={[16, , 24]} fontWeight={700}>
-            90 Days
+            {`${campaignNew ? campaignNew.duration : '--'} Days`}
           </Text>
         </Flex>
         <Flex justifyContent="space-between" flexWrap="wrap">
           <Text fontSize={[16, , 24]} fontWeight={500}>
-            Start:
+            {(() => {
+              if (step === STEEP_COUNT.SOON) return 'Start in:'
+              if (step === STEEP_COUNT.START) return 'End in:'
+              return 'Ended:'
+            })()}
           </Text>
           <Flex>{renderCountdownCard}</Flex>
         </Flex>

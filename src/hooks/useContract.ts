@@ -13,7 +13,7 @@ import zapAbi from 'config/abi/zap.json'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useProviderOrSigner } from 'hooks/useProviderOrSigner'
 import { useMemo } from 'react'
-import { getMulticallAddress, getPredictionsV1Address, getZapAddress } from 'utils/addressHelpers'
+import { getMulticallAddress, getPredictionsV1Address, getZapAddress, getCampaignsAddress } from 'utils/addressHelpers'
 import {
   getAnniversaryAchievementContract,
   getBCakeFarmBoosterContract,
@@ -63,6 +63,7 @@ import { useSigner } from 'wagmi'
 // Imports below migrated from Exchange useContract.ts
 import { Contract } from '@ethersproject/contracts'
 import { WNATIVE } from '@pancakeswap/sdk'
+import campaignsAbi from 'config/abi/campaignAbi.json'
 import { ERC20_BYTES32_ABI } from '../config/abi/erc20'
 import ERC20_ABI from '../config/abi/erc20.json'
 import IPancakePairABI from '../config/abi/IPancakePair.json'
@@ -363,4 +364,9 @@ export function useBCakeProxyContract(proxyContractAddress: string, withSignerIf
     () => proxyContractAddress && getBCakeProxyContract(proxyContractAddress, providerOrSigner),
     [providerOrSigner, proxyContractAddress],
   )
+}
+
+// new
+export function useContractCampaigns(withSignerIfPossible = true) {
+  return useContract(getCampaignsAddress(), campaignsAbi, withSignerIfPossible)
 }

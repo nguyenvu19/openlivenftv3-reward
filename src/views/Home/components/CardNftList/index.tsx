@@ -1,6 +1,8 @@
 import styled from 'styled-components'
 import Carousel from 'react-multi-carousel'
 import { useMatchBreakpoints } from '@pancakeswap/uikit'
+import { useInvestPackageList } from 'state/invest/hooks'
+import { useOtherCurrencyList } from 'state/currency/hooks'
 import NftItem from './NftItem'
 
 const WCardNftList = styled.div`
@@ -49,6 +51,10 @@ const WCardNftList = styled.div`
 
 const CardNftList = () => {
   const { isMobile, isMd } = useMatchBreakpoints()
+
+  const { investList } = useInvestPackageList(1, 100)
+  const { otherCurrencyList } = useOtherCurrencyList(1, 100)
+
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 1000 },
@@ -77,9 +83,11 @@ const CardNftList = () => {
         renderDotsOutside
         partialVisible={isMobile || isMd}
       >
-        {[1, 2, 3, 4, 5].map((item) => (
-          <NftItem key={item} />
-        ))}
+        {investList?.rows
+          ? investList.rows.map((item) => (
+              <NftItem key={item._id} packageInvestItem={item} otherCurrencyList={otherCurrencyList} />
+            ))
+          : [1, 2, 3].map((i) => <NftItem key={i} />)}
       </Carousel>
     </WCardNftList>
   )
