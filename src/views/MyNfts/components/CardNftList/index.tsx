@@ -3,9 +3,10 @@ import CardNftWithID from 'components/Card/CardNftWithID'
 
 const WCardMyNftList = styled.div`
   display: flex;
-  flex-flow: row wrap;
   row-gap: 24px;
   margin: 0 -6px;
+  flex-flow: row wrap;
+  padding-bottom: 100px;
 `
 const WCardNftItem = styled.div`
   width: 100%;
