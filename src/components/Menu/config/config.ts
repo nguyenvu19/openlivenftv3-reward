@@ -59,28 +59,6 @@ const config: (
         icon: LiquidityIcon,
         href: '/liquidity',
       },
-      // {
-      //   label: t('Limit'),
-      //   icon: SwapIcon,
-      //   href: '/limit-orders',
-      //   supportChainIds: SUPPORT_ONLY_BSC,
-      //   image: '/images/decorations/3d-coin.png',
-      // },
-      // {
-      //   label: t('Perpetual'),
-      //   icon: SwapIcon,
-      //   href: `https://perp.pancakeswap.finance/${perpLangMap(languageCode)}/futures/BTCUSDT?theme=${perpTheme(
-      //     isDark,
-      //   )}`,
-      //   supportChainIds: SUPPORT_ONLY_BSC,
-      //   type: DropdownMenuItemType.EXTERNAL_LINK,
-      // },
-      // {
-      //   label: t('Bridge'),
-      //   icon: SwapIcon,
-      //   href: 'https://bridge.pancakeswap.finance/',
-      //   type: DropdownMenuItemType.EXTERNAL_LINK,
-      // },
     ],
   },
   {

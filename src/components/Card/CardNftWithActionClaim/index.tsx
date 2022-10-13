@@ -31,7 +31,7 @@ const CardNftWithActionClaim = () => {
   return (
     <WCardNftWithActionClaim>
       <div className="card-nft-cover">
-        <MediaCard fileUrl="abc.mp4" />
+        <MediaCard fileUrl="https://s3.ap-southeast-1.amazonaws.com/openlivenft/investPackage/TOPAZ.mp4" />
       </div>
       <div className="card-nft-body">
         <Text fontSize={[20]} fontWeight="bold" mb="14px">

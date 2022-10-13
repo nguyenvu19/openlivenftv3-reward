@@ -140,7 +140,7 @@ const CardNftVertical = (props) => {
   return (
     <WCardNftVertical {...props}>
       <div className="card-nft-cover-left">
-        <MediaCard fileUrl="abc.mp4" />
+        <MediaCard fileUrl="https://s3.ap-southeast-1.amazonaws.com/openlivenft/investPackage/TOPAZ.mp4" />
       </div>
       <Box>
         <CardSubHeading>
