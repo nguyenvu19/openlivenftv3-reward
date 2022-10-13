@@ -56,7 +56,7 @@ const CardNftDetailVertical = (props) => {
     <WCardNftVertical {...props}>
       <div className="card-nft-vertical-content">
         <div className="card-nft-cover-left">
-          <MediaCard fileUrl="abc.mp4" />
+          <MediaCard fileUrl="https://s3.ap-southeast-1.amazonaws.com/openlivenft/investPackage/HEMATITE.mp4" />
         </div>
         <Box>
           <CardSubHeading>

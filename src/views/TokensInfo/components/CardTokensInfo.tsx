@@ -1,0 +1,212 @@
+import { useMemo } from 'react'
+import { Box, Flex, Grid, Image, Text } from '@pancakeswap/uikit'
+import MediaCard from 'components/MediaCard'
+import styled from 'styled-components'
+
+const WTokensInfo = styled.div`
+  width: 100%;
+  padding: 24px;
+  background: #eefbff;
+  border: 1px solid rgba(67, 108, 255, 0.3);
+  border-radius: 24px;
+  cursor: pointer;
+
+  display: flex;
+  flex-flow: row wrap;
+  gap: 20px;
+  ${({ theme }) => theme.mediaQueries.sm} {
+    gap: 60px;
+  }
+  .card-nft-cover-left {
+    width: 100%;
+    max-width: 100%;
+
+    ${({ theme }) => theme.mediaQueries.sm} {
+      max-width: 240px;
+    }
+  }
+
+  .card-hold-nft-body {
+    display: flex;
+    flex-direction: column;
+    row-gap: 6px;
+    ${({ theme }) => theme.mediaQueries.sm} {
+      row-gap: 16px;
+    }
+  }
+`
+const CardSubHeading = styled.div`
+  width: fit-content;
+  position: relative;
+  .tag-name {
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 140%;
+    min-width: 60px;
+    text-align: center;
+    padding: 1px 5px;
+    margin-bottom: 20px;
+    position: absolute;
+    top: 0px;
+    left: 116%;
+    border-radius: 5px;
+
+    &:before {
+      content: '';
+      position: absolute;
+      left: -10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 10px;
+      height: 10px;
+      border-width: 6px;
+      border-style: solid;
+    }
+
+    &.upcoming {
+      color: #fff;
+      background: #ffaf51;
+      &:before {
+        border-color: transparent #ffaf51 transparent transparent;
+      }
+    }
+    &.live {
+      color: #fff;
+      background: #008d0e;
+      &:before {
+        border-color: transparent #008d0e transparent transparent;
+      }
+    }
+    &.finish {
+      color: #fff;
+      background: #d71515;
+      &:before {
+        border-color: transparent #d71515 transparent transparent;
+      }
+    }
+  }
+`
+const WCountDown = styled.div`
+  display: flex;
+  align-items: center;
+`
+
+const CardTokensInfo = (props) => {
+  const renderCountdownCard = useMemo(() => {
+    return (
+      <WCountDown>
+        <Flex alignItems="center">
+          <Box background="#529BF0" borderRadius="10px" padding="2px 8px">
+            <Text color="#fff" fontSize={[10, , 24]} bold>
+              10
+            </Text>
+          </Box>
+          <Text fontSize={[10, , 13]} ml="3px">
+            Days
+          </Text>
+        </Flex>
+        <Flex ml="4px" alignItems="center">
+          <Box background="#529BF0" borderRadius="10px" padding="2px 8px">
+            <Text color="#fff" fontSize={[10, , 24]} bold>
+              12
+            </Text>
+          </Box>
+          <Text fontSize={[10, , 13]} ml="3px">
+            Hours
+          </Text>
+        </Flex>
+        <Flex ml="4px" alignItems="center">
+          <Box background="#529BF0" borderRadius="10px" padding="2px 8px">
+            <Text color="#fff" fontSize={[10, , 24]} bold>
+              16
+            </Text>
+          </Box>
+          <Text fontSize={[10, , 13]} ml="3px">
+            Minutes
+          </Text>
+        </Flex>
+        <Flex ml="4px" alignItems="center">
+          <Box background="#529BF0" borderRadius="10px" padding="2px 8px">
+            <Text color="#fff" fontSize={[10, , 24]} bold>
+              22
+            </Text>
+          </Box>
+          <Text fontSize={[10, , 13]} ml="3px">
+            Second
+          </Text>
+        </Flex>
+      </WCountDown>
+    )
+  }, [])
+  return (
+    <WTokensInfo {...props}>
+      <Box>
+        <Flex alignItems="center">
+          <Box width="31px" mr="16px">
+            <Image width={30} height={30} src="/images2/opvIcon.png" />
+          </Box>
+          <Text color="#007CA1" fontWeight="700" fontSize="24px" mb="0">
+            OpenLive NFT
+          </Text>
+          <Text color="#000000" fontSize={[13, , 16]} mb="10px">
+            OPV
+          </Text>
+          <Flex
+            alignItems="center"
+            width="90px"
+            height="32px"
+            ml="16px"
+            background="#fff"
+            border="1px solid #EDF0F3"
+            padding="6px 8px"
+            borderRadius="8px"
+          >
+            <Image width={20} height={20} src="/images2/opvIcon.png" mr="16px" />
+            <Text fontSize={[13, , 16]} color="#000000">
+              Share
+            </Text>
+          </Flex>
+        </Flex>
+
+        <div className="card-hold-nft-body">
+          <Grid gridTemplateColumns={['1fr 1fr', , '1fr 2fr']}>
+            <Text fontSize={[13, , 16]}>Total Reward:</Text>
+            <Flex alignItems="center">
+              <Text fontSize={[13, , 16]} bold>
+                100,000
+              </Text>
+              <Box width="20px" ml="6px">
+                <Image width={30} height={30} src="/images2/opvIcon.png" />
+              </Box>
+            </Flex>
+          </Grid>
+          <Grid gridTemplateColumns={['1fr 1fr', , '1fr 2fr']}>
+            <Text fontSize={[13, , 16]}>Total Claimed:</Text>
+            <Text fontSize={[13, , 16]} bold>
+              0 OPV
+            </Text>
+          </Grid>
+          <Grid gridTemplateColumns={['1fr 1fr', , '1fr 2fr']}>
+            <Text fontSize={[13, , 16]}>Durations:</Text>
+            <Text fontSize={[13, , 16]} bold>
+              90 Days
+            </Text>
+          </Grid>
+          <Grid gridTemplateColumns={['1fr 1fr', , '1fr 2fr']}>
+            <Text fontSize={[13, , 16]}>Start:</Text>
+            <Text fontSize={[13, , 16]} bold>
+              Sep 30 2022
+            </Text>
+          </Grid>
+
+          <Grid gridTemplateColumns={['1fr', '1fr 2fr']} gridTemplateRows="26px">
+            <Text fontSize={[13, , 16]}>Status:</Text>
+            <Flex>{renderCountdownCard}</Flex>
+          </Grid>
+        </div>
+      </Box>
+    </WTokensInfo>
+  )
+}
+
+export default CardTokensInfo
