@@ -17,17 +17,6 @@ const WFooter = styled.div`
 
     li {
       padding: 20px;
-
-      a {
-        color: #069fc2;
-        font-weight: 600;
-        font-size: 16px;
-        line-height: 24px;
-
-        &:hover {
-          color: #000;
-        }
-      }
     }
   }
 `;
