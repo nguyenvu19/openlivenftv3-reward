@@ -124,13 +124,13 @@ const config = {
         permanent: true,
       },
       {
-        source: '/staking',
-        destination: '/pools',
+        source: '/pools',
+        destination: '/staking',
         permanent: true,
       },
       {
         source: '/syrup',
-        destination: '/pools',
+        destination: '/staking',
         permanent: true,
       },
       {

@@ -14,6 +14,7 @@ const WCardNftWithInfo = styled.div`
   box-shadow: 8px 10px 4px rgba(0, 0, 0, 0.25);
   border-radius: 20px;
   overflow: hidden;
+  position: relative;
 
   .card-nft-cover {
     max-width: 100%;
