@@ -1,6 +1,10 @@
-import { Button, Flex, Text } from '@pancakeswap/uikit'
+import { useState } from 'react'
+import CurrencyFormat from 'react-currency-format'
+import { Button, Flex, Skeleton, Text } from '@pancakeswap/uikit'
 import { FlexGap } from 'components/Layout/Flex'
 import MediaCard from 'components/MediaCard'
+import { CampaignItem } from 'state/campaigns/types'
+import { NftType } from 'state/nfts/types'
 import styled from 'styled-components'
 
 const WCardNftWithActionClaim = styled.div`
@@ -27,7 +31,28 @@ const WCardNftWithActionClaim = styled.div`
   }
 `
 
-const CardNftWithActionClaim = () => {
+const CardNftWithActionClaim: React.FC<{
+  campaign?: CampaignItem
+  nftItem?: NftType
+  onClaim?: (item: any, cb: () => void) => void
+}> = ({ campaign, nftItem, onClaim }) => {
+  const [loading, setLoading] = useState(false)
+  const handleClaimNow = () => {
+    if (campaign && nftItem) {
+      setLoading(true)
+      onClaim({ nftItem, campaign }, () => {
+        setLoading(false)
+      })
+    }
+  }
+
+  if (!nftItem) {
+    return (
+      <WCardNftWithActionClaim>
+        <Skeleton height={450} />
+      </WCardNftWithActionClaim>
+    )
+  }
   return (
     <WCardNftWithActionClaim>
       <div className="card-nft-cover">
@@ -35,29 +60,67 @@ const CardNftWithActionClaim = () => {
       </div>
       <div className="card-nft-body">
         <Text fontSize={[20]} fontWeight="bold" mb="14px">
-          NFT By: ID
+          NFT By: {nftItem ? nftItem.token_id : <Skeleton height="14px" width="80px" />}
         </Text>
         <FlexGap flexDirection="column" rowGap="10px">
           <Flex justifyContent="space-between">
             <Text>Total Reward By:</Text>
-            <Text fontWeight="bold">NFT ID</Text>
+            <Text fontWeight="bold">
+              {campaign ? (
+                <CurrencyFormat
+                  value={campaign.totalPool}
+                  displayType="text"
+                  thousandSeparator
+                  suffix={` OPV`}
+                  renderText={(t) => t}
+                />
+              ) : (
+                <Skeleton height="14px" width="80px" />
+              )}
+            </Text>
           </Flex>
           <Flex justifyContent="space-between">
             <Text>Total Claimed:</Text>
-            <Text fontWeight="bold">500 OPV</Text>
+            <Text fontWeight="bold">
+              {campaign ? (
+                <CurrencyFormat
+                  value={campaign.currentPool}
+                  displayType="text"
+                  thousandSeparator
+                  suffix={` OPV`}
+                  renderText={(t) => t}
+                />
+              ) : (
+                <Skeleton height="14px" width="80px" />
+              )}
+            </Text>
           </Flex>
           <Flex justifyContent="space-between">
             <Text>Avaible Claim:</Text>
-            <Text fontWeight="bold">(auto by seccond)</Text>
+            <Text fontWeight="bold">
+              {campaign ? (
+                <CurrencyFormat
+                  value={campaign.totalPool - campaign.currentPool}
+                  displayType="text"
+                  thousandSeparator
+                  suffix={` OPV`}
+                  renderText={(t) => t}
+                />
+              ) : (
+                <Skeleton height="14px" width="80px" />
+              )}
+            </Text>
           </Flex>
         </FlexGap>
       </div>
       <div className="card-nft-footer">
         <Flex justifyContent="center">
-          <Button scale="sm">CLAIM NOW</Button>
-          <Button scale="sm" disabled>
-            CLAIMED
+          <Button scale="sm" isLoading={loading} onClick={handleClaimNow}>
+            CLAIM NOW
           </Button>
+          {/* <Button scale="sm" disabled>
+            CLAIMED
+          </Button> */}
         </Flex>
       </div>
     </WCardNftWithActionClaim>

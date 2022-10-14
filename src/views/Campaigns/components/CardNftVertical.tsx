@@ -1,7 +1,11 @@
 import { useMemo } from 'react'
+import CurrencyFormat from 'react-currency-format'
 import { Box, Flex, Grid, Image, Text } from '@pancakeswap/uikit'
 import MediaCard from 'components/MediaCard'
 import styled from 'styled-components'
+import { CampaignItem, CAMPAIGN_STATUS } from 'state/campaigns/types'
+import { formatDate } from 'helpers'
+import useCountTime, { STEEP_COUNT } from 'hooks/useCountTime'
 
 const WCardNftVertical = styled.div`
   width: 100%;
@@ -90,14 +94,22 @@ const WCountDown = styled.div`
   display: flex;
   align-items: center;
 `
-const CardNftVertical = (props) => {
+
+interface Props {
+  campaign: CampaignItem
+  onClickCampaign?: (campaign: CampaignItem) => void
+  [t: string]: any
+}
+const CardNftVertical: React.FC<Props> = ({ campaign, onClickCampaign, ...props }) => {
+  const { weekdays, days, hours, minutes, seconds, step } = useCountTime(campaign?.start, campaign.finish)
+
   const renderCountdownCard = useMemo(() => {
     return (
-      <WCountDown>
+      <WCountDown onClick={() => onClick && onClick(campaign)}>
         <Flex alignItems="center">
           <Box background="#529BF0" borderRadius="10px" padding="2px 8px">
             <Text color="#fff" fontSize={[10, , 24]} bold>
-              10
+              {weekdays * 7 + days}
             </Text>
           </Box>
           <Text fontSize={[10, , 13]} ml="3px">
@@ -107,7 +119,7 @@ const CardNftVertical = (props) => {
         <Flex ml="4px" alignItems="center">
           <Box background="#529BF0" borderRadius="10px" padding="2px 8px">
             <Text color="#fff" fontSize={[10, , 24]} bold>
-              12
+              {hours}
             </Text>
           </Box>
           <Text fontSize={[10, , 13]} ml="3px">
@@ -117,7 +129,7 @@ const CardNftVertical = (props) => {
         <Flex ml="4px" alignItems="center">
           <Box background="#529BF0" borderRadius="10px" padding="2px 8px">
             <Text color="#fff" fontSize={[10, , 24]} bold>
-              16
+              {minutes}
             </Text>
           </Box>
           <Text fontSize={[10, , 13]} ml="3px">
@@ -127,7 +139,7 @@ const CardNftVertical = (props) => {
         <Flex ml="4px" alignItems="center">
           <Box background="#529BF0" borderRadius="10px" padding="2px 8px">
             <Text color="#fff" fontSize={[10, , 24]} bold>
-              22
+              {seconds}
             </Text>
           </Box>
           <Text fontSize={[10, , 13]} ml="3px">
@@ -136,9 +148,16 @@ const CardNftVertical = (props) => {
         </Flex>
       </WCountDown>
     )
-  }, [])
+  }, [weekdays, days, hours, minutes, seconds, campaign])
+
+  if (!campaign) return <></>
   return (
-    <WCardNftVertical {...props}>
+    <WCardNftVertical
+      onClick={() => {
+        if (onClickCampaign) onClickCampaign(campaign)
+      }}
+      {...props}
+    >
       <div className="card-nft-cover-left">
         <MediaCard fileUrl="https://s3.ap-southeast-1.amazonaws.com/openlivenft/investPackage/TOPAZ.mp4" />
       </div>
@@ -147,9 +166,11 @@ const CardNftVertical = (props) => {
           <Text color="primary" fontWeight="700" fontSize="24px" mb="10px">
             HOLD NFT
           </Text>
-          {/* <span className="tag-name upcoming">Upcoming</span> */}
-          <span className="tag-name live">Live</span>
-          {/* <span className="tag-name finish">Finish</span> */}
+          {(() => {
+            if (campaign.status === CAMPAIGN_STATUS.END) return <span className="tag-name finish">Finish</span>
+            if (campaign.status === CAMPAIGN_STATUS.LIVE) return <span className="tag-name live">Live</span>
+            return <span className="tag-name upcoming">Upcoming</span>
+          })()}
         </CardSubHeading>
 
         <div className="card-hold-nft-body">
@@ -157,7 +178,13 @@ const CardNftVertical = (props) => {
             <Text fontSize={[13, , 16]}>Total Reward:</Text>
             <Flex alignItems="center">
               <Text fontSize={[13, , 16]} bold>
-                100,000
+                <CurrencyFormat
+                  value={campaign.totalPool}
+                  displayType="text"
+                  thousandSeparator
+                  suffix={` OPV`}
+                  renderText={(t) => t}
+                />
               </Text>
               <Box width="20px" ml="6px">
                 <Image width={30} height={30} src="/images2/opvIcon.png" />
@@ -167,24 +194,36 @@ const CardNftVertical = (props) => {
           <Grid gridTemplateColumns={['1fr 1fr', , '1fr 2fr']}>
             <Text fontSize={[13, , 16]}>Total Claimed:</Text>
             <Text fontSize={[13, , 16]} bold>
-              0 OPV
+              <CurrencyFormat
+                value={campaign.currentPool}
+                displayType="text"
+                thousandSeparator
+                suffix={` OPV`}
+                renderText={(t) => t}
+              />
             </Text>
           </Grid>
           <Grid gridTemplateColumns={['1fr 1fr', , '1fr 2fr']}>
             <Text fontSize={[13, , 16]}>Durations:</Text>
             <Text fontSize={[13, , 16]} bold>
-              90 Days
+              {campaign.duration / 1000 / 60 / 60 / 24} Days
             </Text>
           </Grid>
           <Grid gridTemplateColumns={['1fr 1fr', , '1fr 2fr']}>
             <Text fontSize={[13, , 16]}>Start:</Text>
             <Text fontSize={[13, , 16]} bold>
-              Sep 30 2022
+              {formatDate(campaign.start)}
             </Text>
           </Grid>
 
           <Grid gridTemplateColumns={['1fr', '1fr 2fr']} gridTemplateRows="26px">
-            <Text fontSize={[13, , 16]}>Status:</Text>
+            <Text fontSize={[13, , 16]}>
+              {(() => {
+                if (step === STEEP_COUNT.SOON) return 'Start in:'
+                if (step === STEEP_COUNT.START) return 'End in:'
+                return 'Ended:'
+              })()}
+            </Text>
             <Flex>{renderCountdownCard}</Flex>
           </Grid>
         </div>

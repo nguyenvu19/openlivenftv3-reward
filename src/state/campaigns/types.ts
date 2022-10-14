@@ -1,12 +1,19 @@
-export interface CampaignsItem {
+export enum CAMPAIGN_STATUS {
+  COMING,
+  LIVE,
+  END,
+}
+
+export interface CampaignItem {
   id: number
   currentPool: number
   start: number
   finish: number
   totalPool: number
   duration: number
-  isComing: boolean
-  isStart: boolean
-  isEnded: boolean
+  status: CAMPAIGN_STATUS
+  // isComing: boolean
+  // isStart: boolean
+  // isEnded: boolean
   loading: boolean
 }

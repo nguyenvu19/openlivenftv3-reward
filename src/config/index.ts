@@ -5,6 +5,7 @@ export const APP_URL = process.env.NEXT_PUBLIC_APP_URL
 export const APP_USER_URL = process.env.NEXT_PUBLIC_APP_USER_URL
 export const APP_USER_API = process.env.NEXT_PUBLIC_APP_USER_API
 
+export const DEFAULT_CHAIN_ID = +process.env.NEXT_PUBLIC_DEFAULT_CHAIN_ID
 export const TOKEN_ADDRESS = process.env.NEXT_PUBLIC_TOKEN_ADDRESS
 export const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS
 export const NFT_ADDRESS = process.env.NEXT_PUBLIC_NFT_ADDRESS
