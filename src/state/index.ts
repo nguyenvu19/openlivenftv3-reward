@@ -17,6 +17,7 @@ import user from './user/reducer'
 import limitOrders from './limitOrders/reducer'
 import invest from './invest/reducer'
 import otherCurrency from './otherCurrency/reducer'
+import nfts from './nfts/reducer'
 
 const PERSISTED_KEYS: string[] = ['user', 'transactions']
 
@@ -39,6 +40,7 @@ const persistedReducer = persistReducer(
     limitOrders,
     invest,
     otherCurrency,
+    nfts,
 
     // Exchange
     user,

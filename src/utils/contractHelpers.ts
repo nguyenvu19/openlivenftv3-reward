@@ -143,12 +143,12 @@ import type {
   CampaignAbi,
 } from 'config/abi/types'
 import { ChainId } from '@pancakeswap/sdk'
-import { CONTRACT_ADDRESS } from 'config'
+import { CONTRACT_ADDRESS, DEFAULT_CHAIN_ID } from 'config'
 
 export const getContract = ({
   abi,
   address,
-  chainId = ChainId.BSC,
+  chainId = DEFAULT_CHAIN_ID, // ChainId.BSC,
   signer,
 }: {
   abi: any

@@ -1,5 +1,8 @@
 import styled from 'styled-components'
 import CardNftWithActionClaim from 'components/Card/CardNftWithActionClaim'
+import { NftResponse } from 'state/nfts/types'
+import { CampaignItem } from 'state/campaigns/types'
+import { EmptyStyled } from 'views/Campaigns/styled'
 
 const WClaimNftList = styled.div`
   display: flex;
@@ -21,15 +24,34 @@ const WCardNftItem = styled.div`
     max-width: 33.33%;
   }
 `
-const ClaimNftList = () => {
+
+const ClaimNftList: React.FC<{
+  campaign?: CampaignItem
+  listNftUser?: NftResponse
+  onClaim?: (item: any, cb: () => void) => void
+}> = ({ campaign, listNftUser, onClaim }) => {
   return (
     <WClaimNftList>
-      {[1, 2, 3, 3, 4, 5, 6, 7].map((_, index) => (
-        // eslint-disable-next-line react/no-array-index-key
-        <WCardNftItem key={index}>
-          <CardNftWithActionClaim />
-        </WCardNftItem>
-      ))}
+      {listNftUser?.result?.length > 0 ? (
+        <>
+          {listNftUser?.result?.map((nft) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <WCardNftItem key={nft.token_id}>
+              <CardNftWithActionClaim campaign={campaign} nftItem={nft} onClaim={onClaim} />
+            </WCardNftItem>
+          ))}
+        </>
+      ) : listNftUser === undefined ? (
+        <>
+          {[1, 2, 3].map((index) => (
+            <WCardNftItem key={index}>
+              <CardNftWithActionClaim />
+            </WCardNftItem>
+          ))}
+        </>
+      ) : (
+        <EmptyStyled>No Data</EmptyStyled>
+      )}
     </WClaimNftList>
   )
 }

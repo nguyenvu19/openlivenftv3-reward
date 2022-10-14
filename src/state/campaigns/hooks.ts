@@ -1,22 +1,26 @@
-import { useSlowRefreshEffect } from 'hooks/useRefreshEffect'
-import { useAppDispatch } from 'state'
-import { useContractCampaigns } from 'hooks/useContract'
-import { useSelector } from 'react-redux'
 import { useMemo } from 'react'
+import { useSelector } from 'react-redux'
+import { AppState, useAppDispatch } from 'state'
+import { useFastRefreshEffect } from 'hooks/useRefreshEffect'
 import { campaignsSelector } from './selectors'
 import { fetchCampaignsPublicDataAsync } from '.'
+import { CampaignItem } from './types'
 
 export const usePollCoreCampaignsData = () => {
   const dispatch = useAppDispatch()
-  const contractCampaigns = useContractCampaigns(false)
 
-  useSlowRefreshEffect(() => {
-    if (contractCampaigns) {
-      dispatch(fetchCampaignsPublicDataAsync({ contracts: contractCampaigns }))
-    }
-  }, [dispatch, contractCampaigns])
+  useFastRefreshEffect(() => {
+    dispatch(fetchCampaignsPublicDataAsync())
+  }, [dispatch])
 }
 
 export const useCampaigns = () => {
   return useSelector(useMemo(() => campaignsSelector(), []))
+}
+
+export const useCampaignItem = (campaignId?: string | number): CampaignItem | undefined => {
+  const campaigns = useSelector((state: AppState) => state.campaigns.data)
+  return useMemo(() => {
+    return campaigns?.find((campaign) => campaign.id === +campaignId)
+  }, [campaignId, campaigns])
 }
