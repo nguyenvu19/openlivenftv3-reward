@@ -8,7 +8,6 @@ import { updateVersion } from './global/actions'
 import multicall from './multicall/reducer'
 import farmsReducer from './farms'
 import campaignsReducer from './campaigns'
-import poolsReducer from './pools'
 import infoReducer from './info'
 import mint from './mint/reducer'
 import swap from './swap/reducer'
@@ -33,7 +32,6 @@ const persistedReducer = persistReducer(
   persistConfig,
   combineReducers({
     farms: farmsReducer,
-    pools: poolsReducer,
     campaigns: campaignsReducer,
     info: infoReducer,
 

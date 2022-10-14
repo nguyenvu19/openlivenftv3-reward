@@ -105,7 +105,7 @@ const CardNftVertical: React.FC<Props> = ({ campaign, onClickCampaign, ...props 
 
   const renderCountdownCard = useMemo(() => {
     return (
-      <WCountDown onClick={() => onClick && onClick(campaign)}>
+      <WCountDown onClick={() => onClickCampaign && onClickCampaign(campaign)}>
         <Flex alignItems="center">
           <Box background="#529BF0" borderRadius="10px" padding="2px 8px">
             <Text color="#fff" fontSize={[10, , 24]} bold>
@@ -148,7 +148,7 @@ const CardNftVertical: React.FC<Props> = ({ campaign, onClickCampaign, ...props 
         </Flex>
       </WCountDown>
     )
-  }, [weekdays, days, hours, minutes, seconds, campaign])
+  }, [weekdays, days, hours, minutes, seconds, onClickCampaign, campaign])
 
   if (!campaign) return <></>
   return (
