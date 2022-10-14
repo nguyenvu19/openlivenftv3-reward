@@ -25,7 +25,8 @@ const WCardTableTeamWallet = styled.div`
   }
   .ant-table {
     background: transparent;
-
+    border-bottom: 1px solid #4b9dfd;
+    padding-bottom: 16px;
     .ant-table-thead
       > tr
       > th:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before {
@@ -54,8 +55,8 @@ const WCardTableTeamWallet = styled.div`
         font-size: 12px;
         font-weight: 600;
         padding: 12px 6px;
+        border: none;
         background: transparent;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.2);
         ${({ theme }) => theme.mediaQueries.sm} {
           font-size: 14px;
           padding: 12px;
@@ -83,12 +84,13 @@ const WCardTableTeamWallet = styled.div`
     }
   }
   ul.ant-pagination {
+    margin-top: 32px;
     li.ant-pagination-prev,
     .ant-pagination-next {
       button {
         background: #007ca2;
-        border: none;
         border-radius: 50%;
+        border: none;
         color: #fff;
       }
     }
@@ -167,21 +169,18 @@ const CardTableTeamWallet = () => {
       render: (text, record) => {
         return (
           <div className="team-wallet-item-balance" style={{ textAlign: 'right' }}>
-            <Box>
-              <Text bold color="#000000" fontSize={['12px', , '14px']}>
-                {text}
-              </Text>
-              <Text color="#292929" fontSize={['12px', , '14px']}>
-                {record.usdValue > 0 ? (
-                  <>
-                    {' '}
-                    &asymp; ({record.usdValue} {record.currency})
-                  </>
-                ) : (
-                  ''
-                )}
-              </Text>
-            </Box>
+            <Text bold color="#000000" fontSize={['12px', , '14px']} lineHeight="1.2">
+              {text}
+            </Text>
+            <Text color="#292929" fontSize={['12px', , '13px']} lineHeight="1.2">
+              {record.usdValue > 0 ? (
+                <>
+                  &asymp; ({record.usdValue} {record.currency})
+                </>
+              ) : (
+                ''
+              )}
+            </Text>
           </div>
         )
       },
@@ -206,6 +205,14 @@ const CardTableTeamWallet = () => {
     },
     {
       id: 3,
+      name: 'Marketing',
+      address: '0x03xcba...323s23afc3021',
+      balance: '25.0012M',
+      usdValue: 12312,
+      currency: 'USDT',
+    },
+    {
+      id: 4,
       name: 'Marketing',
       address: '0x03xcba...323s23afc3021',
       balance: '25.0012M',
