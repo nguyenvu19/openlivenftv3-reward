@@ -46,7 +46,7 @@ const CardNftWithInfo: React.FC<{
   const fCurrency = otherCurrencyList?.find((curr) => curr._id === packageInvestItem?.currency_invest)
   const fCurrencyReward = otherCurrencyList?.find((curr) => curr._id === packageInvestItem?.currency_bonus_token)
 
-  const propsItem = href
+  const propsItem: any = href
     ? {
         href,
         as: 'a',
@@ -55,59 +55,61 @@ const CardNftWithInfo: React.FC<{
     : {}
   return (
     <WCardNftWithInfo
-      {...propsItem}
       onClick={() => {
         if (onSelectItem) onSelectItem(packageInvestItem)
       }}
+      {...propsItem}
     >
-      <div className="card-nft-cover">
-        <MediaCard fileUrl={packageInvestItem.avatar} />
-      </div>
-      <div className="card-nft-body">
-        <Text fontSize={[20]} fontWeight="bold" mb="14px">
-          {packageInvestItem.title}
-        </Text>
-        <FlexGap flexDirection="column" rowGap="10px">
-          <Flex justifyContent="space-between">
-            <Text>Price:</Text>
-            <Text fontWeight="bold">
-              {isNumber(packageInvestItem?.price_invest) ? (
-                <CurrencyFormat
-                  value={roundNumber(packageInvestItem.price_invest, { decimals: 18 })}
-                  displayType="text"
-                  thousandSeparator
-                  suffix={fCurrency ? ` ${fCurrency.code}` : ''}
-                  renderText={(t) => t}
-                />
-              ) : (
-                '--'
-              )}
-            </Text>
-          </Flex>
-          <Flex justifyContent="space-between">
-            <Text>Reward:</Text>
-            <Text fontWeight="bold">
-              {isNumber(packageInvestItem?.bonus_token) ? (
-                <CurrencyFormat
-                  value={roundNumber(packageInvestItem.bonus_token, { decimals: 18 })}
-                  displayType="text"
-                  thousandSeparator
-                  suffix={fCurrencyReward ? ` ${fCurrencyReward.code}` : ''}
-                  renderText={(t) => t}
-                />
-              ) : (
-                '--'
-              )}
-            </Text>
-          </Flex>
-          <Flex justifyContent="space-between">
-            <Text>Dividend:</Text>
-            <Text fontWeight="bold">
-              {isNumber(packageInvestItem?.dividend_rate) ? `${packageInvestItem.dividend_rate}%` : '--'}
-            </Text>
-          </Flex>
-        </FlexGap>
-      </div>
+      <>
+        <div className="card-nft-cover">
+          <MediaCard fileUrl={packageInvestItem.avatar} />
+        </div>
+        <div className="card-nft-body">
+          <Text fontSize={[20]} fontWeight="bold" mb="14px">
+            {packageInvestItem.title}
+          </Text>
+          <FlexGap flexDirection="column" rowGap="10px">
+            <Flex justifyContent="space-between">
+              <Text>Price:</Text>
+              <Text fontWeight="bold">
+                {isNumber(packageInvestItem?.price_invest) ? (
+                  <CurrencyFormat
+                    value={roundNumber(packageInvestItem.price_invest, { decimals: 18 })}
+                    displayType="text"
+                    thousandSeparator
+                    suffix={fCurrency ? ` ${fCurrency.code}` : ''}
+                    renderText={(t) => t}
+                  />
+                ) : (
+                  '--'
+                )}
+              </Text>
+            </Flex>
+            <Flex justifyContent="space-between">
+              <Text>Reward:</Text>
+              <Text fontWeight="bold">
+                {isNumber(packageInvestItem?.bonus_token) ? (
+                  <CurrencyFormat
+                    value={roundNumber(packageInvestItem.bonus_token, { decimals: 18 })}
+                    displayType="text"
+                    thousandSeparator
+                    suffix={fCurrencyReward ? ` ${fCurrencyReward.code}` : ''}
+                    renderText={(t) => t}
+                  />
+                ) : (
+                  '--'
+                )}
+              </Text>
+            </Flex>
+            <Flex justifyContent="space-between">
+              <Text>Dividend:</Text>
+              <Text fontWeight="bold">
+                {isNumber(packageInvestItem?.dividend_rate) ? `${packageInvestItem.dividend_rate}%` : '--'}
+              </Text>
+            </Flex>
+          </FlexGap>
+        </div>
+      </>
     </WCardNftWithInfo>
   )
 }

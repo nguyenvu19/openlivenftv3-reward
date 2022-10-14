@@ -26,4 +26,11 @@ export interface NftResponse {
   result: NftType[]
 }
 
-export type NftReward = keyof typeof nftRewardConfig
+export type NftReward = {
+  id: number
+  name: string
+  price_usd: number
+  bonus_opv: number
+  dividend_usdt_percent: number
+  reward_per_date: number
+}
