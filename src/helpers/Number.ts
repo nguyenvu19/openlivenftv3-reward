@@ -21,14 +21,14 @@ export function roundNumber(n, options) {
   if (+n > 1e17) return Math.round(+n)
   const num = typeof +n !== 'number' ? 0 : parseFloat(n)
   if (!`${num}`.includes('e')) {
-    return +`${Math.floor(`${num}e+${scale}`)}e-${scale}`
+    return +`${Math.floor(+`${num}e+${scale}`)}e-${scale}`
   }
   const arr = `${num}`.split('e')
   let sig = ''
   if (+arr[1] + scale > 0) {
     sig = '+'
   }
-  return +`${Math.floor(`${+arr[0]}e${sig}${+arr[1] + scale}`)}e-${scale}`
+  return +`${Math.floor(+`${+arr[0]}e${sig}${+arr[1] + scale}`)}e-${scale}`
 }
 
 // ================================================================================
