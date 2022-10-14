@@ -14,7 +14,7 @@ import {
   Team,
   TranslatableText,
 } from 'config/constants/types'
-import { CampaignsItem } from './campaigns/types'
+import { CampaignItem } from './campaigns/types'
 
 export enum GAS_PRICE {
   default = '5',
@@ -266,7 +266,7 @@ export interface PoolsState {
 }
 
 export interface CampaignsState {
-  data: CampaignsItem[]
+  data: CampaignItem[]
 }
 
 export interface InvestState {

@@ -35,18 +35,18 @@ export function useLocalNetworkChain() {
   return undefined
 }
 
-export const useActiveChainId = () => {
+export const useActiveChainId = (forceChainId?: number) => {
   const localChainId = useLocalNetworkChain()
   const queryChainId = useAtomValue(queryChainIdAtom)
 
   const { chain } = useNetwork()
-  const chainId = localChainId ?? chain?.id ?? (queryChainId >= 0 ? ChainId.BSC : undefined)
+  const chainId = forceChainId ?? localChainId ?? chain?.id ?? (queryChainId >= 0 ? ChainId.BSC : undefined)
 
   const isNotMatched = useDeferredValue(chain && localChainId && chain.id !== localChainId)
 
   return {
     chainId,
-    isWrongNetwork: (chain?.unsupported ?? false) || isNotMatched,
+    isWrongNetwork: forceChainId ? false : (chain?.unsupported ?? false) || isNotMatched, // if force change this not warning
     isNotMatched,
   }
 }

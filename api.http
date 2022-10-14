@@ -1,0 +1,9 @@
+###
+GET https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest?slug=openlive-nft
+content-type: application/json
+X-CMC_PRO_API_KEY: 9ba89a82-ed40-4b8b-8394-6ec234bdc40a
+
+###
+GET https://pro-api.coinmarketcap.com/v2/cryptocurrency/info?slug=openlive-nft
+content-type: application/json
+X-CMC_PRO_API_KEY: 9ba89a82-ed40-4b8b-8394-6ec234bdc40a

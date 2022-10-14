@@ -1,7 +1,8 @@
 /* eslint-disable no-await-in-loop */
 import BigNumber from 'bignumber.js'
 import { BIG_ZERO } from 'utils/bigNumber'
-import { CampaignsItem } from './types'
+import { getCampaignContract } from 'utils/contractHelpers'
+import { CampaignItem, CAMPAIGN_STATUS } from './types'
 
 const sleep = async (time) => new Promise((resolve) => setTimeout(resolve, time))
 
@@ -15,16 +16,16 @@ const fetchCampaignsLength = async (contracts) => {
   }
 }
 
-const fetchCampaigns = async (contracts) => {
-  let count = 0
-  const list: CampaignsItem[] = []
-
+const fetchCampaigns = async () => {
+  const contracts = getCampaignContract()
   const campaignsLength = await fetchCampaignsLength(contracts)
 
+  let count = 0
+  const list: CampaignItem[] = []
   try {
     while (true) {
       count++
-      let result = await contracts.campaigns(count)
+      const result = await contracts.campaigns(count)
       const currentPool = new BigNumber(result.currentPool.toString()).shiftedBy(-18).toNumber()
       const totalPool = new BigNumber(result.totalPool.toString()).shiftedBy(-18).toNumber()
       const start = result.start.toNumber() * 1000
@@ -32,19 +33,28 @@ const fetchCampaigns = async (contracts) => {
 
       if (count <= campaignsLength) {
         const currentTimestamp = new Date().getTime()
-        result = {
+
+        let status = CAMPAIGN_STATUS.COMING
+        if (currentTimestamp > finish) {
+          status = CAMPAIGN_STATUS.END
+        } else if (currentTimestamp > start && currentTimestamp < finish) {
+          status = CAMPAIGN_STATUS.LIVE
+        }
+
+        const campaignItem = {
           id: count,
           currentPool,
           start,
           finish,
           totalPool,
-          duration: (finish - start) / 60000,
-          isComing: currentTimestamp < start,
-          isStart: currentTimestamp > start && currentTimestamp < finish,
-          isEnded: currentTimestamp > finish,
+          duration: finish - start,
+          status,
+          // isComing: currentTimestamp < start,
+          // isStart: currentTimestamp > start && currentTimestamp < finish,
+          // isEnded: currentTimestamp > finish,
           loading: false,
         }
-        list.push(result)
+        list.push(campaignItem)
         await sleep(200)
       } else {
         break
@@ -53,7 +63,7 @@ const fetchCampaigns = async (contracts) => {
   } catch (error) {
     console.error('fetchCampaigns error', error)
   }
-  return { list, length: campaignsLength }
+  return { list: list.sort((a, b) => b.start - a.start), length: campaignsLength }
 }
 
 export default fetchCampaigns

@@ -9,19 +9,17 @@ import type {
 import fetchCampaigns from './fetchCampaigns'
 
 export const fetchCampaignsPublicDataAsync = createAsyncThunk<
-  any,
-  { contracts: any },
-  {
-    state: AppState
-  }
+  { list?: any; length: number },
+  void,
+  { state: AppState }
 >(
   'campaigns/fetchCampaignsPublicDataAsync',
-  async ({ contracts }) => {
+  async () => {
     try {
-      return fetchCampaigns(contracts)
+      return fetchCampaigns()
     } catch (error) {
       console.error(error)
-      throw error
+      return null
     }
   },
   {
@@ -53,13 +51,13 @@ const serializeLoadingKey = (
 }
 
 /* Reducer */
-export interface SerializedFarmsState {
+export interface SerializedCampaignsState {
   data: any[]
   loadingKeys: Record<string, boolean>
   campaignLength?: number
 }
 
-const initialState: SerializedFarmsState = {
+const initialState: SerializedCampaignsState = {
   data: [],
   loadingKeys: {},
 }

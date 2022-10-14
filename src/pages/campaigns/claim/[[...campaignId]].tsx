@@ -1,4 +1,4 @@
-import CampaignsClaimNft from '../../views/CampaignsClaimNft'
+import CampaignsClaimNft from '../../../views/CampaignsClaimNft'
 
 const CampaignsClaimNftPage = () => {
   return <CampaignsClaimNft />
