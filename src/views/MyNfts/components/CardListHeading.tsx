@@ -3,7 +3,6 @@ import { Flex, Heading, Text } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
 import Select, { OptionProps } from 'components/Select/Select'
 import styled from 'styled-components'
-import Container from 'components/Layout/Container'
 
 const CardListHeading: React.FC<React.PropsWithChildren> = () => {
   const [sortOption, setSortOption] = useState('hot')
