@@ -1,13 +1,9 @@
 import styled from 'styled-components'
-import BigNumber from 'bignumber.js'
 import Dots from 'components/Loader/Dots'
 import FarmItem from './FarmItem'
 
 export interface ITableProps {
-  farms: FarmWithStakedValue[]
-  userDataReady: boolean
-  cakePrice: BigNumber
-  sortColumn?: string
+  a?: any
 }
 
 const Container = styled.div<{ showBorder?: boolean }>`
@@ -51,7 +47,7 @@ const CenterStyled = styled.div`
   }
 `
 
-const FarmTable: React.FC<React.PropsWithChildren<ITableProps>> = ({ farms, cakePrice, userDataReady }) => {
+const FarmTable: React.FC<React.PropsWithChildren<ITableProps>> = () => {
   const data: any = [
     {
       poolId: 2,

@@ -1,12 +1,8 @@
 import { useState, createContext } from 'react'
 
-import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import { useWeb3React } from '@pancakeswap/wagmi'
 import { Toggle, Text } from '@pancakeswap/uikit'
 import styled from 'styled-components'
 import Page from 'components/Layout/Page'
-import { useFarms, usePriceCakeBusd } from 'state/farms/hooks'
-import { useCakeVaultUserData } from 'state/pools/hooks'
 import { useTranslation } from '@pancakeswap/localization'
 
 import { useUserFarmStakedOnly } from 'state/user/hooks'
@@ -48,26 +44,14 @@ const NUMBER_OF_FARMS_VISIBLE = 12
 const Farms: React.FC<React.PropsWithChildren> = () => {
   const { pathname, query: urlQuery } = useRouter()
   const { t } = useTranslation()
-  const { chainId } = useActiveWeb3React()
 
   const [tabFarmActive, setTabFarmActive] = useState('live')
-
-  const { data: farmsLP, userDataLoaded, poolLength, regularCakePerBlock } = useFarms()
-
-  const { account } = useWeb3React()
-  const cakePrice = usePriceCakeBusd()
 
   const [_query, setQuery] = useState('')
 
   const isArchived = pathname.includes('archived')
   const isInactive = pathname.includes('history')
   const isActive = !isInactive && !isArchived
-
-  useCakeVaultUserData()
-
-  // Users with no wallet connected should see 0 as Earned amount
-  // Connected users should see loading indicator until first userData has loaded
-  const userDataReady = !account || (!!account && userDataLoaded)
 
   const [stakedOnly, setStakedOnly] = useUserFarmStakedOnly(isActive)
 
@@ -94,7 +78,7 @@ const Farms: React.FC<React.PropsWithChildren> = () => {
           </ToggleWrapper>
         </ControlContainer>
 
-        <Table farms={[]} cakePrice={cakePrice} userDataReady={userDataReady} />
+        <Table />
         {/* 
         {account && !userDataLoaded && stakedOnly && (
           <Flex justifyContent="center">
