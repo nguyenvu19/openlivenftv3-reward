@@ -49,7 +49,7 @@ const CardNftWithActionClaim: React.FC<{
   if (!nftItem) {
     return (
       <WCardNftWithActionClaim>
-        <Skeleton height={450} />
+        <Skeleton height={515} />
       </WCardNftWithActionClaim>
     )
   }
