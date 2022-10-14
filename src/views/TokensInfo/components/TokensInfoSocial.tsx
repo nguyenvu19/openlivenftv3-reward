@@ -42,35 +42,78 @@ const TokensInfoSocial = (props) => {
   // textCommunity
   const textCommunity = (
     <Box>
-      <Link external href="/">
-        <Flex width="124px" height="20px" mt="4px" mb="4px" alignItems="center">
-          <Text>{t('ethplorer.io')}</Text>
-          <Image width={16} height={16} src="/imgTokensInfo/social.png" ml={['8px', , '16px']} />
+      <Link external href="https://t.me/OpenLiveNFT" target="_blank" style={{ textDecoration: 'none' }}>
+        <Flex width="245px" height="20px" mt="4px" mb="4px" alignItems="center">
+          <Text color="#000000" fontSize="11px" fontWeight="600">
+            {t('https://t.me/OpenLiveNFT')}
+          </Text>
+          <Image width={16} height={16} src="/imgTokensInfo/social.png" ml={[, , '8px']} />
+        </Flex>
+      </Link>
+      <Link
+        external
+        href="https://openlivenftproject.medium.com"
+        target="_blank"
+        mt="8px"
+        style={{ textDecoration: 'none' }}
+      >
+        <Flex width="245px" height="20px" mt="4px" mb="4px" alignItems="center">
+          <Text color="#000000" fontSize="11px" fontWeight="600">
+            {t('https://openlivenftproject.medium.com')}
+          </Text>
+          <Image width={16} height={16} src="/imgTokensInfo/social.png" ml={[, , '8px']} />
+        </Flex>
+      </Link>
+      <Link external href="https://twitter.com/OpenLiveNFT" target="_blank" mt="8px" style={{ textDecoration: 'none' }}>
+        <Flex width="245px" height="20px" mt="4px" mb="4px" alignItems="center">
+          <Text color="#000000" fontSize="11px" fontWeight="600">
+            {t('https://twitter.com/OpenLiveNFT')}
+          </Text>
+          <Image width={16} height={16} src="/imgTokensInfo/social.png" ml={[, , '8px']} />
+        </Flex>
+      </Link>
+      <Link
+        external
+        href="https://www.reddit.com/r/openLiveNFT"
+        target="_blank"
+        mt="8px"
+        style={{ textDecoration: 'none' }}
+      >
+        <Flex width="245px" height="20px" mt="4px" mb="4px" alignItems="center">
+          <Text color="#000000" fontSize="11px" fontWeight="600">
+            {t('https://www.reddit.com/r/openLiveNFT')}
+          </Text>
+          <Image width={16} height={16} src="/imgTokensInfo/social.png" ml={[, , '8px']} />
         </Flex>
       </Link>
     </Box>
   )
-  // textChat
-  const textChat = (
+  // tooltipChat
+  const tooltipChat = (
     <Box>
-      <Link external href="/">
-        <Flex width="124px" height="20px" mt="4px" mb="4px" alignItems="center">
-          <Text>{t('ethplorer.io')}</Text>
-          <Image width={16} height={16} src="/imgTokensInfo/social.png" ml={['8px', , '16px']} />
+      <Link external href="https://t.me/OpenLiveNFT" target="_blank" style={{ textDecoration: 'none' }}>
+        <Flex width="400px" height="20px" mt="4px" mb="4px" alignItems="center">
+          <Text fontSize="11px" fontWeight="600" color="#000000">
+            {t('https://t.me/OpenLiveNFT')}
+          </Text>
+          <Image width={16} height={16} src="/imgTokensInfo/social.png" ml={[, , '8px']} />
+        </Flex>
+      </Link>
+      <Link external href="https://discord.com/invite/47pTAVsEUF" target="_blank" style={{ textDecoration: 'none' }}>
+        <Flex width="400px" height="20px" mt="4px" mb="4px" alignItems="center">
+          <Text fontSize="11px" fontWeight="600" color="#000000">
+            {t('https://discord.com/invite/47pTAVsEUF')}
+          </Text>
+          <Image width={16} height={16} src="/imgTokensInfo/social.png" ml={[, , '8px']} />
         </Flex>
       </Link>
     </Box>
   )
-  // textWhitepaper
-  const textWhitepaper = (
-    <Box>
-      <Link external href="/">
-        <Flex width="124px" height="20px" mt="4px" mb="4px" alignItems="center">
-          <Text>{t('ethplorer.io')}</Text>
-          <Image width={16} height={16} src="/imgTokensInfo/social.png" ml={['8px', , '16px']} />
-        </Flex>
-      </Link>
-    </Box>
+  // tooltipAudist
+  const tooltipAudist = (
+    <Text fontSize={[12, , 13]} color="#000">
+      {t('Partners listed below conduct security assessments on the provided source code.')}
+    </Text>
   )
   // textButtonCoppy
   const textButtonCoppy = (
@@ -108,17 +151,15 @@ const TokensInfoSocial = (props) => {
               OPV
             </Text>
           </Box>
-          <Tooltip color="#fff" placement="bottom" title={textWhitepaper}>
-            <Button className="button-social-share" width="90px" height="32px" ml={['8px', , '16px']} padding="6px 8px">
-              <Image width={20} height={20} src="/imgTokensInfo/share.png" mr="8px" />
-              <Text fontSize={[12, , 14]} color="#000000">
-                {t('Share')}
-              </Text>
-            </Button>
-          </Tooltip>
+          <Button className="button-social-share" width="90px" height="32px" ml={['8px', , '16px']} padding="6px 8px">
+            <Image width={20} height={20} src="/imgTokensInfo/share.png" mr="8px" />
+            <Text fontSize={[12, , 14]} color="#000000">
+              {t('Share')}
+            </Text>
+          </Button>
         </Flex>
         <Flex alignItems="center" mt={['8px', , '32px']} flexWrap="wrap">
-          <Link href="/" style={{ textDecoration: 'none' }}>
+          <Link href="https://openlivenft.com" style={{ textDecoration: 'none' }}>
             <Button className="button-social" width={[170, , 200]} height="32px" mt={['8px', , , ,]} padding="6px 8px">
               <Image width={20} height={20} src="/imgTokensInfo/link.png" mr={['8px', , '16px']} />
               <Text fontSize={[12, , 14]} fontWeight="600" color="#000000">
@@ -127,7 +168,11 @@ const TokensInfoSocial = (props) => {
               <Image width={20} height={20} src="/imgTokensInfo/social.png" ml={['8px', , '16px']} />
             </Button>
           </Link>
-          <Link href="/" style={{ textDecoration: 'none' }}>
+          <Link
+            target="_blank"
+            href="https://bscscan.com/address/0x36C7B164F85D6F775cD128966D5819c7d36FEfF3"
+            style={{ textDecoration: 'none' }}
+          >
             <Button
               className="button-social"
               width={[130, , 152]}
@@ -163,7 +208,7 @@ const TokensInfoSocial = (props) => {
           </Tooltip>
 
           {/* Chat */}
-          <Tooltip color="#fff" placement="bottom" title={textChat}>
+          <Tooltip color="#fff" placement="bottom" title={tooltipChat}>
             <Button
               className="button-social"
               width={[100, , 120]}
@@ -179,7 +224,8 @@ const TokensInfoSocial = (props) => {
               <Image width={20} height={20} src="/imgTokensInfo/circle-down.png" ml={['8px', , '16px']} />
             </Button>
           </Tooltip>
-          <Link href="/" style={{ textDecoration: 'none' }}>
+
+          <Link href="https://docs.openlivenft.com" target="_blank" style={{ textDecoration: 'none' }}>
             <Button
               className="button-social"
               width={[145, , 168]}
@@ -214,10 +260,14 @@ const TokensInfoSocial = (props) => {
               height="27px"
             >
               <Image width={20} height={20} src="/imgTokensInfo/binance.png" mr="8px" />
-              <Link external href="/" display="flex">
+              <Link
+                href="https://bscscan.com/address/0x36C7B164F85D6F775cD128966D5819c7d36FEfF3"
+                target="_blank"
+                display="flex"
+              >
                 <Text fontSize={[9, , 12]} fontWeight="400" color="#000000">
                   <span style={{ color: '#5B708F' }}>BNB Smart Chain (BEP20):</span>
-                  <span style={{ color: '#292929' }}>0x36C7...35FEfF3</span>
+                  <span style={{ color: '#000', fontSize: '11px', fontWeight: '600' }}>0x36C7...36FEfF3</span>
                 </Text>
               </Link>
               {/* button-coppy */}
@@ -240,13 +290,13 @@ const TokensInfoSocial = (props) => {
               <Text fontSize={[12, , 14]} fontWeight="600" color="#002C6F">
                 {t('Audist')}:
               </Text>
-              <Tooltip color="#fff" placement="bottom" title={textWhitepaper}>
+              <Tooltip color="#fff" placement="bottom" title={tooltipAudist}>
                 <Box width={20} height={20} ml={['8px', , '16px']}>
                   <Image width={20} height={20} src="/imgTokensInfo/information.png" />
                 </Box>
               </Tooltip>
             </Flex>
-            <Link href="/" style={{ textDecoration: 'none' }}>
+            <Link href="https://cmc.certik-skynet.com/redirect?project=openlive-nft" style={{ textDecoration: 'none' }}>
               <Button
                 className="button-social"
                 width={[130, , 127]}

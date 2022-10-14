@@ -27,7 +27,7 @@ const TokensInfo: React.FC<React.PropsWithChildren> = () => {
 
       <Container>
         <Heading textAlign="left" scale="xl">
-          <MyNftH2 scale="lg" color="#007CA2">
+          <MyNftH2 scale="lg" color="#007CA2" mt="32px" mb="32px">
             {t('Team Wallets')}
           </MyNftH2>
         </Heading>
