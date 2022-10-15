@@ -1,14 +1,15 @@
 import { getFullDecimalMultiplier } from 'utils/getFullDecimalMultiplier'
+import env from '../../env'
 
 // Constants config env file
-export const APP_URL = process.env.NEXT_PUBLIC_APP_URL
-export const APP_USER_URL = process.env.NEXT_PUBLIC_APP_USER_URL
-export const APP_USER_API = process.env.NEXT_PUBLIC_APP_USER_API
+export const APP_URL = env.NEXT_PUBLIC_APP_URL
+export const APP_USER_URL = env.NEXT_PUBLIC_APP_USER_URL
+export const APP_USER_API = env.NEXT_PUBLIC_APP_USER_API
 
-export const DEFAULT_CHAIN_ID = +process.env.NEXT_PUBLIC_DEFAULT_CHAIN_ID
-export const TOKEN_ADDRESS = process.env.NEXT_PUBLIC_TOKEN_ADDRESS
-export const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS
-export const NFT_ADDRESS = process.env.NEXT_PUBLIC_NFT_ADDRESS
+export const DEFAULT_CHAIN_ID = +env.NEXT_PUBLIC_DEFAULT_CHAIN_ID
+export const TOKEN_ADDRESS = env.NEXT_PUBLIC_TOKEN_ADDRESS
+export const CONTRACT_ADDRESS = env.NEXT_PUBLIC_CONTRACT_ADDRESS
+export const NFT_ADDRESS = env.NEXT_PUBLIC_NFT_ADDRESS
 
 //  Others
 export const BSC_BLOCK_TIME = 3
