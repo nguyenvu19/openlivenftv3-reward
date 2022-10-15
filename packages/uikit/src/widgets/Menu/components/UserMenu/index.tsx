@@ -66,12 +66,12 @@ const UserMenu: React.FC<UserMenuProps> = ({
   placement = "bottom-end",
   ...props
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const [targetRef, setTargetRef] = useState<HTMLDivElement | null>(null);
   const [tooltipRef, setTooltipRef] = useState<HTMLDivElement | null>(null);
   const accountEllipsis = account ? `${account.substring(0, 2)}...${account.substring(account.length - 4)}` : null;
   const { styles, attributes } = usePopper(targetRef, tooltipRef, {
-    strategy: "fixed",
+    strategy: "absolute",
     placement,
     modifiers: [{ name: "offset", options: { offset: [0, 0] } }],
   });
