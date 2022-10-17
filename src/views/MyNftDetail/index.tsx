@@ -9,6 +9,7 @@ import NftClaimHistory from './components/NftClaimHistory'
 import NftTransferHistory from './components/NftTransferHistory'
 
 const WCardNftDetailPage = styled.div`
+  padding-bottom: 50px;
   .icon-back {
     height: 16px;
     margin-right: 8px;
