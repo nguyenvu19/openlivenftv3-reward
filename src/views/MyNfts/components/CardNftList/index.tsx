@@ -58,11 +58,13 @@ const CardMyNftList: React.FC<Props> = ({ total, myNftsList, handleLoadMore }) =
               <CardNftWithID myInvestItem={myInvestItem} />
             </WCardNftItem>
           ))}
-          <WTableFooter>
-            <Button scale="sm" disabled={total > myNftsList?.length} onClick={handleLoadMore}>
-              Load More
-            </Button>
-          </WTableFooter>
+          {myNftsList?.length > 0 && (
+            <WTableFooter>
+              <Button scale="sm" disabled={total > myNftsList?.length} onClick={handleLoadMore}>
+                Load More
+              </Button>
+            </WTableFooter>
+          )}
         </>
       ) : myNftsList === undefined ? (
         <>

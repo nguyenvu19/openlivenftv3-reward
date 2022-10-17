@@ -85,11 +85,13 @@ const WTableMyNft = ({ columns, dataSource, total, handleLoadMore, ...props }) =
   return (
     <CustomTableMyNft>
       <Table columns={columns} dataSource={dataSource} pagination={false} {...props} />
-      <WTableFooter>
-        <Button scale="sm" disabled={total > dataSource?.length} onClick={handleLoadMore}>
-          Load More
-        </Button>
-      </WTableFooter>
+      {dataSource?.length > 0 && (
+        <WTableFooter>
+          <Button scale="sm" disabled={total > dataSource?.length} onClick={handleLoadMore}>
+            Load More
+          </Button>
+        </WTableFooter>
+      )}
     </CustomTableMyNft>
   )
 }
