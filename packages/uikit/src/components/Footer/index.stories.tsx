@@ -4,14 +4,14 @@ import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import { langs, footerLinks } from "./config";
 import Footer from "./Footer";
-import { FooterProps } from "./types";
+import { FooterLinkType } from "./types";
 
 export default {
   title: "Components/Menu/Footer",
   component: Footer,
 };
 
-const Template: React.FC<React.PropsWithChildren<FooterProps>> = ({ ...args }) => {
+const Template: React.FC<React.PropsWithChildren<{ footerLinks: FooterLinkType[] }>> = ({ ...args }) => {
   return (
     <BrowserRouter>
       <Footer {...args} />
@@ -28,5 +28,5 @@ Default.args = {
   setLang: noop,
   currentLang: "EN",
   cakePriceUsd: 0.023158668932877668,
-  buyCakeLabel: "Buy CAKE",
+  // buyCakeLabel: "Buy CAKE",
 };
