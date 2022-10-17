@@ -1,4 +1,4 @@
-import CardNftDetailPage from 'views/MyNfts/components/CardNftDetailPage'
+import CardNftDetailPage from 'views/MyNftDetail'
 
 const NftDetailPage = () => {
   return <CardNftDetailPage />

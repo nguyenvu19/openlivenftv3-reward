@@ -1,11 +1,12 @@
-import { ArrowBackIconBig, Button, Flex, Heading, useMatchBreakpoints } from '@pancakeswap/uikit'
+import { ArrowBackIconBig, Button, Flex, Heading, Skeleton } from '@pancakeswap/uikit'
 import Container from 'components/Layout/Container'
 import styled from 'styled-components'
 import { useRouter } from 'next/router'
 import { useTranslation } from '@pancakeswap/localization'
-import CardNftDetailVertical from './CardNftDetailVetical'
-import HistoryTableNftDetail from './HistoryTableNftDetail'
-import HistoryTableNftDetailMobile from './HistoryTableNftDetailMobile'
+import { useOpvNftDetail } from 'state/nfts/hooks'
+import CardNftDetailVertical from './components/CardNftDetailVetical'
+import NftClaimHistory from './components/NftClaimHistory'
+import NftTransferHistory from './components/NftTransferHistory'
 
 const WCardNftDetailPage = styled.div`
   .icon-back {
@@ -34,35 +35,45 @@ const MyNftH2 = styled(Heading)`
 `
 
 const CardNftDetailPage: React.FC<React.PropsWithChildren> = () => {
-  const router = useRouter()
+  const { push, query } = useRouter()
   const { t } = useTranslation()
-  const { isMobile } = useMatchBreakpoints()
+
+  const { myNftDetail } = useOpvNftDetail(query?.nft_id?.[0])
 
   return (
     <WCardNftDetailPage>
       <Container>
         <Flex display="flex" alignItems="center" mb="32px">
-          <ArrowBackIconBig onClick={() => router.push('/my-nfts')} className="icon-back" />
+          <ArrowBackIconBig onClick={() => push('/my-nfts')} className="icon-back" />
           <Heading textAlign="left" scale="xl" mr="16px">
             <MyNftH2 scale="lg" color="#007CA2">
               {t('NFT Detail')}
             </MyNftH2>
           </Heading>
-          <Button scale="sm">ID.1</Button>
+          {myNftDetail ? <Button scale="sm">ID: {myNftDetail.tokenId}</Button> : <Skeleton width="50px" />}
         </Flex>
       </Container>
 
       <Container>
-        <CardNftDetailVertical />
+        <CardNftDetailVertical myNftDetail={myNftDetail} />
       </Container>
 
       <Container>
         <Heading textAlign="left" scale="xl" mb="32px" mt="32px">
           <MyNftH2 scale="lg" color="#007CA2">
-            {t('Activities')}
+            {t('Claim History')}
           </MyNftH2>
         </Heading>
-        {isMobile ? <HistoryTableNftDetailMobile /> : <HistoryTableNftDetail />}
+        <NftClaimHistory tokenId={2} />
+      </Container>
+
+      <Container>
+        <Heading textAlign="left" scale="xl" mb="32px" mt="32px">
+          <MyNftH2 scale="lg" color="#007CA2">
+            {t('Transfer History')}
+          </MyNftH2>
+        </Heading>
+        <NftTransferHistory tokenId={2} />
       </Container>
     </WCardNftDetailPage>
   )

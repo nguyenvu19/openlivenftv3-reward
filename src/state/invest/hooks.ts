@@ -45,7 +45,8 @@ export const useInvestPackageList = (page?: number, pageSize?: number) => {
 }
 
 // My invest list item
-export const useMyInvestList = (page?: number, pageSize?: number) => {
+/* @depredation */
+export const useMyInvestListOld = (page?: number, pageSize?: number) => {
   const dispatch = useAppDispatch()
   const [paramsMyInvestList, setParamsMyInvestList] = useState({
     page: page || 1,

@@ -1,4 +1,10 @@
-import { BIT_QUERY, INFO_CLIENT, STABLESWAP_SUBGRAPH_CLIENT, INFO_CLIENT_ETH } from 'config/constants/endpoints'
+import {
+  BIT_QUERY,
+  INFO_CLIENT,
+  STABLESWAP_SUBGRAPH_CLIENT,
+  INFO_CLIENT_ETH,
+  GRAPH_API_OPV,
+} from 'config/constants/endpoints'
 import { GraphQLClient } from 'graphql-request'
 
 // Extra headers
@@ -42,3 +48,6 @@ export const bitQueryServerClient = new GraphQLClient(BIT_QUERY, {
   },
   timeout: 5000,
 })
+
+//
+export const graphqlOpv = new GraphQLClient(GRAPH_API_OPV)

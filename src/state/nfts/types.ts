@@ -34,3 +34,47 @@ export type NftReward = {
   dividend_usdt_percent: number
   reward_per_date: number
 }
+
+// Meta data nft
+
+export interface Attributes {
+  trait_type: string
+  value: string
+}
+export interface NftMetaData {
+  id: number
+  image: string
+  name: string
+  attributes: Attributes[]
+}
+
+export interface MyNftItem {
+  id: string
+  owner: string
+  rareId: string
+  rareName: string
+  tokenId: string
+  tokenUri: string
+}
+
+export interface MyNftsList {
+  total: number
+  account?: string
+  data: MyNftItem[]
+}
+
+export interface ClaimHistoryItemType {
+  id: string
+  amount: string
+  transactionHash: string
+  userAddress: string
+  tokenId: string
+}
+
+export interface NftTransferHistoryItemType {
+  id: string
+  tokenId: string
+  newOwner: string
+  previousOwner: string
+  transactionHash: string
+}

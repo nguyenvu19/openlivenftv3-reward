@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import CardNftWithID from 'components/Card/CardNftWithID'
-import { MyInvestList } from 'state/invest/types'
+import { MyNftsList } from 'state/nfts/types'
 
 const WCardMyNftList = styled.div`
   display: flex;
@@ -37,20 +37,20 @@ const EmptyStyled = styled.div`
 `
 
 interface Props {
-  myInvestList: MyInvestList
+  myNftsList: MyNftsList
 }
-const CardMyNftList: React.FC<Props> = ({ myInvestList }) => {
+const CardMyNftList: React.FC<Props> = ({ myNftsList }) => {
   return (
     <WCardMyNftList>
-      {myInvestList?.rows?.length > 0 ? (
+      {myNftsList?.data?.length > 0 ? (
         <>
-          {myInvestList.rows.map((myInvestItem) => (
-            <WCardNftItem key={myInvestItem._id}>
+          {myNftsList.data.map((myInvestItem) => (
+            <WCardNftItem key={myInvestItem.id}>
               <CardNftWithID myInvestItem={myInvestItem} />
             </WCardNftItem>
           ))}
         </>
-      ) : myInvestList === undefined ? (
+      ) : myNftsList === undefined ? (
         <>
           {[1, 2, 3].map((index) => (
             <WCardNftItem key={index}>

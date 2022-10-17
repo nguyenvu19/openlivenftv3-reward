@@ -1,14 +1,15 @@
 import Container from 'components/Layout/Container'
-import { useMyInvestList } from 'state/invest/hooks'
+import { useGraphMyNftsList } from 'state/nfts/hooks'
 import { OptionProps } from 'components/Select/Select'
 import CardNftList from './components/CardNftList'
 import CardListHeading from './components/CardListHeading'
 
 const MyNftPage: React.FC<React.PropsWithChildren> = () => {
-  const { myInvestList, setParamsMyInvestList } = useMyInvestList()
+  const { myNftsList, setParamsNftsList } = useGraphMyNftsList()
   const onOptionChange = (option: OptionProps) => {
-    setParamsMyInvestList((prev) => ({ ...prev, nft_name: option.value }))
+    setParamsNftsList((prev) => ({ ...prev, rareName: option.value }))
   }
+
   return (
     <>
       <Container>
@@ -16,7 +17,7 @@ const MyNftPage: React.FC<React.PropsWithChildren> = () => {
       </Container>
 
       <Container mt={[null, null, null, '32px']}>
-        <CardNftList myInvestList={myInvestList} />
+        <CardNftList myNftsList={myNftsList} />
       </Container>
     </>
   )
