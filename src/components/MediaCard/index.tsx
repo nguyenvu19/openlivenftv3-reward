@@ -18,7 +18,7 @@ const MediaCard: React.FC<Props> = ({ className = '', fileUrl, videoProps = {}, 
         </div>
       ) : (
         <div className={`embed-responsive ${className || 'embed-responsive-1by1'}`} {...props}>
-          <img className="embed-responsive-item" src={fileUrl} alt="" {...imageProps} />
+          <img className="embed-responsive-item" src={fileUrl || '/images2/no_image.png'} alt="" {...imageProps} />
         </div>
       )}
     </>

@@ -5,9 +5,10 @@ import { AddressZero } from '@ethersproject/constants'
 import { Contract } from '@ethersproject/contracts'
 import type { Provider } from '@ethersproject/providers'
 import { ChainId, Currency } from '@pancakeswap/sdk'
-import { bsc } from '@pancakeswap/wagmi/chains'
+import { bsc, bscTest } from '@pancakeswap/wagmi/chains'
 import memoize from 'lodash/memoize'
 import { TokenAddressMap } from '@pancakeswap/tokens'
+import { DEFAULT_CHAIN_ID, NFT_ADDRESS } from 'config'
 import { chains } from './wagmi'
 
 // returns the checksummed address if the address is valid, otherwise returns false
@@ -24,7 +25,7 @@ export function getBlockExploreLink(
   type: 'transaction' | 'token' | 'address' | 'block' | 'countdown',
   chainIdOverride?: number,
 ): string {
-  const chainId = chainIdOverride || ChainId.BSC
+  const chainId = chainIdOverride || DEFAULT_CHAIN_ID
   const chain = chains.find((c) => c.id === chainId)
   if (!chain) return bsc.blockExplorers.default.url
   switch (type) {
@@ -54,7 +55,10 @@ export function getBlockExploreName(chainIdOverride?: number) {
 }
 
 export function getBscScanLinkForNft(collectionAddress: string, tokenId: string): string {
-  return `${bsc.blockExplorers.default.url}/token/${collectionAddress}?a=${tokenId}`
+  if (DEFAULT_CHAIN_ID === 56) {
+    return `${bsc.blockExplorers.default.url}/token/${collectionAddress || NFT_ADDRESS}?a=${tokenId}`
+  }
+  return `${bscTest.blockExplorers.default.url}/token/${collectionAddress || NFT_ADDRESS}?a=${tokenId}`
 }
 
 // add 10%

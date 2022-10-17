@@ -1,10 +1,12 @@
 import React from 'react'
+import { Link } from '@pancakeswap/uikit'
+import TxStatus from 'components/TxStatus'
+import { ZERO_ADDRESS } from 'config/constants'
+import { formatCode } from 'helpers'
+import { NftTransferHistoryItemType } from 'state/nfts/types'
 import styled from 'styled-components'
+import { getBlockExploreLink } from 'utils'
 
-interface ItemTransaction {
-  data: object
-  index: number
-}
 const WItemTxhHistory = styled.div`
   .wItemTxhHistory {
     width: 100%;
@@ -71,45 +73,59 @@ const WItemTxhHistory = styled.div`
   }
 `
 
-const ItemTransaction: React.FC<React.PropsWithChildren<ItemTransaction>> = ({ data, index, ...props }) => (
+const TableItemTransferHistory: React.FC<{ index: number; nftTransferHistoryItem: NftTransferHistoryItemType }> = ({
+  index,
+  nftTransferHistoryItem,
+}) => (
   <WItemTxhHistory>
-    <div className="wItemTxhHistory" {...props}>
-      <div className="history-item-line">
-        <p>action</p>
-        <p>withdraw</p>
-      </div>
-      {/*  */}
+    <div className="wItemTxhHistory">
       <div className="history-item-line table-history-amount">
-        <p>amount</p>
-        <p data-amount="withdraw">-500 USDT</p>
+        <p>No</p>
+        <p>{index}</p>
       </div>
       {/*  */}
       <div className="history-item-line">
-        <p>event</p>
-        <p>Bonus</p>
+        <p>Event</p>
+        <p>
+          {(() => {
+            if (nftTransferHistoryItem.previousOwner === ZERO_ADDRESS) {
+              return <p style={{ fontWeight: 700 }}>Mint</p>
+            }
+            if (nftTransferHistoryItem.newOwner === ZERO_ADDRESS) {
+              return <p style={{ fontWeight: 700 }}>Burn</p>
+            }
+            return <p style={{ fontWeight: 700 }}>Transfer</p>
+          })()}
+        </p>
       </div>
       {/*  */}
       <div className="history-item-line table-history-status">
-        <p>status</p>
-        <p data-status="Completed">Completed</p>
+        <p>Status</p>
+        <TxStatus title="Completed" status="COMPLETED" />
       </div>
       {/*  */}
       <div className="history-item-line">
-        <p>from</p>
-        <p>0x4dF...9c700</p>
+        <p>From</p>
+        <Link external href={getBlockExploreLink(nftTransferHistoryItem.previousOwner, 'address')}>
+          {formatCode(nftTransferHistoryItem.previousOwner, 5, 5)}
+        </Link>
       </div>
       {/*  */}
       <div className="history-item-line">
-        <p>to</p>
-        <p>0x4dF...9c700</p>
+        <p>To</p>
+        <Link external href={getBlockExploreLink(nftTransferHistoryItem.newOwner, 'address')}>
+          {formatCode(nftTransferHistoryItem.newOwner, 5, 5)}
+        </Link>
       </div>
       <div className="history-item-line">
         <p>Txh</p>
-        <p>10 Downing Street</p>
+        <Link external href={getBlockExploreLink(nftTransferHistoryItem.transactionHash, 'transaction')}>
+          {formatCode(nftTransferHistoryItem.transactionHash, 5, 5)}
+        </Link>
       </div>
       {/*  */}
     </div>
   </WItemTxhHistory>
 )
 
-export default ItemTransaction
+export default TableItemTransferHistory

@@ -28,3 +28,6 @@ export const FARM_API = 'https://farms.pancake-swap.workers.dev'
 export const BIT_QUERY = 'https://graphql.bitquery.io'
 
 export const ACCESS_RISK_API = 'https://red.alert.pancakeswap.com/red-api'
+
+//
+export const GRAPH_API_OPV = 'https://graph-nft.openlive.finance/subgraphs/name/opv/opvnft'
