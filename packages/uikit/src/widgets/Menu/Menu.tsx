@@ -101,6 +101,11 @@ const Inner = styled.div<{ isPushed: boolean; showMenu: boolean }>`
     max-width: ${({ isPushed }) => `calc(100% - ${isPushed ? SIDEBAR_WIDTH_FULL : SIDEBAR_WIDTH_REDUCED}px)`};
   }
 `;
+const FOOTER_HEIGHT = 56;
+const INNER_PADDING_TOP = 30;
+const InnerBody = styled.div`
+  min-height: calc(100vh - ${MENU_HEIGHT + INNER_PADDING_TOP + FOOTER_HEIGHT}px);
+`;
 
 const Menu: React.FC<React.PropsWithChildren<NavProps>> = ({
   linkComponent = "a",
@@ -118,7 +123,6 @@ const Menu: React.FC<React.PropsWithChildren<NavProps>> = ({
   activeItem,
   activeSubItem,
   langs,
-  buyCakeLabel,
   children,
 }) => {
   const { isMobile } = useMatchBreakpoints();
@@ -165,7 +169,9 @@ const Menu: React.FC<React.PropsWithChildren<NavProps>> = ({
               </Flex>
             </StyledNav>
           </FixedContainer>
-          <BodyWrapper pt={!subLinks ? `${isMobile ? totalTopMenuHeight : totalTopMenuHeight + 30}px` : "0"}>
+          <BodyWrapper
+            pt={!subLinks ? `${isMobile ? totalTopMenuHeight : totalTopMenuHeight + INNER_PADDING_TOP}px` : "0"}
+          >
             {/* ========= Sidebar ========= */}
             <Panel
               isPushed={isPushed}
@@ -183,7 +189,7 @@ const Menu: React.FC<React.PropsWithChildren<NavProps>> = ({
               activeSubItem={activeSubItem}
             />
             <Inner isPushed={isPushed} showMenu={showMenu}>
-              {children}
+              <InnerBody>{children}</InnerBody>
               {!isMobile && <Footer footerLinks={footerLinks} />}
             </Inner>
           </BodyWrapper>

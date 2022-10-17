@@ -36,8 +36,8 @@ const useAuth = () => {
             t('Provider Error'),
             <Box>
               <Text>{t('No provider was found')}</Text>
-              <LinkExternal href="https://docs.pancakeswap.finance/get-started/connection-guide">
-                {t('Need help ?')}
+              <LinkExternal href="https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn">
+                {t('Metamask ?')}
               </LinkExternal>
             </Box>,
           )

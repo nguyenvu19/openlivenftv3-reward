@@ -47,7 +47,7 @@ const CardNftDetailPage: React.FC<React.PropsWithChildren> = () => {
           style={{ cursor: 'pointer' }}
           display="flex"
           alignItems="center"
-          mb="32px"
+          mb={['24px', , '32px']}
           onClick={() => push('/my-nfts')}
         >
           <ArrowBackIconBig className="icon-back" />

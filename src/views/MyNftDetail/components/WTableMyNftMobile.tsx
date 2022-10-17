@@ -2,6 +2,8 @@ import { ReactNode } from 'react'
 import { List } from 'antd'
 import { Button } from '@pancakeswap/uikit'
 import styled from 'styled-components'
+import Empty from 'components/Empty'
+import LoadingGray from 'components/LoadingGray'
 
 const WTableMyNftMobileStyled = styled.div`
   margin-bottom: 100px;
@@ -45,9 +47,9 @@ const WTableMyNftMobile: React.FC<Props> = ({ dataSource, total, renderItem, han
           )}
         </div>
       ) : dataSource === undefined ? (
-        <h4>Loading...</h4>
+        <LoadingGray />
       ) : (
-        <div>Nodata</div>
+        <Empty />
       )}
     </WTableMyNftMobileStyled>
   )
