@@ -1,7 +1,9 @@
-import { Button, Flex, Text } from '@pancakeswap/uikit'
-import MediaCard from 'components/MediaCard'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
+import { Button, Flex, Skeleton, Text } from '@pancakeswap/uikit'
+import MediaCard from 'components/MediaCard'
+import { NftMetaData, MyNftItem } from 'state/nfts/types'
 
 const WCardNftWithID = styled.div`
   max-width: 100%;
@@ -26,27 +28,60 @@ const WCardNftWithID = styled.div`
   }
 `
 
-const CardNftWithID = () => {
+interface Props {
+  myInvestItem?: MyNftItem
+}
+const CardNftWithID: React.FC<Props> = ({ myInvestItem }) => {
   const router = useRouter()
+  const [nftMetaData, setNftMetaData] = useState<NftMetaData | undefined | null>()
+
+  useEffect(() => {
+    async function fetchMetaData() {
+      if (myInvestItem) {
+        try {
+          fetch(myInvestItem.tokenUri)
+            .then((res) => res.json())
+            .then((res) => {
+              if (res) {
+                setNftMetaData(res)
+              } else {
+                setNftMetaData(null)
+              }
+            })
+        } catch (error) {
+          setNftMetaData(null)
+        }
+      }
+    }
+    fetchMetaData()
+  }, [myInvestItem])
+
+  if (!myInvestItem) {
+    return (
+      <WCardNftWithID>
+        <Skeleton height={400} />
+      </WCardNftWithID>
+    )
+  }
   return (
     <WCardNftWithID>
       <Flex flexDirection="column" justifyContent="center" alignItems="center">
         <div className="card-nft-cover">
-          <MediaCard fileUrl="https://s3.ap-southeast-1.amazonaws.com/openlivenft/investPackage/TOPAZ.mp4" />
+          <MediaCard fileUrl={nftMetaData?.image} />
         </div>
         <div className="investment-item-content">
           <Text fontSize={[16, , 32]} fontWeight="bold" mt={['16px', null, null, '32']} color="#292929">
-            HEMATITE
+            {myInvestItem.rareName}
           </Text>
           <div className="investment-content" style={{ textAlign: 'center' }}>
             <Button
-              onClick={() => router.push(`${router.pathname}/nft-details`)}
+              onClick={() => router.push(`${router.pathname}/detail/${myInvestItem.tokenId}`)}
               height={['32px', null, null, null, '48px']}
               mt={['16px', null, null, '32px']}
               type="button"
               scale="md"
             >
-              ID.1
+              ID: {myInvestItem.tokenId}
             </Button>
           </div>
         </div>

@@ -1,5 +1,7 @@
 import styled from 'styled-components'
 import CardNftWithID from 'components/Card/CardNftWithID'
+import { MyNftItem } from 'state/nfts/types'
+import { Button } from '@pancakeswap/uikit'
 
 const WCardMyNftList = styled.div`
   display: flex;
@@ -22,16 +24,57 @@ const WCardNftItem = styled.div`
     max-width: 33.33%;
   }
 `
+const EmptyStyled = styled.div`
+  width: 100%;
+  min-height: 200px;
+  padding: 24px;
+  background: #eefbff;
+  border: 1px solid rgba(67, 108, 255, 0.3);
+  border-radius: 24px;
 
-const CardMyNftList = () => {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+const WTableFooter = styled.div`
+  width: 100%;
+  padding-top: 20px;
+  display: flex;
+  justify-content: center;
+`
+
+interface Props {
+  total: number
+  myNftsList?: MyNftItem[]
+  handleLoadMore: () => void
+}
+const CardMyNftList: React.FC<Props> = ({ total, myNftsList, handleLoadMore }) => {
   return (
     <WCardMyNftList>
-      {[1, 2, 3, 4, 5, 6, 7].map((_, index) => (
-        // eslint-disable-next-line react/no-array-index-key
-        <WCardNftItem key={index}>
-          <CardNftWithID />
-        </WCardNftItem>
-      ))}
+      {myNftsList?.length > 0 ? (
+        <>
+          {myNftsList.map((myInvestItem) => (
+            <WCardNftItem key={myInvestItem.id}>
+              <CardNftWithID myInvestItem={myInvestItem} />
+            </WCardNftItem>
+          ))}
+          <WTableFooter>
+            <Button scale="sm" disabled={total > myNftsList?.length} onClick={handleLoadMore}>
+              Load More
+            </Button>
+          </WTableFooter>
+        </>
+      ) : myNftsList === undefined ? (
+        <>
+          {[1, 2, 3].map((index) => (
+            <WCardNftItem key={index}>
+              <CardNftWithID />
+            </WCardNftItem>
+          ))}
+        </>
+      ) : (
+        <EmptyStyled>No Data</EmptyStyled>
+      )}
     </WCardMyNftList>
   )
 }

@@ -1,6 +1,11 @@
-import { Box, Flex, Grid, Image, Link, Text } from '@pancakeswap/uikit'
+import { Box, Flex, Grid, Image, Link, Skeleton, Text } from '@pancakeswap/uikit'
 import MediaCard from 'components/MediaCard'
+import { NFT_ADDRESS } from 'config'
+import { formatCode } from 'helpers'
+import { useEffect, useState } from 'react'
+import { MyNftItem, NftMetaData } from 'state/nfts/types'
 import styled from 'styled-components'
+import { getBscScanLinkForNft } from 'utils'
 
 const WCardNftVertical = styled.div`
   width: 100%;
@@ -43,25 +48,63 @@ const WCardNftVertical = styled.div`
   }
 `
 
-const Hr = styled.hr`
-  width: 100%;
-`
+// const Hr = styled.hr`
+//   width: 100%;
+// `
 const CardSubHeading = styled.div`
   width: fit-content;
   position: relative;
 `
 
-const CardNftDetailVertical = (props) => {
+interface Props {
+  myNftDetail: MyNftItem
+  [t: string]: any
+}
+const CardNftDetailVertical: React.FC<Props> = ({ myNftDetail, ...props }) => {
+  const [nftMetaData, setNftMetaData] = useState<NftMetaData | undefined | null>()
+  const ownerName = nftMetaData?.attributes?.find((o) => o.trait_type === 'Owner Name')
+  const dividend = nftMetaData?.attributes?.find((o) => o.trait_type === 'Devident')
+  const reward01 = nftMetaData?.attributes?.find((o) => o.trait_type === 'reward_01')
+  const opvBonus = nftMetaData?.attributes?.find((o) => o.trait_type === 'OPV Bonus')
+
+  useEffect(() => {
+    async function fetchNftMetaData() {
+      if (myNftDetail) {
+        try {
+          fetch(myNftDetail.tokenUri)
+            .then((res) => res.json())
+            .then((res) => {
+              if (res) {
+                setNftMetaData(res)
+              } else {
+                setNftMetaData(null)
+              }
+            })
+        } catch (error) {
+          setNftMetaData(null)
+        }
+      }
+    }
+    fetchNftMetaData()
+  }, [myNftDetail])
+
+  if (!myNftDetail) {
+    return (
+      <WCardNftVertical>
+        <Skeleton height="520px" />
+      </WCardNftVertical>
+    )
+  }
   return (
     <WCardNftVertical {...props}>
       <div className="card-nft-vertical-content">
         <div className="card-nft-cover-left">
-          <MediaCard fileUrl="https://s3.ap-southeast-1.amazonaws.com/openlivenft/investPackage/TOPAZ.mp4" />
+          <MediaCard fileUrl={nftMetaData?.image} />
         </div>
         <Box>
           <CardSubHeading>
             <Text color="#292929" fontWeight="700" fontSize="24px">
-              HEMATITE
+              {myNftDetail.rareName}
             </Text>
           </CardSubHeading>
           <Text color="rgba(41, 41, 41, 0.6)" fontWeight="400" fontSize="16px" mt="24px" mb="24px">
@@ -73,7 +116,7 @@ const CardNftDetailVertical = (props) => {
                 Owner:
               </Text>
               <Text color="#292929" fontSize={[13, , 16]} fontWeight="700">
-                Admin
+                {ownerName?.value}
               </Text>
             </Grid>
             <Grid gridTemplateColumns={['1fr 1fr', , '1fr 1fr']}>
@@ -81,8 +124,12 @@ const CardNftDetailVertical = (props) => {
                 NFT ID:
               </Text>
               <Flex alignItems="center">
-                <Link style={{ display: 'inline' }} external href="/">
-                  1
+                <Link
+                  style={{ display: 'inline' }}
+                  external
+                  href={getBscScanLinkForNft(undefined, myNftDetail.tokenId)}
+                >
+                  {myNftDetail.tokenId}
                 </Link>
                 <Box width="20px" ml="6px">
                   <Image width={30} height={30} src="/images2/link-icons.png" />
@@ -95,7 +142,7 @@ const CardNftDetailVertical = (props) => {
               </Text>
               <Flex alignItems="center">
                 <Link style={{ display: 'inline' }} external href="/">
-                  0x123..12312
+                  {formatCode(NFT_ADDRESS, 5, 5)}
                 </Link>
                 <Box width="20px" ml="6px">
                   <Image width={30} height={30} src="/images2/link-icons.png" />
@@ -108,7 +155,7 @@ const CardNftDetailVertical = (props) => {
               </Text>
               <Flex alignItems="center">
                 <Link style={{ display: 'inline' }} external href="/">
-                  0%
+                  {dividend?.value}
                 </Link>
                 <Box width="20px" ml="6px">
                   <Image width={30} height={30} src="/images2/link-icons.png" />
@@ -122,7 +169,7 @@ const CardNftDetailVertical = (props) => {
               </Text>
               <Flex alignItems="center">
                 <Link style={{ display: 'inline' }} external href="/">
-                  D0.5 OPV per day
+                  {reward01?.value} OPV
                 </Link>
                 <Box width="20px" ml="6px">
                   <Image width={30} height={30} src="/images2/link-icons.png" />
@@ -134,16 +181,20 @@ const CardNftDetailVertical = (props) => {
                 OPV Bonus:
               </Text>
               <Flex alignItems="center">
-                <Link style={{ display: 'inline' }} external href="/">
-                  500 OPV ( $0.2 )
+                <Link
+                  style={{ display: 'inline' }}
+                  external
+                  href={getBscScanLinkForNft(undefined, myNftDetail.tokenId)}
+                >
+                  {opvBonus?.value} OPV
                 </Link>
                 <Box width="20px" ml="6px">
                   <Image width={30} height={30} src="/images2/link-icons.png" />
                 </Box>
               </Flex>
             </Grid>
-            <Hr />
-            <Text color="#292929" fontWeight="700" fontSize={[16, , 20]}>
+            {/* <Hr /> */}
+            {/* <Text color="#292929" fontWeight="700" fontSize={[16, , 20]}>
               Properties
             </Text>
             <Grid gridTemplateColumns={['1fr', '1fr 1fr']} gridTemplateRows="26px">
@@ -161,7 +212,7 @@ const CardNftDetailVertical = (props) => {
               <Text color="#292929" fontWeight="700" fontSize={[13, , 16]} bold>
                 Admin
               </Text>
-            </Grid>
+            </Grid> */}
           </div>
         </Box>
       </div>
