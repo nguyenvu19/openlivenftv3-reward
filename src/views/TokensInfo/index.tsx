@@ -6,10 +6,12 @@ import CardTableMarketPlace from './components/CardTableMarketPlace'
 import CardTableTeamWallet from './components/CardTableTeamWallet'
 import CardTokensInfo from './components/CardTokensInfo'
 
-const MyNftH2 = styled(Heading)`
+const MyNftH2 = styled.div`
   font-size: 16px;
-  margin-bottom: 0;
+  margin: 16px 0;
+  color: #007ca2;
   ${({ theme }) => theme.mediaQueries.sm} {
+    margin: 32px 0;
     font-size: 32px;
   }
 `
@@ -27,9 +29,7 @@ const TokensInfo: React.FC<React.PropsWithChildren> = () => {
 
       <Container>
         <Heading textAlign="left" scale="xl">
-          <MyNftH2 scale="lg" color="#007CA2" mt="32px" mb="32px">
-            {t('Team Wallets')}
-          </MyNftH2>
+          <MyNftH2>{t('Team Wallets')}</MyNftH2>
         </Heading>
         <CardTableTeamWallet />
       </Container>

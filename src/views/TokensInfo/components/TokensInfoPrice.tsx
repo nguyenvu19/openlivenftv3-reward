@@ -1,5 +1,8 @@
 import { useTranslation } from '@pancakeswap/localization'
+import { useEffect, useState } from 'react'
+import CurrencyFormat from 'react-currency-format'
 import { Progress, Tooltip } from 'antd'
+import { isNumber, roundNumber } from 'helpers'
 import { Box, Button, Flex, Image, Text } from '@pancakeswap/uikit'
 import styled from 'styled-components'
 import BoxInforDetailItem from './BoxInforDetailItem'
@@ -63,15 +66,27 @@ const WProgress = styled.div`
   }
 `
 
-const TokensInfoPrice = () => {
+const TokensInfoPrice = ({ dataLatest }) => {
   const { t } = useTranslation()
+  const price = dataLatest?.quote?.USD?.price
+
   return (
     <>
       <WTokensInfoPrice>
         <Text>{t('OpenLive NFT Price (OPV)')}</Text>
         <Flex alignItems="center" mt="14px">
           <Text as="h2" color="#000" fontSize={['16px', , '24px']} fontWeight="700" pb="4px" mb="0" mr="24px">
-            $0.1325
+            {isNumber(price) ? (
+              <CurrencyFormat
+                value={roundNumber(price, { decimals: null })}
+                displayType="text"
+                thousandSeparator
+                prefix={` $`}
+                renderText={(tx) => tx}
+              />
+            ) : (
+              '--'
+            )}
           </Text>
           <Flex alignItems="center" width="72px" padding="6px" style={{ background: '#D71515' }} borderRadius="8px">
             <Image width={10} height={10} src="/imgTokensInfo/down-white.png" mr="8px" />
@@ -126,25 +141,25 @@ const TokensInfoPrice = () => {
             </Flex>
           </Flex>
 
-          <Tooltip color="#fff" placement="bottom" title={text} trigger={['click']}>
-            <Button
-              mt={['16px', , 0, 0]}
-              width="61px"
-              height="27px"
-              padding="0 4px"
-              scale="sm"
-              style={{ background: '#EDF0F3', boxShadow: 'none' }}
-            >
-              <Text fontSize={['12px', , '14px']} color="#5B708F" fontWeight="600">
-                24h
-              </Text>
-              <Image width={10} height={10} src="/imgTokensInfo/down-outline.png" ml="8px" />
-            </Button>
-          </Tooltip>
+          {/* <Tooltip color="#fff" placement="bottom" title={text} trigger={['click']}> */}
+          <Button
+            mt={['16px', , 0, 0]}
+            width="61px"
+            height="27px"
+            padding="0 4px"
+            scale="sm"
+            style={{ background: '#EDF0F3', boxShadow: 'none' }}
+          >
+            <Text fontSize={['12px', , '14px']} color="#5B708F" fontWeight="600">
+              24h
+            </Text>
+            <Image width={10} height={10} src="/imgTokensInfo/down-outline.png" ml="8px" />
+          </Button>
+          {/* </Tooltip> */}
         </Flex>
       </WTokensInfoPrice>
       <WTokenInfoPriceDetail>
-        <BoxInforDetailItem />
+        <BoxInforDetailItem dataLatest={dataLatest} />
       </WTokenInfoPriceDetail>
     </>
   )
