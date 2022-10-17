@@ -13,7 +13,6 @@ const WCardNftDetailPage = styled.div`
     height: 16px;
     margin-right: 8px;
     color: #007ca1;
-    cursor: pointer;
     ${({ theme }) => theme.mediaQueries.md} {
       height: 22px;
       margin-right: 16px;
@@ -43,8 +42,14 @@ const CardNftDetailPage: React.FC<React.PropsWithChildren> = () => {
   return (
     <WCardNftDetailPage>
       <Container>
-        <Flex display="flex" alignItems="center" mb="32px">
-          <ArrowBackIconBig onClick={() => push('/my-nfts')} className="icon-back" />
+        <Flex
+          style={{ cursor: 'pointer' }}
+          display="flex"
+          alignItems="center"
+          mb="32px"
+          onClick={() => push('/my-nfts')}
+        >
+          <ArrowBackIconBig className="icon-back" />
           <Heading textAlign="left" scale="xl" mr="16px">
             <MyNftH2 scale="lg" color="#007CA2">
               {t('NFT Detail')}
@@ -64,7 +69,7 @@ const CardNftDetailPage: React.FC<React.PropsWithChildren> = () => {
             {t('Claim History')}
           </MyNftH2>
         </Heading>
-        <NftClaimHistory tokenId={2} />
+        <NftClaimHistory tokenId={query?.nft_id?.[0]} />
       </Container>
 
       <Container>
@@ -73,7 +78,7 @@ const CardNftDetailPage: React.FC<React.PropsWithChildren> = () => {
             {t('Transfer History')}
           </MyNftH2>
         </Heading>
-        <NftTransferHistory tokenId={2} />
+        <NftTransferHistory tokenId={query?.nft_id?.[0]} />
       </Container>
     </WCardNftDetailPage>
   )

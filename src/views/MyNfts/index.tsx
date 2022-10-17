@@ -6,8 +6,12 @@ import CardListHeading from './components/CardListHeading'
 
 const MyNftPage: React.FC<React.PropsWithChildren> = () => {
   const { myNftsList, setParamsNftsList } = useGraphMyNftsList()
+
   const onOptionChange = (option: OptionProps) => {
     setParamsNftsList((prev) => ({ ...prev, rareName: option.value }))
+  }
+  const handleLoadMore = () => {
+    setParamsNftsList((prev) => ({ ...prev, total: prev.total + prev.pageSize }))
   }
 
   return (
@@ -17,7 +21,7 @@ const MyNftPage: React.FC<React.PropsWithChildren> = () => {
       </Container>
 
       <Container mt={[null, null, null, '32px']}>
-        <CardNftList myNftsList={myNftsList} />
+        <CardNftList total={myNftsList.total} myNftsList={myNftsList.data} handleLoadMore={handleLoadMore} />
       </Container>
     </>
   )

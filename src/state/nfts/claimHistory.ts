@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { gql } from 'graphql-request'
 import { graphqlOpv } from 'utils/graphql'
-import { ClaimHistoryItemType, MyNftItem } from './types'
+import { ClaimHistoryItemType } from './types'
 
 // fetch nft detail graphql
 const graphNftClaimHistory = async (total: number, tokenId?: string) => {
@@ -35,8 +35,8 @@ export const useNftClaimHistory = (
   tokenId?: string,
 ): {
   nftClaimHistory: ResponseClaimHistory
-  setParamsNftClaimHistory: (p: any) => void
   fetchNftClaimHistory: () => void
+  setParamsNftClaimHistory: (p: any) => void
 } => {
   const [paramsNftClaimHistory, setParamsNftClaimHistory] = useState({
     total: 10,

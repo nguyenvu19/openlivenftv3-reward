@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { Flex, Heading, Text } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
 import Select, { OptionProps } from 'components/Select/Select'
@@ -35,43 +34,43 @@ const optionsInvestName = [
   },
   {
     label: 'HEMATITE',
-    value: 1,
+    value: 'HEMATITE',
   },
   {
     label: 'AMBER',
-    value: 1,
+    value: 'AMBER',
   },
   {
     label: 'ZICRON',
-    value: 1,
+    value: 'ZICRON',
   },
   {
     label: 'PERIDOT',
-    value: 1,
+    value: 'PERIDOT',
   },
   {
     label: 'TOURMALINE',
-    value: 1,
+    value: 'TOURMALINE',
   },
   {
     label: 'TOPAZ',
-    value: 1,
+    value: 'TOPAZ',
   },
   {
     label: 'BERYL',
-    value: 1,
+    value: 'BERYL',
   },
   {
     label: 'EMERALD',
-    value: 1,
+    value: 'EMERALD',
   },
   {
     label: 'SPINEL',
-    value: 1,
+    value: 'SPINEL',
   },
   {
     label: 'RUBY',
-    value: 1,
+    value: 'RUBY',
   },
 ]
 

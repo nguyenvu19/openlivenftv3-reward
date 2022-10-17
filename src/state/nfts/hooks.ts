@@ -81,14 +81,30 @@ const fetchOpvNftsList = async (total: number, address: string, rareName?: strin
     return null
   }
 }
-export const useGraphMyNftsList = () => {
+
+interface ResponseNftsList {
+  total: number
+  pageSize: number
+  account: string
+  rareName: string
+  data: MyNftItem[] | undefined | null
+}
+export const useGraphMyNftsList = (): {
+  myNftsList: ResponseNftsList
+  fetchMyNftsList: () => void
+  setParamsNftsList: (p: any) => void
+} => {
   const { account } = useActiveWeb3React()
   const [paramsNftsList, setParamsNftsList] = useState({
-    total: 1000,
+    total: 9,
+    pageSize: 9,
     account: '',
     rareName: '',
   })
-  const [myNftsList, setMyNftsList] = useState<any>()
+  const [myNftsList, setMyNftsList] = useState<ResponseNftsList>({
+    ...paramsNftsList,
+    data: undefined,
+  })
 
   const fetchMyNftsList = useCallback(async () => {
     if (paramsNftsList.account) {

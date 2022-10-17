@@ -1,4 +1,4 @@
-import { Box, Flex, Grid, Image, Link, Text } from '@pancakeswap/uikit'
+import { Box, Flex, Grid, Image, Link, Skeleton, Text } from '@pancakeswap/uikit'
 import MediaCard from 'components/MediaCard'
 import { NFT_ADDRESS } from 'config'
 import { formatCode } from 'helpers'
@@ -88,7 +88,13 @@ const CardNftDetailVertical: React.FC<Props> = ({ myNftDetail, ...props }) => {
     fetchNftMetaData()
   }, [myNftDetail])
 
-  if (!myNftDetail) return <></>
+  if (!myNftDetail) {
+    return (
+      <WCardNftVertical>
+        <Skeleton height="520px" />
+      </WCardNftVertical>
+    )
+  }
   return (
     <WCardNftVertical {...props}>
       <div className="card-nft-vertical-content">
