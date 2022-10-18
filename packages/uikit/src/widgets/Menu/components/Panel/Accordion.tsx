@@ -65,7 +65,7 @@ const Accordion: React.FC<Props> = ({
     ? {
         as: linkComponent,
         href,
-        ...(type === DropdownMenuItemType.INTERNAL_LINK ? { target: "_blank" } : {}),
+        ...(type === DropdownMenuItemType.EXTERNAL_LINK ? { target: "_blank" } : {}),
       }
     : {
         as: "div",

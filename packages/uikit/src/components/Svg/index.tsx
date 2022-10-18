@@ -162,4 +162,10 @@ export { default as BraveIcon } from "./Icons/Brave";
 export { default as BloctoIcon } from "./Icons/Blocto";
 export { default as EyeIcon } from "./Icons/Eye";
 export { default as EyeSleepIcon } from "./Icons/EyeSleep";
+export { default as CampaignIcon } from "./Icons/Campaign";
+export { default as StakingIcon } from "./Icons/Staking";
+export { default as MyNftIcon } from "./Icons/MyNft";
+export { default as MarketplaceIcon } from "./Icons/Marketplace";
+export { default as TokenInfoIcon } from "./Icons/TokenInfo";
+
 export type { SvgProps } from "./types";

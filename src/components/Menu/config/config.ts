@@ -2,19 +2,19 @@ import {
   MenuItemsType,
   DropdownMenuItemType,
   SwapIcon,
-  SwapFillIcon,
-  EarnFillIcon,
-  EarnIcon,
+  FarmIcon,
+  TokenInfoIcon,
   LiquidityIcon,
   MoreIcon,
   HomeIcon,
+  StakingIcon,
   TradeIcon,
+  CampaignIcon,
+  MyNftIcon,
+  MarketplaceIcon,
 } from '@pancakeswap/uikit'
 import { ContextApi } from '@pancakeswap/localization'
-import { perpLangMap } from 'utils/getPerpetualLanguageCode'
-import { perpTheme } from 'utils/getPerpetualTheme'
 import { DropdownMenuItems } from '@pancakeswap/uikit/src/components/DropdownMenu/types'
-import { SUPPORT_ONLY_BSC } from 'config/constants/supportChains'
 
 export type ConfigMenuDropDownItemsType = DropdownMenuItems & { hideSubNav?: boolean }
 export type ConfigMenuItemsType = Omit<MenuItemsType, 'items'> & { hideSubNav?: boolean; image?: string } & {
@@ -26,19 +26,19 @@ const config: (
   isDark: boolean,
   languageCode?: string,
   chainId?: number,
-) => ConfigMenuItemsType[] = (t, isDark, languageCode) => [
+) => ConfigMenuItemsType[] = (t) => [
   {
     label: t('Home'),
     icon: HomeIcon,
-    fillIcon: SwapFillIcon,
+    fillIcon: HomeIcon,
     href: '/home',
     items: [],
     showItemsOnMobile: false,
   },
   {
     label: t('Campaigns'),
-    icon: HomeIcon,
-    fillIcon: SwapFillIcon,
+    icon: CampaignIcon,
+    fillIcon: CampaignIcon,
     href: '/campaigns',
     items: [],
     showItemsOnMobile: false,
@@ -46,7 +46,7 @@ const config: (
   {
     label: t('Trade'),
     icon: TradeIcon,
-    fillIcon: SwapFillIcon,
+    fillIcon: TradeIcon,
     href: '/swap',
     items: [
       {
@@ -64,40 +64,36 @@ const config: (
   {
     label: t('Farms'),
     href: '/farms',
-    icon: EarnIcon,
-    fillIcon: EarnFillIcon,
+    icon: FarmIcon,
+    fillIcon: FarmIcon,
     image: '/images/decorations/pe2.png',
-    supportChainIds: SUPPORT_ONLY_BSC,
     items: [],
     showItemsOnMobile: false,
   },
   {
     label: t('Staking'),
     href: '/staking',
-    icon: EarnIcon,
-    fillIcon: EarnFillIcon,
+    icon: StakingIcon,
+    fillIcon: StakingIcon,
     image: '/images/decorations/pe2.png',
-    supportChainIds: SUPPORT_ONLY_BSC,
     items: [],
     hideOnMobile: true,
   },
   {
     label: t('My NFTs'),
     href: '/my-nfts',
-    icon: EarnIcon,
-    fillIcon: EarnFillIcon,
+    icon: MyNftIcon,
+    fillIcon: MyNftIcon,
     image: '/images/decorations/pe2.png',
-    supportChainIds: SUPPORT_ONLY_BSC,
     items: [],
     hideOnMobile: true,
   },
   {
     label: t('Marketplace'),
     href: 'https://openlivenft.io/',
-    icon: EarnIcon,
-    fillIcon: EarnFillIcon,
+    icon: MarketplaceIcon,
+    fillIcon: MarketplaceIcon,
     image: '/images/decorations/pe2.png',
-    supportChainIds: SUPPORT_ONLY_BSC,
     type: DropdownMenuItemType.EXTERNAL_LINK,
     items: [],
     hideOnMobile: true,
@@ -105,10 +101,9 @@ const config: (
   {
     label: t('Token Info'),
     href: '/token-info',
-    icon: EarnIcon,
-    fillIcon: EarnFillIcon,
+    icon: TokenInfoIcon,
+    fillIcon: TokenInfoIcon,
     image: '/images/decorations/pe2.png',
-    supportChainIds: SUPPORT_ONLY_BSC,
     items: [],
     hideOnMobile: true,
   },
