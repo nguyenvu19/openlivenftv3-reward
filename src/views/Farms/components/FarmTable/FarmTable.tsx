@@ -1,10 +1,7 @@
 import styled from 'styled-components'
 import Dots from 'components/Loader/Dots'
+import { FarmsItemType } from 'state/farmsOpv/types'
 import FarmItem from './FarmItem'
-
-export interface ITableProps {
-  a?: any
-}
 
 const Container = styled.div<{ showBorder?: boolean }>`
   width: 100%;
@@ -47,7 +44,10 @@ const CenterStyled = styled.div`
   }
 `
 
-const FarmTable: React.FC<React.PropsWithChildren<ITableProps>> = () => {
+export interface Props {
+  farmsData?: FarmsItemType[]
+}
+const FarmTable: React.FC<Props> = ({ farmsData }) => {
   const data: any = [
     {
       poolId: 2,
@@ -117,10 +117,10 @@ const FarmTable: React.FC<React.PropsWithChildren<ITableProps>> = () => {
   const priceToken = 1.4690381679507757e-9
   const priceTokenLPs = 0.0013243180860025663
   return (
-    <Container showBorder={data.length <= 0}>
-      {data ? (
-        data.length > 0 ? (
-          data.map((item) => (
+    <Container showBorder={farmsData.length <= 0}>
+      {farmsData ? (
+        farmsData.length > 0 ? (
+          farmsData.map((item) => (
             <FarmItem
               key={item.poolId}
               filterBy={{}}

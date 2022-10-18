@@ -6,19 +6,22 @@ import CardTableMarketPlace from './components/CardTableMarketPlace'
 import CardTableTeamWallets from './components/CardTableTeamWallets'
 import CardTokensInfo from './components/CardTokensInfo'
 
+const TokenInfoContainer = styled.div`
+  padding-bottom: 70px;
+`
 const MyNftH2 = styled.div`
+  color: #007ca2;
   font-size: 16px;
   margin: 16px 0;
-  color: #007ca2;
   ${({ theme }) => theme.mediaQueries.sm} {
-    margin: 32px 0;
     font-size: 32px;
+    margin: 32px 0;
   }
 `
 const TokenInfo: React.FC<React.PropsWithChildren> = () => {
   const { t } = useTranslation()
   return (
-    <>
+    <TokenInfoContainer>
       <Container>
         <CardTokensInfo />
       </Container>
@@ -33,7 +36,7 @@ const TokenInfo: React.FC<React.PropsWithChildren> = () => {
         </Heading>
         <CardTableTeamWallets />
       </Container>
-    </>
+    </TokenInfoContainer>
   )
 }
 

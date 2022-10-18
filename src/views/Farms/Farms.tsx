@@ -8,6 +8,7 @@ import { useTranslation } from '@pancakeswap/localization'
 import { useUserFarmStakedOnly } from 'state/user/hooks'
 import { useRouter } from 'next/router'
 
+import { useFarmsData } from 'state/farmsOpv/fetchFarms'
 import Table from './components/FarmTable/FarmTable'
 import FarmTabButtons from './components/FarmTabButtons'
 
@@ -42,18 +43,13 @@ const ToggleWrapper = styled.div`
 const NUMBER_OF_FARMS_VISIBLE = 12
 
 const Farms: React.FC<React.PropsWithChildren> = () => {
-  const { pathname, query: urlQuery } = useRouter()
   const { t } = useTranslation()
 
   const [tabFarmActive, setTabFarmActive] = useState('live')
+  const [stakedOnly, setStakedOnly] = useUserFarmStakedOnly(false)
 
-  const [_query, setQuery] = useState('')
-
-  const isArchived = pathname.includes('archived')
-  const isInactive = pathname.includes('history')
-  const isActive = !isInactive && !isArchived
-
-  const [stakedOnly, setStakedOnly] = useUserFarmStakedOnly(isActive)
+  const { farmsData, totalUserDividendsAllPool } = useFarmsData()
+  console.log(farmsData)
 
   return (
     <FarmsContext.Provider value={{ chosenFarmsMemoized: [] }}>
@@ -78,7 +74,7 @@ const Farms: React.FC<React.PropsWithChildren> = () => {
           </ToggleWrapper>
         </ControlContainer>
 
-        <Table />
+        <Table farmsData={farmsData} />
         {/* 
         {account && !userDataLoaded && stakedOnly && (
           <Flex justifyContent="center">

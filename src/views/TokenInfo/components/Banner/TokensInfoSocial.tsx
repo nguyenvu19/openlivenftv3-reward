@@ -1,7 +1,10 @@
-import { Box, Button, Flex, Image, Link, Text, useTooltip } from '@pancakeswap/uikit'
-import styled from 'styled-components'
 import { Tooltip } from 'antd'
+import styled from 'styled-components'
+import { Box, Button, Flex, Image, Link, Text } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
+import { formatCode } from 'helpers'
+import { CopyButton } from 'components/CopyButton'
+import AddToWalletButton from 'components/AddToWallet/AddToWalletButton'
 
 const WTokensInfo = styled.div`
   .button-social {
@@ -42,46 +45,34 @@ const TokensInfoSocial = ({ dataInfo }) => {
   // textCommunity
   const textCommunity = (
     <Box>
-      <Link external href="https://t.me/OpenLiveNFT" target="_blank" style={{ textDecoration: 'none' }}>
+      <Link external href="https://t.me/OpenLiveNFT" style={{ textDecoration: 'none' }}>
         <Flex width="245px" height="20px" mt="4px" mb="4px" alignItems="center">
           <Text color="#000000" fontSize="11px" fontWeight="600">
-            {t('https://t.me/OpenLiveNFT')}
+            https://t.me/OpenLiveNFT
           </Text>
           <Image width={16} height={16} src="/imgTokensInfo/social.png" ml={[, , '8px']} />
         </Flex>
       </Link>
-      <Link
-        external
-        href="https://openlivenftproject.medium.com"
-        target="_blank"
-        mt="8px"
-        style={{ textDecoration: 'none' }}
-      >
+      <Link external href="https://openlivenftproject.medium.com" mt="8px" style={{ textDecoration: 'none' }}>
         <Flex width="245px" height="20px" mt="4px" mb="4px" alignItems="center">
           <Text color="#000000" fontSize="11px" fontWeight="600">
-            {t('https://openlivenftproject.medium.com')}
+            https://openlivenftproject.medium.com
           </Text>
           <Image width={16} height={16} src="/imgTokensInfo/social.png" ml={[, , '8px']} />
         </Flex>
       </Link>
-      <Link external href="https://twitter.com/OpenLiveNFT" target="_blank" mt="8px" style={{ textDecoration: 'none' }}>
+      <Link external href="https://twitter.com/OpenLiveNFT" mt="8px" style={{ textDecoration: 'none' }}>
         <Flex width="245px" height="20px" mt="4px" mb="4px" alignItems="center">
           <Text color="#000000" fontSize="11px" fontWeight="600">
-            {t('https://twitter.com/OpenLiveNFT')}
+            https://twitter.com/OpenLiveNFT
           </Text>
           <Image width={16} height={16} src="/imgTokensInfo/social.png" ml={[, , '8px']} />
         </Flex>
       </Link>
-      <Link
-        external
-        href="https://www.reddit.com/r/openLiveNFT"
-        target="_blank"
-        mt="8px"
-        style={{ textDecoration: 'none' }}
-      >
+      <Link external href="https://www.reddit.com/r/openLiveNFT" mt="8px" style={{ textDecoration: 'none' }}>
         <Flex width="245px" height="20px" mt="4px" mb="4px" alignItems="center">
           <Text color="#000000" fontSize="11px" fontWeight="600">
-            {t('https://www.reddit.com/r/openLiveNFT')}
+            https://www.reddit.com/r/openLiveNFT
           </Text>
           <Image width={16} height={16} src="/imgTokensInfo/social.png" ml={[, , '8px']} />
         </Flex>
@@ -91,18 +82,18 @@ const TokensInfoSocial = ({ dataInfo }) => {
   // tooltipChat
   const tooltipChat = (
     <Box>
-      <Link external href="https://t.me/OpenLiveNFT" target="_blank" style={{ textDecoration: 'none' }}>
+      <Link external href="https://t.me/OpenLiveNFT" style={{ textDecoration: 'none' }}>
         <Flex width="400px" height="20px" mt="4px" mb="4px" alignItems="center">
           <Text fontSize="11px" fontWeight="600" color="#000000">
-            {t('https://t.me/OpenLiveNFT')}
+            https://t.me/OpenLiveNFT
           </Text>
           <Image width={16} height={16} src="/imgTokensInfo/social.png" ml={[, , '8px']} />
         </Flex>
       </Link>
-      <Link external href="https://discord.com/invite/47pTAVsEUF" target="_blank" style={{ textDecoration: 'none' }}>
+      <Link external href="https://discord.com/invite/47pTAVsEUF" style={{ textDecoration: 'none' }}>
         <Flex width="400px" height="20px" mt="4px" mb="4px" alignItems="center">
           <Text fontSize="11px" fontWeight="600" color="#000000">
-            {t('https://discord.com/invite/47pTAVsEUF')}
+            https://discord.com/invite/47pTAVsEUF
           </Text>
           <Image width={16} height={16} src="/imgTokensInfo/social.png" ml={[, , '8px']} />
         </Flex>
@@ -151,15 +142,15 @@ const TokensInfoSocial = ({ dataInfo }) => {
               {dataInfo?.symbol}
             </Text>
           </Box>
-          <Button className="button-social-share" width="90px" height="32px" ml={['8px', , '16px']} padding="6px 8px">
+          {/* <Button className="button-social-share" width="90px" height="32px" ml={['8px', , '16px']} padding="6px 8px">
             <Image width={20} height={20} src="/imgTokensInfo/share.png" mr="8px" />
             <Text fontSize={[12, , 14]} color="#000000">
               {t('Share')}
             </Text>
-          </Button>
+          </Button> */}
         </Flex>
         <Flex alignItems="center" mt={['8px', , '32px']} flexWrap="wrap">
-          <Link href="https://openlivenft.com" style={{ textDecoration: 'none' }}>
+          <Link external href="https://openlivenft.com" style={{ textDecoration: 'none' }}>
             <Button className="button-social" width={[170, , 200]} height="32px" mt={['8px', , , ,]} padding="6px 8px">
               <Image width={20} height={20} src="/imgTokensInfo/link.png" mr={['8px', , '16px']} />
               <Text fontSize={[12, , 14]} fontWeight="600" color="#000000">
@@ -169,7 +160,7 @@ const TokensInfoSocial = ({ dataInfo }) => {
             </Button>
           </Link>
           <Link
-            target="_blank"
+            external
             href="https://bscscan.com/address/0x36C7B164F85D6F775cD128966D5819c7d36FEfF3"
             style={{ textDecoration: 'none' }}
           >
@@ -225,7 +216,7 @@ const TokensInfoSocial = ({ dataInfo }) => {
             </Button>
           </Tooltip>
 
-          <Link href="https://docs.openlivenft.com" target="_blank" style={{ textDecoration: 'none' }}>
+          <Link external href="https://docs.openlivenft.com" style={{ textDecoration: 'none' }}>
             <Button
               className="button-social"
               width={[145, , 168]}
@@ -260,29 +251,36 @@ const TokensInfoSocial = ({ dataInfo }) => {
               height="27px"
             >
               <Image width={20} height={20} src="/imgTokensInfo/binance.png" mr="8px" />
-              <Link
-                href={`https://bscscan.com/address/${dataInfo?.platform?.token_address}`}
-                target="_blank"
-                display="flex"
-              >
-                <Text fontSize={[9, , 12]} fontWeight="400" color="#000000">
+              <Link external href={`https://bscscan.com/address/${dataInfo?.platform?.token_address}`} display="flex">
+                <Text fontSize={[9, , 12]} fontWeight="400" color="#000000" style={{ whiteSpace: 'nowrap' }}>
                   <span style={{ color: '#5B708F' }}>{dataInfo?.platform?.name} Smart Chain (BEP20):</span>
-                  <span style={{ color: '#000', fontWeight: '600' }}>0x36C7...36FEfF3</span>
+                  <span style={{ color: '#000', fontWeight: '600' }}>
+                    {formatCode(dataInfo?.platform?.token_address, 6, 6)}
+                  </span>
                 </Text>
               </Link>
               {/* button-coppy */}
-              <Tooltip color="#000" placement="top" title={textButtonCoppy}>
-                <Box width={12} height={14} ml="8px" className="token-info-button-coppy">
-                  <Image width={12} height={14} src="/imgTokensInfo/coppy.png" />
-                </Box>
-              </Tooltip>
-
-              {/* button-metamask */}
-              <Tooltip color="#000" placement="top" title={textButtonMetaMask}>
-                <Box width={16} height={16} className="token-info-button-metamask" ml="8px">
-                  <Image width={16} height={16} src="/imgTokensInfo/metamask.png" />
-                </Box>
-              </Tooltip>
+              <Flex style={{ gap: '4px', position: 'relative' }} ml="4px" alignItems="center">
+                <CopyButton
+                  width="16px"
+                  buttonColor="textSubtle"
+                  text={dataInfo?.platform?.token_address}
+                  tooltipMessage={t('Token address copied')}
+                  tooltipTop={-20}
+                  tooltipRight={40}
+                  tooltipFontSize={12}
+                />
+                <AddToWalletButton
+                  variant="text"
+                  p="0"
+                  height="auto"
+                  width="fit-content"
+                  tokenAddress={dataInfo?.platform?.token_address}
+                  tokenSymbol="OPV"
+                  tokenDecimals={18}
+                  tokenLogo=""
+                />
+              </Flex>
             </Flex>
           </Box>
           <Box ml={[0, , '24px', '54px']} mt={['16px', , 0, 0]}>
@@ -296,7 +294,11 @@ const TokensInfoSocial = ({ dataInfo }) => {
                 </Box>
               </Tooltip>
             </Flex>
-            <Link href="https://cmc.certik-skynet.com/redirect?project=openlive-nft" style={{ textDecoration: 'none' }}>
+            <Link
+              external
+              href="https://cmc.certik-skynet.com/redirect?project=openlive-nft"
+              style={{ textDecoration: 'none' }}
+            >
               <Button
                 className="button-social"
                 width={[130, , 127]}

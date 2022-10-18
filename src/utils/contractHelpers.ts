@@ -93,6 +93,7 @@ import bCakeFarmBoosterAbi from 'config/abi/bCakeFarmBooster.json'
 import bCakeFarmBoosterProxyFactoryAbi from 'config/abi/bCakeFarmBoosterProxyFactory.json'
 import bCakeProxyAbi from 'config/abi/bCakeProxy.json'
 import campaignAbi from 'config/abi/campaignAbi.json'
+import farmOpvAbi from 'config/abi/farmOpvAbi.json'
 
 // Types
 import type {
@@ -141,9 +142,10 @@ import type {
   BCakeFarmBoosterProxyFactory,
   BCakeProxy,
   CampaignAbi,
+  FarmOpvAbi,
 } from 'config/abi/types'
 import { ChainId } from '@pancakeswap/sdk'
-import { CONTRACT_ADDRESS, DEFAULT_CHAIN_ID } from 'config'
+import { CONTRACT_ADDRESS, CONTRACT_FARM, DEFAULT_CHAIN_ID } from 'config'
 
 export const getContract = ({
   abi,
@@ -369,4 +371,8 @@ export const getBCakeProxyContract = (proxyContractAddress: string, signer?: Sig
 // new
 export const getCampaignContract = (signer?: Signer | Provider) => {
   return getContract({ abi: campaignAbi, address: CONTRACT_ADDRESS, signer }) as CampaignAbi
+}
+
+export const getContractOpvFarm = (signer?: Signer | Provider) => {
+  return getContract({ abi: farmOpvAbi, address: CONTRACT_FARM, signer }) as FarmOpvAbi
 }
