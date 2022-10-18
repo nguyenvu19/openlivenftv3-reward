@@ -1,10 +1,3 @@
-import { CHAIN_IDS } from 'utils/wagmi'
-import TokensInfo from 'views/TokensInfo'
-
-const TokenInfo = () => {
-  return <TokensInfo />
-}
-
-TokenInfo.chains = CHAIN_IDS
+import TokenInfo from 'views/TokenInfo'
 
 export default TokenInfo
