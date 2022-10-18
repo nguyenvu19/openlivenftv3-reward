@@ -1,6 +1,8 @@
+import { useEffect, useState } from 'react'
+import axios from 'axios'
 import styled from 'styled-components'
-import TokensInfoSocial from './TokensInfoSocial'
 import TokensInfoPrice from './TokensInfoPrice'
+import TokensInfoSocial from './TokensInfoSocial'
 
 const WCardTokenInfo = styled.div`
   width: 100%;
@@ -18,11 +20,37 @@ const WCardTokenInfo = styled.div`
   }
 `
 
+interface optionsProp {
+  // eslint-disable-next-line camelcase
+  url: any
+  headers: any
+  json: any
+  fetData: any
+  data: any
+}
+
 const CardTokensInfo = () => {
+  const [fetData, setFetData] = useState<optionsProp>()
+
+  // const dataInfo = fetData && Object.values(fetData?.data?.dataInfo?.data)
+  const dataLatest = fetData && Object.values(fetData?.data?.dataLatest?.data)
+
+  useEffect(() => {
+    async function fetchMyAPI() {
+      try {
+        const res = await axios.get('api/token-info?slug=openlive-nft')
+        setFetData(res?.data)
+      } catch (ex) {
+        console.log('ex', ex)
+      }
+    }
+    fetchMyAPI()
+  }, [])
+
   return (
     <WCardTokenInfo>
       <TokensInfoSocial />
-      <TokensInfoPrice />
+      <TokensInfoPrice dataLatest={fetData && dataLatest?.[0]} />
     </WCardTokenInfo>
   )
 }

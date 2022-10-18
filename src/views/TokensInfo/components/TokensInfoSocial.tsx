@@ -267,7 +267,7 @@ const TokensInfoSocial = (props) => {
               >
                 <Text fontSize={[9, , 12]} fontWeight="400" color="#000000">
                   <span style={{ color: '#5B708F' }}>BNB Smart Chain (BEP20):</span>
-                  <span style={{ color: '#000', fontSize: '11px', fontWeight: '600' }}>0x36C7...36FEfF3</span>
+                  <span style={{ color: '#000', fontWeight: '600' }}>0x36C7...36FEfF3</span>
                 </Text>
               </Link>
               {/* button-coppy */}
