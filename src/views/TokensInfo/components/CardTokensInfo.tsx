@@ -32,8 +32,10 @@ interface optionsProp {
 const CardTokensInfo = () => {
   const [fetData, setFetData] = useState<optionsProp>()
 
-  // const dataInfo = fetData && Object.values(fetData?.data?.dataInfo?.data)
-  const dataLatest = fetData && Object.values(fetData?.data?.dataLatest?.data)
+  const dataInfo = fetData && Object.values(fetData?.data?.dataInfo?.data)?.[0]
+  const dataLatest = fetData && Object.values(fetData?.data?.dataLatest?.data)?.[0]
+  const dataInfoBtc = fetData?.data?.dataInfoBtc
+  const dataInfoEth = fetData?.data?.dataInfoEth
 
   useEffect(() => {
     async function fetchMyAPI() {
@@ -49,8 +51,13 @@ const CardTokensInfo = () => {
 
   return (
     <WCardTokenInfo>
-      <TokensInfoSocial />
-      <TokensInfoPrice dataLatest={fetData && dataLatest?.[0]} />
+      <TokensInfoSocial dataInfo={dataInfo} />
+      <TokensInfoPrice
+        dataInfo={fetData && dataInfo}
+        dataLatest={fetData && dataLatest}
+        dataInfoBtc={dataInfoBtc}
+        dataInfoEth={dataInfoEth}
+      />
     </WCardTokenInfo>
   )
 }

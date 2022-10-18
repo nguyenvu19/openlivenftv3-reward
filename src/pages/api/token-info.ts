@@ -39,12 +39,15 @@ export default async function handler(req, res) {
         'X-CMC_PRO_API_KEY': '72867771-a2ea-44b6-ae97-68281f28942c',
       },
     })
-
-    const [resultLatest, resultInfo] = await Promise.all([promise1, promise2])
+    const promise3 = await axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin')
+    const promise4 = await axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=ethereum')
+    const [resultLatest, resultInfo, tokensBtc, tokensEth] = await Promise.all([promise1, promise2, promise3, promise4])
 
     const dataAll = {
       dataLatest: resultLatest.data,
       dataInfo: resultInfo.data,
+      dataInfoBtc: tokensBtc.data[0],
+      dataInfoEth: tokensEth.data[0],
     }
 
     return res.status(200).json({
