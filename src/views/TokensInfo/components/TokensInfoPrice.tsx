@@ -3,23 +3,24 @@ import { useEffect, useState } from 'react'
 import CurrencyFormat from 'react-currency-format'
 import { Progress, Tooltip } from 'antd'
 import { isNumber, roundNumber } from 'helpers'
+import { formatAmount } from 'utils/formatInfoNumbers'
 import { Box, Button, Flex, Image, Text } from '@pancakeswap/uikit'
 import styled from 'styled-components'
 import BoxInforDetailItem from './BoxInforDetailItem'
 
-const text = (
-  <Box>
-    <Text fontSize={['12px', , '13px']} color="#000" style={{ cursor: 'pointer' }}>
-      24h Low/High
-    </Text>
-    <Text mt="8px" fontSize={['12px', , '13px']} color="#000" style={{ cursor: 'pointer' }}>
-      1m Low/High
-    </Text>
-    <Text mt="8px" fontSize={['12px', , '13px']} color="#000" style={{ cursor: 'pointer' }}>
-      1y Low/High
-    </Text>
-  </Box>
-)
+// const text = (
+//   <Box>
+//     <Text fontSize={['12px', , '13px']} color="#000" style={{ cursor: 'pointer' }}>
+//       24h Low/High
+//     </Text>
+//     <Text mt="8px" fontSize={['12px', , '13px']} color="#000" style={{ cursor: 'pointer' }}>
+//       1m Low/High
+//     </Text>
+//     <Text mt="8px" fontSize={['12px', , '13px']} color="#000" style={{ cursor: 'pointer' }}>
+//       1y Low/High
+//     </Text>
+//   </Box>
+// )
 
 const WTokensInfoPrice = styled.div`
   width: 100%;
@@ -35,50 +36,57 @@ const WTokenInfoPriceDetail = styled.div`
   }
 `
 
-const WProgress = styled.div`
-  width: 130px;
-  .ant-progress-inner {
-    overflow: unset;
-    .ant-progress-bg {
-      background: #c9d0df;
-      height: 4px !important;
-      &::before {
-        content: '';
-        position: absolute;
-        right: -4px;
-        top: 6px;
-        width: 10px;
-        height: 10px;
-        background: #c9d0df;
-        border-radius: 4px;
-        transform: rotate(45deg);
-      }
-      &::after {
-        content: '';
-        position: absolute;
-        right: -8px;
-        top: 13.5px;
-        width: 20px;
-        height: 12px;
-        background: #eefbff;
-      }
-    }
-  }
-`
+// const WProgress = styled.div`
+//   width: 130px;
+//   .ant-progress-inner {
+//     overflow: unset;
+//     .ant-progress-bg {
+//       background: #c9d0df;
+//       height: 4px !important;
+//       &::before {
+//         content: '';
+//         position: absolute;
+//         right: -4px;
+//         top: 6px;
+//         width: 10px;
+//         height: 10px;
+//         background: #c9d0df;
+//         border-radius: 4px;
+//         transform: rotate(45deg);
+//       }
+//       &::after {
+//         content: '';
+//         position: absolute;
+//         right: -8px;
+//         top: 13.5px;
+//         width: 20px;
+//         height: 12px;
+//         background: #eefbff;
+//       }
+//     }
+//   }
+// `
 
-const TokensInfoPrice = ({ dataLatest }) => {
+const TokensInfoPrice = ({ dataLatest, dataInfo, dataInfoBtc, dataInfoEth }) => {
   const { t } = useTranslation()
-  const price = dataLatest?.quote?.USD?.price
+  const priceOpv = dataLatest?.quote?.USD?.price
+  const currentPriceBtc = dataInfoBtc?.current_price
+  const currentPriceEth = dataInfoEth?.current_price
+  const priceBtc = priceOpv / currentPriceBtc
+  const priceEth = priceOpv / currentPriceEth
 
   return (
     <>
       <WTokensInfoPrice>
-        <Text>{t('OpenLive NFT Price (OPV)')}</Text>
+        <Text>
+          {dataLatest?.name || dataInfo?.name}
+          {t(' Price ')}({dataLatest?.symbol || dataInfo?.symbol})
+        </Text>
         <Flex alignItems="center" mt="14px">
           <Text as="h2" color="#000" fontSize={['16px', , '24px']} fontWeight="700" pb="4px" mb="0" mr="24px">
-            {isNumber(price) ? (
+            {isNumber(priceOpv) ? (
               <CurrencyFormat
-                value={roundNumber(price, { decimals: null })}
+                value={roundNumber(priceOpv, { decimals: null })}
                 displayType="text"
                 thousandSeparator
                 prefix={` $`}
@@ -88,38 +96,52 @@ const TokensInfoPrice = ({ dataLatest }) => {
               '--'
             )}
           </Text>
-          <Flex alignItems="center" width="72px" padding="6px" style={{ background: '#D71515' }} borderRadius="8px">
+          {/* <Flex alignItems="center" width="72px" padding="6px" style={{ background: '#D71515' }} borderRadius="8px">
             <Image width={10} height={10} src="/imgTokensInfo/down-white.png" mr="8px" />
             <Text fontSize={['12px', , '14px']} color="#fff" fontWeight="600">
               0.02%
             </Text>
-          </Flex>
+          </Flex> */}
         </Flex>
         {/*  */}
         <Flex alignItems="center" mt="14px">
           <Text color="#5B708F" fontSize={['12px', , '14px']} fontWeight="700" mb="0" mr="16px">
-            0.000006863 BTC
+            {isNumber(priceBtc) ? (
+              <Flex>
+                {formatAmount(priceBtc)}&nbsp;
+                <p style={{ textTransform: 'uppercase' }}> {dataInfoBtc?.symbol}</p>
+              </Flex>
+            ) : (
+              '--'
+            )}
           </Text>
-          <Flex width={80} alignItems="center">
+          {/* <Flex width={80} alignItems="center">
             <Image width={10} height={10} src="/imgTokensInfo/down-red.png" mr="8px" />
             <Text fontSize={['12px', , '14px']} color="#D71515" fontWeight="600">
               0.02%
             </Text>
-          </Flex>
+          </Flex> */}
         </Flex>
         <Flex alignItems="center" mt="14px">
           <Text color="#5B708F" fontSize={['12px', , '14px']} fontWeight="700" mb="0" mr="16px">
-            0.000006863 ETH
+            {isNumber(priceEth) ? (
+              <Flex>
+                {formatAmount(priceEth)}&nbsp;
+                <p style={{ textTransform: 'uppercase' }}> {dataInfoEth?.symbol}</p>
+              </Flex>
+            ) : (
+              '--'
+            )}
           </Text>
-          <Flex width={80} alignItems="center">
+          {/* <Flex width={80} alignItems="center">
             <Image width={10} height={10} src="/imgTokensInfo/down-red.png" mr="8px" />
             <Text fontSize={['12px', , '14px']} color="#D71515" fontWeight="600">
               5.04%
             </Text>
-          </Flex>
+          </Flex> */}
         </Flex>
         <Flex alignItems="center" flexWrap="wrap" mt="14px">
-          <Flex alignItems="center">
+          {/* <Flex alignItems="center">
             <Flex alignItems="center">
               <Text color="#5B708F" fontSize={['12px', , '14px']} fontWeight="400" mb="0" mr="4px">
                 {t('Low')}:
@@ -139,10 +161,10 @@ const TokensInfoPrice = ({ dataLatest }) => {
                 $0.1329
               </Text>
             </Flex>
-          </Flex>
+          </Flex> */}
 
           {/* <Tooltip color="#fff" placement="bottom" title={text} trigger={['click']}> */}
-          <Button
+          {/* <Button
             mt={['16px', , 0, 0]}
             width="61px"
             height="27px"
@@ -154,7 +176,7 @@ const TokensInfoPrice = ({ dataLatest }) => {
               24h
             </Text>
             <Image width={10} height={10} src="/imgTokensInfo/down-outline.png" ml="8px" />
-          </Button>
+          </Button> */}
           {/* </Tooltip> */}
         </Flex>
       </WTokensInfoPrice>

@@ -36,7 +36,7 @@ const WTokensInfo = styled.div`
   }
 `
 
-const TokensInfoSocial = (props) => {
+const TokensInfoSocial = ({ dataInfo }) => {
   const { t } = useTranslation()
 
   // textCommunity
@@ -109,13 +109,13 @@ const TokensInfoSocial = (props) => {
       </Link>
     </Box>
   )
-  // tooltipAudist
-  const tooltipAudist = (
+  // tooltipAudit
+  const tooltipAudit = (
     <Text fontSize={[12, , 13]} color="#000">
       {t('Partners listed below conduct security assessments on the provided source code.')}
     </Text>
   )
-  // textButtonCoppy
+  // textButtonCopy
   const textButtonCoppy = (
     <Box>
       <Flex width="80px" height="20px" mt="4px" mb="4px" alignItems="center">
@@ -137,18 +137,18 @@ const TokensInfoSocial = (props) => {
   )
 
   return (
-    <WTokensInfo {...props}>
+    <WTokensInfo>
       <Box>
         <Flex alignItems="center">
-          <Box width="31px" mr={['4px', , '16px']}>
-            <Image width={30} height={30} src="/images2/opvIcon.png" />
+          <Box style={{ borderRadius: '50%', overflow: 'hidden' }} width="31px" mr={['4px', , '16px']}>
+            <Image width={30} height={30} src={dataInfo?.logo} />
           </Box>
           <Text color="#007CA1" fontWeight="700" fontSize={[12, 14, 24]} mb="0">
-            {t('OpenLive NFT')}
+            {dataInfo?.name}
           </Text>
           <Box ml={['8px', , '32px']} background="#EDF0F3" borderRadius="8px">
             <Text color="#000000" fontSize={[12, , 16]} padding="2px 24px">
-              OPV
+              {dataInfo?.symbol}
             </Text>
           </Box>
           <Button className="button-social-share" width="90px" height="32px" ml={['8px', , '16px']} padding="6px 8px">
@@ -261,12 +261,12 @@ const TokensInfoSocial = (props) => {
             >
               <Image width={20} height={20} src="/imgTokensInfo/binance.png" mr="8px" />
               <Link
-                href="https://bscscan.com/address/0x36C7B164F85D6F775cD128966D5819c7d36FEfF3"
+                href={`https://bscscan.com/address/${dataInfo?.platform?.token_address}`}
                 target="_blank"
                 display="flex"
               >
                 <Text fontSize={[9, , 12]} fontWeight="400" color="#000000">
-                  <span style={{ color: '#5B708F' }}>BNB Smart Chain (BEP20):</span>
+                  <span style={{ color: '#5B708F' }}>{dataInfo?.platform?.name} Smart Chain (BEP20):</span>
                   <span style={{ color: '#000', fontWeight: '600' }}>0x36C7...36FEfF3</span>
                 </Text>
               </Link>
@@ -290,7 +290,7 @@ const TokensInfoSocial = (props) => {
               <Text fontSize={[12, , 14]} fontWeight="600" color="#002C6F">
                 {t('Audist')}:
               </Text>
-              <Tooltip color="#fff" placement="bottom" title={tooltipAudist}>
+              <Tooltip color="#fff" placement="bottom" title={tooltipAudit}>
                 <Box width={20} height={20} ml={['8px', , '16px']}>
                   <Image width={20} height={20} src="/imgTokensInfo/information.png" />
                 </Box>
