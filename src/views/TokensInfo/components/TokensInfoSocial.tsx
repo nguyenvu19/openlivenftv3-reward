@@ -39,8 +39,6 @@ const WTokensInfo = styled.div`
 const TokensInfoSocial = ({ dataInfo }) => {
   const { t } = useTranslation()
 
-  console.log('dataInfo?.playform?.name', dataInfo?.platform?.name)
-
   // textCommunity
   const textCommunity = (
     <Box>
