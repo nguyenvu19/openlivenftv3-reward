@@ -1,8 +1,10 @@
 import { useTranslation } from '@pancakeswap/localization'
-import { Box, Button, Flex, Image, Text, useMatchBreakpoints } from '@pancakeswap/uikit'
+import { Box, Button, Flex, Image, Link, Text } from '@pancakeswap/uikit'
 import { Table, Tooltip } from 'antd'
+import CurrencyFormat from 'react-currency-format'
+import { roundNumber } from 'helpers'
+import { useInfoMarketPairs } from 'state/tokenInfo/hooks'
 import styled from 'styled-components'
-// import TokensInforItem from './TokensInforItem'
 
 const WCardTableMarketPlace = styled.div`
   margin-top: 24px;
@@ -56,6 +58,12 @@ const WCardTableMarketPlace = styled.div`
       }
       .tokens-item-pairs {
         color: #007ca1;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        img {
+          margin-left: 5px;
+        }
       }
       .tokens-item-confidend {
         p {
@@ -76,36 +84,55 @@ const WCardTableMarketPlace = styled.div`
 
 const CardTableMarketPlace = () => {
   const { t } = useTranslation()
-  const { isMobile } = useMatchBreakpoints()
+
+  const { infoMarketPair } = useInfoMarketPairs()
+
   const columns = [
     {
       title: '#',
       dataIndex: 'id',
-      render: (text) => {
-        return <div className="staking-item-id">{text}</div>
+      render: (_, __, index) => {
+        return <div className="staking-item-id">{index + 1}</div>
       },
     },
     {
       title: t('source'),
-      dataIndex: 'source',
+      dataIndex: 'exchangeName',
       render: (text, record) => {
         return (
-          <Flex alignItems="center" className="staking-item-source" style={{ transform: 'translateY(6px)' }}>
-            <Box width={24} height={24} mr="8px">
-              <Image width={24} height={24} src={record.currency} />
-            </Box>
-            {text}
-          </Flex>
+          <Link external href={record.marketUrl}>
+            <Flex alignItems="center" className="staking-item-source" style={{ transform: 'translateY(6px)' }}>
+              <Box width={24} height={24} mr="8px">
+                <Image
+                  width={24}
+                  height={24}
+                  src={`https://s2.coinmarketcap.com/static/img/exchanges/64x64/${record.exchangeId}.png`}
+                />
+              </Box>
+              {text}
+            </Flex>
+          </Link>
         )
       },
     },
     {
       title: <div style={{ textAlign: 'center' }}>{t('Pairs')}</div>,
-      dataIndex: 'pairs',
-      render: (text) => {
+      dataIndex: 'marketPair',
+      render: (text, record) => {
         return (
           <div className="tokens-item-pairs" style={{ textAlign: 'center' }}>
             {text}
+            {record.dexerUrl && (
+              <Link external href={record.dexerUrl}>
+                <Box width={24} height={24} mr="8px">
+                  <Image
+                    width={24}
+                    height={24}
+                    src="https://s2.coinmarketcap.com/static/cloud/img/dex/dexer-flag.png"
+                  />
+                </Box>
+              </Link>
+            )}
           </div>
         )
       },
@@ -113,43 +140,69 @@ const CardTableMarketPlace = () => {
     {
       title: <div style={{ textAlign: 'center' }}>{t('Price')}</div>,
       dataIndex: 'price',
-      render: () => {
+      render: (text) => {
         return (
           <div className="tokens-item-amount" style={{ textAlign: 'center' }}>
-            0.00001 OPV
+            ${roundNumber(text, { scale: 4 })}
           </div>
         )
       },
     },
     {
-      title: <div style={{ textAlign: 'center' }}>{t('Depth')}</div>,
-      dataIndex: 'depth',
+      title: <div style={{ textAlign: 'center' }}>{t('+2% Depth')}</div>,
+      dataIndex: 'depthUsdPositiveTwo',
       render: (text) => {
         return (
           <div className="tokens-item-amount" style={{ textAlign: 'center' }}>
-            {text}
+            {text ? (
+              <CurrencyFormat
+                value={roundNumber(text, { scale: 2 })}
+                thousandSeparator
+                displayType="text"
+                prefix="$"
+                renderText={(txt) => txt}
+              />
+            ) : (
+              '-'
+            )}
+          </div>
+        )
+      },
+    },
+    {
+      title: <div style={{ textAlign: 'center' }}>{t('-2% Depth')}</div>,
+      dataIndex: 'depthUsdNegativeTwo',
+      render: (text) => {
+        return (
+          <div className="tokens-item-amount" style={{ textAlign: 'center' }}>
+            {text ? (
+              <CurrencyFormat
+                value={roundNumber(text, { scale: 2 })}
+                thousandSeparator
+                displayType="text"
+                prefix="$"
+                renderText={(txt) => txt}
+              />
+            ) : (
+              '-'
+            )}
           </div>
         )
       },
     },
     {
       title: <div style={{ textAlign: 'center' }}>{t('Volume')}</div>,
-      dataIndex: 'volume',
+      dataIndex: 'volumeUsd',
       render: (text) => {
         return (
           <div className="tokens-item-amount" style={{ textAlign: 'center' }}>
-            {text}
-          </div>
-        )
-      },
-    },
-    {
-      title: <div style={{ textAlign: 'center' }}>{t('Volume %')}</div>,
-      dataIndex: 'volume2',
-      render: (text) => {
-        return (
-          <div className="tokens-item-amount" style={{ textAlign: 'center' }}>
-            {text}
+            <CurrencyFormat
+              value={Math.round(text)}
+              thousandSeparator
+              displayType="text"
+              prefix="$"
+              renderText={(txt) => txt}
+            />
           </div>
         )
       },
@@ -157,79 +210,51 @@ const CardTableMarketPlace = () => {
     {
       title: <div style={{ textAlign: 'center' }}>{t('Confidence')}</div>,
       dataIndex: 'confidence',
-      render: (text, record) => {
+      render: () => {
         return (
           <div className="tokens-item-confidend" style={{ textAlign: 'center' }}>
-            <p data-confidend={record.confidence}>{text}</p>
+            <p data-confidend="High">High</p>
           </div>
         )
       },
     },
     {
-      title: <div style={{ textAlign: 'center' }}>{t('Liquidity')}</div>,
-      dataIndex: 'liquidity',
+      title: <div style={{ textAlign: 'center' }}>{t('Liquidity Score')}</div>,
+      dataIndex: 'effectiveLiquidity',
       render: (text) => {
         return (
           <div className="tokens-item-amount" style={{ textAlign: 'center' }}>
-            {text}
+            {Math.round(text)}
           </div>
         )
       },
     },
     {
       title: <div style={{ textAlign: 'center' }}>{t('Updated')}</div>,
-      dataIndex: 'updated',
-      render: (text) => {
+      dataIndex: 'text',
+      render: () => {
         return (
           <div className="tokens-item-amount" style={{ textAlign: 'center' }}>
-            {text}
+            Recently
           </div>
         )
       },
     },
   ]
-  const data = [
-    {
-      id: 1,
-      source: 'MEXC',
-      currency: '/imgTokensInfo/mexc.png',
-      pairs: 'OPV/USDT',
-      price: '$0.1327',
-      depth: '$23.327',
-      volume: '-',
-      volume2: '94.07%',
-      confidence: 'High',
-      liquidity: '4',
-      updated: 'Recently',
-    },
-    {
-      id: 2,
-      source: 'PancakeSwap (V2)',
-      currency: '/imgTokensInfo/pankcake.png',
-      pairs: 'OPV/USDT',
-      price: '$0.1327',
-      depth: '$23.327',
-      volume: '-',
-      volume2: '94.07%',
-      confidence: 'N/A',
-      liquidity: '4',
-      updated: 'Recently',
-    },
-  ]
 
-  const text = (
-    <Box>
-      <Text fontSize={['12px', , '13px']} color="#000" style={{ cursor: 'pointer' }}>
-        24h Low/High
-      </Text>
-      <Text mt="8px" fontSize={['12px', , '13px']} color="#000" style={{ cursor: 'pointer' }}>
-        1m Low/High
-      </Text>
-      <Text mt="8px" fontSize={['12px', , '13px']} color="#000" style={{ cursor: 'pointer' }}>
-        1y Low/High
-      </Text>
-    </Box>
-  )
+  // const text = (
+  //   <Box>
+  //     <Text fontSize={['12px', , '13px']} color="#000" style={{ cursor: 'pointer' }}>
+  //       24h Low/High
+  //     </Text>
+  //     <Text mt="8px" fontSize={['12px', , '13px']} color="#000" style={{ cursor: 'pointer' }}>
+  //       1m Low/High
+  //     </Text>
+  //     <Text mt="8px" fontSize={['12px', , '13px']} color="#000" style={{ cursor: 'pointer' }}>
+  //       1y Low/High
+  //     </Text>
+  //   </Box>
+  // )
   return (
     <WCardTableMarketPlace>
       <Flex alignItems="center" justifyContent="space-between" mb="32px" mt="16px">
@@ -237,10 +262,10 @@ const CardTableMarketPlace = () => {
           {t('OpenLive NFT Markets')}
         </Text>
         <Flex alignItems="center">
-          <Text color="#5B708F" fontWeight="600" fontSize={[12, , 14]} mb="0" mr="24px">
+          <Text color="#5B708F" fontWeight="600" fontSize={[12, , 14]} mb="0">
             {t('Pair')}
           </Text>
-          <Tooltip color="#fff" placement="bottom" title={text} trigger={['click']}>
+          {/* <Tooltip color="#fff" placement="bottom" title={text} trigger={['click']}>
             <Button
               width="61px"
               height="27px"
@@ -253,7 +278,7 @@ const CardTableMarketPlace = () => {
               </Text>
               <Image width={10} height={10} src="/imgTokensInfo/down-outline.png" ml="8px" />
             </Button>
-          </Tooltip>
+          </Tooltip> */}
         </Flex>
       </Flex>
       {/* {isMobile ? (
@@ -275,7 +300,7 @@ const CardTableMarketPlace = () => {
         columns={columns}
         scroll={{ x: 400 }}
         rowKey={(record) => record.id}
-        dataSource={data}
+        dataSource={infoMarketPair?.data?.marketPairs || []}
         pagination={false}
       />
     </WCardTableMarketPlace>

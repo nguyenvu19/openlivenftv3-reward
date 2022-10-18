@@ -10,7 +10,7 @@ export const isNumber = (value) => {
 }
 
 // ================================================================================
-export function roundNumber(n, options) {
+export function roundNumber(n, options?: { scale?: number; decimals?: number }) {
   const { scale = 3, decimals } = options || {
     scale: 3,
   }
