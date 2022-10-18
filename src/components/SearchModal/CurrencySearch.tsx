@@ -245,14 +245,14 @@ function CurrencySearch({
             onKeyDown={handleEnter}
           />
         </Row>
-        {showCommonBases && (
+        {/* {showCommonBases && (
           <CommonBases
             chainId={chainId}
             onSelect={handleCurrencySelect}
             selectedCurrency={selectedCurrency}
             commonBasesType={commonBasesType}
           />
-        )}
+        )} */}
       </AutoColumn>
       {getCurrencyListRows()}
     </>

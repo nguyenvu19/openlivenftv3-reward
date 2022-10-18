@@ -45,7 +45,7 @@ const MenuEntry = styled.div<Props>`
   .w-icon {
     width: 46px;
     height: 35px;
-    margin-right: 10px;
+    margin-right: 14px;
   }
   .w-sub-icon {
     width: 42px;
@@ -58,7 +58,7 @@ const MenuEntry = styled.div<Props>`
     justify-content: center;
   }
   .w-icon svg {
-    fill: #fff;
+    fill: ${({ theme }) => theme.colors.primary};
   }
   .w-sub-icon svg {
     fill: ${({ theme }) => theme.colors.primary};
@@ -72,6 +72,7 @@ const MenuEntry = styled.div<Props>`
     background: #1eaab2;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 0px 10px 10px 10px;
+    margin-right: 10px;
   }
   .w-sub-icon.active svg {
     fill: #1eaab2;

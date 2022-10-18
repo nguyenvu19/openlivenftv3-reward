@@ -4,6 +4,7 @@ import Accordion from "./Accordion";
 import { MenuEntry } from "./MenuEntry";
 import MenuLink from "./MenuLink";
 import { PanelProps, PushedProps } from "../../types";
+import { Box } from "../../../../components/Box";
 
 interface Props extends PanelProps, PushedProps {
   isMobile: boolean;
@@ -19,6 +20,10 @@ const Container = styled.div`
   box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
+`;
+const SpaceFooter = styled(Box)`
+  height: "200px";
+  box-shadow: ${({ theme }) => `inset 46px 0px 0px ${theme.colors.primary}`};
 `;
 
 const PanelBody: React.FC<Props> = ({ isPushed, pushNav, isMobile, linksPanel, activeItem, activeSubItem }) => {
@@ -83,6 +88,8 @@ const PanelBody: React.FC<Props> = ({ isPushed, pushNav, isMobile, linksPanel, a
           />
         );
       })}
+
+      <SpaceFooter height="140px" />
     </Container>
   );
 };
