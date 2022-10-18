@@ -103,9 +103,11 @@ const CardNftWithInfo: React.FC<{
             </Flex>
             <Flex justifyContent="space-between">
               <Text>Dividend:</Text>
-              <Text fontWeight="bold">
-                {isNumber(packageInvestItem?.dividend_rate) ? `${packageInvestItem.dividend_rate}%` : '--'}
-              </Text>
+              {packageInvestItem?.dividend_rate !== undefined && (
+                <Text fontWeight="bold">
+                  {isNumber(packageInvestItem?.dividend_rate) ? `${packageInvestItem.dividend_rate}%` : '--'}
+                </Text>
+              )}
             </Flex>
           </FlexGap>
         </div>

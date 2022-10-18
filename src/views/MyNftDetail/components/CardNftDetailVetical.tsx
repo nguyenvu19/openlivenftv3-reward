@@ -5,7 +5,7 @@ import { formatCode } from 'helpers'
 import { useEffect, useState } from 'react'
 import { MyNftItem, NftMetaData } from 'state/nfts/types'
 import styled from 'styled-components'
-import { getBscScanLinkForNft } from 'utils'
+import { getBlockExploreLink, getBscScanLinkForNft } from 'utils'
 
 const WCardNftVertical = styled.div`
   width: 100%;
@@ -18,10 +18,10 @@ const WCardNftVertical = styled.div`
     display: flex;
     flex-flow: row wrap;
     gap: 20px;
-    padding: 24px;
     background: #f6fbfd;
     border-radius: 24px;
     ${({ theme }) => theme.mediaQueries.sm} {
+      padding: 24px;
       gap: 60px;
     }
     .card-nft-cover-left {
@@ -123,75 +123,83 @@ const CardNftDetailVertical: React.FC<Props> = ({ myNftDetail, ...props }) => {
               <Text color="#292929" fontSize={[13, , 16]}>
                 NFT ID:
               </Text>
-              <Flex alignItems="center">
+              {myNftDetail.tokenId !== undefined && (
                 <Link
                   style={{ display: 'inline' }}
                   external
                   href={getBscScanLinkForNft(undefined, myNftDetail.tokenId)}
                 >
-                  {myNftDetail.tokenId}
+                  <Flex alignItems="center">
+                    {myNftDetail.tokenId}
+                    <Box width="20px" ml="6px">
+                      <Image width={30} height={30} src="/images2/link-icons.png" />
+                    </Box>
+                  </Flex>
                 </Link>
-                <Box width="20px" ml="6px">
-                  <Image width={30} height={30} src="/images2/link-icons.png" />
-                </Box>
-              </Flex>
+              )}
             </Grid>
             <Grid gridTemplateColumns={['1fr 1fr', , '1fr 1fr']}>
               <Text color="#292929" fontSize={[13, , 16]}>
                 NFT Contract:
               </Text>
-              <Flex alignItems="center">
-                <Link style={{ display: 'inline' }} external href="/">
+              <Link style={{ display: 'inline' }} external href={getBlockExploreLink(NFT_ADDRESS, 'address')}>
+                <Flex alignItems="center">
                   {formatCode(NFT_ADDRESS, 5, 5)}
-                </Link>
-                <Box width="20px" ml="6px">
-                  <Image width={30} height={30} src="/images2/link-icons.png" />
-                </Box>
-              </Flex>
+                  <Box width="20px" ml="6px">
+                    <Image width={30} height={30} src="/images2/link-icons.png" />
+                  </Box>
+                </Flex>
+              </Link>
             </Grid>
             <Grid gridTemplateColumns={['1fr 1fr', , '1fr 1fr']}>
               <Text color="#292929" fontSize={[13, , 16]}>
                 Dividend:
               </Text>
-              <Flex alignItems="center">
-                <Link style={{ display: 'inline' }} external href="/">
-                  {dividend?.value}
-                </Link>
-                <Box width="20px" ml="6px">
-                  <Image width={30} height={30} src="/images2/link-icons.png" />
-                </Box>
-              </Flex>
+              {dividend?.value !== undefined && (
+                <Flex alignItems="center">
+                  <Link style={{ display: 'inline' }} external href="/">
+                    {dividend?.value}
+                  </Link>
+                  <Box width="20px" ml="6px">
+                    <Image width={30} height={30} src="/images2/link-icons.png" />
+                  </Box>
+                </Flex>
+              )}
             </Grid>
 
             <Grid gridTemplateColumns={['1fr', '1fr 1fr']} gridTemplateRows="26px">
               <Text color="#292929" fontSize={[13, , 16]}>
                 Daily Holder Reward:
               </Text>
-              <Flex alignItems="center">
-                <Link style={{ display: 'inline' }} external href="/">
-                  {reward01?.value} OPV
-                </Link>
-                <Box width="20px" ml="6px">
-                  <Image width={30} height={30} src="/images2/link-icons.png" />
-                </Box>
-              </Flex>
+              {reward01?.value !== undefined && (
+                <Flex alignItems="center">
+                  <Link style={{ display: 'inline' }} external href="/">
+                    {reward01?.value} OPV
+                  </Link>
+                  <Box width="20px" ml="6px">
+                    <Image width={30} height={30} src="/images2/link-icons.png" />
+                  </Box>
+                </Flex>
+              )}
             </Grid>
             <Grid gridTemplateColumns={['1fr', '1fr 1fr']} gridTemplateRows="26px">
               <Text color="#292929" fontSize={[13, , 16]}>
                 OPV Bonus:
               </Text>
-              <Flex alignItems="center">
-                <Link
-                  style={{ display: 'inline' }}
-                  external
-                  href={getBscScanLinkForNft(undefined, myNftDetail.tokenId)}
-                >
-                  {opvBonus?.value} OPV
-                </Link>
-                <Box width="20px" ml="6px">
-                  <Image width={30} height={30} src="/images2/link-icons.png" />
-                </Box>
-              </Flex>
+              {opvBonus?.value !== undefined && (
+                <Flex alignItems="center">
+                  <Link
+                    style={{ display: 'inline' }}
+                    external
+                    href={getBscScanLinkForNft(undefined, myNftDetail.tokenId)}
+                  >
+                    {opvBonus?.value} OPV
+                  </Link>
+                  <Box width="20px" ml="6px">
+                    <Image width={30} height={30} src="/images2/link-icons.png" />
+                  </Box>
+                </Flex>
+              )}
             </Grid>
             {/* <Hr /> */}
             {/* <Text color="#292929" fontWeight="700" fontSize={[16, , 20]}>

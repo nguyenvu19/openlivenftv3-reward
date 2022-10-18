@@ -10,6 +10,7 @@ import { CAMPAIGN_STATUS } from 'state/campaigns/types'
 import { useToast } from '@pancakeswap/uikit'
 import { useTransactionAdder } from 'state/transactions/hooks'
 import moment from 'moment'
+import ConnectWallet from 'components/ConnectWallet'
 import ClaimNftList from './components/ClaimNftList'
 
 const WCampaignsClaimNft = styled.div`
@@ -76,7 +77,11 @@ const CampaignsClaimNft: React.FC<React.PropsWithChildren> = () => {
   return (
     <WCampaignsClaimNft>
       <Container>
-        <ClaimNftList campaign={campaign} listNftUser={listNftUser} onClaim={handleClaimReward} />
+        {account ? (
+          <ClaimNftList campaign={campaign} listNftUser={listNftUser} onClaim={handleClaimReward} />
+        ) : (
+          <ConnectWallet minHeight="400px" />
+        )}
       </Container>
     </WCampaignsClaimNft>
   )
