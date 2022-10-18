@@ -1,18 +1,15 @@
 import { useTranslation } from '@pancakeswap/localization'
-import { Box, Text, useMatchBreakpoints } from '@pancakeswap/uikit'
+import { Link, Text } from '@pancakeswap/uikit'
 import { Table } from 'antd'
 import { TablePaginationConfig } from 'antd/es/table'
 import { FilterValue } from 'antd/es/table/interface'
+import { formatCode } from 'helpers'
+import { useOPVBusdPrice } from 'hooks/useBUSDPrice'
 import { useState } from 'react'
+import { useBossTeamWallets } from 'state/tokenInfo/fetchBossTeamWallets'
 import styled from 'styled-components'
-// import TokensInforItem from './TokensInforItem'
-
-interface TableParams {
-  pagination?: TablePaginationConfig
-  sortField?: string
-  sortOrder?: string
-  filters?: Record<string, FilterValue>
-}
+import { getBlockExploreLink } from 'utils'
+import TableItemBalance from './TableItemBalance'
 
 const WCardTableTeamWallet = styled.div`
   margin-top: 24px;
@@ -130,25 +127,28 @@ const WCardTableTeamWallet = styled.div`
   }
 `
 
-const CardTableTeamWallet = () => {
+const CardTableTeamWallets = () => {
   const { t } = useTranslation()
-  const { isMobile } = useMatchBreakpoints()
+  const { bossTeamWallets, pBossTeamWallets, setPBossTeamWallets } = useBossTeamWallets()
+
+  const opvPrice = useOPVBusdPrice({ forceMainnet: true })
+
   const columns = [
     {
       title: '#',
-      dataIndex: 'id',
-      render: (text) => {
-        return <div className="team-wallet-item-id">{text}</div>
+      dataIndex: 'index',
+      render: (_, __, index) => {
+        return <div className="team-wallet-item-id">{index + 1}</div>
       },
     },
     {
       title: <div style={{ textAlign: 'left' }}>{t('Name')}</div>,
-      dataIndex: 'name',
+      dataIndex: 'title',
       render: (text) => {
         return (
-          <div className="team-wallet-item-name" style={{ textAlign: 'left' }}>
+          <Text className="team-wallet-item-name" fontSize={['12px', , '16px']} bold style={{ textAlign: 'left' }}>
             {text}
-          </div>
+          </Text>
         )
       },
     },
@@ -157,8 +157,10 @@ const CardTableTeamWallet = () => {
       dataIndex: 'address',
       render: (text) => {
         return (
-          <div className="team-wallet-item-name" style={{ textAlign: 'center' }}>
-            {text}
+          <div className="team-wallet-item-name" style={{ display: 'flex', justifyContent: 'center' }}>
+            <Link fontSize={['12px', , '16px']} bold external href={getBlockExploreLink(text, 'address')}>
+              {formatCode(text, 5, 5)}
+            </Link>
           </div>
         )
       },
@@ -166,98 +168,32 @@ const CardTableTeamWallet = () => {
     {
       title: <div style={{ textAlign: 'right' }}>{t('Balance')}</div>,
       dataIndex: 'balance',
-      render: (text, record) => {
-        return (
-          <div className="team-wallet-item-balance" style={{ textAlign: 'right' }}>
-            <Text bold color="#000000" fontSize={['12px', , '14px']} lineHeight="1.2">
-              {text}
-            </Text>
-            <Text color="#292929" fontSize={['12px', , '13px']} lineHeight="1.2">
-              {record.usdValue > 0 ? (
-                <>
-                  &asymp; ({record.usdValue} {record.currency})
-                </>
-              ) : (
-                ''
-              )}
-            </Text>
-          </div>
-        )
+      render: (_, record) => {
+        return <TableItemBalance record={record} opvPrice={opvPrice} />
       },
     },
   ]
-  const data = [
-    {
-      id: 1,
-      name: 'Team',
-      address: '0x03xcba...323s23afc3021',
-      balance: '25.0012M',
-      usdValue: 12312,
-      currency: 'USDT',
-    },
-    {
-      id: 2,
-      name: 'Liquidity',
-      address: '0x03xcba...323s23afc3021',
-      balance: '0',
-      usdValue: 0,
-      currency: 'USDT',
-    },
-    {
-      id: 3,
-      name: 'Marketing',
-      address: '0x03xcba...323s23afc3021',
-      balance: '25.0012M',
-      usdValue: 12312,
-      currency: 'USDT',
-    },
-    {
-      id: 4,
-      name: 'Marketing',
-      address: '0x03xcba...323s23afc3021',
-      balance: '25.0012M',
-      usdValue: 12312,
-      currency: 'USDT',
-    },
-  ]
-  const [tableParams, setTableParams] = useState<TableParams>({
-    pagination: {
-      current: 1,
-      pageSize: 10,
-    },
-  })
-  const handleTableChange = (pagination: TablePaginationConfig) => {
-    setTableParams({
-      pagination,
-    })
-  }
   return (
     <WCardTableTeamWallet>
-      {/* {isMobile ? (
-        <>
-          {data.map((item) => {
-            return <TokensInforItem item={item} id={0} />
-          })}
-        </>
-      ) : (
-        <Table
-          columns={columns}
-          scroll={{ x: 400 }}
-          rowKey={(record) => record.id}
-          dataSource={data}
-          pagination={false}
-        />
-      )} */}
       <Table
         columns={columns}
-        dataSource={data}
-        scroll={{ x: 400 }}
-        rowKey={(record) => record.id}
-        pagination={tableParams.pagination}
-        onChange={handleTableChange}
+        dataSource={bossTeamWallets.data?.rows || []}
+        scroll={{ x: 300 }}
+        rowKey={(record) => record._id}
+        pagination={{
+          total: bossTeamWallets.data?.total,
+          current: pBossTeamWallets.page,
+          onChange: (page, pageSize) => {
+            setPBossTeamWallets((prev) => ({
+              ...prev,
+              page,
+              pageSize,
+            }))
+          },
+        }}
       />
     </WCardTableTeamWallet>
   )
 }
 
-export default CardTableTeamWallet
+export default CardTableTeamWallets

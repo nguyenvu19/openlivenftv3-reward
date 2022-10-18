@@ -1,9 +1,9 @@
 import { useTranslation } from '@pancakeswap/localization'
-import { Box, Button, Flex, Image, Link, Text } from '@pancakeswap/uikit'
-import { Table, Tooltip } from 'antd'
+import { Box, Flex, Image, Link, Text } from '@pancakeswap/uikit'
+import { Table } from 'antd'
 import CurrencyFormat from 'react-currency-format'
 import { roundNumber } from 'helpers'
-import { useInfoMarketPairs } from 'state/tokenInfo/hooks'
+import { useInfoMarketPairs } from 'state/tokenInfo/fetchInfoMarketPair'
 import styled from 'styled-components'
 
 const WCardTableMarketPlace = styled.div`
@@ -281,21 +281,6 @@ const CardTableMarketPlace = () => {
           </Tooltip> */}
         </Flex>
       </Flex>
-      {/* {isMobile ? (
-        <>
-          {data.map((item) => {
-            return <TokensInforItem item={item} id={0} />
-          })}
-        </>
-      ) : (
-        <Table
-          columns={columns}
-          scroll={{ x: 400 }}
-          rowKey={(record) => record.id}
-          dataSource={data}
-          pagination={false}
-        />
-      )} */}
       <Table
         columns={columns}
         scroll={{ x: 400 }}

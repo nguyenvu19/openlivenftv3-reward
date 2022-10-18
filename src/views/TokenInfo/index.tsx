@@ -3,7 +3,7 @@ import { Heading } from '@pancakeswap/uikit'
 import Container from 'components/Layout/Container'
 import styled from 'styled-components'
 import CardTableMarketPlace from './components/CardTableMarketPlace'
-import CardTableTeamWallet from './components/CardTableTeamWallet'
+import CardTableTeamWallets from './components/CardTableTeamWallets'
 import CardTokensInfo from './components/CardTokensInfo'
 
 const MyNftH2 = styled.div`
@@ -15,7 +15,7 @@ const MyNftH2 = styled.div`
     font-size: 32px;
   }
 `
-const TokensInfo: React.FC<React.PropsWithChildren> = () => {
+const TokenInfo: React.FC<React.PropsWithChildren> = () => {
   const { t } = useTranslation()
   return (
     <>
@@ -31,10 +31,10 @@ const TokensInfo: React.FC<React.PropsWithChildren> = () => {
         <Heading textAlign="left" scale="xl">
           <MyNftH2>{t('Team Wallets')}</MyNftH2>
         </Heading>
-        <CardTableTeamWallet />
+        <CardTableTeamWallets />
       </Container>
     </>
   )
 }
 
-export default TokensInfo
+export default TokenInfo

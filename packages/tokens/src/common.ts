@@ -1,5 +1,23 @@
 import { ChainId, Token } from '@pancakeswap/sdk'
 
+export const OPV_MAINNET = new Token(
+  ChainId.BSC,
+  '0x36c7b164f85d6f775cd128966d5819c7d36feff3',
+  18,
+  'OPV',
+  'OpenLive NFT',
+  'https://pancakeswap.finance/',
+)
+
+export const OPV_TESTNET = new Token(
+  ChainId.BSC_TESTNET,
+  '0xFa60D973F7642B748046464e165A65B7323b0DEE', // no opv testnet => use cake testnet
+  18,
+  'OPV',
+  'OpenLive NFT',
+  'https://pancakeswap.finance/',
+)
+
 export const CAKE_MAINNET = new Token(
   ChainId.BSC,
   '0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82',
@@ -128,6 +146,10 @@ export const BUSD: Record<ChainId, Token> = {
 export const CAKE = {
   [ChainId.BSC]: CAKE_MAINNET,
   [ChainId.BSC_TESTNET]: CAKE_TESTNET,
+}
+export const OPV = {
+  [ChainId.BSC]: OPV_MAINNET,
+  [ChainId.BSC_TESTNET]: OPV_TESTNET,
 }
 
 export const USDC = {
