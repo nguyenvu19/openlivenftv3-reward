@@ -18,6 +18,7 @@ const FarmTabButtons: React.FC<React.PropsWithChildren<FarmTabButtonsProps>> = (
         if (!tab.hasStakeInFinishedFarms) {
           return (
             <div
+              key={tab.value}
               className={`btn-tab-farm btn-live ${tab.value === value && 'active'}`}
               onClick={() => onChange && onChange(tab)}
               role="presentation"
@@ -27,7 +28,7 @@ const FarmTabButtons: React.FC<React.PropsWithChildren<FarmTabButtonsProps>> = (
           )
         }
         return (
-          <NotificationDot show>
+          <NotificationDot show key={tab.value}>
             <div
               className={`btn-tab-farm btn-finish ${tab.value === value && 'active'}`}
               onClick={() => onChange && onChange(tab)}
