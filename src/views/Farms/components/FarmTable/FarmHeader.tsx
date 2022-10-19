@@ -126,7 +126,7 @@ const Wrapper = styled.div`
   }
 `
 
-const FarmHeader = ({ infoPool, toggleContent, priceToken, priceTokenLPs, setToggleContent }) => {
+const FarmHeader = ({ infoPool, toggleContent, tokenPriceUsd, priceTokenLPs, setToggleContent }) => {
   const { poolEnded } = infoPool
 
   /**
@@ -210,13 +210,13 @@ const FarmHeader = ({ infoPool, toggleContent, priceToken, priceTokenLPs, setTog
     if (infoPool) {
       const { dailyRewards } = infoPool
       const totalAmountOfPool = infoPool?.poolInfo?.totalLpSupply
-      const rewardPerBlock = (dailyRewards / 86400) * priceToken * 86400 * 365
-      const totalAmount = totalAmountOfPool * (priceTokenLPs || priceToken)
+      const rewardPerBlock = (dailyRewards / 86400) * tokenPriceUsd * 86400 * 365
+      const totalAmount = totalAmountOfPool * (priceTokenLPs || tokenPriceUsd)
       const percent = Math.round((rewardPerBlock / (totalAmount > 0 ? totalAmount : 1)) * 100)
       return totalAmountOfPool <= 0 ? undefined : percent
     }
     return undefined
-  }, [infoPool, priceToken, priceTokenLPs])
+  }, [infoPool, tokenPriceUsd, priceTokenLPs])
 
   return (
     <Wrapper>
@@ -246,7 +246,7 @@ const FarmHeader = ({ infoPool, toggleContent, priceToken, priceTokenLPs, setTog
         </div>
         <div className="farm-item-header-item">
           <p>Daily Rewards</p>
-          <p>{`${formatAmount(infoPool?.dailyRewards)} UDOGE`}</p>
+          <p>{`${formatAmount(infoPool?.dailyRewards)} OPV`}</p>
         </div>
 
         <div className="farm-item-header-item">

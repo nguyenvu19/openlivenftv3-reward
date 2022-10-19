@@ -46,8 +46,11 @@ const CenterStyled = styled.div`
 
 export interface Props {
   farmsData?: FarmsItemType[]
+  tokenPriceUsd?: number
+  priceTokenLPs?: number
+  totalUserDividendsAllPool?: number
 }
-const FarmTable: React.FC<Props> = ({ farmsData }) => {
+const FarmTable: React.FC<Props> = ({ farmsData, tokenPriceUsd, priceTokenLPs, totalUserDividendsAllPool }) => {
   const data: any = [
     {
       poolId: 2,
@@ -107,17 +110,8 @@ const FarmTable: React.FC<Props> = ({ farmsData }) => {
     },
   ]
 
-  const infoTokenLPs = {
-    balance: 0,
-    symbol: 'Cake-LP',
-    name: 'Pancake LPs',
-    decimals: '18',
-    address: '0x64f659D8692d0355faC70c8F1DA59D967B0fdb34',
-  }
-  const priceToken = 1.4690381679507757e-9
-  const priceTokenLPs = 0.0013243180860025663
   return (
-    <Container showBorder={farmsData.length <= 0}>
+    <Container showBorder={farmsData?.length <= 0}>
       {farmsData ? (
         farmsData.length > 0 ? (
           farmsData.map((item) => (
@@ -125,8 +119,7 @@ const FarmTable: React.FC<Props> = ({ farmsData }) => {
               key={item.poolId}
               filterBy={{}}
               infoPool={item}
-              infoTokenLPs={infoTokenLPs}
-              priceToken={priceToken}
+              tokenPriceUsd={tokenPriceUsd}
               priceTokenLPs={priceTokenLPs}
             />
           ))

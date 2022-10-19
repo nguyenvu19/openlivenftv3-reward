@@ -11,7 +11,7 @@ export const OPV_MAINNET = new Token(
 
 export const OPV_TESTNET = new Token(
   ChainId.BSC_TESTNET,
-  '0xFa60D973F7642B748046464e165A65B7323b0DEE', // no opv testnet => use cake testnet
+  '0x93c4a5d89d3a5dcc3b17395f0c730e9e0ca0763d',
   18,
   'OPV',
   'OpenLive NFT',
@@ -75,6 +75,15 @@ export const USDC_GOERLI = new Token(
 export const USDT_BSC = new Token(
   ChainId.BSC,
   '0x55d398326f99059fF775485246999027B3197955',
+  18,
+  'USDT',
+  'Tether USD',
+  'https://tether.to/',
+)
+
+export const USDT_BSC_TESTNET = new Token(
+  ChainId.BSC_TESTNET,
+  '0x7ef95a0fee0dd31b22626fa2e10ee6a223f8a684',
   18,
   'USDT',
   'Tether USD',
@@ -162,6 +171,7 @@ export const USDC = {
 
 export const USDT = {
   [ChainId.BSC]: USDT_BSC,
+  [ChainId.BSC_TESTNET]: USDT_BSC_TESTNET,
   [ChainId.ETHEREUM]: USDT_ETH,
 }
 

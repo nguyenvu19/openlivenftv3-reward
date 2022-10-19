@@ -6,26 +6,14 @@ import { getContractOpvFarm } from 'utils/contractHelpers'
 import { setFarmsData } from './actions'
 import { FarmsItemType } from './types'
 
-const configInfoPool = {
-  contractAddress: '0x5F3bc17058994E9dd2209D065D230e36a8Efb599',
-  logo1: '/images/tokens/0x36c7b164f85d6f775cd128966d5819c7d36feff3.png',
-  logo2: '/images/tokens/0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c.png',
-  lpTokenAddress: '0x7591169B6d2772845E47bc85A6a2C57AE4a4618b',
-  name: 'OPV-BNB LPs',
-  symbol1: 'OPV',
-  symbol2: 'BNB',
-  tokenAddress1: '0x7591169B6d2772845E47bc85A6a2C57AE4a4618b',
-  tokenAddress2: '0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd',
-}
-
-const { contractAddress, symbol1, tokenAddress1, logo1, symbol2, tokenAddress2, logo2, name, lpTokenAddress } =
-  configInfoPool
-
-export const useFarmsData = (account?: string) => {
+export const useFarmsData = ({ account, configInfoPool }: { account?: string; configInfoPool?: any }) => {
   const dispatch = useAppDispatch()
 
   const fetchFarmsData = useCallback(async () => {
-    const contractFarm = getContractOpvFarm()
+    const { contractAddress, symbol1, tokenAddress1, logo1, symbol2, tokenAddress2, logo2, name, lpTokenAddress } =
+      configInfoPool
+
+    const contractFarm = getContractOpvFarm(contractAddress)
     if (contractFarm) {
       try {
         const totalPool = await (await contractFarm.poolLength()).toString()
@@ -107,7 +95,7 @@ export const useFarmsData = (account?: string) => {
         console.error('fetchFarmsData', error)
       }
     }
-  }, [account, dispatch])
+  }, [account, configInfoPool, dispatch])
 
   useEffect(() => {
     fetchFarmsData()

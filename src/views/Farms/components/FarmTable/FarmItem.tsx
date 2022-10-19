@@ -6,6 +6,7 @@ import ConnectWalletButton from 'components/ConnectWalletButton'
 import { formatAmount, roundNumber } from 'helpers/Number'
 import { Button, useToast } from '@pancakeswap/uikit'
 import MediaCard from 'components/MediaCard'
+
 import FarmHeader from './FarmHeader'
 
 const WrapperFarmItem = styled.div`
@@ -254,8 +255,16 @@ const WrapperFarmItem = styled.div`
     }
   }
 `
-const FarmItem = ({ filterBy, infoPool, infoTokenLPs, priceToken, priceTokenLPs, ...props }) => {
+const FarmItem = ({ filterBy, infoPool, tokenPriceUsd, priceTokenLPs, ...props }) => {
   const { toastError } = useToast()
+
+  // const infoTokenLPs = {
+  //   balance: 0,
+  //   symbol: 'Cake-LP',
+  //   name: 'Pancake LPs',
+  //   decimals: '18',
+  //   address: '0x64f659D8692d0355faC70c8F1DA59D967B0fdb34',
+  // }
 
   const [depositLoading, setDepositLoading] = useState(false)
   const [harvestLoading, setHarvestLoading] = useState(false)
@@ -269,8 +278,9 @@ const FarmItem = ({ filterBy, infoPool, infoTokenLPs, priceToken, priceTokenLPs,
   const { account } = useActiveWeb3React()
 
   const handleChosePercent = (per) => {
-    if (infoTokenLPs) {
-      const balanceLPs = infoTokenLPs?.balance || 0
+    const { balance, isValidating } = infoTokenLPsBalance
+    if (infoTokenLPs && balance && isValidating) {
+      const balanceLPs = balance.shiftedBy(infoTokenLPs?.decimals).toNumber()
       setPercent(per)
       setAmountDeposit((balanceLPs * per) / 100)
     } else {
@@ -283,7 +293,7 @@ const FarmItem = ({ filterBy, infoPool, infoTokenLPs, priceToken, priceTokenLPs,
       <FarmHeader
         toggleContent={toggleContent}
         infoPool={infoPool}
-        priceToken={priceToken}
+        tokenPriceUsd={tokenPriceUsd}
         priceTokenLPs={priceTokenLPs}
         setToggleContent={setToggleContent}
       />
@@ -343,7 +353,27 @@ const FarmItem = ({ filterBy, infoPool, infoTokenLPs, priceToken, priceTokenLPs,
 
             <div>
               <p>
-                {`Avail: `} {formatAmount(viewFarm === 0 ? infoTokenLPs?.balance : infoPool?.userInfo?.amount)}
+                {`Avail: `}{' '}
+                {(() => {
+                  const { balance, isValidating } = infoTokenLPsBalance
+                  switch (viewFarm) {
+                    case 0:
+                      if (balance && isValidating) {
+                        return formatAmount(balance.shiftedBy(-infoTokenLPs?.decimals || -18).toNumber())
+                      }
+                      break
+                    case 1:
+                      if (infoPool?.userInfo?.amount !== undefined) {
+                        return infoPool ? formatAmount(infoPool?.userInfo?.amount) : '--'
+                      }
+                      break
+
+                    default:
+                      break
+                  }
+
+                  return '--'
+                })()}
               </p>
             </div>
           </div>
@@ -351,13 +381,25 @@ const FarmItem = ({ filterBy, infoPool, infoTokenLPs, priceToken, priceTokenLPs,
             <p>Please approve the contract</p>
 
             <p>
-              {`Avail: `} {formatAmount(viewFarm === 0 ? infoTokenLPs?.balance : infoPool?.userInfo?.amount)}
+              {`Avail: `}{' '}
+              {(() => {
+                const { balance, isValidating } = infoTokenLPsBalance
+                if (viewFarm === 0) {
+                  return balance && isValidating
+                    ? formatAmount(balance.shiftedBy(-infoTokenLPs?.decimals || -18).toNumber())
+                    : '--'
+                }
+                if (viewFarm === 1) {
+                  return infoPool ? formatAmount(infoPool?.userInfo?.amount) : '--'
+                }
+                return '--'
+              })()}
             </p>
 
             <div className="box-input">
               <input
                 type={viewFarm === 0 ? 'number' : 'text'}
-                value={viewFarm === 0 ? amountDeposit : roundNumber(infoPool?.userInfo?.amount, 3)}
+                value={viewFarm === 0 ? amountDeposit : roundNumber(infoPool?.userInfo?.amount)}
                 readOnly={viewFarm !== 0}
                 onChange={(e) => {
                   setAmountDeposit(+e.target.value)

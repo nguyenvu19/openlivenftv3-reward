@@ -33,7 +33,7 @@ const TableItemBalance = ({ record, opvPrice }) => {
         <Text color="#292929" fontSize={['10px', , '13px']}>
           ~(
           <CurrencyFormat
-            value={roundNumber(opvPrice?.toFixed(3) * +formatBigNumber(opvBalance.data.value, 3))}
+            value={roundNumber(opvPrice * +formatBigNumber(opvBalance.data.value, 3))}
             displayType="text"
             thousandSeparator
             suffix={` USD`}
