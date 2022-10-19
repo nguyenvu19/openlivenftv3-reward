@@ -173,5 +173,9 @@ export const useOPVBusdPrice = ({ forceMainnet } = { forceMainnet: false }) => {
   const { chainId } = useActiveWeb3React()
   const isTestnet = !forceMainnet && isChainTestnet(chainId)
   const opv: Token = isTestnet ? OPV[ChainId.BSC_TESTNET] : OPV[ChainId.BSC]
-  return usePriceByPairs(USDT[opv.chainId], opv)
+  const opvPrice = usePriceByPairs(USDT[opv.chainId], opv)
+  if (opvPrice) {
+    return multiplyPriceByAmount(opvPrice, 1)
+  }
+  return undefined
 }

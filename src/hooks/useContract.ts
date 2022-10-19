@@ -64,6 +64,8 @@ import { useSigner } from 'wagmi'
 import { Contract } from '@ethersproject/contracts'
 import { WNATIVE } from '@pancakeswap/sdk'
 import campaignsAbi from 'config/abi/campaignAbi.json'
+import farmOpvAbi from 'config/abi/farmOpvAbi.json'
+import { FarmOpvAbi } from '../config/abi/types/FarmOpvAbi'
 import { CampaignAbi } from '../config/abi/types/CampaignAbi'
 import { ERC20_BYTES32_ABI } from '../config/abi/erc20'
 import ERC20_ABI from '../config/abi/erc20.json'
@@ -370,4 +372,8 @@ export function useBCakeProxyContract(proxyContractAddress: string, withSignerIf
 // new
 export function useContractCampaigns(withSignerIfPossible = true): CampaignAbi {
   return useContract(getCampaignsAddress(), campaignsAbi, withSignerIfPossible)
+}
+
+export function useContractFarm(address: string, withSignerIfPossible = true): FarmOpvAbi {
+  return useContract(address, farmOpvAbi, withSignerIfPossible)
 }

@@ -1,53 +1,36 @@
 import axios from 'axios'
 
-// export default async function handler(req, res) {
-//   const { slug } = req.query
-//   try {
-//     const result = await axios.get(`https://pro-api.coinmarketcap.com/v2/cryptocurrency/info?slug=${slug}`, {
-//       headers: {
-//         'X-CMC_PRO_API_KEY': '72867771-a2ea-44b6-ae97-68281f28942c',
-//       },
-//     })
-//     if (result.status === 200) {
-//       return res.status(200).json({
-//         status_code: 200,
-//         data: result.data,
-//       })
-//     }
-//     return res.status(200).json({
-//       status_code: 301,
-//       data: result,
-//     })
-//   } catch (error) {
-//     return res.status(200).json({
-//       status_code: 301,
-//       data: error,
-//     })
-//   }
-// }
+const marketCapProKey = '72867771-a2ea-44b6-ae97-68281f28942c'
+const marketCapProApi = 'https://pro-api.coinmarketcap.com/v2'
+const coingeckoApi = 'https://api.coingecko.com/api/v3'
 
 export default async function handler(req, res) {
   const { slug } = req.query
   try {
-    const promise1 = await axios.get(`https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest?slug=${slug}`, {
+    const promiseQuotesLatest = axios.get(`${marketCapProApi}/cryptocurrency/quotes/latest?slug=${slug}`, {
       headers: {
-        'X-CMC_PRO_API_KEY': '72867771-a2ea-44b6-ae97-68281f28942c',
+        'X-CMC_PRO_API_KEY': marketCapProKey,
       },
     })
-    const promise2 = await axios.get(`https://pro-api.coinmarketcap.com/v2/cryptocurrency/info?slug=${slug}`, {
+    const promiseCurrencyInfo = axios.get(`${marketCapProApi}/cryptocurrency/info?slug=${slug}`, {
       headers: {
-        'X-CMC_PRO_API_KEY': '72867771-a2ea-44b6-ae97-68281f28942c',
+        'X-CMC_PRO_API_KEY': marketCapProKey,
       },
     })
-    const promise3 = await axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin')
-    const promise4 = await axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=ethereum')
-    const [resultLatest, resultInfo, tokensBtc, tokensEth] = await Promise.all([promise1, promise2, promise3, promise4])
+    const promiseCurrencyInfoBTC = axios.get(`${coingeckoApi}/coins/markets?vs_currency=usd&ids=bitcoin`)
+    const promiseCurrencyInfoETH = axios.get(`${coingeckoApi}/coins/markets?vs_currency=usd&ids=ethereum`)
+    const [quotesLatest, currencyInfo, currencyInfoBTC, currencyInfoETH] = await Promise.all([
+      promiseQuotesLatest,
+      promiseCurrencyInfo,
+      promiseCurrencyInfoBTC,
+      promiseCurrencyInfoETH,
+    ])
 
     const dataAll = {
-      dataLatest: resultLatest.data,
-      dataInfo: resultInfo.data,
-      dataInfoBtc: tokensBtc.data[0],
-      dataInfoEth: tokensEth.data[0],
+      dataInfo: Object.values(currencyInfo?.data?.data)?.[0],
+      dataLatest: Object.values(quotesLatest?.data?.data)?.[0],
+      dataInfoBtc: currencyInfoBTC?.data?.[0],
+      dataInfoEth: currencyInfoETH?.data?.[0],
     }
 
     return res.status(200).json({

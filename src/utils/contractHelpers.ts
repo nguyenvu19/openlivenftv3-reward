@@ -92,7 +92,9 @@ import cakePredictionsAbi from 'config/abi/cakePredictions.json'
 import bCakeFarmBoosterAbi from 'config/abi/bCakeFarmBooster.json'
 import bCakeFarmBoosterProxyFactoryAbi from 'config/abi/bCakeFarmBoosterProxyFactory.json'
 import bCakeProxyAbi from 'config/abi/bCakeProxy.json'
+import factoryPancakeAbi from 'config/abi/factoryPancakeAbi.json'
 import campaignAbi from 'config/abi/campaignAbi.json'
+import farmOpvAbi from 'config/abi/farmOpvAbi.json'
 
 // Types
 import type {
@@ -141,9 +143,11 @@ import type {
   BCakeFarmBoosterProxyFactory,
   BCakeProxy,
   CampaignAbi,
+  FarmOpvAbi,
+  FactoryPancakeAbi,
 } from 'config/abi/types'
-import { ChainId } from '@pancakeswap/sdk'
-import { CONTRACT_ADDRESS, DEFAULT_CHAIN_ID } from 'config'
+import { ChainId, FACTORY_ADDRESS_MAP } from '@pancakeswap/sdk'
+import { CONTRACT_ADDRESS, CONTRACT_FARM, DEFAULT_CHAIN_ID } from 'config'
 
 export const getContract = ({
   abi,
@@ -367,6 +371,18 @@ export const getBCakeProxyContract = (proxyContractAddress: string, signer?: Sig
 }
 
 // new
+export const getContractFactoryPancake = (signer?: Signer | Provider) => {
+  return getContract({
+    abi: factoryPancakeAbi,
+    address: FACTORY_ADDRESS_MAP[DEFAULT_CHAIN_ID],
+    signer,
+  }) as FactoryPancakeAbi
+}
+
 export const getCampaignContract = (signer?: Signer | Provider) => {
   return getContract({ abi: campaignAbi, address: CONTRACT_ADDRESS, signer }) as CampaignAbi
+}
+
+export const getContractOpvFarm = (address?: string, signer?: Signer | Provider) => {
+  return getContract({ abi: farmOpvAbi, address: address || CONTRACT_FARM, signer }) as FarmOpvAbi
 }
