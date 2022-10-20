@@ -1,20 +1,17 @@
 import { createReducer } from '@reduxjs/toolkit'
-import { setFarmsData } from './actions'
-import { FarmsItemType } from './types'
+import { setStakingList } from './actions'
+import { StakingItemType } from './types'
 
 export interface InvestState {
-  farmsData: FarmsItemType[] | null | undefined
-  totalUserDividendsAllPool: number | null | undefined
+  stakingList: StakingItemType[] | null | undefined
 }
 
 export const initialState: InvestState = {
-  farmsData: undefined,
-  totalUserDividendsAllPool: undefined,
+  stakingList: undefined,
 }
 
 export default createReducer<InvestState>(initialState, (builder) =>
-  builder.addCase(setFarmsData, (state, { payload }) => {
-    state.farmsData = payload.farmsData
-    state.totalUserDividendsAllPool = payload.totalUserDividendsAllPool
+  builder.addCase(setStakingList, (state, { payload }) => {
+    state.stakingList = payload.stakingList
   }),
 )
