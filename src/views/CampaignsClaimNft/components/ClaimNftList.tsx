@@ -7,8 +7,11 @@ import { EmptyStyled } from 'views/Campaigns/styled'
 const WClaimNftList = styled.div`
   display: flex;
   flex-flow: row wrap;
-  row-gap: 24px;
-  margin: 0 -6px;
+  row-gap: 12px;
+  margin: 0 -12px;
+  ${({ theme }) => theme.mediaQueries.sm} {
+    row-gap: 24px;
+  }
 `
 const WCardNftItem = styled.div`
   width: 100%;

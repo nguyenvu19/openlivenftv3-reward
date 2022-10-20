@@ -10,10 +10,16 @@ import useNftMetaDataByUrl from 'state/nfts/fetchNftMetaDataByUrl'
 
 const WCardNftWithActionClaim = styled.div`
   background: #eefbff;
-  border: 1px solid #00438e;
-  box-shadow: 8px 10px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 20px;
+  border: 1px solid rgba(67, 108, 255, 0.3);
+  border-radius: 12px;
+
   overflow: hidden;
+  ${({ theme }) => theme.mediaQueries.sm} {
+    background: #eefbff;
+    border: 1px solid #00438e;
+    box-shadow: 8px 10px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+  }
 
   .card-nft-cover {
     max-width: 100%;
@@ -24,11 +30,14 @@ const WCardNftWithActionClaim = styled.div`
   }
 
   .card-nft-body {
-    padding: 24px;
+    padding: 14px;
+    ${({ theme }) => theme.mediaQueries.sm} {
+      padding: 24px;
+    }
   }
 
   .card-nft-footer {
-    padding: 0 12px 12px;
+    padding: 12px 12px 20px;
   }
 `
 
@@ -62,13 +71,13 @@ const CardNftWithActionClaim: React.FC<{
         <MediaCard fileUrl={nftMetaData?.image} />
       </div>
       <div className="card-nft-body">
-        <Text fontSize={[20]} fontWeight="bold" mb="14px">
+        <Text fontSize={['16px', , '24px']} fontWeight="bold" mb={['14px']}>
           NFT By: {nftItem ? nftItem.token_id : <Skeleton height="14px" width="80px" />}
         </Text>
         <FlexGap flexDirection="column" rowGap="10px">
           <Flex justifyContent="space-between">
-            <Text>Total Reward By:</Text>
-            <Text fontWeight="bold">
+            <Text fontSize={['13px', , '16px']}>Total Reward By:</Text>
+            <Text fontSize={['13px', , '16px']} fontWeight="bold">
               {campaign ? (
                 <CurrencyFormat
                   value={campaign.totalPool}
@@ -83,8 +92,8 @@ const CardNftWithActionClaim: React.FC<{
             </Text>
           </Flex>
           <Flex justifyContent="space-between">
-            <Text>Total Claimed:</Text>
-            <Text fontWeight="bold">
+            <Text fontSize={['13px', , '16px']}>Total Claimed:</Text>
+            <Text fontSize={['13px', , '16px']} fontWeight="bold">
               {campaign ? (
                 <CurrencyFormat
                   value={campaign.currentPool}
@@ -99,8 +108,8 @@ const CardNftWithActionClaim: React.FC<{
             </Text>
           </Flex>
           <Flex justifyContent="space-between">
-            <Text>Available Claim:</Text>
-            <Text fontWeight="bold">
+            <Text fontSize={['13px', , '16px']}>Available Claim:</Text>
+            <Text fontSize={['13px', , '16px']} fontWeight="bold">
               {campaign ? (
                 <CurrencyFormat
                   value={campaign.totalPool - campaign.currentPool}

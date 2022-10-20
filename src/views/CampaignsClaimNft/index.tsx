@@ -11,6 +11,7 @@ import { useToast } from '@pancakeswap/uikit'
 import { useTransactionAdder } from 'state/transactions/hooks'
 import moment from 'moment'
 import ConnectWallet from 'components/ConnectWallet'
+import BackLink from 'components/BackLink'
 import ClaimNftList from './components/ClaimNftList'
 
 const WCampaignsClaimNft = styled.div`
@@ -76,6 +77,9 @@ const CampaignsClaimNft: React.FC<React.PropsWithChildren> = () => {
 
   return (
     <WCampaignsClaimNft>
+      <Container mb={['14px', , '24px']}>
+        <BackLink showArrow href="/campaigns" title="Campaigns" />
+      </Container>
       <Container>
         {account ? (
           <ClaimNftList campaign={campaign} listNftUser={listNftUser} onClaim={handleClaimReward} />

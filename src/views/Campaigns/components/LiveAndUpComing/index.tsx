@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from 'react'
-import { Flex, Heading } from '@pancakeswap/uikit'
+import { Flex, Heading, Text } from '@pancakeswap/uikit'
 import { FlexGap } from 'components/Layout/Flex'
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
@@ -29,10 +29,10 @@ const LiveAndUpComing = ({ campaigns }) => {
 
   return (
     <WLiveAndUpComing>
-      <Flex justifyContent="center" mb="40px">
-        <Heading size="xxl" as="h2">
+      <Flex justifyContent="center" mb={['24px', , '42px']}>
+        <Text as="h2" fontSize={['16px', , '24px']} fontWeight="700" color="textSubtle">
           Live & Upcoming
-        </Heading>
+        </Text>
       </Flex>
       <FlexGap gap="30px" flexDirection="column">
         {campaignLive?.length > 0 ? (
