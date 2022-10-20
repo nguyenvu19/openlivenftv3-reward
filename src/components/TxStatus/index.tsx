@@ -2,12 +2,14 @@ import styled from 'styled-components'
 
 const WTxStatus = styled.div`
   font-weight: 700;
-  font-size: 16px;
+  font-size: 13px;
   line-height: 140%;
   text-align: center;
   padding: 4px 16px;
   border-radius: 4px;
-
+  ${({ theme }) => theme.mediaQueries.sm} {
+    font-size: 16px;
+  }
   &[data-status='CREATED'] {
     color: white;
     background: #fdc22a;

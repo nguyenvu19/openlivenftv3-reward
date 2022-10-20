@@ -242,7 +242,7 @@ const CardHoldNft = ({ campaignNew }) => {
           </Text>
         </Flex>
         <Flex justifyContent="space-between" flexWrap="wrap">
-          <Text fontSize={[16, , 24]} fontWeight={500}>
+          <Text fontSize={[16, , 24]} fontWeight={500} style={{ whiteSpace: 'nowrap' }}>
             {(() => {
               if (step === STEEP_COUNT.SOON) return 'Start in:'
               if (step === STEEP_COUNT.START) return 'End in:'

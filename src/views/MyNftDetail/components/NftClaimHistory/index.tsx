@@ -10,7 +10,7 @@ import { getBlockExploreLink } from 'utils'
 import TableClaimHistoryAmount from '../FieldData/Amount'
 import WTableMyNft from '../WTableMyNft'
 import WTableMyNftMobile from '../WTableMyNftMobile'
-import ItemRecentTransaction from './ItemRecentTransaction'
+import NftClaimHistoryItem from './NftClaimHistoryItem'
 
 const columns: ColumnsType<ClaimHistoryItemType> = [
   {
@@ -83,7 +83,7 @@ const NftClaimHistory = ({ tokenId }) => {
         <WTableMyNftMobile
           total={nftClaimHistory.total}
           dataSource={nftClaimHistory ? nftClaimHistory.data : []}
-          renderItem={(item) => <ItemRecentTransaction nftClaimHistoryItem={item} />}
+          renderItem={(item) => <NftClaimHistoryItem nftClaimHistoryItem={item} />}
           handleLoadMore={handleLoadMore}
         />
       ) : (

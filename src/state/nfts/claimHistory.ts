@@ -43,6 +43,7 @@ export const useNftClaimHistory = (
     pageSize: 10,
     tokenId,
   })
+
   const [nftClaimHistory, setNftClaimHistory] = useState<ResponseClaimHistory>({
     ...paramsNftClaimHistory,
     data: undefined,
@@ -58,6 +59,11 @@ export const useNftClaimHistory = (
     }
   }, [paramsNftClaimHistory])
 
+  useEffect(() => {
+    if (tokenId) {
+      setParamsNftClaimHistory((prev) => ({ ...prev, tokenId }))
+    }
+  }, [tokenId])
   useEffect(() => {
     fetchNftClaimHistory()
   }, [fetchNftClaimHistory])

@@ -14,7 +14,6 @@ const WItemTxhHistory = styled.div`
     width: 100%;
     padding: 16px;
     background: #eefbff;
-    border: 1px solid $secondary;
     border-radius: 12px;
 
     .history-item-line {
@@ -22,6 +21,10 @@ const WItemTxhHistory = styled.div`
       align-items: center;
       justify-content: space-between;
       margin-bottom: 16px;
+      margin-bottom: 12px;
+      ${({ theme }) => theme.mediaQueries.sm} {
+        margin-bottom: 16px;
+      }
       &.table-history-amount {
         p {
           &[data-amount='deposit'] {
@@ -59,8 +62,6 @@ const WItemTxhHistory = styled.div`
         margin-bottom: 0;
       }
       & > p {
-        color: $text-main;
-        margin-bottom: 16px;
         &:first-child {
           font-size: 14px;
           font-weight: 700;
@@ -75,7 +76,7 @@ const WItemTxhHistory = styled.div`
   }
 `
 
-const ItemRecentTransaction: React.FC<{ nftClaimHistoryItem: ClaimHistoryItemType }> = ({ nftClaimHistoryItem }) => (
+const NftClaimHistoryItem: React.FC<{ nftClaimHistoryItem: ClaimHistoryItemType }> = ({ nftClaimHistoryItem }) => (
   <WItemTxhHistory>
     <div className="wItemTxhHistory">
       <div className="history-item-line table-history-amount">
@@ -97,20 +98,28 @@ const ItemRecentTransaction: React.FC<{ nftClaimHistoryItem: ClaimHistoryItemTyp
       {/*  */}
       <div className="history-item-line">
         <p>From</p>
-        <Link external href={getBlockExploreLink(CONTRACT_ADDRESS, 'address')}>
+        <Link external href={getBlockExploreLink(CONTRACT_ADDRESS, 'address')} fontSize={['13px', , '16px']}>
           {formatCode(CONTRACT_ADDRESS, 5, 5)}
         </Link>
       </div>
       {/*  */}
       <div className="history-item-line">
         <p>To</p>
-        <Link external href={getBlockExploreLink(nftClaimHistoryItem.userAddress, 'address')}>
+        <Link
+          external
+          href={getBlockExploreLink(nftClaimHistoryItem.userAddress, 'address')}
+          fontSize={['13px', , '16px']}
+        >
           {formatCode(nftClaimHistoryItem.userAddress, 5, 5)}
         </Link>
       </div>
       <div className="history-item-line">
         <p>Txh</p>
-        <Link external href={getBlockExploreLink(nftClaimHistoryItem.transactionHash, 'transaction')}>
+        <Link
+          external
+          href={getBlockExploreLink(nftClaimHistoryItem.transactionHash, 'transaction')}
+          fontSize={['13px', , '16px']}
+        >
           {formatCode(nftClaimHistoryItem.transactionHash, 5, 5)}
         </Link>
       </div>
@@ -119,4 +128,4 @@ const ItemRecentTransaction: React.FC<{ nftClaimHistoryItem: ClaimHistoryItemTyp
   </WItemTxhHistory>
 )
 
-export default ItemRecentTransaction
+export default NftClaimHistoryItem

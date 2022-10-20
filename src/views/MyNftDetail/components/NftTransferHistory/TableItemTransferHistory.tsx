@@ -12,14 +12,16 @@ const WItemTxhHistory = styled.div`
     width: 100%;
     padding: 16px;
     background: #eefbff;
-    border: 1px solid $secondary;
     border-radius: 12px;
 
     .history-item-line {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
+      ${({ theme }) => theme.mediaQueries.sm} {
+        margin-bottom: 16px;
+      }
       &.table-history-amount {
         p {
           &[data-amount='deposit'] {
@@ -57,15 +59,13 @@ const WItemTxhHistory = styled.div`
         margin-bottom: 0;
       }
       & > p {
-        color: $text-main;
-        margin-bottom: 16px;
         &:first-child {
-          font-size: 14px;
+          font-size: 13px;
           font-weight: 700;
           margin-bottom: 0;
         }
         &:last-child {
-          font-size: 14px;
+          font-size: 13px;
           margin-bottom: 0;
         }
       }
@@ -106,20 +106,32 @@ const TableItemTransferHistory: React.FC<{ index: number; nftTransferHistoryItem
       {/*  */}
       <div className="history-item-line">
         <p>From</p>
-        <Link external href={getBlockExploreLink(nftTransferHistoryItem.previousOwner, 'address')}>
+        <Link
+          external
+          href={getBlockExploreLink(nftTransferHistoryItem.previousOwner, 'address')}
+          fontSize={['13px', , '16px']}
+        >
           {formatCode(nftTransferHistoryItem.previousOwner, 5, 5)}
         </Link>
       </div>
       {/*  */}
       <div className="history-item-line">
         <p>To</p>
-        <Link external href={getBlockExploreLink(nftTransferHistoryItem.newOwner, 'address')}>
+        <Link
+          external
+          href={getBlockExploreLink(nftTransferHistoryItem.newOwner, 'address')}
+          fontSize={['13px', , '16px']}
+        >
           {formatCode(nftTransferHistoryItem.newOwner, 5, 5)}
         </Link>
       </div>
       <div className="history-item-line">
         <p>Txh</p>
-        <Link external href={getBlockExploreLink(nftTransferHistoryItem.transactionHash, 'transaction')}>
+        <Link
+          external
+          href={getBlockExploreLink(nftTransferHistoryItem.transactionHash, 'transaction')}
+          fontSize={['13px', , '16px']}
+        >
           {formatCode(nftTransferHistoryItem.transactionHash, 5, 5)}
         </Link>
       </div>

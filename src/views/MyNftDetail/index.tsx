@@ -9,7 +9,7 @@ import NftClaimHistory from './components/NftClaimHistory'
 import NftTransferHistory from './components/NftTransferHistory'
 
 const WCardNftDetailPage = styled.div`
-  padding-bottom: 50px;
+  padding-bottom: 70px;
   .icon-back {
     height: 16px;
     margin-right: 8px;
@@ -65,7 +65,7 @@ const CardNftDetailPage: React.FC<React.PropsWithChildren> = () => {
       </Container>
 
       <Container>
-        <Heading textAlign="left" scale="xl" mb="32px" mt="32px">
+        <Heading textAlign="left" scale="xl" m={['32px 0 12px 0 ', , '32px 0 32px 0']}>
           <MyNftH2 scale="lg" color="#007CA2">
             {t('Claim History')}
           </MyNftH2>
@@ -74,7 +74,7 @@ const CardNftDetailPage: React.FC<React.PropsWithChildren> = () => {
       </Container>
 
       <Container>
-        <Heading textAlign="left" scale="xl" mb="32px" mt="32px">
+        <Heading textAlign="left" scale="xl" m={['32px 0 12px 0 ', , '32px 0 32px 0']}>
           <MyNftH2 scale="lg" color="#007CA2">
             {t('Transfer History')}
           </MyNftH2>

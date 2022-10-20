@@ -60,6 +60,11 @@ export const useNftTransferHistory = (
   }, [paramsNftClaimHistory])
 
   useEffect(() => {
+    if (tokenId) {
+      setParamsNftTransferHistory((prev) => ({ ...prev, tokenId }))
+    }
+  }, [tokenId])
+  useEffect(() => {
     fetchNftTransferHistory()
   }, [fetchNftTransferHistory])
 

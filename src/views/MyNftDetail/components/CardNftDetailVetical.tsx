@@ -83,11 +83,18 @@ const CardNftDetailVertical: React.FC<Props> = ({ myNftDetail, ...props }) => {
         </div>
         <Box>
           <CardSubHeading>
-            <Text color="#292929" fontWeight="700" fontSize="24px">
+            <Text color="#292929" fontWeight="700" fontSize={['24px']}>
               {myNftDetail.rareName}
             </Text>
           </CardSubHeading>
-          <Text color="rgba(41, 41, 41, 0.6)" fontWeight="400" fontSize="16px" mt="24px" mb="24px">
+          <Text
+            color="rgba(41, 41, 41, 0.6)"
+            fontWeight="400"
+            fontSize={['13px', '16px']}
+            bold
+            mt={['13px', , '24px']}
+            mb={['13px', , '24px']}
+          >
             This NFT will give you some unique benefits.
           </Text>
           <div className="card-hold-nft-body">
@@ -110,8 +117,10 @@ const CardNftDetailVertical: React.FC<Props> = ({ myNftDetail, ...props }) => {
                   href={getBscScanLinkForNft(undefined, myNftDetail.tokenId)}
                 >
                   <Flex alignItems="center">
-                    {myNftDetail.tokenId}
-                    <Box width="20px" ml="6px">
+                    <Text color="#007CA2" fontSize={['13px', '16px']} fontWeight="700">
+                      {myNftDetail.tokenId}
+                    </Text>
+                    <Box width={['14px', , '24px']} ml="6px">
                       <Image width={30} height={30} src="/images2/link-icons.png" />
                     </Box>
                   </Flex>
@@ -124,8 +133,10 @@ const CardNftDetailVertical: React.FC<Props> = ({ myNftDetail, ...props }) => {
               </Text>
               <Link style={{ display: 'inline' }} external href={getBlockExploreLink(NFT_ADDRESS, 'address')}>
                 <Flex alignItems="center">
-                  {formatCode(NFT_ADDRESS, 5, 5)}
-                  <Box width="20px" ml="6px">
+                  <Text color="#007CA2" fontSize={['13px', '16px']} fontWeight="700">
+                    {formatCode(NFT_ADDRESS, 5, 5)}
+                  </Text>
+                  <Box width={['13px', , '20px']} ml="6px">
                     <Image width={30} height={30} src="/images2/link-icons.png" />
                   </Box>
                 </Flex>
@@ -136,71 +147,57 @@ const CardNftDetailVertical: React.FC<Props> = ({ myNftDetail, ...props }) => {
                 Dividend:
               </Text>
               {dividend?.value !== undefined && (
-                <Flex alignItems="center">
-                  <Link style={{ display: 'inline' }} external href="/">
-                    {dividend?.value}
-                  </Link>
-                  <Box width="20px" ml="6px">
-                    <Image width={30} height={30} src="/images2/link-icons.png" />
-                  </Box>
-                </Flex>
+                <Link style={{ display: 'inline' }} external href="/">
+                  <Flex alignItems="center">
+                    <Text color="#007CA2" fontSize={['13px', '16px']} fontWeight="700">
+                      {dividend?.value}
+                    </Text>
+                    <Box width={['13px', , '20px']} ml="6px">
+                      <Image width={30} height={30} src="/images2/link-icons.png" />
+                    </Box>
+                  </Flex>
+                </Link>
               )}
             </Grid>
 
-            <Grid gridTemplateColumns={['1fr', '1fr 1fr']} gridTemplateRows="26px">
+            <Grid gridTemplateColumns={['1fr 1fr', '1fr 1fr']}>
               <Text color="#292929" fontSize={[13, , 16]}>
                 Daily Holder Reward:
               </Text>
               {reward01?.value !== undefined && (
-                <Flex alignItems="center">
-                  <Link style={{ display: 'inline' }} external href="/">
-                    {reward01?.value} OPV
-                  </Link>
-                  <Box width="20px" ml="6px">
-                    <Image width={30} height={30} src="/images2/link-icons.png" />
-                  </Box>
-                </Flex>
+                <Link style={{ display: 'inline' }} external href="/">
+                  <Flex alignItems="center">
+                    <Text color="#007CA2" fontSize={['13px', '16px']} fontWeight="700">
+                      {reward01?.value} OPV
+                    </Text>
+                    <Box width={['13px', , '20px']} ml="6px">
+                      <Image width={30} height={30} src="/images2/link-icons.png" />
+                    </Box>
+                  </Flex>
+                </Link>
               )}
             </Grid>
-            <Grid gridTemplateColumns={['1fr', '1fr 1fr']} gridTemplateRows="26px">
+            <Grid gridTemplateColumns={['1fr 1fr', '1fr 1fr']}>
               <Text color="#292929" fontSize={[13, , 16]}>
                 OPV Bonus:
               </Text>
               {opvBonus?.value !== undefined && (
-                <Flex alignItems="center">
-                  <Link
-                    style={{ display: 'inline' }}
-                    external
-                    href={getBscScanLinkForNft(undefined, myNftDetail.tokenId)}
-                  >
-                    {opvBonus?.value} OPV
-                  </Link>
-                  <Box width="20px" ml="6px">
-                    <Image width={30} height={30} src="/images2/link-icons.png" />
-                  </Box>
-                </Flex>
+                <Link
+                  style={{ display: 'inline' }}
+                  external
+                  href={getBscScanLinkForNft(undefined, myNftDetail.tokenId)}
+                >
+                  <Flex alignItems="center">
+                    <Text color="#007CA2" fontSize={['13px', '16px']} fontWeight="700">
+                      {opvBonus?.value} OPV
+                    </Text>
+                    <Box width={['13px', , '20px']} ml="6px">
+                      <Image width={30} height={30} src="/images2/link-icons.png" />
+                    </Box>
+                  </Flex>
+                </Link>
               )}
             </Grid>
-            {/* <Hr /> */}
-            {/* <Text color="#292929" fontWeight="700" fontSize={[16, , 20]}>
-              Properties
-            </Text>
-            <Grid gridTemplateColumns={['1fr', '1fr 1fr']} gridTemplateRows="26px">
-              <Text color="#292929" fontSize={[13, , 16]}>
-                Category:
-              </Text>
-              <Text color="#292929" fontWeight="700" fontSize={[13, , 16]} bold>
-                Action Card
-              </Text>
-            </Grid>
-            <Grid gridTemplateColumns={['1fr', '1fr 1fr']} gridTemplateRows="26px">
-              <Text color="#292929" fontSize={[13, , 16]}>
-                Identification:
-              </Text>
-              <Text color="#292929" fontWeight="700" fontSize={[13, , 16]} bold>
-                Admin
-              </Text>
-            </Grid> */}
           </div>
         </Box>
       </div>
