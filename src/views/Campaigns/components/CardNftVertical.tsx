@@ -163,7 +163,7 @@ const CardNftVertical: React.FC<Props> = ({ campaign, onClickCampaign, ...props 
       </div>
       <Box>
         <CardSubHeading>
-          <Text color="primary" fontWeight="700" fontSize="24px" mb="10px">
+          <Text color="textSubtle" fontWeight="700" fontSize="24px" mb="10px">
             HOLD NFT
           </Text>
           {(() => {
@@ -175,16 +175,12 @@ const CardNftVertical: React.FC<Props> = ({ campaign, onClickCampaign, ...props 
 
         <div className="card-hold-nft-body">
           <Grid gridTemplateColumns={['1fr 1fr', , '1fr 2fr']}>
-            <Text fontSize={[13, , 16]}>Total Reward:</Text>
+            <Text fontSize={[13, , 16]} color="textSubtle" fontWeight={600}>
+              Total Reward:
+            </Text>
             <Flex alignItems="center">
-              <Text fontSize={[13, , 16]} bold>
-                <CurrencyFormat
-                  value={campaign.totalPool}
-                  displayType="text"
-                  thousandSeparator
-                  suffix={` OPV`}
-                  renderText={(t) => t}
-                />
+              <Text fontSize={[13, , 16]} bold color="textSubtle" fontWeight={700}>
+                <CurrencyFormat value={campaign.totalPool} displayType="text" thousandSeparator renderText={(t) => t} />
               </Text>
               <Box width="20px" ml="6px">
                 <Image width={30} height={30} src="/images2/opvIcon.png" />
@@ -192,8 +188,10 @@ const CardNftVertical: React.FC<Props> = ({ campaign, onClickCampaign, ...props 
             </Flex>
           </Grid>
           <Grid gridTemplateColumns={['1fr 1fr', , '1fr 2fr']}>
-            <Text fontSize={[13, , 16]}>Total Claimed:</Text>
-            <Text fontSize={[13, , 16]} bold>
+            <Text fontSize={[13, , 16]} color="textSubtle" fontWeight={600}>
+              Total Claimed:
+            </Text>
+            <Text fontSize={[13, , 16]} bold color="textSubtle" fontWeight={700}>
               <CurrencyFormat
                 value={campaign.currentPool}
                 displayType="text"
@@ -204,20 +202,24 @@ const CardNftVertical: React.FC<Props> = ({ campaign, onClickCampaign, ...props 
             </Text>
           </Grid>
           <Grid gridTemplateColumns={['1fr 1fr', , '1fr 2fr']}>
-            <Text fontSize={[13, , 16]}>Durations:</Text>
-            <Text fontSize={[13, , 16]} bold>
-              {campaign.duration / 1000 / 60 / 60 / 24} Days
+            <Text fontSize={[13, , 16]} color="textSubtle" fontWeight={600}>
+              Durations:
+            </Text>
+            <Text fontSize={[13, , 16]} bold color="textSubtle" fontWeight={700}>
+              {campaign?.duration ? Math.round(campaign.duration / 1000 / 60 / 60 / 24) : '--'} Days
             </Text>
           </Grid>
           <Grid gridTemplateColumns={['1fr 1fr', , '1fr 2fr']}>
-            <Text fontSize={[13, , 16]}>Start:</Text>
-            <Text fontSize={[13, , 16]} bold>
+            <Text fontSize={[13, , 16]} color="textSubtle" fontWeight={600}>
+              Start:
+            </Text>
+            <Text fontSize={[13, , 16]} bold color="textSubtle" fontWeight={700}>
               {formatDate(campaign.start)}
             </Text>
           </Grid>
 
           <Grid gridTemplateColumns={['1fr', '1fr 2fr']} gridTemplateRows="26px">
-            <Text fontSize={[13, , 16]}>
+            <Text fontSize={[13, , 16]} color="textSubtle" fontWeight={600}>
               {(() => {
                 if (step === STEEP_COUNT.SOON) return 'Start in:'
                 if (step === STEEP_COUNT.START) return 'End in:'

@@ -12,10 +12,12 @@ const Stats = () => {
   }
 
   const TradesCardData: IconCardData = {
+    background: '#F9F7CB',
     icon: <img src={DecorationCloud01.src} alt="" />,
   }
 
   const StakedCardData: IconCardData = {
+    background: 'rgba(148, 191, 255, 0.5)',
     icon: <img src={DecorationCloud01.src} alt="" />,
   }
 

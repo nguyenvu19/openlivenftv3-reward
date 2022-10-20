@@ -84,6 +84,7 @@ const WCardHoldNft = styled.div`
 
       ${({ theme }) => theme.mediaQueries.md} {
         font-size: 16px;
+        padding: 3px 10px;
       }
 
       &:before {
@@ -110,13 +111,14 @@ const WCardHoldNft = styled.div`
     display: flex;
     flex-direction: column;
     row-gap: 16px;
+    z-index: 2;
   }
 `
-
 const WCountDown = styled.div`
   display: flex;
   align-items: center;
 `
+
 const CardHoldNft = ({ campaignNew }) => {
   const router = useRouter()
   const { weekdays, days, hours, minutes, seconds, step } = useCountTime(campaignNew?.start, campaignNew?.finish)
@@ -236,7 +238,7 @@ const CardHoldNft = ({ campaignNew }) => {
             Durations:
           </Text>
           <Text fontSize={[16, , 24]} fontWeight={700}>
-            {`${campaignNew ? campaignNew.duration : '--'} Days`}
+            {`${campaignNew ? Math.round(campaignNew.duration / 1000 / 60 / 60 / 24) : '--'} Days`}
           </Text>
         </Flex>
         <Flex justifyContent="space-between" flexWrap="wrap">

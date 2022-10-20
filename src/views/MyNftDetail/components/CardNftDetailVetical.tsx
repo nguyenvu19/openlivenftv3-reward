@@ -2,8 +2,8 @@ import { Box, Flex, Grid, Image, Link, Skeleton, Text } from '@pancakeswap/uikit
 import MediaCard from 'components/MediaCard'
 import { NFT_ADDRESS } from 'config'
 import { formatCode } from 'helpers'
-import { useEffect, useState } from 'react'
-import { MyNftItem, NftMetaData } from 'state/nfts/types'
+import useNftMetaDataByUrl from 'state/nfts/fetchNftMetaDataByUrl'
+import { MyNftItem } from 'state/nfts/types'
 import styled from 'styled-components'
 import { getBlockExploreLink, getBscScanLinkForNft } from 'utils'
 
@@ -61,32 +61,12 @@ interface Props {
   [t: string]: any
 }
 const CardNftDetailVertical: React.FC<Props> = ({ myNftDetail, ...props }) => {
-  const [nftMetaData, setNftMetaData] = useState<NftMetaData | undefined | null>()
+  const nftMetaData = useNftMetaDataByUrl(myNftDetail?.tokenUri)
+
   const ownerName = nftMetaData?.attributes?.find((o) => o.trait_type === 'Owner Name')
   const dividend = nftMetaData?.attributes?.find((o) => o.trait_type === 'Devident')
   const reward01 = nftMetaData?.attributes?.find((o) => o.trait_type === 'reward_01')
   const opvBonus = nftMetaData?.attributes?.find((o) => o.trait_type === 'OPV Bonus')
-
-  useEffect(() => {
-    async function fetchNftMetaData() {
-      if (myNftDetail) {
-        try {
-          fetch(myNftDetail.tokenUri)
-            .then((res) => res.json())
-            .then((res) => {
-              if (res) {
-                setNftMetaData(res)
-              } else {
-                setNftMetaData(null)
-              }
-            })
-        } catch (error) {
-          setNftMetaData(null)
-        }
-      }
-    }
-    fetchNftMetaData()
-  }, [myNftDetail])
 
   if (!myNftDetail) {
     return (

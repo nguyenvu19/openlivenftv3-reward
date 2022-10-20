@@ -96,12 +96,16 @@ const CardTableMarketPlace = () => {
       },
     },
     {
-      title: t('source'),
+      title: t('Source'),
       dataIndex: 'exchangeName',
       render: (text, record) => {
         return (
           <Link external href={record.marketUrl}>
-            <Flex alignItems="center" className="staking-item-source" style={{ transform: 'translateY(6px)' }}>
+            <Flex
+              alignItems="center"
+              className="staking-item-source"
+              style={{ transform: 'translateY(6px)', whiteSpace: 'nowrap' }}
+            >
               <Box width={24} height={24} mr="8px">
                 <Image
                   width={24}
@@ -149,7 +153,7 @@ const CardTableMarketPlace = () => {
       },
     },
     {
-      title: <div style={{ textAlign: 'center' }}>{t('+2% Depth')}</div>,
+      title: <div style={{ textAlign: 'center', whiteSpace: 'nowrap' }}>{t('+2% Depth')}</div>,
       dataIndex: 'depthUsdPositiveTwo',
       render: (text) => {
         return (
@@ -170,7 +174,7 @@ const CardTableMarketPlace = () => {
       },
     },
     {
-      title: <div style={{ textAlign: 'center' }}>{t('-2% Depth')}</div>,
+      title: <div style={{ textAlign: 'center', whiteSpace: 'nowrap' }}>{t('-2% Depth')}</div>,
       dataIndex: 'depthUsdNegativeTwo',
       render: (text) => {
         return (

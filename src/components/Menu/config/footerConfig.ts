@@ -3,8 +3,8 @@ import { ContextApi } from '@pancakeswap/localization'
 
 export const footerLinks: (t: ContextApi['t']) => FooterLinkType[] = (t) => [
   {
-    label: 'Dashboard',
-    href: '/dashboard',
+    label: 'Home',
+    href: '/home',
     target: '_blank',
     items: [],
   },

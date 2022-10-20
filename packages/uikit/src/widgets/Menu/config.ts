@@ -148,7 +148,7 @@ export const userMenulinks: DropdownMenuItems[] = [
   {
     type: DropdownMenuItemType.BUTTON,
     disabled: true,
-    label: "Dashboard",
+    label: "Home",
   },
   {
     type: DropdownMenuItemType.BUTTON,

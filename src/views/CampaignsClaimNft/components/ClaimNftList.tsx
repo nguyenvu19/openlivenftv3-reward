@@ -35,7 +35,6 @@ const ClaimNftList: React.FC<{
       {listNftUser?.result?.length > 0 ? (
         <>
           {listNftUser?.result?.map((nft) => (
-            // eslint-disable-next-line react/no-array-index-key
             <WCardNftItem key={nft.token_id}>
               <CardNftWithActionClaim campaign={campaign} nftItem={nft} onClaim={onClaim} />
             </WCardNftItem>
