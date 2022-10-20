@@ -9,7 +9,7 @@ import useCountTime, { STEEP_COUNT } from 'hooks/useCountTime'
 
 const WCardNftVertical = styled.div`
   width: 100%;
-  padding: 24px;
+  padding: 12px;
   background: #eefbff;
   border: 1px solid rgba(67, 108, 255, 0.3);
   border-radius: 24px;
@@ -19,6 +19,7 @@ const WCardNftVertical = styled.div`
   flex-flow: row wrap;
   gap: 20px;
   ${({ theme }) => theme.mediaQueries.sm} {
+    padding: 24px;
     gap: 60px;
   }
   .card-nft-cover-left {
@@ -44,14 +45,14 @@ const CardSubHeading = styled.div`
   position: relative;
   .tag-name {
     font-weight: 700;
-    font-size: 12px;
+    font-size: 16px;
     line-height: 140%;
     min-width: 60px;
     text-align: center;
-    padding: 1px 5px;
+    padding: 1px 20px;
     margin-bottom: 20px;
     position: absolute;
-    top: 0px;
+    top: 6px;
     left: 116%;
     border-radius: 5px;
 
@@ -163,7 +164,7 @@ const CardNftVertical: React.FC<Props> = ({ campaign, onClickCampaign, ...props 
       </div>
       <Box>
         <CardSubHeading>
-          <Text color="primary" fontWeight="700" fontSize="24px" mb="10px">
+          <Text color="textSubtle" fontWeight="700" fontSize="24px" mb="10px">
             HOLD NFT
           </Text>
           {(() => {
@@ -175,16 +176,12 @@ const CardNftVertical: React.FC<Props> = ({ campaign, onClickCampaign, ...props 
 
         <div className="card-hold-nft-body">
           <Grid gridTemplateColumns={['1fr 1fr', , '1fr 2fr']}>
-            <Text fontSize={[13, , 16]}>Total Reward:</Text>
+            <Text fontSize={[13, , 16]} color="textSubtle" fontWeight={600} pr="8px">
+              Total Reward:
+            </Text>
             <Flex alignItems="center">
-              <Text fontSize={[13, , 16]} bold>
-                <CurrencyFormat
-                  value={campaign.totalPool}
-                  displayType="text"
-                  thousandSeparator
-                  suffix={` OPV`}
-                  renderText={(t) => t}
-                />
+              <Text fontSize={[13, , 16]} bold color="textSubtle" fontWeight={700}>
+                <CurrencyFormat value={campaign.totalPool} displayType="text" thousandSeparator renderText={(t) => t} />
               </Text>
               <Box width="20px" ml="6px">
                 <Image width={30} height={30} src="/images2/opvIcon.png" />
@@ -192,8 +189,10 @@ const CardNftVertical: React.FC<Props> = ({ campaign, onClickCampaign, ...props 
             </Flex>
           </Grid>
           <Grid gridTemplateColumns={['1fr 1fr', , '1fr 2fr']}>
-            <Text fontSize={[13, , 16]}>Total Claimed:</Text>
-            <Text fontSize={[13, , 16]} bold>
+            <Text fontSize={[13, , 16]} color="textSubtle" fontWeight={600} pr="8px">
+              Total Claimed:
+            </Text>
+            <Text fontSize={[13, , 16]} bold color="textSubtle" fontWeight={700}>
               <CurrencyFormat
                 value={campaign.currentPool}
                 displayType="text"
@@ -204,20 +203,24 @@ const CardNftVertical: React.FC<Props> = ({ campaign, onClickCampaign, ...props 
             </Text>
           </Grid>
           <Grid gridTemplateColumns={['1fr 1fr', , '1fr 2fr']}>
-            <Text fontSize={[13, , 16]}>Durations:</Text>
-            <Text fontSize={[13, , 16]} bold>
-              {campaign.duration / 1000 / 60 / 60 / 24} Days
+            <Text fontSize={[13, , 16]} color="textSubtle" fontWeight={600} pr="8px">
+              Durations:
+            </Text>
+            <Text fontSize={[13, , 16]} bold color="textSubtle" fontWeight={700}>
+              {campaign?.duration ? Math.round(campaign.duration / 1000 / 60 / 60 / 24) : '--'} Days
             </Text>
           </Grid>
           <Grid gridTemplateColumns={['1fr 1fr', , '1fr 2fr']}>
-            <Text fontSize={[13, , 16]}>Start:</Text>
-            <Text fontSize={[13, , 16]} bold>
+            <Text fontSize={[13, , 16]} color="textSubtle" fontWeight={600} pr="8px">
+              Start:
+            </Text>
+            <Text fontSize={[13, , 16]} bold color="textSubtle" fontWeight={700}>
               {formatDate(campaign.start)}
             </Text>
           </Grid>
 
           <Grid gridTemplateColumns={['1fr', '1fr 2fr']} gridTemplateRows="26px">
-            <Text fontSize={[13, , 16]}>
+            <Text fontSize={[13, , 16]} color="textSubtle" fontWeight={600} style={{ whiteSpace: 'nowrap' }} pr="8px">
               {(() => {
                 if (step === STEEP_COUNT.SOON) return 'Start in:'
                 if (step === STEEP_COUNT.START) return 'End in:'

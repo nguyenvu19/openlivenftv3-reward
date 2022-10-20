@@ -84,7 +84,13 @@ const WTableFooter = styled.div`
 const WTableMyNft = ({ columns, dataSource, total, handleLoadMore, ...props }) => {
   return (
     <CustomTableMyNft>
-      <Table columns={columns} dataSource={dataSource} pagination={false} {...props} />
+      <Table
+        columns={columns}
+        dataSource={dataSource}
+        rowKey={(record) => record?.tokenId}
+        pagination={false}
+        {...props}
+      />
       {dataSource?.length > 0 && (
         <WTableFooter>
           <Button scale="sm" disabled={total > dataSource?.length} onClick={handleLoadMore}>

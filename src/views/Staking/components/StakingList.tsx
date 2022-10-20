@@ -1,5 +1,5 @@
-import { useModal } from '@pancakeswap/uikit'
 import { useState } from 'react'
+import { useStakingListData } from 'state/staking/fetchStakingList'
 import styled from 'styled-components'
 import HeaderStakingList from './HeaderStakingList'
 import ModalStaking from './ModalStaking'
@@ -12,6 +12,9 @@ const WStakingList = styled.div`
 
 const StakingList = () => {
   const [modalStaking, setModalStaking] = useState({ open: false, dataModal: null })
+
+  useStakingListData(1)
+
   const handleStaking = (packageItem) => {
     setModalStaking({ open: true, dataModal: packageItem })
   }
@@ -19,7 +22,6 @@ const StakingList = () => {
     <WStakingList>
       <HeaderStakingList />
       <PackageStakingList onStaking={handleStaking} />
-
       <ModalStaking open={modalStaking.open} dataModal={modalStaking.dataModal} setModalStaking={setModalStaking} />
     </WStakingList>
   )

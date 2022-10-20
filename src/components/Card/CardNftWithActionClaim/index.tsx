@@ -6,6 +6,7 @@ import MediaCard from 'components/MediaCard'
 import { CampaignItem } from 'state/campaigns/types'
 import { NftType } from 'state/nfts/types'
 import styled from 'styled-components'
+import useNftMetaDataByUrl from 'state/nfts/fetchNftMetaDataByUrl'
 
 const WCardNftWithActionClaim = styled.div`
   background: #eefbff;
@@ -46,6 +47,8 @@ const CardNftWithActionClaim: React.FC<{
     }
   }
 
+  const nftMetaData = useNftMetaDataByUrl(nftItem?.token_uri)
+
   if (!nftItem) {
     return (
       <WCardNftWithActionClaim>
@@ -56,7 +59,7 @@ const CardNftWithActionClaim: React.FC<{
   return (
     <WCardNftWithActionClaim>
       <div className="card-nft-cover">
-        <MediaCard fileUrl="https://s3.ap-southeast-1.amazonaws.com/openlivenft/investPackage/TOPAZ.mp4" />
+        <MediaCard fileUrl={nftMetaData?.image} />
       </div>
       <div className="card-nft-body">
         <Text fontSize={[20]} fontWeight="bold" mb="14px">
@@ -96,7 +99,7 @@ const CardNftWithActionClaim: React.FC<{
             </Text>
           </Flex>
           <Flex justifyContent="space-between">
-            <Text>Avaible Claim:</Text>
+            <Text>Available Claim:</Text>
             <Text fontWeight="bold">
               {campaign ? (
                 <CurrencyFormat

@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { Button, Flex, Skeleton, Text } from '@pancakeswap/uikit'
 import MediaCard from 'components/MediaCard'
 import { NftMetaData, MyNftItem } from 'state/nfts/types'
+import useNftMetaDataByUrl from 'state/nfts/fetchNftMetaDataByUrl'
 
 const WCardNftWithID = styled.div`
   max-width: 100%;
@@ -33,28 +34,7 @@ interface Props {
 }
 const CardNftWithID: React.FC<Props> = ({ myInvestItem }) => {
   const router = useRouter()
-  const [nftMetaData, setNftMetaData] = useState<NftMetaData | undefined | null>()
-
-  useEffect(() => {
-    async function fetchMetaData() {
-      if (myInvestItem) {
-        try {
-          fetch(myInvestItem.tokenUri)
-            .then((res) => res.json())
-            .then((res) => {
-              if (res) {
-                setNftMetaData(res)
-              } else {
-                setNftMetaData(null)
-              }
-            })
-        } catch (error) {
-          setNftMetaData(null)
-        }
-      }
-    }
-    fetchMetaData()
-  }, [myInvestItem])
+  const nftMetaData = useNftMetaDataByUrl(myInvestItem?.tokenUri)
 
   if (!myInvestItem) {
     return (
@@ -70,16 +50,16 @@ const CardNftWithID: React.FC<Props> = ({ myInvestItem }) => {
           <MediaCard fileUrl={nftMetaData?.image} />
         </div>
         <div className="investment-item-content">
-          <Text fontSize={[16, , 32]} fontWeight="bold" mt={['16px', null, null, '32']} color="#292929">
+          <Text color="#292929" fontSize={[16, , 32]} fontWeight="bold" mt={['16px', null, '32']} textAlign="center">
             {myInvestItem.rareName}
           </Text>
           <div className="investment-content" style={{ textAlign: 'center' }}>
             <Button
-              onClick={() => router.push(`${router.pathname}/detail/${myInvestItem.tokenId}`)}
-              height={['32px', null, null, null, '48px']}
-              mt={['16px', null, null, '32px']}
               type="button"
               scale="md"
+              height={['32px', null, null, null, '48px']}
+              mt={['16px', null, null, '32px']}
+              onClick={() => router.push(`${router.pathname}/detail/${myInvestItem.tokenId}`)}
             >
               ID: {myInvestItem.tokenId}
             </Button>

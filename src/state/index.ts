@@ -19,6 +19,7 @@ import otherCurrency from './otherCurrency/reducer'
 import nfts from './nfts/reducer'
 import tokenInfo from './tokenInfo/reducer'
 import farmsOpv from './farmsOpv/reducer'
+import staking from './staking/reducer'
 
 const PERSISTED_KEYS: string[] = ['user', 'transactions']
 
@@ -43,6 +44,7 @@ const persistedReducer = persistReducer(
     nfts,
     tokenInfo,
     farmsOpv,
+    staking,
 
     // Exchange
     user,
