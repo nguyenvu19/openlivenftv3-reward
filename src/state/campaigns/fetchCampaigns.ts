@@ -47,11 +47,8 @@ const fetchCampaigns = async () => {
           start,
           finish,
           totalPool,
-          duration: finish - start,
           status,
-          // isComing: currentTimestamp < start,
-          // isStart: currentTimestamp > start && currentTimestamp < finish,
-          // isEnded: currentTimestamp > finish,
+          duration: finish - start,
           loading: false,
         }
         list.push(campaignItem)

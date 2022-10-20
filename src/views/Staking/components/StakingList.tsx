@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import { useStakingListData } from 'state/staking/fetchStakingList'
 import styled from 'styled-components'
-import HeaderStakingList from './HeaderStakingList'
+import { useStakingListData } from 'state/staking/fetchStakingList'
 import ModalStaking from './ModalStaking'
+import HeaderStakingList from './HeaderStakingList'
 import PackageStakingList from './PackageStakingList'
 
 const WStakingList = styled.div`
@@ -10,18 +10,19 @@ const WStakingList = styled.div`
   padding-bottom: 70px;
 `
 
-const StakingList = () => {
+const StakingList: React.FC = () => {
   const [modalStaking, setModalStaking] = useState({ open: false, dataModal: null })
 
-  useStakingListData(1)
+  const { stakingList } = useStakingListData()
 
   const handleStaking = (packageItem) => {
     setModalStaking({ open: true, dataModal: packageItem })
   }
+
   return (
     <WStakingList>
       <HeaderStakingList />
-      <PackageStakingList onStaking={handleStaking} />
+      <PackageStakingList stakingList={stakingList} onStaking={handleStaking} />
       <ModalStaking open={modalStaking.open} dataModal={modalStaking.dataModal} setModalStaking={setModalStaking} />
     </WStakingList>
   )

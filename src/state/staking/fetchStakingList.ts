@@ -1,17 +1,13 @@
-/* eslint-disable no-constant-condition */
 /* eslint-disable no-await-in-loop */
 import { FAST_INTERVAL } from 'config/constants'
 import { useSelector } from 'react-redux'
 import { AppState, useAppDispatch } from 'state'
 import useSWR from 'swr'
 import { getContractStaking } from 'utils/contractHelpers'
+import { StakingItemType } from './types'
+import { setStakingList } from './actions'
 
-export const FARM_STATUS = {
-  LIVE: 'live',
-  END: 'end',
-}
-
-export const useStakingListData = (poolId = 1) => {
+export const useStakingListData = (poolId = 1): { stakingList: StakingItemType[] } => {
   const dispatch = useAppDispatch()
 
   useSWR(
@@ -33,19 +29,19 @@ export const useStakingListData = (poolId = 1) => {
             if (apr === 0 && time === 0 && totalStakedAmount === 0) break
 
             arr.push({
+              poolId,
+              planId: count,
               apr,
               time,
               totalStakedAmount,
             })
           }
-          console.log('arr', arr)
 
-          // dispatch(
-          //   setFarmsData({
-          //     farmsData: pFarmsList,
-          //     totalUserDividendsAllPool: pTotalUserDividendsAllPool,
-          //   }),
-          // )
+          dispatch(
+            setStakingList({
+              stakingList: arr,
+            }),
+          )
         } catch (error) {
           console.error('useStakingListData', error)
         }
@@ -54,6 +50,6 @@ export const useStakingListData = (poolId = 1) => {
     { refreshInterval: FAST_INTERVAL },
   )
 
-  const { farmsData, totalUserDividendsAllPool } = useSelector((state: AppState) => state.farmsOpv)
-  return { farmsData, totalUserDividendsAllPool, fetchFarmsData: () => null }
+  const stakingList = useSelector((state: AppState) => state.staking.stakingList)
+  return { stakingList }
 }

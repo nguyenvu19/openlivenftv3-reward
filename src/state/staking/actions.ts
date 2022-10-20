@@ -1,7 +1,6 @@
 import { createAction } from '@reduxjs/toolkit'
-import { FarmsItemType } from './types'
+import { StakingItemType } from './types'
 
-export const setFarmsData = createAction<{
-  farmsData: FarmsItemType[] | null | undefined
-  totalUserDividendsAllPool: number
-}>('farmsOpv/setFarmsData')
+export const setStakingList = createAction<{ stakingList: StakingItemType[] | null | undefined }>(
+  'staking/setStakingList',
+)
