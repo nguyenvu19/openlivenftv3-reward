@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { Flex, Heading } from '@pancakeswap/uikit'
+import { Flex, Heading, Text } from '@pancakeswap/uikit'
 import { FlexGap } from 'components/Layout/Flex'
 import styled from 'styled-components'
 import { CAMPAIGN_STATUS } from 'state/campaigns/types'
@@ -17,10 +17,10 @@ const HoldNftComplete = ({ campaigns }) => {
   )
   return (
     <WHoldNftComplete>
-      <Flex justifyContent="center" mb="40px">
-        <Heading size="xxl" as="h2">
+      <Flex justifyContent="center" mb={['12px', , '42px']}>
+        <Text as="h2" fontSize={['16px', , '24px']} fontWeight="700" color="textSubtle">
           Completed
-        </Heading>
+        </Text>
       </Flex>
       <FlexGap gap="30px" flexDirection="column">
         {campaignEnd?.length > 0 ? (

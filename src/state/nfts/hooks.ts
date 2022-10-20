@@ -14,10 +14,11 @@ export const useSelectorMyNftsList = (): NftResponse | null | undefined => {
   return useSelector((state: AppState) => state.nfts.list)
 }
 
-export const useMyNftsList = ({ pageSize, account }: { pageSize?: number; account?: string }) => {
+export const useMyNftsList = ({ limit, account }: { limit?: number; account?: string }) => {
   const dispatch = useAppDispatch()
   const [paramsNftsList, setParamsNftsList] = useState({
-    limit: pageSize || 100,
+    limit: limit || 9,
+    pageSize: 9,
     chain: 'bsc testnet',
     format: 'decimal',
     token_addresses: NFT_ADDRESS,

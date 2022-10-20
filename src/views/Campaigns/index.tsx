@@ -1,7 +1,7 @@
 import { PageMeta } from 'components/Layout/Page'
 import Container from 'components/Layout/Container'
 import { useCampaigns, usePollCoreCampaignsData } from 'state/campaigns/hooks'
-import OpenliveBanner from './components/Banners/OpenliveBanner'
+import OpvBanner from 'components/Banners/OpvBanner'
 import LiveAndUpComing from './components/LiveAndUpComing'
 import HoldNftComplete from './components/HoldNftComplete'
 
@@ -15,7 +15,7 @@ const Campaigns: React.FC<React.PropsWithChildren> = () => {
       <PageMeta />
 
       <Container>
-        <OpenliveBanner />
+        <OpvBanner />
       </Container>
 
       <Container>

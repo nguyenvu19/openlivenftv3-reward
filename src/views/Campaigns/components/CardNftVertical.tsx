@@ -45,17 +45,20 @@ const CardSubHeading = styled.div`
   position: relative;
   .tag-name {
     font-weight: 700;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 140%;
     min-width: 60px;
     text-align: center;
     padding: 1px 20px;
     margin-bottom: 20px;
     position: absolute;
-    top: 6px;
+    top: 2px;
     left: 116%;
     border-radius: 5px;
-
+    ${({ theme }) => theme.mediaQueries.md} {
+      font-size: 16px;
+      top: 6px;
+    }
     &:before {
       content: '';
       position: absolute;
@@ -109,7 +112,7 @@ const CardNftVertical: React.FC<Props> = ({ campaign, onClickCampaign, ...props 
       <WCountDown onClick={() => onClickCampaign && onClickCampaign(campaign)}>
         <Flex alignItems="center">
           <Box background="#529BF0" borderRadius="10px" padding="2px 8px">
-            <Text color="#fff" fontSize={[10, , 24]} bold>
+            <Text color="#fff" fontSize={[10, , 24]} bold minWidth="14px" textAlign="center">
               {weekdays * 7 + days}
             </Text>
           </Box>
@@ -119,7 +122,7 @@ const CardNftVertical: React.FC<Props> = ({ campaign, onClickCampaign, ...props 
         </Flex>
         <Flex ml="4px" alignItems="center">
           <Box background="#529BF0" borderRadius="10px" padding="2px 8px">
-            <Text color="#fff" fontSize={[10, , 24]} bold>
+            <Text color="#fff" fontSize={[10, , 24]} bold minWidth="14px" textAlign="center">
               {hours}
             </Text>
           </Box>
@@ -129,7 +132,7 @@ const CardNftVertical: React.FC<Props> = ({ campaign, onClickCampaign, ...props 
         </Flex>
         <Flex ml="4px" alignItems="center">
           <Box background="#529BF0" borderRadius="10px" padding="2px 8px">
-            <Text color="#fff" fontSize={[10, , 24]} bold>
+            <Text color="#fff" fontSize={[10, , 24]} bold minWidth="14px" textAlign="center">
               {minutes}
             </Text>
           </Box>
@@ -139,7 +142,7 @@ const CardNftVertical: React.FC<Props> = ({ campaign, onClickCampaign, ...props 
         </Flex>
         <Flex ml="4px" alignItems="center">
           <Box background="#529BF0" borderRadius="10px" padding="2px 8px">
-            <Text color="#fff" fontSize={[10, , 24]} bold>
+            <Text color="#fff" fontSize={[10, , 24]} bold minWidth="14px" textAlign="center">
               {seconds}
             </Text>
           </Box>
@@ -164,7 +167,7 @@ const CardNftVertical: React.FC<Props> = ({ campaign, onClickCampaign, ...props 
       </div>
       <Box>
         <CardSubHeading>
-          <Text color="textSubtle" fontWeight="700" fontSize="24px" mb="10px">
+          <Text color="textSubtle" fontWeight="700" fontSize={['16px', , '24px']} mb={['24px', , '12px']}>
             HOLD NFT
           </Text>
           {(() => {

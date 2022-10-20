@@ -9,16 +9,13 @@ import ImgDecoration02 from '../images/decoration02.png'
 
 const WCardHoldNft = styled.div`
   padding: 30px 14px;
-  margin-bottom: 40px;
-  ${({ theme }) => theme.mediaQueries.md} {
-    margin-bottom: 60px;
-  }
+  margin-bottom: 10px;
 
   background: #f4f9ff;
-  border: 3px solid #0a79f9;
+  border: 1px solid #0a79f9;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   backdrop-filter: blur(15px);
-  border-radius: 32px;
+  border-radius: 24px;
 
   display: flex;
   flex-direction: column;
@@ -29,6 +26,9 @@ const WCardHoldNft = styled.div`
 
   ${({ theme }) => theme.mediaQueries.md} {
     padding: 50px;
+    margin-bottom: 60px;
+    border-radius: 32px;
+    border: 3px solid #0a79f9;
   }
 
   .condition-left {

@@ -26,6 +26,8 @@ import GlobalStyle from '../style/Global'
 import 'style/EmbedResponsive.css'
 import 'antd/dist/antd.css'
 import 'react-multi-carousel/lib/styles.css'
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
 
 const EasterEgg = dynamic(() => import('components/EasterEgg'), { ssr: false })
 

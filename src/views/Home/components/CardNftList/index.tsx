@@ -6,10 +6,12 @@ import { useOtherCurrencyList } from 'state/otherCurrency/hooks'
 import NftItem from './NftItem'
 
 const WCardNftList = styled.div`
-  padding-bottom: 40px;
   position: relative;
-
+  padding-bottom: 10px;
   margin: 0 -8px;
+  ${({ theme }) => theme.mediaQueries.md} {
+    padding-bottom: 40px;
+  }
   .carousel-item {
     padding: 20px 8px;
   }
@@ -63,12 +65,10 @@ const CardNftList = () => {
     tablet: {
       breakpoint: { max: 999, min: 476 },
       items: 2,
-      partialVisibilityGutter: 40,
     },
     mobile: {
       breakpoint: { max: 475, min: 0 },
       items: 1,
-      partialVisibilityGutter: 40,
     },
   }
   return (
@@ -76,6 +76,7 @@ const CardNftList = () => {
       <Carousel
         responsive={responsive}
         showDots
+        arrows={!isMobile}
         containerClass=""
         itemClass="carousel-item"
         dotListClass="carousel-dots-list"

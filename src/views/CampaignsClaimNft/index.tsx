@@ -11,6 +11,7 @@ import { useToast } from '@pancakeswap/uikit'
 import { useTransactionAdder } from 'state/transactions/hooks'
 import moment from 'moment'
 import ConnectWallet from 'components/ConnectWallet'
+import BackLink from 'components/BackLink'
 import ClaimNftList from './components/ClaimNftList'
 
 const WCampaignsClaimNft = styled.div`
@@ -29,7 +30,7 @@ const CampaignsClaimNft: React.FC<React.PropsWithChildren> = () => {
   const contractCampaign = useContractCampaigns()
 
   const campaign = useCampaignItem(campaignId?.[0])
-  const { data: listNftUser } = useMyNftsList({ account })
+  const { data: listNftUser, setParamsNftsList } = useMyNftsList({ account })
 
   const addTransaction = useTransactionAdder()
   const handleClaimReward = async ({ nftItem }: { nftItem: NftType }, cb) => {
@@ -74,11 +75,24 @@ const CampaignsClaimNft: React.FC<React.PropsWithChildren> = () => {
     return true
   }
 
+  const handleLoadMore = () => {
+    setParamsNftsList((prev) => ({ ...prev, limit: prev.limit + prev.pageSize }))
+  }
+
   return (
     <WCampaignsClaimNft>
+      <Container mb={['14px', , '24px']}>
+        <BackLink showArrow href="/campaigns" title="Campaigns" />
+      </Container>
       <Container>
         {account ? (
-          <ClaimNftList campaign={campaign} listNftUser={listNftUser} onClaim={handleClaimReward} />
+          <ClaimNftList
+            campaign={campaign}
+            listNftUser={listNftUser?.result}
+            total={listNftUser?.total}
+            onClaim={handleClaimReward}
+            handleLoadMore={handleLoadMore}
+          />
         ) : (
           <ConnectWallet minHeight="400px" />
         )}
