@@ -81,7 +81,7 @@ const FarmTable: React.FC<Props> = ({
         )
       ) : (
         <CenterStyled>
-          <Dots>loading</Dots>
+          <Dots>Loading</Dots>
         </CenterStyled>
       )}
     </Container>
