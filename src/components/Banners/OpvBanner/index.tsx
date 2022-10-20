@@ -1,11 +1,15 @@
+import { Heading } from '@pancakeswap/uikit'
 import styled from 'styled-components'
-import { Heading, useMatchBreakpoints } from '@pancakeswap/uikit'
+import { APP_USER_URL } from 'config'
+import SlickCarousel from 'components/SlickCarousel'
+import OpvBannerItem from './OpvBannerItem'
 
-const WBanner = styled.div`
+const WOpvBanner = styled.div`
+  display: block;
   width: 100%;
-  height: 100%;
   max-height: 370px;
   position: relative;
+
   margin-bottom: 24px;
   ${({ theme }) => theme.mediaQueries.md} {
     margin-bottom: 60px;
@@ -26,17 +30,14 @@ export const StyledSubheading = styled(Heading)`
   }
   margin-bottom: 8px;
 `
-const OpenliveBanner = () => {
-  const { isMobile } = useMatchBreakpoints()
+const OpvBanner = () => {
   return (
-    <WBanner>
-      {isMobile ? (
-        <img src="/images2/lottery.png" alt="LotteryBanner" />
-      ) : (
-        <img src="/images2/lottery.png" alt="LotteryBanner" />
-      )}
-    </WBanner>
+    <WOpvBanner as="a" href={APP_USER_URL} target="_blank">
+      <SlickCarousel arrows={false} dots={false} infinite speed={500} slidesToShow={1} slidesToScroll={1}>
+        <OpvBannerItem />
+      </SlickCarousel>
+    </WOpvBanner>
   )
 }
 
-export default OpenliveBanner
+export default OpvBanner

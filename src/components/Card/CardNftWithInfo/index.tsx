@@ -10,11 +10,15 @@ import { OtherCurrencyType } from 'state/otherCurrency/types'
 const WCardNftWithInfo = styled.div`
   display: block;
   background: #eefbff;
-  border: 1px solid #00438e;
-  box-shadow: 8px 10px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 20px;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.07);
+  border-radius: 12px;
   overflow: hidden;
   position: relative;
+  ${({ theme }) => theme.mediaQueries.md} {
+    border: 1px solid #00438e;
+    border-radius: 20px;
+    box-shadow: 8px 10px 4px rgba(0, 0, 0, 0.25);
+  }
 
   .card-nft-cover {
     max-width: 100%;
