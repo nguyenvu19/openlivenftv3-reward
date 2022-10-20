@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from 'react'
-import { Flex, Heading, Text } from '@pancakeswap/uikit'
+import { Flex, Text } from '@pancakeswap/uikit'
 import { FlexGap } from 'components/Layout/Flex'
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
@@ -8,7 +8,10 @@ import { EmptyStyled } from 'views/Campaigns/styled'
 import CardNftVertical from '../CardNftVertical'
 
 const WLiveAndUpComing = styled.div`
-  padding-bottom: 70px;
+  padding-bottom: 24px;
+  ${({ theme }) => theme.mediaQueries.sm} {
+    padding-bottom: 72px;
+  }
 `
 
 const LiveAndUpComing = ({ campaigns }) => {
@@ -29,7 +32,7 @@ const LiveAndUpComing = ({ campaigns }) => {
 
   return (
     <WLiveAndUpComing>
-      <Flex justifyContent="center" mb={['24px', , '42px']}>
+      <Flex justifyContent="center" mb={['12px', , '42px']}>
         <Text as="h2" fontSize={['16px', , '24px']} fontWeight="700" color="textSubtle">
           Live & Upcoming
         </Text>
