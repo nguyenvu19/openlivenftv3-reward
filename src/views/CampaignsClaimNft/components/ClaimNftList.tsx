@@ -39,16 +39,22 @@ const ClaimNftList: React.FC<{
   campaign?: CampaignItem
   listNftUser?: NftType[]
   total?: number
+  contractCampaign?: any
   onClaim?: (item: any, cb: () => void) => void
   handleLoadMore?: () => void
-}> = ({ campaign, listNftUser, total, onClaim, handleLoadMore }) => {
+}> = ({ campaign, listNftUser, total, onClaim, handleLoadMore, contractCampaign }) => {
   return (
     <WClaimNftList>
       {listNftUser?.length > 0 ? (
         <>
           {listNftUser?.map((nft) => (
             <WCardNftItem key={nft.token_id}>
-              <CardNftWithActionClaim campaign={campaign} nftItem={nft} onClaim={onClaim} />
+              <CardNftWithActionClaim
+                campaign={campaign}
+                nftItem={nft}
+                onClaim={onClaim}
+                contractCampaign={contractCampaign}
+              />
             </WCardNftItem>
           ))}
           {listNftUser?.length > 0 && (

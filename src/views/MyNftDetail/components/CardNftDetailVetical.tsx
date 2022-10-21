@@ -47,10 +47,6 @@ const WCardNftVertical = styled.div`
     }
   }
 `
-
-// const Hr = styled.hr`
-//   width: 100%;
-// `
 const CardSubHeading = styled.div`
   width: fit-content;
   position: relative;
@@ -65,7 +61,7 @@ const CardNftDetailVertical: React.FC<Props> = ({ myNftDetail, ...props }) => {
 
   const ownerName = nftMetaData?.attributes?.find((o) => o.trait_type === 'Owner Name')
   const dividend = nftMetaData?.attributes?.find((o) => o.trait_type === 'Devident')
-  const reward01 = nftMetaData?.attributes?.find((o) => o.trait_type === 'reward_01')
+  const reward01 = nftMetaData?.attributes?.find((o) => o.trait_type === 'OPV Reward')
   const opvBonus = nftMetaData?.attributes?.find((o) => o.trait_type === 'OPV Bonus')
 
   if (!myNftDetail) {

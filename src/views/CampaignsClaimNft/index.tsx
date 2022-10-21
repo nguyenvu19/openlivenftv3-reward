@@ -30,7 +30,7 @@ const CampaignsClaimNft: React.FC<React.PropsWithChildren> = () => {
   const contractCampaign = useContractCampaigns()
 
   const campaign = useCampaignItem(campaignId?.[0])
-  const { data: listNftUser, setParamsNftsList } = useMyNftsList({ account })
+  const { data: listNftUser, setParamsNftsList, fetchMyNftsList } = useMyNftsList({ account })
 
   const addTransaction = useTransactionAdder()
   const handleClaimReward = async ({ nftItem }: { nftItem: NftType }, cb) => {
@@ -66,10 +66,12 @@ const CampaignsClaimNft: React.FC<React.PropsWithChildren> = () => {
       })
       if (response) {
         await response.wait()
+        fetchMyNftsList()
         if (cb) cb()
       }
     } catch (error) {
       console.error('error', error)
+      fetchMyNftsList()
       if (cb) cb()
     }
     return true
@@ -92,6 +94,7 @@ const CampaignsClaimNft: React.FC<React.PropsWithChildren> = () => {
             total={listNftUser?.total}
             onClaim={handleClaimReward}
             handleLoadMore={handleLoadMore}
+            contractCampaign={contractCampaign}
           />
         ) : (
           <ConnectWallet minHeight="400px" />

@@ -4,7 +4,6 @@ import { Button } from '@pancakeswap/uikit'
 import styled from 'styled-components'
 import Empty from 'components/Empty'
 import LoadingGray from 'components/LoadingGray'
-import { InfoMarketPair } from 'state/tokenInfo/types'
 
 const WTableMyNftMobileStyled = styled.div`
   .recent-txh-mobile {
@@ -20,7 +19,7 @@ const WTableFooter = styled.div`
 `
 interface Props {
   total: number
-  dataSource: InfoMarketPair[]
+  dataSource: any[]
   renderItem: (item: any, index?: number) => ReactNode
   handleLoadMore?: () => void
 }
