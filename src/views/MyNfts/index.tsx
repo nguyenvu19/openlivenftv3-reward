@@ -1,3 +1,4 @@
+import styled from 'styled-components'
 import Container from 'components/Layout/Container'
 import { useGraphMyNftsList } from 'state/nfts/hooks'
 import { OptionProps } from 'components/Select/Select'
@@ -5,6 +6,10 @@ import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import ConnectWallet from 'components/ConnectWallet'
 import CardNftList from './components/CardNftList'
 import CardListHeading from './components/CardListHeading'
+
+const WMyNftPage = styled.div`
+  padding-bottom: 120px;
+`
 
 const MyNftPage: React.FC<React.PropsWithChildren> = () => {
   const { account } = useActiveWeb3React()
@@ -18,19 +23,19 @@ const MyNftPage: React.FC<React.PropsWithChildren> = () => {
   }
 
   return (
-    <>
+    <WMyNftPage>
       <Container>
         <CardListHeading onOptionChange={onOptionChange} />
       </Container>
 
-      <Container mt={[null, null, null, '32px']}>
+      <Container mt={[null, null, null, '16px']}>
         {account ? (
           <CardNftList total={myNftsList.total} myNftsList={myNftsList.data} handleLoadMore={handleLoadMore} />
         ) : (
           <ConnectWallet />
         )}
       </Container>
-    </>
+    </WMyNftPage>
   )
 }
 

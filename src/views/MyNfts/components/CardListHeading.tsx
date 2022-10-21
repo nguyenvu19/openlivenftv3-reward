@@ -1,25 +1,11 @@
-import { Flex, Heading, Text } from '@pancakeswap/uikit'
+import { Flex } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
 import Select, { OptionProps } from 'components/Select/Select'
 import styled from 'styled-components'
-
-const MyNftH2 = styled(Heading)`
-  font-size: 16px;
-  margin-bottom: 0;
-  ${({ theme }) => theme.mediaQueries.sm} {
-    font-size: 32px;
-  }
-`
-const LabelWrapper = styled.div`
-  > ${Text} {
-    font-size: 12px;
-  }
-`
+import BackLink from 'components/BackLink'
 
 const FilterContainer = styled.div`
   display: flex;
-  align-items: center;
-  width: 100%;
   padding: 8px 0px;
   ${({ theme }) => theme.mediaQueries.sm} {
     width: auto;
@@ -82,18 +68,14 @@ const CardListHeading: React.FC<Props> = ({ onOptionChange }) => {
 
   return (
     <Flex justifyContent="space-between" alignItems="center" flexDirection="row">
-      <Heading textAlign="left" scale="xl">
-        <MyNftH2 scale="lg" color="#007CA2">
-          {t('My NFTs')}
-        </MyNftH2>
-      </Heading>
-      <Heading textAlign="right" scale="xl">
-        <FilterContainer>
-          <LabelWrapper>
+      <BackLink
+        title={t('My NFTs')}
+        rightNode={
+          <FilterContainer>
             <Select options={optionsInvestName} onOptionChange={onOptionChange} />
-          </LabelWrapper>
-        </FilterContainer>
-      </Heading>
+          </FilterContainer>
+        }
+      />
     </Flex>
   )
 }

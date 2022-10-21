@@ -5,6 +5,7 @@ import { useContext } from 'react'
 import { MenuContext } from '@pancakeswap/uikit/src/widgets/Menu/context'
 
 const WBackLink = styled(Flex)`
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -23,7 +24,7 @@ const WBackLink = styled(Flex)`
 interface Props {
   href?: string
   showArrow?: boolean
-  title?: string
+  title?: React.ReactNode | string
   rightNode?: React.ReactNode
   target?: string
   [t: string]: any
@@ -37,12 +38,12 @@ const BackLink: React.FC<Props> = ({ href, showArrow, title, rightNode, target, 
   const itemLinkProps: any = isHttp
     ? {
         as: 'a',
-        href,
+        ...(href && { href }),
         ...(target && { target }),
       }
     : {
-        as: linkComponent,
-        href,
+        as: href ? linkComponent : 'div',
+        ...(href && { href }),
       }
   return (
     <WBackLink {...itemLinkProps} {...props}>

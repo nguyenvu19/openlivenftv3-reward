@@ -4,7 +4,7 @@ import { ArrowDropDownIcon, Box, BoxProps, Text } from '@pancakeswap/uikit'
 
 const DropDownHeader = styled.div`
   width: 100%;
-  height: 40px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -14,6 +14,9 @@ const DropDownHeader = styled.div`
   border-radius: 8px;
   background: ${({ theme }) => theme.colors.input};
   transition: border-radius 0.15s;
+  ${({ theme }) => theme.mediaQueries.sm} {
+    height: 40px;
+  }
 `
 
 const DropDownListContainer = styled.div`
@@ -40,7 +43,7 @@ const DropDownContainer = styled(Box)<{ isOpen: boolean }>`
   position: relative;
   background: ${({ theme }) => theme.colors.input};
   border-radius: 8px;
-  height: 40px;
+  /* height: 40px; */
   min-width: 136px;
   user-select: none;
   z-index: 20;
