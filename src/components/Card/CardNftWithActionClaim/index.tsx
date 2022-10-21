@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import CurrencyFormat from 'react-currency-format'
 import { Button, Flex, Skeleton, Text } from '@pancakeswap/uikit'
 import { FlexGap } from 'components/Layout/Flex'
@@ -7,6 +7,7 @@ import { CampaignItem } from 'state/campaigns/types'
 import { NftType } from 'state/nfts/types'
 import styled from 'styled-components'
 import useNftMetaDataByUrl from 'state/nfts/fetchNftMetaDataByUrl'
+import moment from 'moment'
 
 const WCardNftWithActionClaim = styled.div`
   background: #eefbff;
@@ -45,7 +46,8 @@ const CardNftWithActionClaim: React.FC<{
   campaign?: CampaignItem
   nftItem?: NftType
   onClaim?: (item: any, cb: () => void) => void
-}> = ({ campaign, nftItem, onClaim }) => {
+  contractCampaign?: any
+}> = ({ campaign, nftItem, onClaim, contractCampaign }) => {
   const [loading, setLoading] = useState(false)
   const handleClaimNow = () => {
     if (campaign && nftItem) {
@@ -57,6 +59,23 @@ const CardNftWithActionClaim: React.FC<{
   }
 
   const nftMetaData = useNftMetaDataByUrl(nftItem?.token_uri)
+
+  /* Check is claimed */
+  const [isClaimed, setClaimTime] = useState(true)
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-extra-semi
+    ;(async () => {
+      if (contractCampaign && nftItem) {
+        const lastTimeClaim = await (await contractCampaign.claimTimes(nftItem.token_id)).toNumber()
+        const currentTime = new Date(moment(new Date()).format('YYYY/MM/DD')).getTime()
+        if (lastTimeClaim * 1000 >= currentTime) {
+          setClaimTime(true)
+        } else {
+          setClaimTime(false)
+        }
+      }
+    })()
+  }, [contractCampaign, nftItem])
 
   if (!nftItem) {
     return (
@@ -127,12 +146,15 @@ const CardNftWithActionClaim: React.FC<{
       </div>
       <div className="card-nft-footer">
         <Flex justifyContent="center">
-          <Button scale="sm" isLoading={loading} onClick={handleClaimNow}>
-            CLAIM NOW
-          </Button>
-          {/* <Button scale="sm" disabled>
-            CLAIMED
-          </Button> */}
+          {isClaimed ? (
+            <Button scale="sm" disabled>
+              CLAIMED
+            </Button>
+          ) : (
+            <Button scale="sm" isLoading={loading} onClick={handleClaimNow}>
+              CLAIM NOW
+            </Button>
+          )}
         </Flex>
       </div>
     </WCardNftWithActionClaim>
