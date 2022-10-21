@@ -2,8 +2,7 @@ import styled from "styled-components";
 import { Colors } from "../../theme";
 
 export const StyledIconContainer = styled.div<{ activeBackgroundColor?: keyof Colors }>`
-  background: ${({ activeBackgroundColor, theme }) =>
-    activeBackgroundColor ? theme.colors[activeBackgroundColor] : "transparent"};
+  background: ${({ activeBackgroundColor }) => activeBackgroundColor || "transparent"};
 `;
 
 export const StyledAnimatedIconComponent = styled.div<{
@@ -30,6 +29,12 @@ export const StyledAnimatedIconComponent = styled.div<{
       bottom: 0;
       overflow:hidden;
     }
+
+    svg {
+      width: 24px;
+      height: 24px;
+    }
+    
 
     div:last-child {
       height: 0;

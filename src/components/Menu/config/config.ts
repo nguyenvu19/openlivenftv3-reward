@@ -32,16 +32,16 @@ const config: (
     icon: HomeIcon,
     fillIcon: HomeIcon,
     href: '/home',
-    items: [],
     showItemsOnMobile: false,
+    items: [],
   },
   {
     label: t('Campaigns'),
     icon: CampaignIcon,
     fillIcon: CampaignIcon,
     href: '/campaigns',
-    items: [],
     showItemsOnMobile: false,
+    items: [],
   },
   {
     label: t('Trade'),
@@ -67,8 +67,8 @@ const config: (
     icon: FarmIcon,
     fillIcon: FarmIcon,
     image: '/images/decorations/pe2.png',
-    items: [],
     showItemsOnMobile: false,
+    items: [],
   },
   {
     label: t('Staking'),
@@ -76,8 +76,8 @@ const config: (
     icon: StakingIcon,
     fillIcon: StakingIcon,
     image: '/images/decorations/pe2.png',
+    showItemsOnMobile: false,
     items: [],
-    hideOnMobile: true,
   },
   {
     label: t('My NFTs'),
@@ -85,8 +85,8 @@ const config: (
     icon: MyNftIcon,
     fillIcon: MyNftIcon,
     image: '/images/decorations/pe2.png',
+    showItemsOnMobile: false,
     items: [],
-    hideOnMobile: true,
   },
   {
     label: t('Marketplace'),
@@ -95,8 +95,8 @@ const config: (
     fillIcon: MarketplaceIcon,
     image: '/images/decorations/pe2.png',
     type: DropdownMenuItemType.EXTERNAL_LINK,
+    showItemsOnMobile: false,
     items: [],
-    hideOnMobile: true,
   },
   {
     label: t('Token Info'),
@@ -104,31 +104,8 @@ const config: (
     icon: TokenInfoIcon,
     fillIcon: TokenInfoIcon,
     image: '/images/decorations/pe2.png',
+    showItemsOnMobile: false,
     items: [],
-    hideOnMobile: true,
-  },
-  {
-    label: '',
-    href: '/staking',
-    icon: MoreIcon,
-    items: [
-      {
-        label: t('Staking'),
-        href: '/staking',
-      },
-      {
-        label: t('My NFTs'),
-        href: '/my-nfts',
-      },
-      {
-        label: t('Marketplace'),
-        href: '/marketplace',
-      },
-      {
-        label: t('Token Info'),
-        href: '/token-info',
-      },
-    ],
   },
 ]
 
