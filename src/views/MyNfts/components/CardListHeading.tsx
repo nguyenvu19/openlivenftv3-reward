@@ -6,10 +6,8 @@ import BackLink from 'components/BackLink'
 
 const FilterContainer = styled.div`
   display: flex;
-  padding: 8px 0px;
   ${({ theme }) => theme.mediaQueries.sm} {
     width: auto;
-    padding: 0;
   }
 `
 

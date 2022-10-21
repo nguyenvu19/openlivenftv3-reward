@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from '@pancakeswap/uikit'
+import { Box, Link } from '@pancakeswap/uikit'
 import TxStatus from 'components/TxStatus'
 import { ZERO_ADDRESS } from 'config/constants'
 import { formatCode } from 'helpers'
@@ -111,6 +111,9 @@ const TableItemTransferHistory: React.FC<{ index: number; nftTransferHistoryItem
           href={getBlockExploreLink(nftTransferHistoryItem.previousOwner, 'address')}
           fontSize={['13px', , '16px']}
         >
+          <Box width="20px" height="20px" mr="12px">
+            <img src="/images2/icons/default-user-icon.png" alt="" />
+          </Box>
           {formatCode(nftTransferHistoryItem.previousOwner, 5, 5)}
         </Link>
       </div>
@@ -122,6 +125,9 @@ const TableItemTransferHistory: React.FC<{ index: number; nftTransferHistoryItem
           href={getBlockExploreLink(nftTransferHistoryItem.newOwner, 'address')}
           fontSize={['13px', , '16px']}
         >
+          <Box width="20px" height="20px" mr="12px">
+            <img src="/images2/icons/default-user-icon.png" alt="" />
+          </Box>
           {formatCode(nftTransferHistoryItem.newOwner, 5, 5)}
         </Link>
       </div>

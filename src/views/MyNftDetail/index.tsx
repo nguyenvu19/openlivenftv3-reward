@@ -43,7 +43,7 @@ const CardNftDetailPage: React.FC<React.PropsWithChildren> = () => {
 
   return (
     <WCardNftDetailPage>
-      <Container mb={['16px', , '24px']}>
+      <Container mb="24px">
         <BackLink
           showArrow
           href="/my-nfts"
@@ -55,7 +55,7 @@ const CardNftDetailPage: React.FC<React.PropsWithChildren> = () => {
                   ID: {myNftDetail.tokenId}
                 </Button>
               ) : (
-                <Skeleton width="50px" />
+                <Skeleton width="50px" ml="10px" />
               )}
             </Flex>
           }

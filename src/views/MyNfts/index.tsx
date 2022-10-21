@@ -28,7 +28,7 @@ const MyNftPage: React.FC<React.PropsWithChildren> = () => {
         <CardListHeading onOptionChange={onOptionChange} />
       </Container>
 
-      <Container mt={[null, null, null, '16px']}>
+      <Container mt={['12px', null, null, '16px']}>
         {account ? (
           <CardNftList total={myNftsList.total} myNftsList={myNftsList.data} handleLoadMore={handleLoadMore} />
         ) : (
