@@ -197,7 +197,11 @@ const CardHoldNft = ({ campaignNew }) => {
   if (!campaignNew) {
     return (
       <WCardHoldNft style={{ cursor: 'not-allowed' }}>
-        <Skeleton height={['160px', , '230px']} />
+        <Skeleton height={['160px', , '230px']}>
+          <Flex alignItems="center" height="100%">
+            Upcoming
+          </Flex>
+        </Skeleton>
       </WCardHoldNft>
     )
   }

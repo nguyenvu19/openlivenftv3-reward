@@ -22,7 +22,7 @@ const Stats = () => {
   }
 
   return (
-    <Flex justifyContent="center" alignItems="center" flexDirection="column" mb="70px">
+    <Flex justifyContent="center" alignItems="center" flexDirection="column">
       <Flex width="100%" flexDirection={['column', null, null, 'row']}>
         <IconCard {...UsersCardData} mr={[null, null, null, '33px', '66px']} mb={['16px', null, null, '0']}>
           <Flex flexDirection="column">

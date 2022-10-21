@@ -1,6 +1,17 @@
+import { useState } from 'react'
 import styled, { createGlobalStyle } from 'styled-components'
-import { Box, Button, Checkbox, Flex, Grid, Text } from '@pancakeswap/uikit'
+import { Box, Button, Checkbox, Flex, Grid, Text, useToast } from '@pancakeswap/uikit'
 import { Modal } from 'antd'
+import { useContractStaking } from 'hooks/useContract'
+import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
+import { toLocaleString } from 'utils'
+import { StakingItemType } from 'state/staking/types'
+import { isNumber } from 'helpers'
+import { useTranslation } from '@pancakeswap/localization'
+import { TransactionResponse } from '@ethersproject/providers'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import { useTransactionAdder } from 'state/transactions/hooks'
+import ConnectWalletButton from 'components/ConnectWalletButton'
 import Caution01 from './Caution01'
 import StakingInput from './StakingInput'
 import CautionImage from '../../images/caution.png'
@@ -59,10 +70,70 @@ const InputRightNode = styled.div`
     background: #000;
   }
 `
+interface Props {
+  open?: boolean
+  dataModal?: StakingItemType
+  projectFee?: number
+  setModalStaking?: (p: any) => void
+  onStakingSuccess: () => void
+}
+const ModalStaking: React.FC<Props> = ({ open, dataModal, projectFee, onStakingSuccess, ...props }) => {
+  const { t } = useTranslation()
+  const { toastSuccess, toastError } = useToast()
 
-const ModalStaking = ({ open, dataModal, setModalStaking, ...props }) => {
-  const onPurchase = () => {
-    console.log(123)
+  const contractStaking = useContractStaking()
+  const { callWithGasPrice } = useCallWithGasPrice()
+
+  const { account } = useActiveWeb3React()
+  const addTransaction = useTransactionAdder()
+
+  const [errorMess, setErrorMess] = useState('')
+  const [isAgreementChecked, setIsAgreementChecked] = useState(false)
+  const [amount, setAmount] = useState('')
+  const [stakingLoading, setStakingLoading] = useState(false)
+
+  const onPurchase = async () => {
+    if (!account) return false
+    if (!contractStaking || !dataModal || !isNumber(projectFee)) return false
+    if (!amount || +amount <= 0) {
+      setErrorMess(t('Please enter amount'))
+      return false
+    }
+    if (!isAgreementChecked) {
+      setErrorMess(t('Please check to agree OPENLIVE Staking Service Agreement'))
+      return false
+    }
+    const stakingParams = {
+      poolId: dataModal.poolId,
+      planId: dataModal.planId,
+      feeBnb: toLocaleString(projectFee * 1e18),
+      amount: toLocaleString(+amount * 1e18),
+    }
+
+    return callWithGasPrice(
+      contractStaking,
+      'invest',
+      [stakingParams.poolId, stakingParams.planId, stakingParams.amount],
+      {
+        value: stakingParams.feeBnb,
+      },
+    )
+      .then(async (response: TransactionResponse) => {
+        await response.wait()
+        addTransaction(response, {
+          summary: `Staking: ${dataModal.time} days with ${amount} OPV`,
+        })
+        toastSuccess('Staking success')
+        onStakingSuccess()
+        setStakingLoading(false)
+      })
+      .catch((error: any) => {
+        console.error('Failed to Staking', error)
+        if (error?.code !== 4001) {
+          toastError(t('Error'), error.message)
+        }
+        setStakingLoading(false)
+      })
   }
   return (
     <Modal open={open} width={1000} className="modal-staking" centered footer={false} {...props}>
@@ -99,7 +170,8 @@ const ModalStaking = ({ open, dataModal, setModalStaking, ...props }) => {
                 <Text fontSize={['12px', , '16px']}>Available amount 0.0000000 OPV</Text>
               </Flex>
               <StakingInput
-                value={199999}
+                placeHolder="Enter amount"
+                value={amount}
                 rightNode={
                   <InputRightNode className="">
                     <Text>OPV</Text>
@@ -107,6 +179,7 @@ const ModalStaking = ({ open, dataModal, setModalStaking, ...props }) => {
                     <Button scale="xs">Max</Button>
                   </InputRightNode>
                 }
+                onChange={(v) => setAmount(v)}
               />
             </Box>
             <Text bold fontSize={['12px', , '16px']}>
@@ -177,13 +250,19 @@ const ModalStaking = ({ open, dataModal, setModalStaking, ...props }) => {
                 justifyContent: 'center',
               }}
             >
-              Error Code
+              {errorMess}
             </Text>
 
             <Box background="#DFDDDD" borderRadius="12px" p="12px 16px">
               <Flex>
                 <Box>
-                  <Checkbox scale="xs" />
+                  <Checkbox
+                    scale="xs"
+                    checked={isAgreementChecked}
+                    onChange={(e) => {
+                      setIsAgreementChecked(e.target.checked)
+                    }}
+                  />
                 </Box>
                 <Text fontSize={['12px', , ' 14px']} pl="10px">
                   I have read and I agree to OPENLIVE Staking Service Agreement
@@ -192,9 +271,19 @@ const ModalStaking = ({ open, dataModal, setModalStaking, ...props }) => {
             </Box>
 
             <Box mt="16px">
-              <Button width="100%" scale="md" onClick={onPurchase}>
-                Confirm Purchase
-              </Button>
+              {account ? (
+                <Button
+                  width="100%"
+                  scale="md"
+                  isLoading={stakingLoading}
+                  disabled={stakingLoading}
+                  onClick={onPurchase}
+                >
+                  Confirm Purchase
+                </Button>
+              ) : (
+                <ConnectWalletButton />
+              )}
             </Box>
           </div>
         </div>

@@ -7,10 +7,10 @@ import { getContractStaking } from 'utils/contractHelpers'
 import { StakingItemType } from './types'
 import { setStakingList } from './actions'
 
-export const useStakingListData = (poolId = 1): { stakingList: StakingItemType[] } => {
+export const useStakingListData = (poolId = 1): { stakingList: StakingItemType[]; fetchStakingList: () => void } => {
   const dispatch = useAppDispatch()
 
-  useSWR(
+  const { mutate } = useSWR(
     ['staking-list', [poolId]],
     async () => {
       const contractStaking = getContractStaking()
@@ -51,5 +51,5 @@ export const useStakingListData = (poolId = 1): { stakingList: StakingItemType[]
   )
 
   const stakingList = useSelector((state: AppState) => state.staking.stakingList)
-  return { stakingList }
+  return { stakingList, fetchStakingList: mutate }
 }
