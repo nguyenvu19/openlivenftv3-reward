@@ -6,11 +6,11 @@ import { ImageProps } from "./types";
 import Placeholder from "./Placeholder";
 
 const StyledImage = styled.img`
-  height: 100%;
   left: 0;
   position: absolute;
   top: 0;
   width: 100%;
+  height: 100%;
 `;
 
 const Image: React.FC<React.PropsWithChildren<ImageProps>> = ({ src, alt, width, height, fallbackSrc, ...props }) => {

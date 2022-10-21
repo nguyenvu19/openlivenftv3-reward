@@ -6,9 +6,9 @@ import { useBalance } from 'wagmi'
 import { roundNumber } from 'helpers'
 import { isAddress } from 'utils'
 
-const TableItemBalance = ({ record, opvPrice }) => {
+const TableItemBalance = ({ address, opvPrice }) => {
   const opvBalance = useBalance({
-    addressOrName: isAddress(record?.address) ? record?.address : undefined,
+    addressOrName: isAddress(address) ? address : undefined,
     token: OPV_MAINNET.address,
     chainId: 56,
   })
