@@ -13,6 +13,7 @@ const WCardTokenInfo = styled.div`
   display: flex;
   flex-flow: row wrap;
   gap: 20px;
+
   ${({ theme }) => theme.mediaQueries.sm} {
     gap: 32px;
     padding: 24px;
