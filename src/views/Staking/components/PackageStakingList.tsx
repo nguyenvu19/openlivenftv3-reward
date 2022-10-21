@@ -97,7 +97,7 @@ const PackageStakingList: React.FC<Props> = ({ stakingList, onStaking }) => {
       title: t('Est.APR'),
       dataIndex: 'apr',
       render: (text) => {
-        return <div className="staking-item-apr">{text / 60000}</div>
+        return <div className="staking-item-apr">{roundNumber((text / 1e18) * 100 * 30 * 84600, { scale: 2 })}%</div>
       },
     },
     {

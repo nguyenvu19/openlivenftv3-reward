@@ -6,6 +6,7 @@ import {
   Erc20Bytes32,
   Erc721collection,
   Multicall,
+  StakingAbi,
   Weth,
   Zap,
 } from 'config/abi/types'
@@ -63,8 +64,11 @@ import { useSigner } from 'wagmi'
 // Imports below migrated from Exchange useContract.ts
 import { Contract } from '@ethersproject/contracts'
 import { WNATIVE } from '@pancakeswap/sdk'
+import { CONTRACT_STAKING } from 'config'
 import campaignsAbi from 'config/abi/campaignAbi.json'
 import farmOpvAbi from 'config/abi/farmOpvAbi.json'
+import stakingAbi from 'config/abi/stakingAbi.json'
+
 import { FarmOpvAbi } from '../config/abi/types/FarmOpvAbi'
 import { CampaignAbi } from '../config/abi/types/CampaignAbi'
 import { ERC20_BYTES32_ABI } from '../config/abi/erc20'
@@ -376,4 +380,8 @@ export function useContractCampaigns(withSignerIfPossible = true): CampaignAbi {
 
 export function useContractFarm(address: string, withSignerIfPossible = true): FarmOpvAbi {
   return useContract(address, farmOpvAbi, withSignerIfPossible)
+}
+
+export function useContractStaking(withSignerIfPossible = true): StakingAbi {
+  return useContract(CONTRACT_STAKING, stakingAbi, withSignerIfPossible)
 }
