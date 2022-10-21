@@ -1,10 +1,10 @@
-import { ArrowBackIconBig, Flex, Text } from '@pancakeswap/uikit'
-import styled from 'styled-components'
-import { useTranslation } from '@pancakeswap/localization'
 import { useContext } from 'react'
+import styled from 'styled-components'
+import { ArrowBackIconBig, Link, Text } from '@pancakeswap/uikit'
+import { useTranslation } from '@pancakeswap/localization'
 import { MenuContext } from '@pancakeswap/uikit/src/widgets/Menu/context'
 
-const WBackLink = styled(Flex)`
+const WBackLink = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
@@ -46,13 +46,13 @@ const BackLink: React.FC<Props> = ({ href, showArrow, title, rightNode, target, 
         ...(href && { href }),
       }
   return (
-    <WBackLink {...itemLinkProps} {...props}>
-      <Flex alignItems="center">
+    <WBackLink {...props}>
+      <Link {...itemLinkProps}>
         {showArrow && <ArrowBackIconBig className="icon-back" />}
         <Text color="#007CA2" fontSize={['16px', , '24px', '32px']} fontWeight="700">
           {title || t('Back')}
         </Text>
-      </Flex>
+      </Link>
       {rightNode}
     </WBackLink>
   )
