@@ -5,7 +5,7 @@ const AnimatedIconComponent: React.FC<React.PropsWithChildren<IconComponentType>
   icon,
   fillIcon,
   color = "textSubtle",
-  activeColor = "secondary",
+  activeColor = "#005E6B",
   activeBackgroundColor,
   isActive = false,
   ...props

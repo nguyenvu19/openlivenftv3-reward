@@ -5,10 +5,12 @@ import { Button } from '@pancakeswap/uikit'
 
 const WCardMyNftList = styled.div`
   display: flex;
-  row-gap: 24px;
-  margin: 0 -6px;
+  row-gap: 0px;
+  margin: 0 -12px;
   flex-flow: row wrap;
-  padding-bottom: 100px;
+  ${({ theme }) => theme.mediaQueries.sm} {
+    row-gap: 24px;
+  }
 `
 const WCardNftItem = styled.div`
   width: 100%;

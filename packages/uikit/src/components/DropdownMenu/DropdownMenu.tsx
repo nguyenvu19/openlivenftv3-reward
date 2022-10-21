@@ -33,7 +33,7 @@ const DropdownMenu: React.FC<React.PropsWithChildren<DropdownMenuProps>> = ({
   const { styles, attributes } = usePopper(targetRef, tooltipRef, {
     strategy: isBottomNav ? "absolute" : "fixed",
     placement: isBottomNav ? "top" : "bottom-start",
-    modifiers: [{ name: "offset", options: { offset: [0, isBottomNav ? 6 : 0] } }],
+    modifiers: [{ name: "offset", options: { offset: [0, isBottomNav ? 10 : 0] } }],
   });
 
   const isMenuShow = isOpen && ((isBottomNav && showItemsOnMobile) || !isBottomNav);
@@ -109,9 +109,9 @@ const DropdownMenu: React.FC<React.PropsWithChildren<DropdownMenuProps>> = ({
                   <StyledDropdownMenuItemContainer key={itemItem}>
                     {type === DropdownMenuItemType.BUTTON && (
                       <DropdownMenuItem
+                        type="button"
                         $isActive={isActive}
                         disabled={disabled || isDisabled}
-                        type="button"
                         {...itemProps}
                       >
                         {MenuItemContent}

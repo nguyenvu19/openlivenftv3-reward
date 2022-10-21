@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from '@pancakeswap/uikit'
+import { Box, Image, Link } from '@pancakeswap/uikit'
 import TxStatus from 'components/TxStatus'
 import { CONTRACT_ADDRESS } from 'config'
 import { ZERO_ADDRESS } from 'config/constants'
@@ -99,6 +99,9 @@ const NftClaimHistoryItem: React.FC<{ nftClaimHistoryItem: ClaimHistoryItemType 
       <div className="history-item-line">
         <p>From</p>
         <Link external href={getBlockExploreLink(CONTRACT_ADDRESS, 'address')} fontSize={['13px', , '16px']}>
+          <Box width="20px" height="20px" mr="12px">
+            <img src="/images2/icons/default-user-icon.png" alt="" />
+          </Box>
           {formatCode(CONTRACT_ADDRESS, 5, 5)}
         </Link>
       </div>
@@ -110,6 +113,9 @@ const NftClaimHistoryItem: React.FC<{ nftClaimHistoryItem: ClaimHistoryItemType 
           href={getBlockExploreLink(nftClaimHistoryItem.userAddress, 'address')}
           fontSize={['13px', , '16px']}
         >
+          <Box width="20px" height="20px">
+            <img src="/images2/icons/default-user-icon.png" alt="" />
+          </Box>
           {formatCode(nftClaimHistoryItem.userAddress, 5, 5)}
         </Link>
       </div>

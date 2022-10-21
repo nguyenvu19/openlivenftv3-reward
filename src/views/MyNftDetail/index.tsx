@@ -1,7 +1,8 @@
-import { ArrowBackIconBig, Button, Flex, Heading, Skeleton } from '@pancakeswap/uikit'
-import Container from 'components/Layout/Container'
-import styled from 'styled-components'
 import { useRouter } from 'next/router'
+import styled from 'styled-components'
+import { Button, Flex, Heading, Skeleton } from '@pancakeswap/uikit'
+import BackLink from 'components/BackLink'
+import Container from 'components/Layout/Container'
 import { useTranslation } from '@pancakeswap/localization'
 import { useOpvNftDetail } from 'state/nfts/hooks'
 import CardNftDetailVertical from './components/CardNftDetailVetical'
@@ -9,7 +10,7 @@ import NftClaimHistory from './components/NftClaimHistory'
 import NftTransferHistory from './components/NftTransferHistory'
 
 const WCardNftDetailPage = styled.div`
-  padding-bottom: 70px;
+  padding-bottom: 120px;
   .icon-back {
     height: 16px;
     margin-right: 8px;
@@ -35,29 +36,30 @@ const MyNftH2 = styled(Heading)`
 `
 
 const CardNftDetailPage: React.FC<React.PropsWithChildren> = () => {
-  const { push, query } = useRouter()
+  const { query } = useRouter()
   const { t } = useTranslation()
 
   const { myNftDetail } = useOpvNftDetail(query?.nft_id?.[0])
 
   return (
     <WCardNftDetailPage>
-      <Container>
-        <Flex
-          style={{ cursor: 'pointer' }}
-          display="flex"
-          alignItems="center"
-          mb={['24px', , '32px']}
-          onClick={() => push('/my-nfts')}
-        >
-          <ArrowBackIconBig className="icon-back" />
-          <Heading textAlign="left" scale="xl" mr="16px">
-            <MyNftH2 scale="lg" color="#007CA2">
+      <Container mb="24px">
+        <BackLink
+          showArrow
+          href="/my-nfts"
+          title={
+            <Flex alignItems="center">
               {t('NFT Detail')}
-            </MyNftH2>
-          </Heading>
-          {myNftDetail ? <Button scale="sm">ID: {myNftDetail.tokenId}</Button> : <Skeleton width="50px" />}
-        </Flex>
+              {myNftDetail ? (
+                <Button scale="sm" ml="10px" fontSize={['13px', , '20px']} height={['26px', , '32px']}>
+                  ID: {myNftDetail.tokenId}
+                </Button>
+              ) : (
+                <Skeleton width="50px" ml="10px" />
+              )}
+            </Flex>
+          }
+        />
       </Container>
 
       <Container>
