@@ -47,7 +47,7 @@ const BackLink: React.FC<Props> = ({ href, showArrow, title, rightNode, target, 
       }
   return (
     <WBackLink {...props}>
-      <Link {...itemLinkProps}>
+      <Link {...itemLinkProps} style={{ textDecoration: 'unset' }}>
         {showArrow && <ArrowBackIconBig className="icon-back" />}
         <Text color="#007CA2" fontSize={['16px', , '24px', '32px']} fontWeight="700">
           {title || t('Back')}
