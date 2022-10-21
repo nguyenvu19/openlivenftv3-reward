@@ -7,7 +7,7 @@ import CardTableTeamWallets from './components/CardTableTeamWallets'
 import CardTokensInfo from './components/CardTokensInfo'
 
 const TokenInfoContainer = styled.div`
-  padding-bottom: 70px;
+  padding-bottom: 120px;
 `
 const MyNftH2 = styled.div`
   color: #007ca2;
@@ -22,11 +22,11 @@ const TokenInfo: React.FC<React.PropsWithChildren> = () => {
   const { t } = useTranslation()
   return (
     <TokenInfoContainer>
-      <Container>
+      <Container mb={['24px', , '48px']}>
         <CardTokensInfo />
       </Container>
 
-      <Container>
+      <Container mb={['24px', , '48px']}>
         <CardTableMarketPlace />
       </Container>
 

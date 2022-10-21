@@ -1,12 +1,13 @@
 import { useTranslation } from '@pancakeswap/localization'
-import { Link, Text } from '@pancakeswap/uikit'
+import { Text, useMatchBreakpoints } from '@pancakeswap/uikit'
 import { Table } from 'antd'
-import { formatCode } from 'helpers'
+import MobileListContainer from 'components/MobileListContainer'
 import { useOPVBusdPrice } from 'hooks/useBUSDPrice'
 import { useBossTeamWallets } from 'state/tokenInfo/fetchBossTeamWallets'
 import styled from 'styled-components'
-import { getBlockExploreLink } from 'utils'
-import TableItemBalance from './TableItemBalance'
+import TableItemBalance from './DataItems/TableItemBalance'
+import BossTeamWalletMobile from './BossTeamWalletMobile'
+import TableItemAddress from './DataItems/TableItemAddress'
 
 const WCardTableTeamWallet = styled.div`
   margin-top: 24px;
@@ -14,6 +15,7 @@ const WCardTableTeamWallet = styled.div`
   padding: 0px 12px;
   background: #eefbff;
   border-radius: 12px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   ${({ theme }) => theme.mediaQueries.sm} {
     padding: 16px 24px;
   }
@@ -126,9 +128,10 @@ const WCardTableTeamWallet = styled.div`
 
 const CardTableTeamWallets = () => {
   const { t } = useTranslation()
-  const { bossTeamWallets, pBossTeamWallets, setPBossTeamWallets } = useBossTeamWallets()
-
+  const { isMobile } = useMatchBreakpoints()
   const opvPrice = useOPVBusdPrice({ forceMainnet: true })
+
+  const { bossTeamWallets, pBossTeamWallets, setPBossTeamWallets } = useBossTeamWallets()
 
   const columns = [
     {
@@ -143,7 +146,7 @@ const CardTableTeamWallets = () => {
       dataIndex: 'title',
       render: (text) => {
         return (
-          <Text className="team-wallet-item-name" fontSize={['12px', , '16px']} bold style={{ textAlign: 'left' }}>
+          <Text fontSize={['12px', , '16px']} bold style={{ textAlign: 'left' }}>
             {text}
           </Text>
         )
@@ -153,42 +156,46 @@ const CardTableTeamWallets = () => {
       title: <div style={{ textAlign: 'center' }}>{t('Address')}</div>,
       dataIndex: 'address',
       render: (text) => {
-        return (
-          <div className="team-wallet-item-name" style={{ display: 'flex', justifyContent: 'center' }}>
-            <Link fontSize={['12px', , '16px']} bold external href={getBlockExploreLink(text, 'address')}>
-              {formatCode(text, 5, 5)}
-            </Link>
-          </div>
-        )
+        return <TableItemAddress address={text} />
       },
     },
     {
       title: <div style={{ textAlign: 'right' }}>{t('Balance')}</div>,
       dataIndex: 'balance',
       render: (_, record) => {
-        return <TableItemBalance record={record} opvPrice={opvPrice} />
+        return <TableItemBalance address={record?.address} opvPrice={opvPrice} />
       },
     },
   ]
   return (
     <WCardTableTeamWallet>
-      <Table
-        columns={columns}
-        dataSource={bossTeamWallets.data?.rows || []}
-        scroll={{ x: 300 }}
-        rowKey={(record) => record._id}
-        pagination={{
-          total: bossTeamWallets.data?.total,
-          current: pBossTeamWallets.page,
-          onChange: (page, pageSize) => {
-            setPBossTeamWallets((prev) => ({
-              ...prev,
-              page,
-              pageSize,
-            }))
-          },
-        }}
-      />
+      {isMobile ? (
+        <MobileListContainer
+          total={bossTeamWallets?.data?.total}
+          dataSource={bossTeamWallets?.data?.rows || []}
+          renderItem={(item, index) => (
+            <BossTeamWalletMobile index={index + 1} bossTeamWallet={item} opvPrice={opvPrice} />
+          )}
+        />
+      ) : (
+        <Table
+          columns={columns}
+          dataSource={bossTeamWallets.data?.rows || []}
+          scroll={{ x: 300 }}
+          rowKey={(record) => record._id}
+          pagination={{
+            total: bossTeamWallets.data?.total,
+            current: pBossTeamWallets.page,
+            onChange: (page, pageSize) => {
+              setPBossTeamWallets((prev) => ({
+                ...prev,
+                page,
+                pageSize,
+              }))
+            },
+          }}
+        />
+      )}
     </WCardTableTeamWallet>
   )
 }
