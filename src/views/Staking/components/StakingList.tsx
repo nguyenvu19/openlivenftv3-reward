@@ -22,6 +22,7 @@ const StakingList: React.FC = () => {
   }
 
   const handleStakingSuccess = useCallback(() => {
+    setModalStaking({ open: false, dataModal: null })
     fetchStakingList()
   }, [fetchStakingList])
 

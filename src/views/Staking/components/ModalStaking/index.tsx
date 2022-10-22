@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import styled, { createGlobalStyle } from 'styled-components'
-import { Box, Button, Checkbox, Flex, Grid, Text, useToast } from '@pancakeswap/uikit'
+import { Box, Button, Checkbox, Flex, Grid, Skeleton, Text, useToast } from '@pancakeswap/uikit'
+import { Currency, CurrencyAmount } from '@pancakeswap/sdk'
 import { Modal } from 'antd'
 import { useContractStaking } from 'hooks/useContract'
 import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
@@ -12,6 +13,16 @@ import { TransactionResponse } from '@ethersproject/providers'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useTransactionAdder } from 'state/transactions/hooks'
 import ConnectWalletButton from 'components/ConnectWalletButton'
+import { ApprovalState, useApproveCallback } from 'hooks/useApproveCallback'
+import { TOKEN_ADDRESS } from 'config'
+import { useCurrency } from 'hooks/Tokens'
+import tryParseAmount from '@pancakeswap/utils/tryParseAmount'
+import Dots from 'components/Loader/Dots'
+import { useGetOpvBalance } from 'hooks/useTokenBalance'
+import { FetchStatus } from 'config/constants/types'
+import { formatBigNumber } from 'utils/formatBalance'
+import useCatchTxError from 'hooks/useCatchTxError'
+import { ToastDescriptionWithTx } from 'components/Toast'
 import Caution01 from './Caution01'
 import StakingInput from './StakingInput'
 import CautionImage from '../../images/caution.png'
@@ -81,16 +92,26 @@ const ModalStaking: React.FC<Props> = ({ open, dataModal, projectFee, onStakingS
   const { t } = useTranslation()
   const { toastSuccess, toastError } = useToast()
 
+  const [errorMess, setErrorMess] = useState('')
+  const [isAgreementChecked, setIsAgreementChecked] = useState(false)
+  const [amount, setAmount] = useState('')
+  const [stakingLoading, setStakingLoading] = useState(false)
+
   const contractStaking = useContractStaking()
   const { callWithGasPrice } = useCallWithGasPrice()
 
   const { account } = useActiveWeb3React()
   const addTransaction = useTransactionAdder()
 
-  const [errorMess, setErrorMess] = useState('')
-  const [isAgreementChecked, setIsAgreementChecked] = useState(false)
-  const [amount, setAmount] = useState('')
-  const [stakingLoading, setStakingLoading] = useState(false)
+  const { balance: opvBalance, fetchStatus: opvFetchStatus } = useGetOpvBalance()
+
+  const { fetchWithCatchTxError } = useCatchTxError()
+
+  // w currency
+  const currencyOpv = useCurrency(TOKEN_ADDRESS)
+  // amounts
+  const independentAmount: CurrencyAmount<Currency> | undefined = tryParseAmount(`${amount}`, currencyOpv)
+  const [approveState, approveCallback] = useApproveCallback(independentAmount, contractStaking?.address)
 
   const onPurchase = async () => {
     if (!account) return false
@@ -99,10 +120,15 @@ const ModalStaking: React.FC<Props> = ({ open, dataModal, projectFee, onStakingS
       setErrorMess(t('Please enter amount'))
       return false
     }
+    if (+amount > +formatBigNumber(opvBalance, 3)) {
+      setErrorMess(t('Amount is not enough'))
+      return false
+    }
     if (!isAgreementChecked) {
       setErrorMess(t('Please check to agree OPENLIVE Staking Service Agreement'))
       return false
     }
+
     const stakingParams = {
       poolId: dataModal.poolId,
       planId: dataModal.planId,
@@ -110,30 +136,40 @@ const ModalStaking: React.FC<Props> = ({ open, dataModal, projectFee, onStakingS
       amount: toLocaleString(+amount * 1e18),
     }
 
-    return callWithGasPrice(
-      contractStaking,
-      'invest',
-      [stakingParams.poolId, stakingParams.planId, stakingParams.amount],
-      {
+    setErrorMess('')
+    setStakingLoading(true)
+    const receipt = await fetchWithCatchTxError(() =>
+      callWithGasPrice(contractStaking, 'invest', [stakingParams.poolId, stakingParams.planId, stakingParams.amount], {
         value: stakingParams.feeBnb,
-      },
+      }),
     )
-      .then(async (response: TransactionResponse) => {
-        await response.wait()
-        addTransaction(response, {
-          summary: `Staking: ${dataModal.time} days with ${amount} OPV`,
-        })
-        toastSuccess('Staking success')
-        onStakingSuccess()
-        setStakingLoading(false)
-      })
-      .catch((error: any) => {
-        console.error('Failed to Staking', error)
-        if (error?.code !== 4001) {
-          toastError(t('Error'), error.message)
-        }
-        setStakingLoading(false)
-      })
+    setStakingLoading(false)
+    if (receipt?.status) {
+      toastSuccess(
+        t('Staking Success'),
+        <ToastDescriptionWithTx txHash={receipt.transactionHash}>abc</ToastDescriptionWithTx>,
+      )
+    } else {
+      setErrorMess(receipt.message)
+    }
+
+    // .then(async (response: TransactionResponse) => {
+    //   await response.wait()
+    //   addTransaction(response, {
+    //     summary: `Staking: ${dataModal.time} days with ${amount} OPV`,
+    //   })
+    //   toastSuccess('Staking success')
+    //   onStakingSuccess()
+    //   setStakingLoading(false)
+    // })
+    // .catch((error: any) => {
+    //   console.error('Failed to Staking', error)
+    //   if (error?.code !== 4001) {
+    //     toastError(t('Error'), error.message)
+    //   }
+    //   setStakingLoading(false)
+    // })
+    return false
   }
   return (
     <Modal open={open} width={1000} className="modal-staking" centered footer={false} {...props}>
@@ -167,7 +203,11 @@ const ModalStaking: React.FC<Props> = ({ open, dataModal, projectFee, onStakingS
                 <Text mb="5px" bold fontSize={['12px', , '16px']}>
                   Lock Amount
                 </Text>
-                <Text fontSize={['12px', , '16px']}>Available amount 0.0000000 OPV</Text>
+                {opvFetchStatus !== FetchStatus.Fetched ? (
+                  <Skeleton height="22px" width="60px" />
+                ) : (
+                  <Text fontSize={['12px', , '16px']}>Available amount: {formatBigNumber(opvBalance, 3)} OPV</Text>
+                )}
               </Flex>
               <StakingInput
                 placeHolder="Enter amount"
@@ -271,19 +311,31 @@ const ModalStaking: React.FC<Props> = ({ open, dataModal, projectFee, onStakingS
             </Box>
 
             <Box mt="16px">
-              {account ? (
-                <Button
-                  width="100%"
-                  scale="md"
-                  isLoading={stakingLoading}
-                  disabled={stakingLoading}
-                  onClick={onPurchase}
-                >
-                  Confirm Purchase
-                </Button>
-              ) : (
-                <ConnectWalletButton />
-              )}
+              {(() => {
+                if (!account) return <ConnectWalletButton>Connect</ConnectWalletButton>
+                if (
+                  approveState === ApprovalState.NOT_APPROVED ||
+                  approveState === ApprovalState.PENDING ||
+                  approveState === ApprovalState.UNKNOWN
+                ) {
+                  return (
+                    <Button width="100%" onClick={approveCallback} disabled={approveState === ApprovalState.PENDING}>
+                      {approveState === ApprovalState.PENDING ? <Dots>{t('Enabling')}</Dots> : t('Enabling')}
+                    </Button>
+                  )
+                }
+                return (
+                  <Button
+                    width="100%"
+                    scale="md"
+                    isLoading={stakingLoading}
+                    disabled={stakingLoading}
+                    onClick={onPurchase}
+                  >
+                    Confirm Purchase
+                  </Button>
+                )
+              })()}
             </Box>
           </div>
         </div>
