@@ -9,7 +9,6 @@ import { toLocaleString } from 'utils'
 import { StakingItemType } from 'state/staking/types'
 import { isNumber } from 'helpers'
 import { useTranslation } from '@pancakeswap/localization'
-import { TransactionResponse } from '@ethersproject/providers'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useTransactionAdder } from 'state/transactions/hooks'
 import ConnectWalletButton from 'components/ConnectWalletButton'
@@ -21,8 +20,8 @@ import Dots from 'components/Loader/Dots'
 import { useGetOpvBalance } from 'hooks/useTokenBalance'
 import { FetchStatus } from 'config/constants/types'
 import { formatBigNumber } from 'utils/formatBalance'
-import useCatchTxError from 'hooks/useCatchTxError'
 import { ToastDescriptionWithTx } from 'components/Toast'
+import useCatchTxErrorMessage from 'hooks/useCatchTxErrorMessage'
 import Caution01 from './Caution01'
 import StakingInput from './StakingInput'
 import CautionImage from '../../images/caution.png'
@@ -99,13 +98,12 @@ const ModalStaking: React.FC<Props> = ({ open, dataModal, projectFee, onStakingS
 
   const contractStaking = useContractStaking()
   const { callWithGasPrice } = useCallWithGasPrice()
+  const { fetchWithCatchTxError } = useCatchTxErrorMessage()
 
   const { account } = useActiveWeb3React()
   const addTransaction = useTransactionAdder()
 
   const { balance: opvBalance, fetchStatus: opvFetchStatus } = useGetOpvBalance()
-
-  const { fetchWithCatchTxError } = useCatchTxError()
 
   // w currency
   const currencyOpv = useCurrency(TOKEN_ADDRESS)
@@ -138,19 +136,19 @@ const ModalStaking: React.FC<Props> = ({ open, dataModal, projectFee, onStakingS
 
     setErrorMess('')
     setStakingLoading(true)
-    const receipt = await fetchWithCatchTxError(() =>
+    const { receipt, status, message } = await fetchWithCatchTxError(() =>
       callWithGasPrice(contractStaking, 'invest', [stakingParams.poolId, stakingParams.planId, stakingParams.amount], {
         value: stakingParams.feeBnb,
       }),
     )
     setStakingLoading(false)
-    if (receipt?.status) {
+    if (status) {
       toastSuccess(
         t('Staking Success'),
         <ToastDescriptionWithTx txHash={receipt.transactionHash}>abc</ToastDescriptionWithTx>,
       )
     } else {
-      setErrorMess(receipt.message)
+      setErrorMess(message)
     }
 
     // .then(async (response: TransactionResponse) => {
