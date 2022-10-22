@@ -6,12 +6,15 @@ import { EmptyStyled } from 'views/Campaigns/styled'
 import { Button } from '@pancakeswap/uikit'
 
 const WClaimNftList = styled.div`
-  display: flex;
-  flex-flow: row wrap;
-  row-gap: 12px;
-  margin: 0 -12px;
-  ${({ theme }) => theme.mediaQueries.sm} {
-    row-gap: 24px;
+  width: 100%;
+  .nft-claim-content {
+    display: flex;
+    flex-flow: row wrap;
+    row-gap: 12px;
+    margin: 0 -12px;
+    ${({ theme }) => theme.mediaQueries.sm} {
+      row-gap: 24px;
+    }
   }
 `
 const WCardNftItem = styled.div`
@@ -46,7 +49,7 @@ const ClaimNftList: React.FC<{
   return (
     <WClaimNftList>
       {listNftUser?.length > 0 ? (
-        <>
+        <div className="nft-claim-content">
           {listNftUser?.map((nft) => (
             <WCardNftItem key={nft.token_id}>
               <CardNftWithActionClaim
@@ -64,15 +67,15 @@ const ClaimNftList: React.FC<{
               </Button>
             </WTableFooter>
           )}
-        </>
+        </div>
       ) : listNftUser === undefined ? (
-        <>
+        <div className="nft-claim-content">
           {[1, 2, 3].map((index) => (
             <WCardNftItem key={index}>
               <CardNftWithActionClaim />
             </WCardNftItem>
           ))}
-        </>
+        </div>
       ) : (
         <EmptyStyled>No Data</EmptyStyled>
       )}

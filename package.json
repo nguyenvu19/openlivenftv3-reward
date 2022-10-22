@@ -8,6 +8,8 @@
   "scripts": {
     "analyze": "ANALYZE=true yarn build",
     "dev": "next dev",
+    "dev:stag": "env-cmd -f .env.staging next dev",
+    "dev:prod": "env-cmd -f .env.production next dev",
     "build": "next build",
     "build:dev": "env-cmd -f .env.development next build",
     "build:stag": "env-cmd -f .env.staging next build",

@@ -5,6 +5,7 @@ import env from '../../env'
 export const APP_URL = env.NEXT_PUBLIC_APP_URL
 export const APP_USER_URL = env.NEXT_PUBLIC_APP_USER_URL
 export const APP_USER_API = env.NEXT_PUBLIC_APP_USER_API
+export const GRAPH_API_OPV = env.NEXT_PUBLIC_APP_GRAPH_API
 
 export const DEFAULT_CHAIN_ID = +env.NEXT_PUBLIC_DEFAULT_CHAIN_ID
 export const TOKEN_ADDRESS = env.NEXT_PUBLIC_TOKEN_ADDRESS

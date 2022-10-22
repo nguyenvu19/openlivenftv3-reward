@@ -1,6 +1,6 @@
 import { Tooltip } from 'antd'
 import styled from 'styled-components'
-import { Box, Button, Flex, Image, Link, Text } from '@pancakeswap/uikit'
+import { Box, Button, Flex, Image, Link, Skeleton, Text } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
 import { formatCode } from 'helpers'
 import { CopyButton } from 'components/CopyButton'
@@ -146,11 +146,11 @@ const TokensInfoSocial = ({ dataInfo }) => {
           mb="0"
           style={{ whiteSpace: 'nowrap', lineHeight: 'unset' }}
         >
-          {dataInfo?.name}
+          {dataInfo?.name || <Skeleton width="120px" />}
         </Text>
         <Box ml={['8px', , '32px']} background="#EDF0F3" borderRadius="8px">
           <Text color="#000000" fontSize={[12, , 16]} padding="2px 24px">
-            {dataInfo?.symbol}
+            {dataInfo?.symbol || <Skeleton width="20px" />}
           </Text>
         </Box>
         <Button className="button-social-share" width="90px" height="32px" ml={['8px', , '16px']} padding="6px 8px">

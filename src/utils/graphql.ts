@@ -1,10 +1,5 @@
-import {
-  BIT_QUERY,
-  INFO_CLIENT,
-  STABLESWAP_SUBGRAPH_CLIENT,
-  INFO_CLIENT_ETH,
-  GRAPH_API_OPV,
-} from 'config/constants/endpoints'
+import { GRAPH_API_OPV } from 'config'
+import { BIT_QUERY, INFO_CLIENT, STABLESWAP_SUBGRAPH_CLIENT, INFO_CLIENT_ETH } from 'config/constants/endpoints'
 import { GraphQLClient } from 'graphql-request'
 
 // Extra headers
