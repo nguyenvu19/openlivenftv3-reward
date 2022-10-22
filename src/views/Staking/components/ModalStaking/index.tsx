@@ -147,6 +147,7 @@ const ModalStaking: React.FC<Props> = ({ open, dataModal, projectFee, onStakingS
         t('Staking Success'),
         <ToastDescriptionWithTx txHash={receipt.transactionHash}>abc</ToastDescriptionWithTx>,
       )
+      onStakingSuccess()
     } else {
       setErrorMess(message)
     }

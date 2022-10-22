@@ -43,24 +43,24 @@ const config: (
     showItemsOnMobile: false,
     items: [],
   },
-  // {
-  //   label: t('Trade'),
-  //   icon: TradeIcon,
-  //   fillIcon: TradeIcon,
-  //   href: '/swap',
-  //   items: [
-  //     {
-  //       label: t('Swap'),
-  //       icon: SwapIcon,
-  //       href: '/swap',
-  //     },
-  //     {
-  //       label: t('Liquidity'),
-  //       icon: LiquidityIcon,
-  //       href: '/liquidity',
-  //     },
-  //   ],
-  // },
+  {
+    label: t('Trade'),
+    icon: TradeIcon,
+    fillIcon: TradeIcon,
+    href: '/swap',
+    items: [
+      {
+        label: t('Swap'),
+        icon: SwapIcon,
+        href: '/swap',
+      },
+      {
+        label: t('Liquidity'),
+        icon: LiquidityIcon,
+        href: '/liquidity',
+      },
+    ],
+  },
   // {
   //   label: t('Farms'),
   //   href: '/farms',
