@@ -97,7 +97,7 @@ const PackageStakingList: React.FC<Props> = ({ stakingList, onStaking }) => {
       title: t('Est.APR'),
       dataIndex: 'apr',
       render: (text) => {
-        return <div className="staking-item-apr">{roundNumber((text / 1e18) * 100 * 30 * 84600, { scale: 2 })}%</div>
+        return <div className="staking-item-apr">{text}%</div>
       },
     },
     {
@@ -112,7 +112,7 @@ const PackageStakingList: React.FC<Props> = ({ stakingList, onStaking }) => {
       },
     },
     {
-      title: <div style={{ textAlign: 'center' }}>{t('Minimum Locked Amount')}</div>,
+      title: <div style={{ textAlign: 'center' }}>{t('Total Pools Staked')}</div>,
       dataIndex: 'totalStakedAmount',
       render: (text) => {
         return (
@@ -132,6 +132,27 @@ const PackageStakingList: React.FC<Props> = ({ stakingList, onStaking }) => {
         )
       },
     },
+    // {
+    //   title: <div style={{ textAlign: 'center' }}>{t('Minimum Locked Amount')}</div>,
+    //   dataIndex: 'totalStakedAmount',
+    //   render: (text) => {
+    //     return (
+    //       <div className="staking-item-amount" style={{ textAlign: 'center' }}>
+    //         {isNumber(text) ? (
+    //           <CurrencyFormat
+    //             value={roundNumber(new BigNumber(text).shiftedBy(-18).toNumber())}
+    //             displayType="text"
+    //             thousandSeparator
+    //             suffix={` OPV`}
+    //             renderText={(txt) => txt}
+    //           />
+    //         ) : (
+    //           <Skeleton height="14px" width="80px" />
+    //         )}
+    //       </div>
+    //     )
+    //   },
+    // },
     {
       title: '',
       dataIndex: 'actions',

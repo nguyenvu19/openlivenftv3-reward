@@ -8,7 +8,6 @@ import useContractStakingConditions from '../hooks/useContractStakingConditions'
 
 const WStakingList = styled.div`
   width: 100%;
-  padding-bottom: 70px;
 `
 
 const StakingList: React.FC = () => {

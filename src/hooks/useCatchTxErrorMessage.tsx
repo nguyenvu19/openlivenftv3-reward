@@ -5,7 +5,12 @@ import { logError, isUserRejected } from 'utils/sentry'
 import useActiveWeb3React from './useActiveWeb3React'
 
 export type TxResponse = TransactionResponse | null
-export type TxCatchReceipt = { receipt: TransactionReceipt | null; status: boolean; message: string }
+export type TxCatchReceipt = {
+  txReceipt: TransactionReceipt | null
+  txResponse: TxResponse | null
+  status: boolean
+  message: string
+}
 
 export type CatchTxErrorReturn = {
   fetchWithCatchTxError: (fn: () => Promise<TxResponse>) => Promise<TxCatchReceipt>
@@ -36,7 +41,7 @@ export default function useCatchTxErrorMessage(): CatchTxErrorReturn {
 
   const fetchWithCatchTxError = useCallback(
     async (callTx: () => Promise<TxResponse>): Promise<TxCatchReceipt> => {
-      let tx: TxResponse = null
+      let txResponse: TxResponse = null
       let message = ''
 
       try {
@@ -47,20 +52,20 @@ export default function useCatchTxErrorMessage(): CatchTxErrorReturn {
          *
          * wait for useSWRMutation finished, so we could apply SWR in case manually trigger tx call
          */
-        tx = await callTx()
+        txResponse = await callTx()
 
         // toastSuccess(`${t('Transaction Submitted')}!`, <ToastDescriptionWithTx txHash={tx.hash} />)
 
-        const receipt = await tx.wait()
+        const txReceipt = await txResponse.wait()
 
-        return { receipt, status: true, message: 'Success' }
+        return { txReceipt, txResponse, status: true, message: 'Success' }
       } catch (error: any) {
         if (!isUserRejected(error)) {
-          if (!tx) {
+          if (!txResponse) {
             message = handleNormalError(error)
           } else {
             provider
-              .call(tx, tx.blockNumber)
+              .call(txResponse, txResponse.blockNumber)
               .then(() => {
                 message = handleNormalError(error)
               })
@@ -101,7 +106,7 @@ export default function useCatchTxErrorMessage(): CatchTxErrorReturn {
         setLoading(false)
       }
 
-      return { receipt: null, status: false, message }
+      return { txReceipt: null, txResponse, status: false, message }
     },
     [handleNormalError, provider],
   )

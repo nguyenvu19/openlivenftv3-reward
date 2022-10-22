@@ -6,6 +6,7 @@ import StakingList from './components/StakingList'
 
 const WStaking = styled.div`
   min-height: calc(100vh - 186px);
+  padding-bottom: 120px;
 `
 
 const Staking = () => {

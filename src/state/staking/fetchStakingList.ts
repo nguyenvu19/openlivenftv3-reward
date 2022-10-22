@@ -3,6 +3,7 @@ import { FAST_INTERVAL } from 'config/constants'
 import { useSelector } from 'react-redux'
 import { AppState, useAppDispatch } from 'state'
 import useSWR from 'swr'
+import { roundNumber } from 'helpers'
 import { getContractStaking } from 'utils/contractHelpers'
 import { StakingItemType } from './types'
 import { setStakingList } from './actions'
@@ -16,7 +17,7 @@ export const useStakingListData = (poolId = 1): { stakingList: StakingItemType[]
       const contractStaking = getContractStaking()
 
       if (contractStaking) {
-        const arr: any[] = []
+        const arr: StakingItemType[] = []
         try {
           let count = 0
           while (true) {
@@ -31,9 +32,11 @@ export const useStakingListData = (poolId = 1): { stakingList: StakingItemType[]
             arr.push({
               poolId,
               planId: count,
-              apr,
+              apr: roundNumber((apr / 1e18) * 100 * 30 * 84600, { scale: 2 }),
               time,
               totalStakedAmount,
+              min: 1,
+              max: 500,
             })
           }
 

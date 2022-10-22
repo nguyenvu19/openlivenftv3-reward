@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import styled, { createGlobalStyle } from 'styled-components'
 import { Box, Button, Checkbox, Flex, Grid, Skeleton, Text, useToast } from '@pancakeswap/uikit'
 import { Currency, CurrencyAmount } from '@pancakeswap/sdk'
@@ -87,7 +87,14 @@ interface Props {
   setModalStaking?: (p: any) => void
   onStakingSuccess: () => void
 }
-const ModalStaking: React.FC<Props> = ({ open, dataModal, projectFee, onStakingSuccess, ...props }) => {
+const ModalStaking: React.FC<Props> = ({
+  open,
+  dataModal,
+  projectFee,
+  setModalStaking,
+  onStakingSuccess,
+  ...props
+}) => {
   const { t } = useTranslation()
   const { toastSuccess, toastError } = useToast()
 
@@ -136,17 +143,16 @@ const ModalStaking: React.FC<Props> = ({ open, dataModal, projectFee, onStakingS
 
     setErrorMess('')
     setStakingLoading(true)
-    const { receipt, status, message } = await fetchWithCatchTxError(() =>
+    const { txResponse, status, message } = await fetchWithCatchTxError(() =>
       callWithGasPrice(contractStaking, 'invest', [stakingParams.poolId, stakingParams.planId, stakingParams.amount], {
         value: stakingParams.feeBnb,
       }),
     )
     setStakingLoading(false)
     if (status) {
-      toastSuccess(
-        t('Staking Success'),
-        <ToastDescriptionWithTx txHash={receipt.transactionHash}>abc</ToastDescriptionWithTx>,
-      )
+      addTransaction(txResponse, {
+        summary: `Staking: ${dataModal.time} days with ${amount} OPV`,
+      })
       onStakingSuccess()
     } else {
       setErrorMess(message)
@@ -171,7 +177,15 @@ const ModalStaking: React.FC<Props> = ({ open, dataModal, projectFee, onStakingS
     return false
   }
   return (
-    <Modal open={open} width={1000} className="modal-staking" centered footer={false} {...props}>
+    <Modal
+      open={open}
+      width={1000}
+      className="modal-staking"
+      centered
+      footer={false}
+      onCancel={() => setModalStaking({ open: false, dataModal: null })}
+      {...props}
+    >
       <GlobalStyleModalStaking />
       <WModalStakingContent>
         <div className="modal-staking-left">
@@ -195,7 +209,7 @@ const ModalStaking: React.FC<Props> = ({ open, dataModal, projectFee, onStakingS
               <Text mb="5px" bold fontSize={['12px', , '16px']}>
                 Type
               </Text>
-              <StakingInput readOnly value="30 Days" style={{ textAlign: 'center' }} />
+              <StakingInput readOnly value={`${dataModal?.time} Days`} style={{ textAlign: 'center' }} />
             </Box>
             <Box mb="24px">
               <Flex justifyContent="space-between">
@@ -225,8 +239,8 @@ const ModalStaking: React.FC<Props> = ({ open, dataModal, projectFee, onStakingS
               Lock Amount Limitation
             </Text>
             <Grid gridTemplateColumns={['1fr', , '1fr 1fr']}>
-              <Text fontSize={['12px', , '16px']}>Minium: 0.0000001 OPV</Text>
-              <Text fontSize={['12px', , '16px']}>Maxium: 500 OPV</Text>
+              <Text fontSize={['12px', , '16px']}>Minium: {dataModal?.min || '--'} OPV</Text>
+              <Text fontSize={['12px', , '16px']}>Maximum: {dataModal?.max || '--'} OPV</Text>
             </Grid>
           </div>
         </div>
@@ -246,7 +260,7 @@ const ModalStaking: React.FC<Props> = ({ open, dataModal, projectFee, onStakingS
             <Flex justifyContent="space-between" mb="6px">
               <Text fontSize={['12px', , '16px']}>Redemption Period</Text>
               <Text bold fontSize={['12px', , '16px']}>
-                1 Days
+                {dataModal?.time} Days
               </Text>
             </Flex>
             <Flex justifyContent="space-between" mb="6px">
@@ -258,7 +272,7 @@ const ModalStaking: React.FC<Props> = ({ open, dataModal, projectFee, onStakingS
             <Flex justifyContent="space-between" mb="24px">
               <Text fontSize={['12px', , '16px']}>Est.APR</Text>
               <Text bold color="#46D79E" fontSize={['12px', , '16px']}>
-                10.54 %
+                {dataModal?.apr} %
               </Text>
             </Flex>
             <Box background="#BBBBBB" borderRadius="12px" p="12px">
@@ -343,4 +357,4 @@ const ModalStaking: React.FC<Props> = ({ open, dataModal, projectFee, onStakingS
   )
 }
 
-export default ModalStaking
+export default React.memo(ModalStaking)
