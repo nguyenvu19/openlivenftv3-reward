@@ -74,11 +74,11 @@ function MyApp(props: AppProps<{ initialReduxState: any }>) {
         <meta name="twitter:title" content="OpenLive NFT" />
         <meta
           name="description"
-          content="OpenLive NFT is a data analytics company that uses a cloud-based expert system to inform healthcare decision making."
+          content="OpenLive NFT - The pioneering platform that brings digital economic values to the community. A place where you can rest assured about your decisions."
         />
         <meta
           name="twitter:description"
-          content="OpenLive NFT is a data analytics company that uses a cloud-based expert system to inform healthcare decision making."
+          content="OpenLive NFT - The pioneering platform that brings digital economic values to the community. A place where you can rest assured about your decisions."
         />
         {(Component as NextPageWithLayout).mp && (
           // eslint-disable-next-line @next/next/no-sync-scripts

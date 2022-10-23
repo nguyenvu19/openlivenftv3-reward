@@ -5,7 +5,7 @@ import { PageMeta } from './types'
 export const DEFAULT_META: PageMeta = {
   title: 'OpenLive NFT',
   description:
-    'OpenLive NFT is a data analytics company that uses a cloud-based expert system to inform healthcare decision making.',
+    'OpenLive NFT - The pioneering platform that brings digital economic values to the community. A place where you can rest assured about your decisions.',
   image: '/logo.png',
 }
 

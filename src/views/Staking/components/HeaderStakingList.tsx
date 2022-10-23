@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import CurrencyFormat from 'react-currency-format'
-import { Button, Flex, Skeleton, Text } from '@pancakeswap/uikit'
+import { Button, Flex, Link, Skeleton, Text } from '@pancakeswap/uikit'
 import { useGetOpvBalance } from 'hooks/useTokenBalance'
 import { formatBigNumber } from 'utils/formatBalance'
 import { FetchStatus } from 'config/constants/types'
@@ -91,7 +91,9 @@ const HeaderStakingList = ({ opvEarned }) => {
         </WCardInfo>
       </Flex>
       <Flex justifyContent={['center', , , 'right']}>
-        <Button>History</Button>
+        <Link href="/staking/history">
+          <Button>History</Button>
+        </Link>
       </Flex>
     </WHeaderStakingList>
   )

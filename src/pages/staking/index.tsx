@@ -1,4 +1,4 @@
-import Staking from '../views/Staking'
+import Staking from '../../views/Staking'
 
 const StakingPage = () => <Staking />
 

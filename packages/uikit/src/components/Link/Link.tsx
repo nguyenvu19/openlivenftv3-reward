@@ -8,9 +8,9 @@ const StyledLink = styled(Text)<LinkProps>`
   display: flex;
   align-items: center;
   width: fit-content;
-  &:hover {
+  /* &:hover {
     text-decoration: underline;
-  }
+  } */
 `;
 
 const Link: React.FC<React.PropsWithChildren<LinkProps>> = ({ external, ...props }) => {
