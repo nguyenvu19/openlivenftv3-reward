@@ -7,6 +7,7 @@ import { FetchStatus } from 'config/constants/types'
 import { useTotalStaked } from 'state/staking/fetchTotalStaked'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useStakingHistory } from 'state/staking/fetchStakingHistory'
+import { useStakingEarn } from 'state/staking/hooks'
 
 const WHeaderStakingList = styled.div`
   width: 100%;
@@ -39,12 +40,10 @@ const WCardInfo = styled.div`
   border: 1px solid ${({ theme }) => theme.colors.primary};
 `
 
-const HeaderStakingList = () => {
+const HeaderStakingList = ({ opvEarned }) => {
   const { account } = useActiveWeb3React()
   const { balance, fetchStatus } = useGetOpvBalance()
   const { totalStaked } = useTotalStaked(account)
-  const { stakingHistory } = useStakingHistory(account)
-  console.log('stakingHistory', stakingHistory)
 
   return (
     <WHeaderStakingList>
@@ -67,7 +66,7 @@ const HeaderStakingList = () => {
           )}
         </WCardInfo>
         <WCardInfo className="card-info-item">
-          <Text fontSize={['13px', , '13px']} fontWeight={600}>
+          <Text fontSize={['13px', , '13px']} fontWeight={600} style={{ whiteSpace: 'nowrap' }}>
             OPV STAKED
           </Text>
           {totalStaked !== undefined ? (
@@ -79,12 +78,12 @@ const HeaderStakingList = () => {
           )}
         </WCardInfo>
         <WCardInfo className="card-info-item">
-          <Text fontSize={['13px', , '13px']} fontWeight={600}>
+          <Text fontSize={['13px', , '13px']} fontWeight={600} style={{ whiteSpace: 'nowrap' }}>
             OPV EARNED
           </Text>
-          {totalStaked !== undefined ? (
+          {opvEarned !== undefined ? (
             <Text fontSize={['13px', , '13px']} fontWeight={600}>
-              <CurrencyFormat value={totalStaked || 0} displayType="text" thousandSeparator renderText={(t) => t} />
+              <CurrencyFormat value={opvEarned || 0} displayType="text" thousandSeparator renderText={(t) => t} />
             </Text>
           ) : (
             <Skeleton height="14px" width="80px" />

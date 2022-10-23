@@ -5,7 +5,7 @@ import { FAST_INTERVAL } from 'config/constants'
 import { useSelector } from 'react-redux'
 import { AppState, useAppDispatch } from 'state'
 import { setStakingHistory } from './actions'
-import { StakingHistory } from './types'
+import { StakingHistory, STAKING_STATUS } from './types'
 
 export const useStakingHistory = (
   address: string,
@@ -22,20 +22,26 @@ export const useStakingHistory = (
           const { deposits } = await contractStaking.getUserInfo(address)
           if (deposits?.length > 0) {
             const parseDeposits = deposits.map((item) => {
+              const currentTime = new Date().getTime()
+              const startTime = +item.start.toString() * 1000
+              const endTime = +item.finish.toString() * 1000
               return {
                 amount: new BigNumber(+item.amount.toString()).shiftedBy(-18).toNumber(),
                 apr: +item.apr.toString(),
                 checkpoint: +item.checkpoint.toString(),
                 fee: +item.fee.toString(),
-                finish: +item.finish.toString(),
                 isUnStake: item.isUnStake,
-                plan: item.plan,
+                planId: item.plan,
                 poolId: item.poolId,
-                start: +item.start.toString(),
                 userAddress: item.userAddress,
+                start: startTime,
+                finish: endTime,
+                poolStatus: currentTime >= endTime ? STAKING_STATUS.END : STAKING_STATUS.LIVE,
               }
             })
             dispatch(setStakingHistory(parseDeposits))
+          } else {
+            dispatch(setStakingHistory([]))
           }
         } catch (error) {
           console.error('useStakingHistory', error)

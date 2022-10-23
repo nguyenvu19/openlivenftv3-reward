@@ -8,6 +8,10 @@ export interface StakingItemType {
   max: number
 }
 
+export enum STAKING_STATUS {
+  LIVE,
+  END,
+}
 export interface StakingHistory {
   amount: number
   apr: number
@@ -15,8 +19,9 @@ export interface StakingHistory {
   fee: number
   finish: number
   isUnStake: boolean
-  plan: number
+  planId: number
   poolId: number
   start: number
   userAddress: string
+  poolStatus: STAKING_STATUS
 }

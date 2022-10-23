@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled, { createGlobalStyle } from 'styled-components'
-import { Box, Button, Checkbox, Flex, Grid, Skeleton, Text, useToast } from '@pancakeswap/uikit'
+import { Box, Button, Checkbox, Flex, Grid, Skeleton, Text } from '@pancakeswap/uikit'
 import { Currency, CurrencyAmount } from '@pancakeswap/sdk'
 import { Modal } from 'antd'
 import { useContractStaking } from 'hooks/useContract'
@@ -20,7 +20,6 @@ import Dots from 'components/Loader/Dots'
 import { useGetOpvBalance } from 'hooks/useTokenBalance'
 import { FetchStatus } from 'config/constants/types'
 import { formatBigNumber } from 'utils/formatBalance'
-import { ToastDescriptionWithTx } from 'components/Toast'
 import useCatchTxErrorMessage from 'hooks/useCatchTxErrorMessage'
 import Caution01 from './Caution01'
 import StakingInput from './StakingInput'
@@ -96,7 +95,6 @@ const ModalStaking: React.FC<Props> = ({
   ...props
 }) => {
   const { t } = useTranslation()
-  const { toastSuccess, toastError } = useToast()
 
   const [errorMess, setErrorMess] = useState('')
   const [isAgreementChecked, setIsAgreementChecked] = useState(false)

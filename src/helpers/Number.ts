@@ -10,25 +10,34 @@ export const isNumber = (value) => {
 }
 
 // ================================================================================
-export function roundNumber(n, options?: { scale?: number; decimals?: number }) {
-  const { scale = 3, decimals } = options || {
+export function roundNumber(n, options?: { scale?: number; scaleSmall?: number; decimals?: number }) {
+  const {
+    scale = 3,
+    scaleSmall,
+    decimals,
+  } = options || {
     scale: 3,
   }
+
+  let customScale = scale
   if (!isNumber(n)) return 0
+  if (scaleSmall && n > 10) {
+    customScale = scaleSmall
+  }
   if (n && decimals) {
     n = new BigNumber(n).shiftedBy(-decimals).toNumber()
   }
   if (+n > 1e17) return Math.round(+n)
   const num = typeof +n !== 'number' ? 0 : parseFloat(n)
   if (!`${num}`.includes('e')) {
-    return +`${Math.floor(+`${num}e+${scale}`)}e-${scale}`
+    return +`${Math.floor(+`${num}e+${customScale}`)}e-${customScale}`
   }
   const arr = `${num}`.split('e')
   let sig = ''
-  if (+arr[1] + scale > 0) {
+  if (+arr[1] + customScale > 0) {
     sig = '+'
   }
-  return +`${Math.floor(+`${+arr[0]}e${sig}${+arr[1] + scale}`)}e-${scale}`
+  return +`${Math.floor(+`${+arr[0]}e${sig}${+arr[1] + customScale}`)}e-${customScale}`
 }
 
 // ================================================================================
