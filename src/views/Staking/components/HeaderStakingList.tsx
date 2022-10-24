@@ -1,24 +1,18 @@
 import styled from 'styled-components'
 import CurrencyFormat from 'react-currency-format'
+import { Col, Row } from 'antd'
 import { Button, Flex, Link, Skeleton, Text } from '@pancakeswap/uikit'
 import { useGetOpvBalance } from 'hooks/useTokenBalance'
 import { formatBigNumber } from 'utils/formatBalance'
 import { FetchStatus } from 'config/constants/types'
 import { useTotalStaked } from 'state/staking/fetchTotalStaked'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import { useStakingHistory } from 'state/staking/fetchStakingHistory'
-import { useStakingEarn } from 'state/staking/hooks'
 
 const WHeaderStakingList = styled.div`
   width: 100%;
-  padding: 14px 0;
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-  row-gap: 20px;
+  padding: 14px 0 24px;
   ${({ theme }) => theme.mediaQueries.md} {
     padding: 30px 0;
-    flex-direction: row;
   }
   .card-info-item {
     margin-right: 20px;
@@ -39,6 +33,19 @@ const WCardInfo = styled.div`
   border-radius: 12px;
   border: 1px solid ${({ theme }) => theme.colors.primary};
 `
+const WButtonHistory = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: right;
+
+  a,
+  button {
+    width: 100%;
+    ${({ theme }) => theme.mediaQueries.md} {
+      width: fit-content;
+    }
+  }
+`
 
 const HeaderStakingList = ({ opvEarned }) => {
   const { account } = useActiveWeb3React()
@@ -47,54 +54,67 @@ const HeaderStakingList = ({ opvEarned }) => {
 
   return (
     <WHeaderStakingList>
-      <Flex width="100%" flexDirection={['column', , , 'row']} justifyContent="space-between" rowGap="14px">
-        <WCardInfo className="card-info-item">
-          <Text fontSize={['13px', , '13px']} fontWeight={600} style={{ whiteSpace: 'nowrap' }}>
-            OPV AVAILABLE
-          </Text>
-          {fetchStatus === FetchStatus.Fetched ? (
+      <Row
+        gutter={[
+          { xs: 12, sm: 16, md: 24 },
+          { xs: 12, sm: 16, md: 24 },
+        ]}
+      >
+        <Col xs={24} sm={12} md={6}>
+          <WCardInfo className="card-info-item">
             <Text fontSize={['13px', , '13px']} fontWeight={600} style={{ whiteSpace: 'nowrap' }}>
-              <CurrencyFormat
-                value={formatBigNumber(balance, 3)}
-                displayType="text"
-                thousandSeparator
-                renderText={(t) => t}
-              />
+              OPV AVAILABLE
             </Text>
-          ) : (
-            <Skeleton height="14px" width="80px" />
-          )}
-        </WCardInfo>
-        <WCardInfo className="card-info-item">
-          <Text fontSize={['13px', , '13px']} fontWeight={600} style={{ whiteSpace: 'nowrap' }}>
-            OPV STAKED
-          </Text>
-          {totalStaked !== undefined ? (
-            <Text fontSize={['13px', , '13px']} fontWeight={600}>
-              <CurrencyFormat value={totalStaked || 0} displayType="text" thousandSeparator renderText={(t) => t} />
+            {fetchStatus === FetchStatus.Fetched ? (
+              <Text fontSize={['13px', , '13px']} fontWeight={600} style={{ whiteSpace: 'nowrap' }}>
+                <CurrencyFormat
+                  value={formatBigNumber(balance, 3)}
+                  displayType="text"
+                  thousandSeparator
+                  renderText={(t) => t}
+                />
+              </Text>
+            ) : (
+              <Skeleton height="14px" width="80px" />
+            )}
+          </WCardInfo>
+        </Col>
+        <Col xs={24} sm={12} md={6}>
+          <WCardInfo className="card-info-item">
+            <Text fontSize={['13px', , '13px']} fontWeight={600} style={{ whiteSpace: 'nowrap' }}>
+              OPV STAKED
             </Text>
-          ) : (
-            <Skeleton height="14px" width="80px" />
-          )}
-        </WCardInfo>
-        <WCardInfo className="card-info-item">
-          <Text fontSize={['13px', , '13px']} fontWeight={600} style={{ whiteSpace: 'nowrap' }}>
-            OPV EARNED
-          </Text>
-          {opvEarned !== undefined ? (
-            <Text fontSize={['13px', , '13px']} fontWeight={600}>
-              <CurrencyFormat value={opvEarned || 0} displayType="text" thousandSeparator renderText={(t) => t} />
+            {totalStaked !== undefined ? (
+              <Text fontSize={['13px', , '13px']} fontWeight={600}>
+                <CurrencyFormat value={totalStaked || 0} displayType="text" thousandSeparator renderText={(t) => t} />
+              </Text>
+            ) : (
+              <Skeleton height="14px" width="80px" />
+            )}
+          </WCardInfo>
+        </Col>
+        <Col xs={24} sm={12} md={6}>
+          <WCardInfo className="card-info-item">
+            <Text fontSize={['13px', , '13px']} fontWeight={600} style={{ whiteSpace: 'nowrap' }}>
+              OPV EARNED
             </Text>
-          ) : (
-            <Skeleton height="14px" width="80px" />
-          )}
-        </WCardInfo>
-      </Flex>
-      <Flex justifyContent={['center', , , 'right']}>
-        <Link href="/staking/history">
-          <Button>History</Button>
-        </Link>
-      </Flex>
+            {opvEarned !== undefined ? (
+              <Text fontSize={['13px', , '13px']} fontWeight={600}>
+                <CurrencyFormat value={opvEarned || 0} displayType="text" thousandSeparator renderText={(t) => t} />
+              </Text>
+            ) : (
+              <Skeleton height="14px" width="80px" />
+            )}
+          </WCardInfo>
+        </Col>
+        <Col xs={24} sm={12} md={6}>
+          <WButtonHistory>
+            <Link href="/staking/history">
+              <Button>History</Button>
+            </Link>
+          </WButtonHistory>
+        </Col>
+      </Row>
     </WHeaderStakingList>
   )
 }

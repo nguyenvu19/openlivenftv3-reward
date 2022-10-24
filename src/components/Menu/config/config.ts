@@ -44,7 +44,7 @@ const config: (
       showItemsOnMobile: false,
       items: [],
     },
-    process.env.NODE_ENV !== 'production' && {
+    process.env.NEXT_PUBLIC_NODE_ENV !== 'production' && {
       label: t('Trade'),
       icon: TradeIcon,
       fillIcon: TradeIcon,
@@ -62,7 +62,7 @@ const config: (
         },
       ],
     },
-    process.env.NODE_ENV !== 'production' && {
+    process.env.NEXT_PUBLIC_NODE_ENV !== 'production' && {
       label: t('Farms'),
       href: '/farms',
       icon: FarmIcon,
@@ -71,7 +71,7 @@ const config: (
       showItemsOnMobile: false,
       items: [],
     },
-    process.env.NODE_ENV !== 'production' && {
+    process.env.NEXT_PUBLIC_NODE_ENV !== 'production' && {
       label: t('Staking'),
       href: '/staking',
       icon: StakingIcon,
