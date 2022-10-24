@@ -62,7 +62,7 @@ const config: (
         },
       ],
     },
-    process.env.NEXT_PUBLIC_NODE_ENV !== 'production' && {
+    process.env.NEXT_PUBLIC_NODE_ENV === 'development' && {
       label: t('Farms'),
       href: '/farms',
       icon: FarmIcon,
