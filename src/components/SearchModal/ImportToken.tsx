@@ -53,7 +53,7 @@ function ImportToken({ tokens, handleCurrencySelect }: ImportProps) {
         const address = token.address ? `${truncateHash(token.address)}` : null
         return (
           <Grid key={token.address} gridTemplateRows="1fr 1fr 1fr" gridGap="4px">
-            {list !== undefined ? (
+            {/* {list !== undefined ? (
               <Tag
                 variant="success"
                 outline
@@ -66,7 +66,7 @@ function ImportToken({ tokens, handleCurrencySelect }: ImportProps) {
               <Tag variant="failure" outline scale="sm" startIcon={<ErrorIcon color="failure" />}>
                 {t('Unknown Source')}
               </Tag>
-            )}
+            )} */}
             <Flex alignItems="center">
               <Text mr="8px">{token.name}</Text>
               <Text>({token.symbol})</Text>
