@@ -20,16 +20,16 @@ const Caution01 = () => {
         <img src={CautionImage.src} alt="" />
       </Box>
       <Box>
-        <Text fontSize={['8px', , ' 12px']} color="#000" fontWeight={700} lineHeight="unset" mb="2px">
+        <Text fontSize="12px" color="#000" fontWeight={700} lineHeight="unset" mb="2px">
           Caution:
         </Text>
-        <Text fontSize={['8px', , '12px']} color="#000" fontWeight={600}>
+        <Text fontSize="12px" color="#000" fontWeight={600}>
           - Staked package will not be allowed to cancel until the lock expires.
         </Text>
-        <Text fontSize={['8px', , '12px']} color="#000" fontWeight={600}>
+        <Text fontSize="12px" color="#000" fontWeight={600}>
           - After locking, your OPV tokens will be deducted from &#34;Spot&#34; wallet.
         </Text>
-        <Text fontSize={['8px', , '12px']} color="#000" fontWeight={600}>
+        <Text fontSize="12px" color="#000" fontWeight={600}>
           - You can participate in many different &#34;Stake&#34; packages with only one account.
         </Text>
       </Box>

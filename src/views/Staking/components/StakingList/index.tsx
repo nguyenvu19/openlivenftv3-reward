@@ -4,10 +4,10 @@ import { useStakingListData } from 'state/staking/fetchStakingList'
 import { useStakingEarn } from 'state/staking/hooks'
 import { useStakingHistory } from 'state/staking/fetchStakingHistory'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import ModalStaking from './ModalStaking'
+import ModalStaking from '../ModalStaking'
 import HeaderStakingList from './HeaderStakingList'
 import PackageStakingList from './PackageStakingList'
-import useContractStakingConditions from '../hooks/useContractStakingConditions'
+import useContractStakingConditions from '../../hooks/useContractStakingConditions'
 
 const WStakingList = styled.div`
   width: 100%;

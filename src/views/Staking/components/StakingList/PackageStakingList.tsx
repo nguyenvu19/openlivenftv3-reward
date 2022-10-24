@@ -2,10 +2,14 @@ import styled from 'styled-components'
 import { Table } from 'antd'
 import CurrencyFormat from 'react-currency-format'
 import { useTranslation } from '@pancakeswap/localization'
-import { Button, Flex, Skeleton } from '@pancakeswap/uikit'
+import { Button, Flex, Skeleton, useMatchBreakpoints } from '@pancakeswap/uikit'
 import { StakingItemType } from 'state/staking/types'
 import { isNumber, roundNumber } from 'helpers'
 import BigNumber from 'bignumber.js'
+import MobileListContainer from 'components/MobileListContainer'
+import ConnectWalletButton from 'components/ConnectWalletButton'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import StakingListItemMobile from './StakingListItemMobile'
 
 const WPackageStakingList = styled.div`
   width: 100%;
@@ -84,6 +88,8 @@ interface Props {
 }
 const PackageStakingList: React.FC<Props> = ({ stakingList, onStaking }) => {
   const { t } = useTranslation()
+  const { isMobile } = useMatchBreakpoints()
+  const { account } = useActiveWeb3React()
 
   const columns = [
     {
@@ -159,9 +165,13 @@ const PackageStakingList: React.FC<Props> = ({ stakingList, onStaking }) => {
       render: (_, record) => {
         return (
           <Flex justifyContent="flex-end">
-            <Button scale="sm" minWidth={[, '120px']} onClick={() => onStaking(record)}>
-              Stake
-            </Button>
+            {account ? (
+              <Button scale="sm" minWidth={[, '120px']} onClick={() => onStaking(record)}>
+                Stake
+              </Button>
+            ) : (
+              <ConnectWalletButton scale="sm" />
+            )}
           </Flex>
         )
       },
@@ -170,21 +180,21 @@ const PackageStakingList: React.FC<Props> = ({ stakingList, onStaking }) => {
 
   return (
     <WPackageStakingList>
-      {/* {isMobile ? (
-        <>
-          {data.map((item) => {
-            return <PackageStakingItemMobile packageItem={item} />
-          })}
-        </>
-      ) : ( */}
-      <Table
-        columns={columns}
-        scroll={{ x: 400 }}
-        rowKey={(record) => record.planId}
-        dataSource={stakingList || []}
-        pagination={false}
-      />
-      {/* )} */}
+      {isMobile ? (
+        <MobileListContainer
+          total={stakingList?.length}
+          dataSource={stakingList || []}
+          renderItem={(item) => <StakingListItemMobile stakingItem={item} onStake={onStaking} />}
+        />
+      ) : (
+        <Table
+          columns={columns}
+          scroll={{ x: 400 }}
+          rowKey={(record) => record.planId}
+          dataSource={stakingList || []}
+          pagination={false}
+        />
+      )}
     </WPackageStakingList>
   )
 }

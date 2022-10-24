@@ -6,6 +6,7 @@ import Empty from 'components/Empty'
 import LoadingGray from 'components/LoadingGray'
 
 const WTableMyNftMobileStyled = styled.div`
+  padding-top: 12px;
   .recent-txh-mobile {
     .infinite-scroll {
       overflow-x: hidden !important;

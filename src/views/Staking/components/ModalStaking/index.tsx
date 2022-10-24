@@ -60,7 +60,7 @@ const WModalStakingContent = styled.div`
   .modal-staking-right {
     flex: 1 1 100%;
     max-width: 100%;
-    padding: 12px;
+    padding: 12px 12px 24px;
     background: #eefbff;
     ${({ theme }) => theme.mediaQueries.md} {
       padding: 24px;
@@ -100,7 +100,7 @@ const ModalStaking: React.FC<Props> = ({
 
   const [errorMess, setErrorMess] = useState('')
   const [isAgreementChecked, setIsAgreementChecked] = useState(false)
-  const [amount, setAmount] = useState('')
+  const [amount, setAmount] = useState<string | number>('')
   const [stakingLoading, setStakingLoading] = useState(false)
 
   const contractStaking = useContractStaking()
@@ -176,6 +176,10 @@ const ModalStaking: React.FC<Props> = ({
     // })
     return false
   }
+
+  const handleMaxAmount = () => {
+    setAmount(formatBigNumber(opvBalance, 3))
+  }
   return (
     <Modal
       open={open}
@@ -229,7 +233,9 @@ const ModalStaking: React.FC<Props> = ({
                   <InputRightNode className="">
                     <Text>OPV</Text>
                     <span className="divider" />
-                    <Button scale="xs">Max</Button>
+                    <Button scale="xs" onClick={handleMaxAmount}>
+                      Max
+                    </Button>
                   </InputRightNode>
                 }
                 onChange={(v) => setAmount(v)}
@@ -280,7 +286,7 @@ const ModalStaking: React.FC<Props> = ({
                 <Box maxWidth={24} mr="6px">
                   <img src={CautionImage.src} alt="" />
                 </Box>
-                <Text color="#fff" fontSize={['8px', , ' 12px']}>
+                <Text color="#fff" fontSize={['12px', , ' 12px']}>
                   The APR is adjusted daily based on the on-chain staking rewards, and the specific APR is subject to
                   the page display on the day.
                 </Text>
@@ -323,9 +329,12 @@ const ModalStaking: React.FC<Props> = ({
               </Flex>
             </Box>
 
-            <Box mt="16px">
+            <Flex mt="16px" justifyContent="center">
               {(() => {
-                if (!account) return <ConnectWalletButton>Connect</ConnectWalletButton>
+                if (!account)
+                  return (
+                    <ConnectWalletButton onClick={() => setModalStaking({ open: false })}>Connect</ConnectWalletButton>
+                  )
                 if (
                   approveState === ApprovalState.NOT_APPROVED ||
                   approveState === ApprovalState.PENDING ||
@@ -349,7 +358,7 @@ const ModalStaking: React.FC<Props> = ({
                   </Button>
                 )
               })()}
-            </Box>
+            </Flex>
           </div>
         </div>
       </WModalStakingContent>
