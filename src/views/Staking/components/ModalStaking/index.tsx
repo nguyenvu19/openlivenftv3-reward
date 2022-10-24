@@ -31,7 +31,9 @@ const GlobalStyleModalStaking = createGlobalStyle`
     border-radius: 20px;  
     overflow: hidden;
     .ant-modal-close-x {
-      display: none;
+      span {
+        color: Red;
+      }
     }
     .ant-modal-body {
       padding: 0;

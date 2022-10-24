@@ -73,7 +73,7 @@ const WCardHoldNft = styled.div`
       line-height: 140%;
 
       padding: 1px 5px;
-      margin-bottom: 20px;
+      margin-bottom: 30px;
 
       position: absolute;
       top: -10px;
@@ -131,7 +131,7 @@ const CardHoldNft = ({ campaignNew }) => {
             background="#529BF0"
             borderRadius="10px"
             padding="2px 8px"
-            minWidth={['10px', , '40px']}
+            minWidth={['30px', , '40px']}
             style={{ textAlign: 'center' }}
           >
             <Text color="#fff" fontSize={[10, , 24]} fontWeight={700}>
@@ -147,7 +147,7 @@ const CardHoldNft = ({ campaignNew }) => {
             background="#529BF0"
             borderRadius="10px"
             padding="2px 8px"
-            minWidth={['10px', , '40px']}
+            minWidth={['30px', , '40px']}
             style={{ textAlign: 'center' }}
           >
             <Text color="#fff" fontSize={[10, , 24]} fontWeight={700}>
@@ -163,7 +163,7 @@ const CardHoldNft = ({ campaignNew }) => {
             background="#529BF0"
             borderRadius="10px"
             padding="2px 8px"
-            minWidth={['10px', , '40px']}
+            minWidth={['30px', , '40px']}
             style={{ textAlign: 'center' }}
           >
             <Text color="#fff" fontSize={[10, , 24]} fontWeight={700}>
@@ -179,7 +179,7 @@ const CardHoldNft = ({ campaignNew }) => {
             background="#529BF0"
             borderRadius="10px"
             padding="2px 8px"
-            minWidth={['10px', , '40px']}
+            minWidth={['30px', , '40px']}
             style={{ textAlign: 'center' }}
           >
             <Text color="#fff" fontSize={[10, , 24]} fontWeight={700}>
@@ -232,7 +232,7 @@ const CardHoldNft = ({ campaignNew }) => {
                 '--'
               )}
             </Text>
-            <Box width="20px" ml="6px">
+            <Box width="30px" ml="6px">
               <Image width={30} height={30} src="/images2/opvIcon.png" />
             </Box>
           </Flex>

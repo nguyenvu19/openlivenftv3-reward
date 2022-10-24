@@ -111,7 +111,7 @@ const CardNftVertical: React.FC<Props> = ({ campaign, onClickCampaign, ...props 
     return (
       <WCountDown onClick={() => onClickCampaign && onClickCampaign(campaign)}>
         <Flex alignItems="center">
-          <Box background="#529BF0" borderRadius="10px" padding="2px 8px" minWidth="50px">
+          <Box background="#529BF0" borderRadius="10px" padding="2px 8px" minWidth={['32px', , '50px']}>
             <Text color="#fff" fontSize={[10, , 24]} bold minWidth="14px" textAlign="center">
               {weekdays * 7 + days}
             </Text>
@@ -121,7 +121,7 @@ const CardNftVertical: React.FC<Props> = ({ campaign, onClickCampaign, ...props 
           </Text>
         </Flex>
         <Flex ml="4px" alignItems="center">
-          <Box background="#529BF0" borderRadius="10px" padding="2px 8px" minWidth="50px">
+          <Box background="#529BF0" borderRadius="10px" padding="2px 8px" minWidth={['32px', , '50px']}>
             <Text color="#fff" fontSize={[10, , 24]} bold minWidth="14px" textAlign="center">
               {hours}
             </Text>
@@ -131,7 +131,7 @@ const CardNftVertical: React.FC<Props> = ({ campaign, onClickCampaign, ...props 
           </Text>
         </Flex>
         <Flex ml="4px" alignItems="center">
-          <Box background="#529BF0" borderRadius="10px" padding="2px 8px" minWidth="50px">
+          <Box background="#529BF0" borderRadius="10px" padding="2px 8px" minWidth={['32px', , '50px']}>
             <Text color="#fff" fontSize={[10, , 24]} bold minWidth="14px" textAlign="center">
               {minutes}
             </Text>
@@ -141,7 +141,7 @@ const CardNftVertical: React.FC<Props> = ({ campaign, onClickCampaign, ...props 
           </Text>
         </Flex>
         <Flex ml="4px" alignItems="center">
-          <Box background="#529BF0" borderRadius="10px" padding="2px 8px" minWidth="50px">
+          <Box background="#529BF0" borderRadius="10px" padding="2px 8px" minWidth={['32px', , '50px']}>
             <Text color="#fff" fontSize={[10, , 24]} bold minWidth="14px" textAlign="center">
               {seconds}
             </Text>

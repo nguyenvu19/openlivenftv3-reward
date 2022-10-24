@@ -71,16 +71,22 @@ const WrapperFarmItem = styled.div`
 
       p {
         font-weight: 700;
-        font-size: 18px;
+        font-size: 16px;
         line-height: 21px;
         color: #1487db;
+        ${({ theme }) => theme.mediaQueries.sm} {
+          font-size: 18px;
+        }
 
         &:first-child {
           color: #000;
           font-weight: bold;
-          font-size: 18px;
+          font-size: 16px;
           line-height: 19px;
           margin-bottom: 8px;
+          ${({ theme }) => theme.mediaQueries.sm} {
+            font-size: 18px;
+          }
         }
         span {
           color: #000;
@@ -263,7 +269,10 @@ const WrapperFarmItem = styled.div`
 
       .farm-card-group-actions {
         text-align: center;
-        margin-top: 32px;
+        margin-top: 16px;
+        ${({ theme }) => theme.mediaQueries.sm} {
+          margin-top: 32px;
+        }
       }
     }
   }
@@ -315,7 +324,7 @@ const FarmItem = ({
   // w currency
   const currencyLps = useCurrency(infoPool?.lpToken)
   // amounts
-  const independentAmount: CurrencyAmount<Currency> | undefined = tryParseAmount(`${amountDeposit}`, currencyLps)
+  const independentAmount: CurrencyAmount<Currency> | undefined = tryParseAmount(`${amountDeposit || 1}`, currencyLps)
   const [approveState, approveCallback] = useApproveCallback(independentAmount, contractFarm?.address)
 
   /* Deposit */
@@ -471,6 +480,8 @@ const FarmItem = ({
                 isLoading={harvestLoading}
                 disabled={!infoPool?.userInfo?.userDividends}
                 onClick={() => handleHarvest(infoPool)}
+                fontSize={['14px', , '18px']}
+                height={['32px', , '48px']}
               >
                 EARN HARVEST
               </Button>
@@ -626,6 +637,8 @@ const FarmItem = ({
                         handleUnStakeLps(infoPool)
                       }
                     }}
+                    fontSize={['14px', , '16px']}
+                    height={['32px', , '48px']}
                   >
                     Approve
                   </Button>

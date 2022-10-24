@@ -63,7 +63,10 @@ const Wrapper = styled.div`
   }
 
   .farm-item-header-item {
-    padding: 16px;
+    padding: 10px 16px;
+    ${({ theme }) => theme.mediaQueries.sm} {
+      padding: 16px;
+    }
 
     p {
       color: #1487db;
