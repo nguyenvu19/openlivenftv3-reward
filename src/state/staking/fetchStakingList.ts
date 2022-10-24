@@ -32,7 +32,7 @@ export const useStakingListData = (poolId = 1): { stakingList: StakingItemType[]
             arr.push({
               poolId,
               planId: count,
-              apr: roundNumber((apr / 1e18) * 100 * 30 * 84600, { scale: 2 }),
+              apr: roundNumber((apr / 1e18) * 100 * 30 * 86400, { scale: 2 }),
               time,
               totalStakedAmount,
               min: 1,
