@@ -65,18 +65,14 @@ const HeaderStakingList = ({ opvEarned }) => {
             <Text fontSize={['13px', , '13px']} fontWeight={600} style={{ whiteSpace: 'nowrap' }}>
               OPV AVAILABLE
             </Text>
-            {fetchStatus === FetchStatus.Fetched ? (
-              <Text fontSize={['13px', , '13px']} fontWeight={600} style={{ whiteSpace: 'nowrap' }}>
-                <CurrencyFormat
-                  value={formatBigNumber(balance, 3)}
-                  displayType="text"
-                  thousandSeparator
-                  renderText={(t) => t}
-                />
-              </Text>
-            ) : (
-              <Skeleton height="14px" width="80px" />
-            )}
+            <Text fontSize={['13px', , '13px']} fontWeight={600} style={{ whiteSpace: 'nowrap' }}>
+              <CurrencyFormat
+                value={fetchStatus === FetchStatus.Fetched ? formatBigNumber(balance, 3) : 0}
+                displayType="text"
+                thousandSeparator
+                renderText={(t) => t}
+              />
+            </Text>
           </WCardInfo>
         </Col>
         <Col xs={24} sm={12} md={6}>
@@ -84,13 +80,9 @@ const HeaderStakingList = ({ opvEarned }) => {
             <Text fontSize={['13px', , '13px']} fontWeight={600} style={{ whiteSpace: 'nowrap' }}>
               OPV STAKED
             </Text>
-            {totalStaked !== undefined ? (
-              <Text fontSize={['13px', , '13px']} fontWeight={600}>
-                <CurrencyFormat value={totalStaked || 0} displayType="text" thousandSeparator renderText={(t) => t} />
-              </Text>
-            ) : (
-              <Skeleton height="14px" width="80px" />
-            )}
+            <Text fontSize={['13px', , '13px']} fontWeight={600}>
+              <CurrencyFormat value={totalStaked || 0} displayType="text" thousandSeparator renderText={(t) => t} />
+            </Text>
           </WCardInfo>
         </Col>
         <Col xs={24} sm={12} md={6}>
@@ -98,13 +90,9 @@ const HeaderStakingList = ({ opvEarned }) => {
             <Text fontSize={['13px', , '13px']} fontWeight={600} style={{ whiteSpace: 'nowrap' }}>
               OPV EARNED
             </Text>
-            {opvEarned !== undefined ? (
-              <Text fontSize={['13px', , '13px']} fontWeight={600}>
-                <CurrencyFormat value={opvEarned || 0} displayType="text" thousandSeparator renderText={(t) => t} />
-              </Text>
-            ) : (
-              <Skeleton height="14px" width="80px" />
-            )}
+            <Text fontSize={['13px', , '13px']} fontWeight={600}>
+              <CurrencyFormat value={opvEarned || 0} displayType="text" thousandSeparator renderText={(t) => t} />
+            </Text>
           </WCardInfo>
         </Col>
         <Col xs={24} sm={12} md={6}>
