@@ -44,7 +44,7 @@ const config: (
       showItemsOnMobile: false,
       items: [],
     },
-    process.env.NEXT_PUBLIC_NODE_ENV !== 'production' && {
+    {
       label: t('Trade'),
       icon: TradeIcon,
       fillIcon: TradeIcon,
@@ -71,7 +71,7 @@ const config: (
       showItemsOnMobile: false,
       items: [],
     },
-    process.env.NEXT_PUBLIC_NODE_ENV !== 'production' && {
+    {
       label: t('Staking'),
       href: '/staking',
       icon: StakingIcon,
