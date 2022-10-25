@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import { CampaignItem, CAMPAIGN_STATUS } from 'state/campaigns/types'
 import { formatDate } from 'helpers'
 import useCountTime, { STEEP_COUNT } from 'hooks/useCountTime'
+import CampaignImg from '../images/campaign-img.png'
 
 const WCardNftVertical = styled.div`
   width: 100%;
@@ -25,6 +26,8 @@ const WCardNftVertical = styled.div`
   .card-nft-cover-left {
     width: 100%;
     max-width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
 
     ${({ theme }) => theme.mediaQueries.sm} {
       max-width: 240px;
@@ -163,7 +166,7 @@ const CardNftVertical: React.FC<Props> = ({ campaign, onClickCampaign, ...props 
       {...props}
     >
       <div className="card-nft-cover-left">
-        <MediaCard fileUrl="https://s3.ap-southeast-1.amazonaws.com/openlivenft/investPackage/TOPAZ.mp4" />
+        <MediaCard fileUrl={CampaignImg.src} />
       </div>
       <Box>
         <CardSubHeading>
