@@ -48,7 +48,8 @@ const CardNftWithInfo: React.FC<{
   }
 
   const fCurrency = otherCurrencyList?.find((curr) => curr._id === packageInvestItem?.currency_invest)
-  const fCurrencyReward = otherCurrencyList?.find((curr) => curr._id === packageInvestItem?.currency_bonus_token)
+  // const fCurrencyReward = otherCurrencyList?.find((curr) => curr._id === packageInvestItem?.currency_bonus_token)
+  const opvReward = packageInvestItem?.meta_data?.find((item) => item.key === 'OPV Reward')
 
   const propsItem: any = href
     ? {
@@ -90,20 +91,8 @@ const CardNftWithInfo: React.FC<{
               </Text>
             </Flex>
             <Flex justifyContent="space-between">
-              <Text>Reward:</Text>
-              <Text fontWeight="bold">
-                {isNumber(packageInvestItem?.bonus_token) ? (
-                  <CurrencyFormat
-                    value={roundNumber(packageInvestItem.bonus_token, { decimals: 18 })}
-                    displayType="text"
-                    thousandSeparator
-                    suffix={fCurrencyReward ? ` ${fCurrencyReward.code}` : ''}
-                    renderText={(t) => t}
-                  />
-                ) : (
-                  '--'
-                )}
-              </Text>
+              <Text>Daily Reward:</Text>
+              <Text fontWeight="bold">{opvReward && opvReward?.value}</Text>
             </Flex>
             <Flex justifyContent="space-between">
               <Text>Dividend:</Text>
