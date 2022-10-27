@@ -15,7 +15,7 @@ export interface InvestPackageType {
   currency_bonus_token: string
   currency_invest: string
   dividend_rate: number
-  meta_data: MetaData
+  meta_data: MetaData[]
   price_invest: number
   rare: number
   status: boolean
