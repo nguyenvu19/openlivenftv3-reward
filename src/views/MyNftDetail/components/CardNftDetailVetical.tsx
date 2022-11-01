@@ -59,7 +59,6 @@ interface Props {
 const CardNftDetailVertical: React.FC<Props> = ({ myNftDetail, ...props }) => {
   const nftMetaData = useNftMetaDataByUrl(myNftDetail?.tokenUri)
 
-  const ownerName = nftMetaData?.attributes?.find((o) => o.trait_type === 'Owner Name')
   const dividend = nftMetaData?.attributes?.find((o) => o.trait_type === 'Devident')
   const reward01 = nftMetaData?.attributes?.find((o) => o.trait_type === 'OPV Reward')
   const opvBonus = nftMetaData?.attributes?.find((o) => o.trait_type === 'OPV Bonus')
@@ -98,9 +97,16 @@ const CardNftDetailVertical: React.FC<Props> = ({ myNftDetail, ...props }) => {
               <Text color="#292929" fontSize={[13, , 16]}>
                 Owner:
               </Text>
-              <Text color="#292929" fontSize={[13, , 16]} fontWeight="700">
-                {ownerName?.value}
-              </Text>
+              <Link style={{ display: 'inline' }} external href={getBlockExploreLink(myNftDetail?.owner, 'address')}>
+                <Flex alignItems="center">
+                  <Text color="#007CA2" fontSize={['13px', '16px']} fontWeight="700">
+                    {formatCode(myNftDetail?.owner, 5, 5)}
+                  </Text>{' '}
+                  <Box width={['14px', , '24px']} ml="6px">
+                    <Image width={30} height={30} src="/images2/link-icons.png" />
+                  </Box>
+                </Flex>
+              </Link>
             </Grid>
             <Grid gridTemplateColumns={['1fr 1fr', , '1fr 1fr']}>
               <Text color="#292929" fontSize={[13, , 16]}>
@@ -143,16 +149,9 @@ const CardNftDetailVertical: React.FC<Props> = ({ myNftDetail, ...props }) => {
                 Dividend:
               </Text>
               {dividend?.value !== undefined && (
-                <Link style={{ display: 'inline' }} external href="/">
-                  <Flex alignItems="center">
-                    <Text color="#007CA2" fontSize={['13px', '16px']} fontWeight="700">
-                      {dividend?.value}
-                    </Text>
-                    <Box width={['13px', , '20px']} ml="6px">
-                      <Image width={30} height={30} src="/images2/link-icons.png" />
-                    </Box>
-                  </Flex>
-                </Link>
+                <Text color="#292929" fontSize={['13px', '16px']} fontWeight="700">
+                  {dividend?.value}
+                </Text>
               )}
             </Grid>
 
@@ -161,16 +160,9 @@ const CardNftDetailVertical: React.FC<Props> = ({ myNftDetail, ...props }) => {
                 Daily Holder Reward:
               </Text>
               {reward01?.value !== undefined && (
-                <Link style={{ display: 'inline' }} external href="/">
-                  <Flex alignItems="center">
-                    <Text color="#007CA2" fontSize={['13px', '16px']} fontWeight="700">
-                      {reward01?.value} OPV
-                    </Text>
-                    <Box width={['13px', , '20px']} ml="6px">
-                      <Image width={30} height={30} src="/images2/link-icons.png" />
-                    </Box>
-                  </Flex>
-                </Link>
+                <Text color="#292929" fontSize={['13px', '16px']} fontWeight="700">
+                  {reward01?.value} OPV
+                </Text>
               )}
             </Grid>
             <Grid gridTemplateColumns={['1fr 1fr', '1fr 1fr']}>
@@ -178,20 +170,9 @@ const CardNftDetailVertical: React.FC<Props> = ({ myNftDetail, ...props }) => {
                 OPV Bonus:
               </Text>
               {opvBonus?.value !== undefined && (
-                <Link
-                  style={{ display: 'inline' }}
-                  external
-                  href={getBscScanLinkForNft(undefined, myNftDetail.tokenId)}
-                >
-                  <Flex alignItems="center">
-                    <Text color="#007CA2" fontSize={['13px', '16px']} fontWeight="700">
-                      {opvBonus?.value} OPV
-                    </Text>
-                    <Box width={['13px', , '20px']} ml="6px">
-                      <Image width={30} height={30} src="/images2/link-icons.png" />
-                    </Box>
-                  </Flex>
-                </Link>
+                <Text color="#292929" fontSize={['13px', '16px']} fontWeight="700">
+                  {opvBonus?.value} OPV
+                </Text>
               )}
             </Grid>
           </div>

@@ -3,10 +3,10 @@ import CardNftWithID from 'components/Card/CardNftWithID'
 import { MyNftItem } from 'state/nfts/types'
 import { Button } from '@pancakeswap/uikit'
 
-const WCardMyNftList = styled.div`
+const WCardMyNftList = styled.div<{ isEmpty?: boolean }>`
   display: flex;
   row-gap: 0px;
-  margin: 0 -12px;
+  margin: ${({ isEmpty }) => (isEmpty ? '0' : '0 -12px')};
   flex-flow: row wrap;
   ${({ theme }) => theme.mediaQueries.sm} {
     row-gap: 24px;
@@ -52,7 +52,7 @@ interface Props {
 }
 const CardMyNftList: React.FC<Props> = ({ total, myNftsList, handleLoadMore }) => {
   return (
-    <WCardMyNftList>
+    <WCardMyNftList isEmpty={!(myNftsList?.length > 0)}>
       {myNftsList?.length > 0 ? (
         <>
           {myNftsList.map((myInvestItem) => (
