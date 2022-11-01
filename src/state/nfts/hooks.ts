@@ -5,7 +5,7 @@ import { stringify } from 'querystring'
 import { gql } from 'graphql-request'
 import { MORALIS_APP_API, MORALIS_APP_API_KEY } from 'config/constants/moralis'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import { NFT_ADDRESS } from 'config'
+import { DEFAULT_CHAIN_ID, NFT_ADDRESS } from 'config'
 import { setNftsList } from './actions'
 import { MyNftItem, NftResponse } from './types'
 import { graphqlOpv } from '../../utils/graphql'
@@ -19,7 +19,7 @@ export const useMyNftsList = ({ limit, account }: { limit?: number; account?: st
   const [paramsNftsList, setParamsNftsList] = useState({
     limit: limit || 9,
     pageSize: 9,
-    chain: 'bsc testnet',
+    chain: DEFAULT_CHAIN_ID === 56 ? 'bsc' : 'bsc testnet',
     format: 'decimal',
     token_addresses: NFT_ADDRESS,
   })
