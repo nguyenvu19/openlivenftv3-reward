@@ -4,11 +4,13 @@ const ENV_DEVELOPMENT = {
   NEXT_PUBLIC_APP_URL: 'https://app-openlivenft-dev.netlify.com',
   NEXT_PUBLIC_APP_USER_URL: 'https://openlivev3-dev.netlify.app',
   NEXT_PUBLIC_APP_USER_API: 'https://api-nft-dev.openlive.finance/api/v1',
+  NEXT_PUBLIC_APP_USER_API_METADATA: 'https://api-nft-dev.openlive.finance/meta',
+
   NEXT_PUBLIC_APP_GRAPH_API: 'https://graph-nft.openlive.finance/subgraphs/name/opv/opvnft',
 
   NEXT_PUBLIC_DEFAULT_CHAIN_ID: 97,
   NEXT_PUBLIC_TOKEN_ADDRESS: '0x93c4a5d89d3a5dcc3b17395f0c730e9e0ca0763d',
-  NEXT_PUBLIC_CONTRACT_ADDRESS: '0xF4153b354dD5f97E013AB7D3348454ba9AF580d2',
+  NEXT_PUBLIC_CONTRACT_ADDRESS: '0xda255a3cB45DD26D017e2CD1E5c3B9128D32D07B',
   NEXT_PUBLIC_NFT_ADDRESS: '0x224A2F0B9D487f2646e8D801E896eb2c21522232',
   NEXT_PUBLIC_CONTRACT_FARM: '0xD4aE8F6e257FbEb56361dBD96d8Aff2C027bD9aC',
   NEXT_PUBLIC_CONTRACT_STAKING: '0x876B4fb11A2694e7a16814C561FC6CD79eF8B5cA',
@@ -27,6 +29,8 @@ const ENV_STAGING = {
   NEXT_PUBLIC_APP_URL: 'https://app-openlivenft-uat.netlify.com',
   NEXT_PUBLIC_APP_USER_URL: 'https://openlivev3-uat.netlify.app',
   NEXT_PUBLIC_APP_USER_API: 'https://api-nft.openlive.finance/api/v1',
+  NEXT_PUBLIC_APP_USER_API_METADATA: 'https://metadata.openlivenft.io/meta',
+
   NEXT_PUBLIC_APP_GRAPH_API: 'https://api.thegraph.com/subgraphs/name/opvgraph/opv-nft',
 
   NEXT_PUBLIC_DEFAULT_CHAIN_ID: 56,
@@ -50,6 +54,8 @@ const ENV_PRODUCTION = {
   NEXT_PUBLIC_APP_URL: 'https://app.openlivenft.finance',
   NEXT_PUBLIC_APP_USER_URL: 'https://nft.openlive.finance',
   NEXT_PUBLIC_APP_USER_API: 'https://api-nft.openlive.finance/api/v1',
+  NEXT_PUBLIC_APP_USER_API_METADATA: 'https://metadata.openlivenft.io/meta',
+
   NEXT_PUBLIC_APP_GRAPH_API: 'https://api.thegraph.com/subgraphs/name/opvgraph/opv-nft',
 
   NEXT_PUBLIC_DEFAULT_CHAIN_ID: 56,

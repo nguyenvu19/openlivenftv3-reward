@@ -158,22 +158,6 @@ const ModalStaking: React.FC<Props> = ({
       setErrorMess(message)
     }
 
-    // .then(async (response: TransactionResponse) => {
-    //   await response.wait()
-    //   addTransaction(response, {
-    //     summary: `Staking: ${dataModal.time} days with ${amount} OPV`,
-    //   })
-    //   toastSuccess('Staking success')
-    //   onStakingSuccess()
-    //   setStakingLoading(false)
-    // })
-    // .catch((error: any) => {
-    //   console.error('Failed to Staking', error)
-    //   if (error?.code !== 4001) {
-    //     toastError(t('Error'), error.message)
-    //   }
-    //   setStakingLoading(false)
-    // })
     return false
   }
 
@@ -246,7 +230,7 @@ const ModalStaking: React.FC<Props> = ({
             </Text>
             <Grid gridTemplateColumns={['1fr', , '1fr 1fr']}>
               <Text fontSize={['12px', , '16px']}>Minium: {dataModal?.min || '--'} OPV</Text>
-              <Text fontSize={['12px', , '16px']}>Maximum: {dataModal?.max || '--'} OPV</Text>
+              {/* <Text fontSize={['12px', , '16px']}>Maximum: {dataModal?.max || '--'} OPV</Text> */}
             </Grid>
           </div>
         </div>

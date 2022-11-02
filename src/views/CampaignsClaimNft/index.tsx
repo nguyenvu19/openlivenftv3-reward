@@ -31,6 +31,7 @@ const CampaignsClaimNft: React.FC<React.PropsWithChildren> = () => {
 
   const campaign = useCampaignItem(campaignId?.[0])
   const { data: listNftUser, setParamsNftsList, fetchMyNftsList } = useMyNftsList({ account })
+  // '0x6e664E9ba68387CBC527B0F401E3DD9AB24fB75d'
 
   const addTransaction = useTransactionAdder()
   const handleClaimReward = async ({ nftItem }: { nftItem: NftType }, cb) => {
@@ -51,7 +52,9 @@ const CampaignsClaimNft: React.FC<React.PropsWithChildren> = () => {
     }
 
     try {
-      const lastTimeClaim = await (await contractCampaign.claimTimes(nftItem.token_id)).toNumber()
+      const lastTimeClaim = await (
+        await contractCampaign.claimTimeByCampaigns(campaignId?.[0], nftItem.token_id)
+      ).toNumber()
       if (lastTimeClaim && lastTimeClaim > 0) {
         const currentTime = new Date(moment(new Date()).format('YYYY/MM/DD')).getTime()
         if (lastTimeClaim * 1000 >= currentTime) {

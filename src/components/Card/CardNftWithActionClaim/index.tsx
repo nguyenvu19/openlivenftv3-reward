@@ -8,6 +8,7 @@ import { NftType } from 'state/nfts/types'
 import styled from 'styled-components'
 import useNftMetaDataByUrl from 'state/nfts/fetchNftMetaDataByUrl'
 import moment from 'moment'
+import { APP_USER_METADATA, NFT_ADDRESS } from 'config'
 
 const WCardNftWithActionClaim = styled.div`
   background: #eefbff;
@@ -58,15 +59,21 @@ const CardNftWithActionClaim: React.FC<{
     }
   }
 
+  // const nftMetaData = useNftMetaDataByUrl(
+  //   nftItem ? `${APP_USER_METADATA}/${NFT_ADDRESS}/${nftItem?.token_id}` : undefined,
+  // )
   const nftMetaData = useNftMetaDataByUrl(nftItem?.token_uri)
+  const opvReward = nftMetaData?.attributes?.find((o) => o.trait_type === 'OPV Reward')
 
   /* Check is claimed */
   const [isClaimed, setClaimTime] = useState(true)
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-extra-semi
     ;(async () => {
-      if (contractCampaign && nftItem) {
-        const lastTimeClaim = await (await contractCampaign.claimTimes(nftItem.token_id)).toNumber()
+      if (contractCampaign && nftItem && campaign) {
+        const lastTimeClaim = await (
+          await contractCampaign.claimTimeByCampaigns(campaign.id, nftItem.token_id)
+        ).toNumber()
         const currentTime = new Date(moment(new Date()).format('YYYY/MM/DD')).getTime()
         if (lastTimeClaim * 1000 >= currentTime) {
           setClaimTime(true)
@@ -75,7 +82,7 @@ const CardNftWithActionClaim: React.FC<{
         }
       }
     })()
-  }, [contractCampaign, nftItem])
+  }, [contractCampaign, nftItem, campaign])
 
   if (!nftItem) {
     return (
@@ -91,11 +98,11 @@ const CardNftWithActionClaim: React.FC<{
       </div>
       <div className="card-nft-body">
         <Text fontSize={['16px', , '24px']} fontWeight="bold" mb={['14px']}>
-          NFT By: {nftItem ? nftItem.token_id : <Skeleton height="14px" width="80px" />}
+          NFT ID: {nftItem ? nftItem.token_id : <Skeleton height="14px" width="80px" />}
         </Text>
         <FlexGap flexDirection="column" rowGap="10px">
           <Flex justifyContent="space-between">
-            <Text fontSize={['13px', , '16px']}>Total Reward By:</Text>
+            <Text fontSize={['13px', , '16px']}>Total Reward:</Text>
             <Text fontSize={['13px', , '16px']} fontWeight="bold">
               {campaign ? (
                 <CurrencyFormat
@@ -129,17 +136,7 @@ const CardNftWithActionClaim: React.FC<{
           <Flex justifyContent="space-between">
             <Text fontSize={['13px', , '16px']}>Available Claim:</Text>
             <Text fontSize={['13px', , '16px']} fontWeight="bold">
-              {campaign ? (
-                <CurrencyFormat
-                  value={campaign.totalPool - campaign.currentPool}
-                  displayType="text"
-                  thousandSeparator
-                  suffix={` OPV`}
-                  renderText={(t) => t}
-                />
-              ) : (
-                <Skeleton height="14px" width="80px" />
-              )}
+              {opvReward ? opvReward.value : <Skeleton height="14px" width="80px" />}
             </Text>
           </Flex>
         </FlexGap>

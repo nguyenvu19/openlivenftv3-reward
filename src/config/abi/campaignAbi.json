@@ -12,7 +12,8 @@
     "inputs": [
       { "indexed": true, "internalType": "uint256", "name": "tokenId", "type": "uint256" },
       { "indexed": false, "internalType": "address", "name": "userAddress", "type": "address" },
-      { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }
+      { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" },
+      { "indexed": false, "internalType": "uint256", "name": "totalDays", "type": "uint256" }
     ],
     "name": "Claim",
     "type": "event"
@@ -38,6 +39,13 @@
   {
     "inputs": [],
     "name": "LIMIT_CLAIME",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "TIME_STEP",
     "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
@@ -81,6 +89,16 @@
     "name": "claimOPV",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "", "type": "uint256" },
+      { "internalType": "uint256", "name": "", "type": "uint256" }
+    ],
+    "name": "claimTimeByCampaigns",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -164,6 +182,16 @@
     "type": "function"
   },
   {
+    "inputs": [
+      { "internalType": "uint256", "name": "", "type": "uint256" },
+      { "internalType": "uint256", "name": "", "type": "uint256" }
+    ],
+    "name": "rateCampaigns",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "name": "rates",
     "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
@@ -194,8 +222,19 @@
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "rare", "type": "uint256" },
-      { "internalType": "uint256", "name": "opvQuantity", "type": "uint256" }
+      { "internalType": "uint256", "name": "campId", "type": "uint256" },
+      { "internalType": "uint256[]", "name": "rares", "type": "uint256[]" },
+      { "internalType": "uint256[]", "name": "opvQuantities", "type": "uint256[]" }
+    ],
+    "name": "setRateCampaign",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256[]", "name": "rares", "type": "uint256[]" },
+      { "internalType": "uint256[]", "name": "opvQuantities", "type": "uint256[]" }
     ],
     "name": "setRates",
     "outputs": [],

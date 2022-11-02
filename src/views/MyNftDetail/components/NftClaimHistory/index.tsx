@@ -27,7 +27,7 @@ const columns: ColumnsType<ClaimHistoryItemType> = [
   {
     title: 'Event',
     dataIndex: 'userAddress',
-    render: (userAddress) => <p style={{ fontWeight: 700 }}>{userAddress === ZERO_ADDRESS ? 'Buy' : 'Bonus'}</p>,
+    render: (userAddress) => <p style={{ fontWeight: 700 }}>{userAddress === ZERO_ADDRESS ? 'Buy' : 'Reward'}</p>,
   },
   {
     title: 'Status',
