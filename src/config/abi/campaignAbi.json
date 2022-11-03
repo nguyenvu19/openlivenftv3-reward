@@ -13,7 +13,8 @@
       { "indexed": true, "internalType": "uint256", "name": "tokenId", "type": "uint256" },
       { "indexed": false, "internalType": "address", "name": "userAddress", "type": "address" },
       { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" },
-      { "indexed": false, "internalType": "uint256", "name": "totalDays", "type": "uint256" }
+      { "indexed": false, "internalType": "uint256", "name": "totalDays", "type": "uint256" },
+      { "indexed": false, "internalType": "uint256", "name": "campaignId", "type": "uint256" }
     ],
     "name": "Claim",
     "type": "event"
@@ -67,6 +68,19 @@
     "name": "addCampaign",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "tokenId", "type": "uint256" },
+      { "internalType": "uint256", "name": "campaignID", "type": "uint256" }
+    ],
+    "name": "calculateReward",
+    "outputs": [
+      { "internalType": "uint256", "name": "totalAmount", "type": "uint256" },
+      { "internalType": "uint256", "name": "totalDays", "type": "uint256" }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {

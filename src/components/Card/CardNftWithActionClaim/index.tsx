@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import CurrencyFormat from 'react-currency-format'
 import { Button, Flex, Skeleton, Text } from '@pancakeswap/uikit'
 import { FlexGap } from 'components/Layout/Flex'
@@ -7,8 +7,9 @@ import { CampaignItem } from 'state/campaigns/types'
 import { NftType } from 'state/nfts/types'
 import styled from 'styled-components'
 import useNftMetaDataByUrl from 'state/nfts/fetchNftMetaDataByUrl'
-import moment from 'moment'
-import { APP_USER_METADATA, NFT_ADDRESS } from 'config'
+// import { APP_USER_METADATA, NFT_ADDRESS } from 'config'
+import { useAvailableClaim, useCheckIsNftClaimed } from 'state/campaigns/hooks'
+import FormatAmount from 'components/FormatAmount'
 
 const WCardNftWithActionClaim = styled.div`
   background: #eefbff;
@@ -47,42 +48,29 @@ const CardNftWithActionClaim: React.FC<{
   campaign?: CampaignItem
   nftItem?: NftType
   onClaim?: (item: any, cb: () => void) => void
-  contractCampaign?: any
-}> = ({ campaign, nftItem, onClaim, contractCampaign }) => {
+}> = ({ campaign, nftItem, onClaim }) => {
   const [loading, setLoading] = useState(false)
-  const handleClaimNow = () => {
-    if (campaign && nftItem) {
-      setLoading(true)
-      onClaim({ nftItem, campaign }, () => {
-        setLoading(false)
-      })
-    }
-  }
 
   // const nftMetaData = useNftMetaDataByUrl(
   //   nftItem ? `${APP_USER_METADATA}/${NFT_ADDRESS}/${nftItem?.token_id}` : undefined,
   // )
   const nftMetaData = useNftMetaDataByUrl(nftItem?.token_uri)
-  const opvReward = nftMetaData?.attributes?.find((o) => o.trait_type === 'OPV Reward')
+  // const opvReward = nftMetaData?.attributes?.find((o) => o.trait_type === 'OPV Reward')
 
   /* Check is claimed */
-  const [isClaimed, setClaimTime] = useState(true)
-  useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-extra-semi
-    ;(async () => {
-      if (contractCampaign && nftItem && campaign) {
-        const lastTimeClaim = await (
-          await contractCampaign.claimTimeByCampaigns(campaign.id, nftItem.token_id)
-        ).toNumber()
-        const currentTime = new Date(moment(new Date()).format('YYYY/MM/DD')).getTime()
-        if (lastTimeClaim * 1000 >= currentTime) {
-          setClaimTime(true)
-        } else {
-          setClaimTime(false)
-        }
-      }
-    })()
-  }, [contractCampaign, nftItem, campaign])
+  const { isClaimed, fetchClaimTime } = useCheckIsNftClaimed(campaign?.id, nftItem?.token_id)
+  const { availableClaim, fetchAvailableClaim } = useAvailableClaim(campaign?.id, nftItem?.token_id)
+
+  const handleClaimNow = () => {
+    if (campaign && nftItem) {
+      setLoading(true)
+      onClaim({ nftItem, campaign }, () => {
+        fetchClaimTime()
+        fetchAvailableClaim()
+        setLoading(false)
+      })
+    }
+  }
 
   if (!nftItem) {
     return (
@@ -136,7 +124,11 @@ const CardNftWithActionClaim: React.FC<{
           <Flex justifyContent="space-between">
             <Text fontSize={['13px', , '16px']}>Available Claim:</Text>
             <Text fontSize={['13px', , '16px']} fontWeight="bold">
-              {opvReward ? opvReward.value : <Skeleton height="14px" width="80px" />}
+              {availableClaim !== undefined ? (
+                <FormatAmount value={availableClaim} suffix={` OPV`} />
+              ) : (
+                <Skeleton height="14px" width="80px" />
+              )}
             </Text>
           </Flex>
         </FlexGap>

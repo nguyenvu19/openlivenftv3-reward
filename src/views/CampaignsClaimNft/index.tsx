@@ -97,7 +97,6 @@ const CampaignsClaimNft: React.FC<React.PropsWithChildren> = () => {
             total={listNftUser?.total}
             onClaim={handleClaimReward}
             handleLoadMore={handleLoadMore}
-            contractCampaign={contractCampaign}
           />
         ) : (
           <ConnectWallet minHeight="400px" />

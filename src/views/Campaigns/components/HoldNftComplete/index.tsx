@@ -26,7 +26,7 @@ const HoldNftComplete = ({ campaigns }) => {
         {campaignEnd?.length > 0 ? (
           <>
             {campaignEnd?.map((campaign) => (
-              <CardNftVertical key={campaign.finish} campaign={campaign} />
+              <CardNftVertical key={campaign.finish} campaign={campaign} style={{ cursor: 'not-allowed' }} />
             ))}
           </>
         ) : (
