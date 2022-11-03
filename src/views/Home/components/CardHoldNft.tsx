@@ -225,7 +225,7 @@ const CardHoldNft = ({ campaignNew }) => {
                   value={campaignNew?.totalPool}
                   displayType="text"
                   thousandSeparator
-                  suffix={` USDT`}
+                  suffix={` OPV`}
                   renderText={(t) => t}
                 />
               ) : (
