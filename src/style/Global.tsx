@@ -17,6 +17,10 @@ const GlobalStyle = createGlobalStyle`
       max-width: 100%;
     }
   }
+
+  .sb-chat-btn { 
+    bottom: 100px !important;
+  }
 `
 
 export default GlobalStyle
