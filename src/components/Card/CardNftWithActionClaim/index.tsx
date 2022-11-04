@@ -4,10 +4,9 @@ import { Button, Flex, Skeleton, Text } from '@pancakeswap/uikit'
 import { FlexGap } from 'components/Layout/Flex'
 import MediaCard from 'components/MediaCard'
 import { CampaignItem } from 'state/campaigns/types'
-import { NftType } from 'state/nfts/types'
+import { MyNftItem } from 'state/nfts/types'
 import styled from 'styled-components'
 import useNftMetaDataByUrl from 'state/nfts/fetchNftMetaDataByUrl'
-// import { APP_USER_METADATA, NFT_ADDRESS } from 'config'
 import { useAvailableClaim, useCheckIsNftClaimed } from 'state/campaigns/hooks'
 import FormatAmount from 'components/FormatAmount'
 
@@ -46,20 +45,16 @@ const WCardNftWithActionClaim = styled.div`
 
 const CardNftWithActionClaim: React.FC<{
   campaign?: CampaignItem
-  nftItem?: NftType
+  nftItem?: MyNftItem
   onClaim?: (item: any, cb: () => void) => void
 }> = ({ campaign, nftItem, onClaim }) => {
   const [loading, setLoading] = useState(false)
 
-  // const nftMetaData = useNftMetaDataByUrl(
-  //   nftItem ? `${APP_USER_METADATA}/${NFT_ADDRESS}/${nftItem?.token_id}` : undefined,
-  // )
-  const nftMetaData = useNftMetaDataByUrl(nftItem?.token_uri)
-  // const opvReward = nftMetaData?.attributes?.find((o) => o.trait_type === 'OPV Reward')
+  const nftMetaData = useNftMetaDataByUrl(nftItem?.tokenUri)
 
   /* Check is claimed */
-  const { isClaimed, fetchClaimTime } = useCheckIsNftClaimed(campaign?.id, nftItem?.token_id)
-  const { availableClaim, fetchAvailableClaim } = useAvailableClaim(campaign?.id, nftItem?.token_id)
+  const { isClaimed, fetchClaimTime } = useCheckIsNftClaimed(campaign?.id, nftItem?.tokenId)
+  const { availableClaim, fetchAvailableClaim } = useAvailableClaim(campaign?.id, nftItem?.tokenId)
 
   const handleClaimNow = () => {
     if (campaign && nftItem) {
@@ -86,7 +81,7 @@ const CardNftWithActionClaim: React.FC<{
       </div>
       <div className="card-nft-body">
         <Text fontSize={['16px', , '24px']} fontWeight="bold" mb={['14px']}>
-          NFT ID: {nftItem ? nftItem.token_id : <Skeleton height="14px" width="80px" />}
+          NFT ID: {nftItem ? nftItem.tokenId : <Skeleton height="14px" width="80px" />}
         </Text>
         <FlexGap flexDirection="column" rowGap="10px">
           <Flex justifyContent="space-between">

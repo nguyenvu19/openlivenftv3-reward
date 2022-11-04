@@ -13,7 +13,7 @@ const WMyNftPage = styled.div`
 
 const MyNftPage: React.FC<React.PropsWithChildren> = () => {
   const { account } = useActiveWeb3React()
-  const { myNftsList, setParamsNftsList } = useGraphMyNftsList()
+  const { myNftsList, setParamsNftsList } = useGraphMyNftsList(account)
 
   const onOptionChange = (option: OptionProps) => {
     setParamsNftsList((prev) => ({ ...prev, rareName: option.value }))

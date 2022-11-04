@@ -161,7 +161,7 @@ const CardNftDetailVertical: React.FC<Props> = ({ myNftDetail, ...props }) => {
               </Text>
               {reward01?.value !== undefined && (
                 <Text color="#292929" fontSize={['13px', '16px']} fontWeight="700">
-                  {reward01?.value} OPV
+                  {reward01?.value}
                 </Text>
               )}
             </Grid>

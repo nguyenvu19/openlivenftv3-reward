@@ -3,7 +3,7 @@ import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useContractCampaigns } from 'hooks/useContract'
 import { useCampaignItem, usePollCoreCampaignsData } from 'state/campaigns/hooks'
 import { useRouter } from 'next/router'
-import { useMyNftsList } from 'state/nfts/hooks'
+import { useGraphMyNftsList } from 'state/nfts/hooks'
 import styled from 'styled-components'
 import { NftType } from 'state/nfts/types'
 import { CAMPAIGN_STATUS } from 'state/campaigns/types'
@@ -30,7 +30,8 @@ const CampaignsClaimNft: React.FC<React.PropsWithChildren> = () => {
   const contractCampaign = useContractCampaigns()
 
   const campaign = useCampaignItem(campaignId?.[0])
-  const { data: listNftUser, setParamsNftsList, fetchMyNftsList } = useMyNftsList({ account })
+
+  const { myNftsList, fetchMyNftsList, setParamsNftsList } = useGraphMyNftsList(account)
   // '0x6e664E9ba68387CBC527B0F401E3DD9AB24fB75d'
 
   const addTransaction = useTransactionAdder()
@@ -93,8 +94,8 @@ const CampaignsClaimNft: React.FC<React.PropsWithChildren> = () => {
         {account ? (
           <ClaimNftList
             campaign={campaign}
-            listNftUser={listNftUser?.result}
-            total={listNftUser?.total}
+            listNftUser={myNftsList?.data}
+            total={myNftsList?.total}
             onClaim={handleClaimReward}
             handleLoadMore={handleLoadMore}
           />

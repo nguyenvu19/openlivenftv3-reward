@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import CardNftWithActionClaim from 'components/Card/CardNftWithActionClaim'
-import { NftType } from 'state/nfts/types'
+import { MyNftItem } from 'state/nfts/types'
 import { CampaignItem } from 'state/campaigns/types'
 import { EmptyStyled } from 'views/Campaigns/styled'
 import { Button } from '@pancakeswap/uikit'
@@ -40,7 +40,7 @@ const WTableFooter = styled.div`
 
 const ClaimNftList: React.FC<{
   campaign?: CampaignItem
-  listNftUser?: NftType[]
+  listNftUser?: MyNftItem[]
   total?: number
   onClaim?: (item: any, cb: () => void) => void
   handleLoadMore?: () => void
@@ -50,7 +50,7 @@ const ClaimNftList: React.FC<{
       {listNftUser?.length > 0 ? (
         <div className="nft-claim-content">
           {listNftUser?.map((nft) => (
-            <WCardNftItem key={nft.token_id}>
+            <WCardNftItem key={nft.tokenId}>
               <CardNftWithActionClaim campaign={campaign} nftItem={nft} onClaim={onClaim} />
             </WCardNftItem>
           ))}

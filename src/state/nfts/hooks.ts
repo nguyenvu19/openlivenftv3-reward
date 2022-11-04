@@ -90,12 +90,13 @@ interface ResponseNftsList {
   rareName: string
   data: MyNftItem[] | undefined | null
 }
-export const useGraphMyNftsList = (): {
+export const useGraphMyNftsList = (
+  account?: string,
+): {
   myNftsList: ResponseNftsList
   fetchMyNftsList: () => void
   setParamsNftsList: (p: any) => void
 } => {
-  const { account } = useActiveWeb3React()
   const [paramsNftsList, setParamsNftsList] = useState({
     total: 9,
     pageSize: 9,
