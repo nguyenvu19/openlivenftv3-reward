@@ -1,5 +1,11 @@
-import { ResetCSS, ToastListener } from '@pancakeswap/uikit'
+import { Fragment } from 'react'
+import { NextPage } from 'next'
+import Script from 'next/script'
+import Head from 'next/head'
+import dynamic from 'next/dynamic'
+import type { AppProps } from 'next/app'
 import BigNumber from 'bignumber.js'
+import { ResetCSS, ToastListener } from '@pancakeswap/uikit'
 import GlobalCheckClaimStatus from 'components/GlobalCheckClaimStatus'
 import { NetworkModal } from 'components/NetworkModal'
 import { FixedSubgraphHealthIndicator } from 'components/SubgraphHealthIndicator/FixedSubgraphHealthIndicator'
@@ -9,12 +15,7 @@ import useEagerConnectMP from 'hooks/useEagerConnect.bmp'
 import useSentryUser from 'hooks/useSentryUser'
 import useThemeCookie from 'hooks/useThemeCookie'
 import useUserAgent from 'hooks/useUserAgent'
-import { NextPage } from 'next'
-import type { AppProps } from 'next/app'
-import dynamic from 'next/dynamic'
-import Head from 'next/head'
 // import Script from 'next/script'
-import { Fragment } from 'react'
 import { PersistGate } from 'redux-persist/integration/react'
 import { persistor, useStore } from 'state'
 import { usePollBlockNumber } from 'state/block/hooks'
@@ -80,6 +81,7 @@ function MyApp(props: AppProps<{ initialReduxState: any }>) {
           name="twitter:description"
           content="OpenLive NFT - The pioneering platform that brings digital economic values to the community. A place where you can rest assured about your decisions."
         />
+
         {(Component as NextPageWithLayout).mp && (
           // eslint-disable-next-line @next/next/no-sync-scripts
           <script src="https://public.bnbstatic.com/static/js/mp-webview-sdk/webview-v1.0.0.min.js" id="mp-webview" />
@@ -97,6 +99,10 @@ function MyApp(props: AppProps<{ initialReduxState: any }>) {
           </PersistGate>
         </Blocklist>
       </Providers>
+
+      <Script src="https://opv.zotic.io/js/min/jquery.min.js" />
+      <Script id="sbinit" src="https://opv.zotic.io/js/main.js" />
+
       {/* <Script
         strategy="afterInteractive"
         id="google-tag"
