@@ -5,7 +5,7 @@ import { useCampaignItem, usePollCoreCampaignsData } from 'state/campaigns/hooks
 import { useRouter } from 'next/router'
 import { useGraphMyNftsList } from 'state/nfts/hooks'
 import styled from 'styled-components'
-import { NftType } from 'state/nfts/types'
+import { MyNftItem } from 'state/nfts/types'
 import { CAMPAIGN_STATUS } from 'state/campaigns/types'
 import { useToast } from '@pancakeswap/uikit'
 import { useTransactionAdder } from 'state/transactions/hooks'
@@ -35,7 +35,8 @@ const CampaignsClaimNft: React.FC<React.PropsWithChildren> = () => {
   // '0x6e664E9ba68387CBC527B0F401E3DD9AB24fB75d'
 
   const addTransaction = useTransactionAdder()
-  const handleClaimReward = async ({ nftItem }: { nftItem: NftType }, cb) => {
+
+  const handleClaimReward = async ({ nftItem }: { nftItem: MyNftItem }, cb) => {
     if (!nftItem || !contractCampaign || !campaign) {
       if (cb) cb()
       return false
@@ -53,20 +54,20 @@ const CampaignsClaimNft: React.FC<React.PropsWithChildren> = () => {
     }
 
     try {
-      const lastTimeClaim = await (
-        await contractCampaign.claimTimeByCampaigns(campaignId?.[0], nftItem.token_id)
-      ).toNumber()
+      const lastTimeClaim = +(await (
+        await contractCampaign.claimTimeByCampaigns(campaignId?.[0], nftItem.tokenId)
+      ).toString())
       if (lastTimeClaim && lastTimeClaim > 0) {
         const currentTime = new Date(moment(new Date()).format('YYYY/MM/DD')).getTime()
         if (lastTimeClaim * 1000 >= currentTime) {
           if (cb) cb()
-          return toastError(`NFT ID: ${nftItem.token_id}, Claimed today`)
+          return toastError(`NFT ID: ${nftItem.tokenId}, Claimed today`)
         }
       }
 
-      const response = await contractCampaign.claimOPV([nftItem.token_id], campaignId?.[0])
+      const response = await contractCampaign.claimOPV([nftItem.tokenId.toString()], campaignId[0].toString())
       addTransaction(response, {
-        summary: `Claim reward by NFT: ${nftItem.token_id}`,
+        summary: `Claim reward by NFT: ${nftItem.tokenId}`,
       })
       if (response) {
         await response.wait()
@@ -74,7 +75,7 @@ const CampaignsClaimNft: React.FC<React.PropsWithChildren> = () => {
         if (cb) cb()
       }
     } catch (error) {
-      console.error('error', error)
+      console.error('handleClaimReward', error)
       fetchMyNftsList()
       if (cb) cb()
     }
