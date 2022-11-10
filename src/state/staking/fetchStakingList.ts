@@ -28,7 +28,7 @@ export const useStakingListData = (poolId = 1): { stakingList: StakingItemType[]
 
             if (apr === 0 && time === 0 && totalStakedAmount === 0) break
 
-            const aprPerDay = +((apr / 1e18) * 100 * time * 86400).toFixed(1)
+            const aprPerDay = +((apr / 1e18) * 100 * 365 * 86400).toFixed(1)
             arr.push({
               poolId,
               planId: count,
