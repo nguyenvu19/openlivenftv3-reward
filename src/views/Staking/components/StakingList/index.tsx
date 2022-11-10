@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react'
 import styled from 'styled-components'
 import { useStakingListData } from 'state/staking/fetchStakingList'
-import { useStakingEarn } from 'state/staking/hooks'
+import { useStakingEarnedContract } from 'state/staking/hooks'
 import { useStakingHistory } from 'state/staking/fetchStakingHistory'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import ModalStaking from '../ModalStaking'
@@ -20,7 +20,8 @@ const StakingList: React.FC = () => {
   const { stakingList, fetchStakingList } = useStakingListData()
   const { projectFee } = useContractStakingConditions()
   const { stakingHistory } = useStakingHistory(account)
-  const { opvEarned } = useStakingEarn(account, stakingList, stakingHistory)
+  // const { opvEarned } = useStakingEarn(account, stakingList, stakingHistory)
+  const { opvEarned } = useStakingEarnedContract(account, stakingHistory)
 
   const handleStaking = (packageItem) => {
     setModalStaking({ open: true, dataModal: packageItem })

@@ -1,6 +1,8 @@
-import { roundNumber } from 'helpers'
 import { useState } from 'react'
 import useSWR from 'swr'
+import { roundNumber } from 'helpers'
+import { useContractStaking } from 'hooks/useContract'
+import { formatBigNumber } from 'utils/formatBalance'
 import { StakingHistory, StakingItemType, STAKING_STATUS } from './types'
 
 export function useStakingEarn(account?: string, stakingList?: StakingItemType[], stakingHistory?: StakingHistory[]) {
@@ -32,6 +34,32 @@ export function useStakingEarn(account?: string, stakingList?: StakingItemType[]
         }
 
         setOpvEarned(roundNumber(totalEarn, { scale: 5, scaleSmall: 2 }))
+      }
+    },
+    { refreshInterval: 1000 },
+  )
+  return { opvEarned }
+}
+
+export function useStakingEarnedContract(account?: string, stakingHistory?: StakingHistory[]) {
+  const contractStaking = useContractStaking()
+  const [opvEarned, setOpvEarned] = useState<number | undefined>()
+  useSWR(
+    ['staking-earned', account, stakingHistory],
+    async () => {
+      if (account && contractStaking && stakingHistory) {
+        try {
+          let totalEarn = 0
+          for (let i = 0; i < stakingHistory.length; i++) {
+            const packageItem = stakingHistory[i]
+            // eslint-disable-next-line no-await-in-loop
+            const packageEarned = await contractStaking.calculateDivedend(packageItem.start / 1000, account)
+            totalEarn += +formatBigNumber(packageEarned)
+            setOpvEarned(roundNumber(totalEarn, { scale: 6 }))
+          }
+        } catch (error) {
+          console.error('useStakingEarnedContract', error)
+        }
       }
     },
     { refreshInterval: 1000 },
