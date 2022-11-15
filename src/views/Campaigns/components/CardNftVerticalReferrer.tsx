@@ -1,12 +1,9 @@
-import { useMemo } from 'react'
-import CurrencyFormat from 'react-currency-format'
-import { Box, Flex, Grid, Image, Text } from '@pancakeswap/uikit'
+import { Box, Flex, Grid, Image, Text, Button, Link } from '@pancakeswap/uikit'
 import MediaCard from 'components/MediaCard'
 import styled from 'styled-components'
 import { CampaignItem, CAMPAIGN_STATUS } from 'state/campaigns/types'
-import { formatDate } from 'helpers'
-import useCountTime, { STEEP_COUNT } from 'hooks/useCountTime'
-import CampaignImg from '../images/campaign-img.png'
+import { APP_USER_URL } from 'config'
+import CampaignImg from '../images/campaign-referrer.jpeg'
 
 const WCardNftVertical = styled.div`
   width: 100%;
@@ -14,7 +11,6 @@ const WCardNftVertical = styled.div`
   background: #eefbff;
   border: 1px solid rgba(67, 108, 255, 0.3);
   border-radius: 24px;
-  cursor: pointer;
 
   display: flex;
   flex-direction: column;
@@ -105,72 +101,17 @@ const CardSubHeading = styled.div`
     }
   }
 `
-const WCountDown = styled.div`
-  display: flex;
-  align-items: center;
-`
 
 interface Props {
   campaign: CampaignItem
   onClickCampaign?: (campaign: CampaignItem) => void
-  [t: string]: any
 }
-const CardNftVertical: React.FC<Props> = ({ campaign, onClickCampaign, ...props }) => {
-  const { weekdays, days, hours, minutes, seconds, step } = useCountTime(campaign?.start, campaign.finish)
-
-  const renderCountdownCard = useMemo(() => {
-    return (
-      <WCountDown onClick={() => onClickCampaign && onClickCampaign(campaign)}>
-        <Flex alignItems="center">
-          <Box background="#529BF0" borderRadius="10px" padding="2px 8px" minWidth={['32px', , '50px']}>
-            <Text color="#fff" fontSize={[10, , 24]} bold minWidth="14px" textAlign="center">
-              {weekdays * 7 + days}
-            </Text>
-          </Box>
-          <Text fontSize={[10, , 13]} ml="3px">
-            Days
-          </Text>
-        </Flex>
-        <Flex ml="4px" alignItems="center">
-          <Box background="#529BF0" borderRadius="10px" padding="2px 8px" minWidth={['32px', , '50px']}>
-            <Text color="#fff" fontSize={[10, , 24]} bold minWidth="14px" textAlign="center">
-              {hours}
-            </Text>
-          </Box>
-          <Text fontSize={[10, , 13]} ml="3px">
-            Hours
-          </Text>
-        </Flex>
-        <Flex ml="4px" alignItems="center">
-          <Box background="#529BF0" borderRadius="10px" padding="2px 8px" minWidth={['32px', , '50px']}>
-            <Text color="#fff" fontSize={[10, , 24]} bold minWidth="14px" textAlign="center">
-              {minutes}
-            </Text>
-          </Box>
-          <Text fontSize={[10, , 13]} ml="3px">
-            Minutes
-          </Text>
-        </Flex>
-        <Flex ml="4px" alignItems="center">
-          <Box background="#529BF0" borderRadius="10px" padding="2px 8px" minWidth={['32px', , '50px']}>
-            <Text color="#fff" fontSize={[10, , 24]} bold minWidth="14px" textAlign="center">
-              {seconds}
-            </Text>
-          </Box>
-          <Text fontSize={[10, , 13]} ml="3px">
-            Second
-          </Text>
-        </Flex>
-      </WCountDown>
-    )
-  }, [weekdays, days, hours, minutes, seconds, onClickCampaign, campaign])
-
-  if (!campaign) return <></>
+const CardNftVertical: React.FC<Props> = ({ campaign, ...props }) => {
   return (
     <WCardNftVertical
-      onClick={() => {
-        if (onClickCampaign) onClickCampaign(campaign)
-      }}
+      // onClick={() => {
+      //   if (onClickCampaign) onClickCampaign(campaign)
+      // }}
       {...props}
     >
       <div className="card-nft-cover-left">
@@ -179,7 +120,7 @@ const CardNftVertical: React.FC<Props> = ({ campaign, onClickCampaign, ...props 
       <div className="card-nft-right">
         <CardSubHeading>
           <Text color="textSubtle" fontWeight="700" fontSize={['16px', , '24px']} mb={['24px', , '12px']}>
-            HOLD NFT
+            REFERRAL TO EARN
           </Text>
           {(() => {
             if (campaign.status === CAMPAIGN_STATUS.END) return <span className="tag-name finish">Finish</span>
@@ -191,57 +132,66 @@ const CardNftVertical: React.FC<Props> = ({ campaign, onClickCampaign, ...props 
         <div className="card-hold-nft-body">
           <Grid gridTemplateColumns={['1fr 1fr', , '1fr 2fr']}>
             <Text fontSize={[13, , 16]} color="textSubtle" fontWeight={600} pr="8px">
-              Total Reward:
+              Email Verification:
             </Text>
             <Flex alignItems="center">
               <Text fontSize={[13, , 16]} bold color="textSubtle" fontWeight={700}>
-                <CurrencyFormat value={campaign.totalPool} displayType="text" thousandSeparator renderText={(t) => t} />
+                20 OP
               </Text>
               <Box width="20px" ml="6px">
-                <Image width={30} height={30} src="/images2/opvIcon.png" />
+                <Image width={30} height={30} src="/images2/tokens/OP.png" />
               </Box>
             </Flex>
           </Grid>
           <Grid gridTemplateColumns={['1fr 1fr', , '1fr 2fr']}>
             <Text fontSize={[13, , 16]} color="textSubtle" fontWeight={600} pr="8px">
-              Total Claimed:
+              KYC Verification:
             </Text>
-            <Text fontSize={[13, , 16]} bold color="textSubtle" fontWeight={700}>
-              <CurrencyFormat
-                value={campaign.currentPool}
-                displayType="text"
-                thousandSeparator
-                suffix={` OPV`}
-                renderText={(t) => t}
-              />
-            </Text>
+            <Flex alignItems="center">
+              <Text fontSize={[13, , 16]} bold color="textSubtle" fontWeight={700}>
+                20 OP
+              </Text>
+              <Box width="20px" ml="6px">
+                <Image width={30} height={30} src="/images2/tokens/OP.png" />
+              </Box>
+            </Flex>
           </Grid>
           <Grid gridTemplateColumns={['1fr 1fr', , '1fr 2fr']}>
             <Text fontSize={[13, , 16]} color="textSubtle" fontWeight={600} pr="8px">
-              Durations:
+              F1 - KYC Verification:
             </Text>
-            <Text fontSize={[13, , 16]} bold color="textSubtle" fontWeight={700}>
-              {campaign?.duration ? Math.round(campaign.duration / 1000 / 60 / 60 / 24) : '--'} Days
-            </Text>
+            <Flex alignItems="center">
+              <Text fontSize={[13, , 16]} bold color="textSubtle" fontWeight={700}>
+                20 OP
+              </Text>
+              <Box width="20px" ml="6px">
+                <Image width={30} height={30} src="/images2/tokens/OP.png" />
+              </Box>
+            </Flex>
           </Grid>
           <Grid gridTemplateColumns={['1fr 1fr', , '1fr 2fr']}>
             <Text fontSize={[13, , 16]} color="textSubtle" fontWeight={600} pr="8px">
-              Start:
+              F1 - Buy 1 NFT:
             </Text>
-            <Text fontSize={[13, , 16]} bold color="textSubtle" fontWeight={700}>
-              {formatDate(campaign.start)}
-            </Text>
+            <Flex alignItems="center">
+              <Text fontSize={[13, , 16]} bold color="textSubtle" fontWeight={700}>
+                20 OP
+              </Text>
+              <Box width="20px" ml="6px">
+                <Image width={30} height={30} src="/images2/tokens/OP.png" />
+              </Box>
+            </Flex>
           </Grid>
 
-          <Grid gridTemplateColumns={['1fr', '1fr 2fr']} gridTemplateRows="26px">
+          <Grid gridTemplateColumns={['1fr', '1fr 2fr']} gridTemplateRows="26px" mt="6px">
             <Text fontSize={[13, , 16]} color="textSubtle" fontWeight={600} style={{ whiteSpace: 'nowrap' }} pr="8px">
-              {(() => {
-                if (step === STEEP_COUNT.SOON) return 'Start in:'
-                if (step === STEEP_COUNT.START) return 'End in:'
-                return 'Ended:'
-              })()}
+              Swap OPoint to OPV
             </Text>
-            <Flex>{renderCountdownCard}</Flex>
+            <Flex alignItems="center">
+              <Link href={APP_USER_URL}>
+                <Button scale="sm">Click to join now!</Button>
+              </Link>
+            </Flex>
           </Grid>
         </div>
       </div>
