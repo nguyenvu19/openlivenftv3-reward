@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useTranslation } from '@pancakeswap/localization'
 import { Box, Checkbox, Flex, Modal, Text, Button } from '@pancakeswap/uikit'
 import { formatDate, isNumber, roundNumber } from 'helpers'
@@ -5,13 +6,12 @@ import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
 import useCatchTxErrorMessage from 'hooks/useCatchTxErrorMessage'
 import { useContractStaking } from 'hooks/useContract'
-import { useEffect, useState } from 'react'
 import { StakingHistory } from 'state/staking/types'
 import { useTransactionAdder } from 'state/transactions/hooks'
 import styled from 'styled-components'
 import { toLocaleString } from 'utils'
 import useContractStakingConditions from 'views/Staking/hooks/useContractStakingConditions'
-import { fetchStakingEarned } from 'state/staking/hooks'
+import { useStakingEarned } from 'state/staking/hooks'
 import FormatAmount from 'components/FormatAmount'
 import Amount from '../TableStakingHistory/DataItems/Amount'
 
@@ -89,7 +89,6 @@ function ModalDetailUnstake({ title, dataModal, onDismiss, ...props }: Props) {
   const [isAgreementChecked, setIsAgreementChecked] = useState(false)
   const [loading, setLoading] = useState(false)
   const [errorMess, setErrorMess] = useState('')
-  const [opvEarned, setOpvEarned] = useState<string | number>('')
 
   const contractStaking = useContractStaking()
   const { projectFee } = useContractStakingConditions()
@@ -130,15 +129,7 @@ function ModalDetailUnstake({ title, dataModal, onDismiss, ...props }: Props) {
     return false
   }
 
-  useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-extra-semi
-    ;(async () => {
-      if (contractStaking && account && dataModal) {
-        const resultEarned = await fetchStakingEarned(contractStaking, account, dataModal.start / 1000)
-        setOpvEarned(+resultEarned)
-      }
-    })()
-  }, [account, contractStaking, dataModal])
+  const { opvEarned } = useStakingEarned(account, dataModal?.start)
 
   return (
     <Modal

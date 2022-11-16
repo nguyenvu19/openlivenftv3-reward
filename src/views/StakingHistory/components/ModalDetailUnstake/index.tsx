@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useTranslation } from '@pancakeswap/localization'
 import { Box, Checkbox, Flex, Modal, Text, Button } from '@pancakeswap/uikit'
 import { formatDate, isNumber, roundNumber } from 'helpers'
@@ -6,7 +7,7 @@ import CurrencyFormat from 'react-currency-format'
 import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
 import useCatchTxErrorMessage from 'hooks/useCatchTxErrorMessage'
 import { useContractStaking } from 'hooks/useContract'
-import { useMemo, useState } from 'react'
+import { useStakingEarned } from 'state/staking/hooks'
 import { StakingHistory } from 'state/staking/types'
 import { useTransactionAdder } from 'state/transactions/hooks'
 import styled from 'styled-components'
@@ -128,14 +129,7 @@ function ModalDetailUnstake({ title, dataModal, onDismiss, ...props }: Props) {
     return false
   }
 
-  const opvEarned = useMemo(() => {
-    if (dataModal) {
-      const lockTime = (dataModal.finish - dataModal.start) / 1000 / 60 / 60 / 24
-      const percentPerDay = ((dataModal?.apr / 1e18) * 100 * 30 * 84600) / 360
-      return ((percentPerDay * dataModal.amount) / 100) * lockTime
-    }
-    return 0
-  }, [dataModal])
+  const { opvEarned } = useStakingEarned(account, dataModal?.start)
 
   return (
     <Modal

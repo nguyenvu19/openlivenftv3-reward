@@ -49,7 +49,7 @@ export async function fetchStakingEarned(contractStaking, account, startTime) {
   return totalEarn
 }
 
-export function useStakingEarnedContract(account?: string, stakingHistory?: StakingHistory[]) {
+export function useStakingTotalEarnedContract(account?: string, stakingHistory?: StakingHistory[]) {
   const contractStaking = useContractStaking()
   const [opvEarned, setOpvEarned] = useState<number | undefined>()
   useSWR(
@@ -65,11 +65,32 @@ export function useStakingEarnedContract(account?: string, stakingHistory?: Stak
             setOpvEarned(roundNumber(totalEarn, { scale: 6 }))
           }
         } catch (error) {
-          console.error('useStakingEarnedContract', error)
+          console.error('useStakingTotalEarnedContract', error)
         }
       }
     },
     { refreshInterval: 1000 },
   )
   return { opvEarned }
+}
+
+export function useStakingEarned(account?: string, start?: number) {
+  const contractStaking = useContractStaking()
+  const { data } = useSWR(
+    ['staking-earned', account, start],
+    async () => {
+      if (account && contractStaking && start) {
+        try {
+          const resultEarned = await fetchStakingEarned(contractStaking, account, start)
+          return resultEarned
+        } catch (error) {
+          console.error('useStakingEarned', error)
+          return undefined
+        }
+      }
+      return undefined
+    },
+    { refreshInterval: 1000 },
+  )
+  return { opvEarned: data }
 }
