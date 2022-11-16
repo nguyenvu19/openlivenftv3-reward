@@ -89,7 +89,7 @@ function ModalDetailUnstake({ title, dataModal, onDismiss, ...props }: Props) {
   const [isAgreementChecked, setIsAgreementChecked] = useState(false)
   const [loading, setLoading] = useState(false)
   const [errorMess, setErrorMess] = useState('')
-  const [opvEarned, setOpvEarned] = useState('')
+  const [opvEarned, setOpvEarned] = useState<string | number>('')
 
   const contractStaking = useContractStaking()
   const { projectFee } = useContractStakingConditions()
@@ -135,7 +135,7 @@ function ModalDetailUnstake({ title, dataModal, onDismiss, ...props }: Props) {
     ;(async () => {
       if (contractStaking && account && dataModal) {
         const resultEarned = await fetchStakingEarned(contractStaking, account, dataModal.start / 1000)
-        setOpvEarned(resultEarned)
+        setOpvEarned(+resultEarned)
       }
     })()
   }, [account, contractStaking, dataModal])
