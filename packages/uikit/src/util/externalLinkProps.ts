@@ -1,4 +1,5 @@
-const EXTERNAL_LINK_PROPS: { target: string; rel: string } = {
+const EXTERNAL_LINK_PROPS: { a: string; target: string; rel: string } = {
+  as: "a",
   target: "_blank",
   rel: "noreferrer noopener",
 };

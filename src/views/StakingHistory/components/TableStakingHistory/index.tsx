@@ -47,7 +47,12 @@ const TableStakingHistory = () => {
           total={dataStakingHistoryMobile.length}
           dataSource={dataStakingHistoryMobile}
           renderItem={(item, index) => (
-            <StakingHistoryItemMobile index={index + 1} stakingHistoryItem={item} onClaim={onPresentModalStaking} />
+            <StakingHistoryItemMobile
+              index={index + 1}
+              stakingHistoryItem={item}
+              onClaim={onPresentModalStaking}
+              onWithdraw={onPresentModalWithdraw}
+            />
           )}
         />
       ) : (

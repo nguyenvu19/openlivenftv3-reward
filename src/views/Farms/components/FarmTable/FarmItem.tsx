@@ -523,7 +523,7 @@ const FarmItem = ({
 
             <div>
               <p>
-                {`Avail: `}{' '}
+                {`Avail: `}
                 {(() => {
                   switch (viewFarm) {
                     case 0:
@@ -541,7 +541,7 @@ const FarmItem = ({
             <p>Please approve the contract</p>
 
             <p>
-              {`Avail: `} {`Avail: `}{' '}
+              {`Avail: `}
               {(() => {
                 switch (viewFarm) {
                   case 0:

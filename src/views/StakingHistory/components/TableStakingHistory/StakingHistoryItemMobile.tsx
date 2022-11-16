@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { useTranslation } from '@pancakeswap/localization'
 import { StakingHistory } from 'state/staking/types'
@@ -6,6 +6,7 @@ import { formatDate } from 'helpers'
 import Amount from './DataItems/Amount'
 import Period from './DataItems/Period'
 import StakingStatus from './DataItems/StakingStatus'
+import Action from './DataItems/Action'
 
 const WStakingHistoryItemMobile = styled.div`
   .market-price-item-content {
@@ -77,7 +78,8 @@ const StakingHistoryItemMobile: React.FC<{
   index: number
   stakingHistoryItem: StakingHistory
   onClaim: (p: any, cb: () => void) => void
-}> = ({ index, stakingHistoryItem, onClaim }) => {
+  onWithdraw: (p: any, cb: () => void) => void
+}> = ({ index, stakingHistoryItem, onClaim, onWithdraw }) => {
   const { t } = useTranslation()
   return (
     <WStakingHistoryItemMobile>
@@ -131,6 +133,19 @@ const StakingHistoryItemMobile: React.FC<{
         <div className="history-item-line">
           <p>{t('Finish')}</p>
           <p>{formatDate(stakingHistoryItem.finish)}</p>
+        </div>
+
+        {/*  */}
+        <div className="history-item-line">
+          <p>{t('Finish')}</p>
+          <div>
+            <Action
+              stakingHistory={stakingHistoryItem}
+              onWithdraw={(cb) => {
+                onWithdraw(stakingHistoryItem, cb)
+              }}
+            />
+          </div>
         </div>
       </div>
     </WStakingHistoryItemMobile>
