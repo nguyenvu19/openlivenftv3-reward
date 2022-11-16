@@ -65,7 +65,7 @@ const WalletInfo: React.FC<WalletInfoProps> = ({ hasLowNativeBalance, onDismiss 
           <Flex justifyContent="space-between" alignItems="center" mb="8px">
             <Flex bg={COLORS.ETH} borderRadius="16px" pl="4px" pr="8px" py="2px">
               <ChainLogo chainId={chain.id} />
-              <Text color="white" ml="4px">
+              <Text color="white" ml="4px" fontSize={['14px', , '16px']}>
                 {chain.name}
               </Text>
             </Flex>
@@ -89,7 +89,7 @@ const WalletInfo: React.FC<WalletInfoProps> = ({ hasLowNativeBalance, onDismiss 
         <Flex justifyContent="space-between" alignItems="center" mb="8px">
           <Flex bg={COLORS.BNB} borderRadius="16px" pl="4px" pr="8px" py="2px">
             <ChainLogo chainId={ChainId.BSC} />
-            <Text color="white" ml="4px">
+            <Text color="white" ml="4px" fontSize={['14px', , '16px']}>
               BNB Smart Chain
             </Text>
           </Flex>
