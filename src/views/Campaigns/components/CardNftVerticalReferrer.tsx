@@ -188,7 +188,7 @@ const CardNftVertical: React.FC<Props> = ({ campaign, ...props }) => {
               Swap OPoint to OPV
             </Text>
             <Flex alignItems="center">
-              <Link href={APP_USER_URL}>
+              <Link href={APP_USER_URL} external target="_blank">
                 <Button scale="sm">Click to join now!</Button>
               </Link>
             </Flex>

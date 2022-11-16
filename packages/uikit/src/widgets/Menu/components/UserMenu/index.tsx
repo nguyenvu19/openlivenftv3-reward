@@ -10,7 +10,6 @@ export const StyledUserMenu = styled(Flex)`
   align-items: center;
   cursor: pointer;
   display: inline-flex;
-  padding-left: 8px;
   position: relative;
 
   &:hover {

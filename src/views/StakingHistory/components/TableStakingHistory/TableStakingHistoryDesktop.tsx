@@ -6,6 +6,7 @@ import { StakingHistory } from 'state/staking/types'
 import Amount from './DataItems/Amount'
 import StakingStatus from './DataItems/StakingStatus'
 import Period from './DataItems/Period'
+import Action from './DataItems/Action'
 
 const WTableStakingHistoryDesktop = styled(Table)`
   .ant-table {
@@ -58,12 +59,14 @@ interface Props {
   paramsStakingHistory: any
   setPramsStakingHistory: (p: any) => void
   onClaim?: (p: StakingHistory, cb: () => void) => void
+  onWithdraw?: (p: StakingHistory, cb: () => void) => void
 }
 const TableStakingHistoryDesktop: React.FC<Props> = ({
   dataSource,
   paramsStakingHistory,
   setPramsStakingHistory,
   onClaim,
+  onWithdraw,
 }) => {
   const { t } = useTranslation()
 
@@ -135,6 +138,20 @@ const TableStakingHistoryDesktop: React.FC<Props> = ({
       render: (text) => {
         return <p style={{ textAlign: 'center' }}>{formatDate(text)}</p>
       },
+    },
+    {
+      title: <div style={{ textAlign: 'center' }}>{t('Action')}</div>,
+      dataIndex: 'finish',
+      render: (_, record) => (
+        <div style={{ textAlign: 'center' }}>
+          <Action
+            stakingHistory={record}
+            onWithdraw={(cb) => {
+              onWithdraw(record, cb)
+            }}
+          />
+        </div>
+      ),
     },
   ]
 

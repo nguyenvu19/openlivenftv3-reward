@@ -50,7 +50,7 @@ const TotalBalance = ({ ...props }) => {
     <WTotalBalance onClick={() => setShow((prev) => !prev)} {...props}>
       <Flex alignItems="center">
         {show ? (
-          `${formatBigNumber(balance)} ($${roundNumber(opvPrice)}) OPV`
+          `${roundNumber(formatBigNumber(balance))} ($${roundNumber(opvPrice)}) OPV`
         ) : (
           <>
             <span>$ </span>********

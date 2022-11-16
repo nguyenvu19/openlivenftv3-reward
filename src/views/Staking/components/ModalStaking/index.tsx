@@ -154,6 +154,7 @@ const ModalStaking: React.FC<Props> = ({
         summary: `Staking: ${dataModal.time} days with ${amount} OPV`,
       })
       onStakingSuccess()
+      setAmount('')
     } else {
       setErrorMess(message)
     }
@@ -171,7 +172,10 @@ const ModalStaking: React.FC<Props> = ({
       className="modal-staking"
       centered
       footer={false}
-      onCancel={() => setModalStaking({ open: false, dataModal: null })}
+      onCancel={() => {
+        setModalStaking({ open: false, dataModal: null })
+        setAmount('')
+      }}
       {...props}
     >
       <GlobalStyleModalStaking />

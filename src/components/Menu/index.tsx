@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 import { useRouter } from 'next/router'
+import { Space } from 'antd'
 import { NextLinkFromReactRouter } from 'components/NextLink'
 import { Menu as UikitMenu } from '@pancakeswap/uikit'
 import { useTranslation, languageList } from '@pancakeswap/localization'
@@ -37,10 +38,10 @@ const Menu = (props) => {
           return <NextLinkFromReactRouter to={linkProps.href} {...linkProps} prefetch={false} />
         }}
         rightSide={
-          <>
+          <Space size={16}>
             <TotalBalance />
             <UserMenu />
-          </>
+          </Space>
         }
         isDark={isDark}
         toggleTheme={toggleTheme}

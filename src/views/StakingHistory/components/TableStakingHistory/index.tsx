@@ -7,6 +7,7 @@ import { useStakingHistory } from 'state/staking/fetchStakingHistory'
 import StakingHistoryItemMobile from './StakingHistoryItemMobile'
 import TableStakingHistoryDesktop from './TableStakingHistoryDesktop'
 import ModalDetailUnstake from '../ModalDetailUnstake'
+import ModalStakingWithdraw from '../ModalStakingWithdraw'
 
 const WTableStakingHistory = styled.div`
   width: 100%;
@@ -37,6 +38,7 @@ const TableStakingHistory = () => {
     : []
 
   const [onPresentModalStaking] = useModal(<ModalDetailUnstake title="Stake Detail" />)
+  const [onPresentModalWithdraw] = useModal(<ModalStakingWithdraw title="Stake Detail" />)
 
   return (
     <WTableStakingHistory>
@@ -54,6 +56,7 @@ const TableStakingHistory = () => {
           paramsStakingHistory={paramsStakingHistory}
           setPramsStakingHistory={setPramsStakingHistory}
           onClaim={onPresentModalStaking}
+          onWithdraw={onPresentModalWithdraw}
         />
       )}
     </WTableStakingHistory>

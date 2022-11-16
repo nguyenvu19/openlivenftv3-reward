@@ -96,7 +96,7 @@ function ModalDetailUnstake({ title, dataModal, onDismiss, ...props }: Props) {
 
   const addTransaction = useTransactionAdder()
 
-  const handleWithdraw = async () => {
+  const handleClaim = async () => {
     if (!account) return false
     if (!contractStaking || !isNumber(projectFee)) return false
     if (!isAgreementChecked) {
@@ -212,8 +212,8 @@ function ModalDetailUnstake({ title, dataModal, onDismiss, ...props }: Props) {
           </Text>
         </Box>
         <Flex justifyContent="center">
-          <Button isLoading={loading} disabled={loading} onClick={handleWithdraw}>
-            Withdraw
+          <Button isLoading={loading} disabled={loading} onClick={handleClaim}>
+            Claim
           </Button>
         </Flex>
       </WStyledModal>
