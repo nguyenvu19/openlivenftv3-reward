@@ -2,16 +2,17 @@ import { useTranslation } from '@pancakeswap/localization'
 import { Box, Checkbox, Flex, Modal, Text, Button } from '@pancakeswap/uikit'
 import { formatDate, isNumber, roundNumber } from 'helpers'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import CurrencyFormat from 'react-currency-format'
 import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
 import useCatchTxErrorMessage from 'hooks/useCatchTxErrorMessage'
 import { useContractStaking } from 'hooks/useContract'
-import { useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { StakingHistory } from 'state/staking/types'
 import { useTransactionAdder } from 'state/transactions/hooks'
 import styled from 'styled-components'
 import { toLocaleString } from 'utils'
 import useContractStakingConditions from 'views/Staking/hooks/useContractStakingConditions'
+import { fetchStakingEarned } from 'state/staking/hooks'
+import FormatAmount from 'components/FormatAmount'
 import Amount from '../TableStakingHistory/DataItems/Amount'
 
 const WStyledModal = styled.div`
@@ -88,6 +89,7 @@ function ModalDetailUnstake({ title, dataModal, onDismiss, ...props }: Props) {
   const [isAgreementChecked, setIsAgreementChecked] = useState(false)
   const [loading, setLoading] = useState(false)
   const [errorMess, setErrorMess] = useState('')
+  const [opvEarned, setOpvEarned] = useState('')
 
   const contractStaking = useContractStaking()
   const { projectFee } = useContractStakingConditions()
@@ -128,14 +130,15 @@ function ModalDetailUnstake({ title, dataModal, onDismiss, ...props }: Props) {
     return false
   }
 
-  const opvEarned = useMemo(() => {
-    if (dataModal) {
-      const lockTime = (dataModal.finish - dataModal.start) / 1000 / 60 / 60 / 24
-      const percentPerDay = ((dataModal?.apr / 1e18) * 100 * 30 * 84600) / 360
-      return ((percentPerDay * dataModal.amount) / 100) * lockTime
-    }
-    return 0
-  }, [dataModal])
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-extra-semi
+    ;(async () => {
+      if (contractStaking && account && dataModal) {
+        const resultEarned = await fetchStakingEarned(contractStaking, account, dataModal.start / 1000)
+        setOpvEarned(resultEarned)
+      }
+    })()
+  }, [account, contractStaking, dataModal])
 
   return (
     <Modal
@@ -171,13 +174,10 @@ function ModalDetailUnstake({ title, dataModal, onDismiss, ...props }: Props) {
           <Flex justifyContent="space-between">
             <Text fontWeight="700">OPV Earn</Text>
             <Text color="textSubtle" fontWeight="600">
-              <CurrencyFormat
+              <FormatAmount
                 value={roundNumber(opvEarned, { scale: 6, scaleSmall: 3 })}
-                thousandSeparator
-                displayType="text"
                 suffix={` OPV`}
-                renderText={(txt) => txt}
-                {...props}
+                nullValue="--"
               />
             </Text>
           </Flex>
