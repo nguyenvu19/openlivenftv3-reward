@@ -44,7 +44,7 @@ export function useStakingEarn(account?: string, stakingList?: StakingItemType[]
 
 // Staking earned
 export async function fetchStakingEarned(contractStaking, account, startTime) {
-  const packageEarned = await contractStaking.calculateDivedend(startTime, account)
+  const packageEarned = await contractStaking.calculateDivedend(startTime?.toString(), account)
   const totalEarn = +formatBigNumber(packageEarned)
   return totalEarn
 }
@@ -81,7 +81,7 @@ export function useStakingEarned(account?: string, start?: number) {
     async () => {
       if (account && contractStaking && start) {
         try {
-          const resultEarned = await fetchStakingEarned(contractStaking, account, start)
+          const resultEarned = await fetchStakingEarned(contractStaking, account, start / 1000)
           return resultEarned
         } catch (error) {
           console.error('useStakingEarned', error)
