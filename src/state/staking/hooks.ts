@@ -60,7 +60,7 @@ export function useStakingTotalEarnedContract(account?: string, stakingHistory?:
           let totalEarn = 0
           for (let i = 0; i < stakingHistory.length; i++) {
             const packageItem = stakingHistory[i]
-            const resultEarn = await fetchStakingEarned(contractStaking, packageItem.start / 1000, account)
+            const resultEarn = await fetchStakingEarned(contractStaking, account, packageItem.start / 1000)
             totalEarn += resultEarn
             setOpvEarned(roundNumber(totalEarn, { scale: 6 }))
           }
