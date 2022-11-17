@@ -88,13 +88,7 @@ const CardNftWithActionClaim: React.FC<{
             <Text fontSize={['13px', , '16px']}>Total Reward:</Text>
             <Text fontSize={['13px', , '16px']} fontWeight="bold">
               {campaign ? (
-                <CurrencyFormat
-                  value={campaign.totalPool}
-                  displayType="text"
-                  thousandSeparator
-                  suffix={` OPV`}
-                  renderText={(t) => t}
-                />
+                <FormatAmount value={campaign.totalPool} suffix={` OPV`} />
               ) : (
                 <Skeleton height="14px" width="80px" />
               )}
@@ -104,13 +98,7 @@ const CardNftWithActionClaim: React.FC<{
             <Text fontSize={['13px', , '16px']}>Total Claimed:</Text>
             <Text fontSize={['13px', , '16px']} fontWeight="bold">
               {campaign ? (
-                <CurrencyFormat
-                  value={campaign.currentPool}
-                  displayType="text"
-                  thousandSeparator
-                  suffix={` OPV`}
-                  renderText={(t) => t}
-                />
+                <FormatAmount value={campaign.currentPool} suffix={` OPV`} />
               ) : (
                 <Skeleton height="14px" width="80px" />
               )}
