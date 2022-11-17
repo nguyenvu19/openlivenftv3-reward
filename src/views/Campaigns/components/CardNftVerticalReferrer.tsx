@@ -149,7 +149,7 @@ const CardNftVertical: React.FC<Props> = ({ campaign, ...props }) => {
             </Text>
             <Flex alignItems="center">
               <Text fontSize={[13, , 16]} bold color="textSubtle" fontWeight={700}>
-                20 OP
+                50 OP
               </Text>
               <Box width="20px" ml="6px">
                 <Image width={30} height={30} src="/images2/tokens/OP.png" />
@@ -162,7 +162,7 @@ const CardNftVertical: React.FC<Props> = ({ campaign, ...props }) => {
             </Text>
             <Flex alignItems="center">
               <Text fontSize={[13, , 16]} bold color="textSubtle" fontWeight={700}>
-                20 OP
+                50 OP
               </Text>
               <Box width="20px" ml="6px">
                 <Image width={30} height={30} src="/images2/tokens/OP.png" />
@@ -175,7 +175,7 @@ const CardNftVertical: React.FC<Props> = ({ campaign, ...props }) => {
             </Text>
             <Flex alignItems="center">
               <Text fontSize={[13, , 16]} bold color="textSubtle" fontWeight={700}>
-                20 OP
+                50 OP
               </Text>
               <Box width="20px" ml="6px">
                 <Image width={30} height={30} src="/images2/tokens/OP.png" />
