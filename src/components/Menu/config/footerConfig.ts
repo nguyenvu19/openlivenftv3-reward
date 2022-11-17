@@ -16,7 +16,7 @@ export const footerLinks: (t: ContextApi['t']) => FooterLinkType[] = (t) => [
   },
   {
     label: 'About Us',
-    href: '',
+    href: 'https://linktr.ee/openlivenft.com',
     target: '_blank',
     items: [],
   },
