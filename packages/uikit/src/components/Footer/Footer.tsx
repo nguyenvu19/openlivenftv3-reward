@@ -30,8 +30,15 @@ const MenuItem: React.FC<Props> = ({ footerLinks }) => {
   return (
     <WFooter>
       <ul>
-        {footerLinks.map(({ href, label }) => {
-          const itemLinkProps: any = href
+        {footerLinks.map(({ href, label, target }) => {
+          const isHttp = href?.startsWith("http");
+          const itemLinkProps: any = isHttp
+            ? {
+                as: "a",
+                href,
+                target,
+              }
+            : href
             ? {
                 as: linkComponent,
                 href,

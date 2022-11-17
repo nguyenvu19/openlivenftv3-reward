@@ -6,7 +6,7 @@ import { DEFAULT_META, getCustomMeta } from 'config/constants/meta'
 import Container from './Container'
 
 const StyledPage = styled(Container)`
-  min-height: calc(100vh - 64px);
+  min-height: calc(100vh - 130px - 64px);
   padding-bottom: 50px;
 
   ${({ theme }) => theme.mediaQueries.sm} {
