@@ -16,6 +16,8 @@ declare global {
     } & Ethereum
   }
 
+  function logout()
+
   interface Date {
     addDays: (date: any, count: number) => void
   }
