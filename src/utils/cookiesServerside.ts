@@ -9,4 +9,4 @@ export const setCookiesByKey = (context, key, value) => {
 }
 
 // Delete
-export const deleteCookiesByKey = (context, key) => nookies.destroy(ctx, key)
+export const deleteCookiesByKey = (context, key) => nookies.destroy(context, key)
