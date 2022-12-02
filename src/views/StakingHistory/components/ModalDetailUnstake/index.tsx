@@ -207,7 +207,7 @@ function ModalDetailUnstake({ title, dataModal, onDismiss, ...props }: Props) {
         </Box>
         <Flex justifyContent="center">
           <Button isLoading={loading} disabled={loading} onClick={handleWithdraw}>
-            Withdraw
+            Unstake
           </Button>
         </Flex>
       </WStyledModal>

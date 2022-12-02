@@ -32,7 +32,7 @@ const StakingStatus: React.FC<{
         }
         return (
           <Button scale="sm" isLoading={loading} disabled={loading} onClick={onClaim}>
-            {t('Claim')}
+            {t('Unstake')}
           </Button>
         )
       })()}
