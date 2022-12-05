@@ -112,7 +112,7 @@ function ModalDetailUnstake({ title, dataModal, onDismiss, ...props }: Props) {
     setErrorMess('')
     setLoading(true)
     const { txResponse, status, message } = await fetchWithCatchTxError(() =>
-      callWithGasPrice(contractStaking, 'withdraw', [paramsWithdraw.start], {
+      callWithGasPrice(contractStaking, 'unStake', [paramsWithdraw.start], {
         value: paramsWithdraw.feeBnb,
       }),
     )
@@ -207,7 +207,7 @@ function ModalDetailUnstake({ title, dataModal, onDismiss, ...props }: Props) {
         </Box>
         <Flex justifyContent="center">
           <Button isLoading={loading} disabled={loading} onClick={handleWithdraw}>
-            Withdraw
+            Unstake
           </Button>
         </Flex>
       </WStyledModal>
