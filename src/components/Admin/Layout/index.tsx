@@ -1,5 +1,6 @@
+import Link from 'next/link'
 import React, { useState } from 'react'
-import styled from 'styled-components'
+
 import {
   CheckCircleOutlined,
   DollarOutlined,
@@ -8,11 +9,13 @@ import {
   HomeOutlined,
   MenuOutlined,
   TeamOutlined,
-  WalletOutlined,
-  DownOutlined,
   UserOutlined,
+  WalletOutlined,
 } from '@ant-design/icons'
-import { Layout, Menu, Avatar, Dropdown, MenuProps } from 'antd'
+import { Dropdown, Layout, Menu, MenuProps } from 'antd'
+import styled from 'styled-components'
+import BreadCrumbs from 'components/BreadCrumbs'
+import { useRouter } from 'next/router'
 
 const { Header, Sider, Content } = Layout
 
@@ -22,14 +25,19 @@ const WAdminLayout = styled.div`
   .logo {
     height: 70px;
     background: rgba(0, 0, 0, 0.3);
+    padding: 0;
     margin: 0px;
-    padding: 0px 10px;
     text-align: center;
     overflow: hidden;
     border-radius: 0px;
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
+
+    ${({ theme }) => theme.mediaQueries.sm} {
+      padding: 0 10px;
+    }
 
     img {
       max-width: 100%;
@@ -104,6 +112,32 @@ const WAdminLayout = styled.div`
       }
     }
   }
+
+  .ant-layout-content {
+    padding: 20px 20px 0px !important;
+    margin: 0 0 -32px 0 !important;
+
+    .ant-breadcrumb {
+      ol {
+        li:first-child {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .ant-layout-sider-collapsed {
+    width: 0;
+    min-width: 0 !important;
+    max-width: 0 !important;
+    flex: 0 0 0 !important;
+    ${({ theme }) => theme.mediaQueries.sm} {
+      width: 80px;
+      min-width: 80px !important;
+      max-width: 80px !important;
+      flex: 0 0 80px !important;
+    }
+  }
 `
 
 type MenuItem = Required<MenuProps>['items'][number]
@@ -118,37 +152,33 @@ function getItem(label: React.ReactNode, key: React.Key, icon?: React.ReactNode,
 }
 
 const items: MenuItem[] = [
-  getItem('Dashboard', '1', <HomeOutlined />),
-  getItem('Report', 'sub1', <GroupOutlined />, [
-    getItem('Wallet', '3'),
-    getItem('Customer', '4'),
-    getItem('Transaction', '5'),
-  ]),
-  getItem('Investment', 'sub2', <FunnelPlotOutlined />, [
-    getItem('Package', '6'),
-    getItem('History', '7'),
-    getItem('Dividend', '8'),
-  ]),
-  getItem('Manager', 'sub3', <TeamOutlined />, [
-    getItem('Admin', '9'),
-    getItem('Currency', '10'),
-    getItem('Chain', '11'),
-    getItem('Wallet', '12'),
-    getItem('County', '13'),
-  ]),
-  getItem('Team Wallet', '14', <WalletOutlined />),
-  getItem('Admin Claim Deposit', 'sub4', <DollarOutlined />, [getItem('History', '15'), getItem('Claim', '16')]),
-  getItem('Check hash deposit', '17', <CheckCircleOutlined />),
+  getItem('Admin', '/admin', <HomeOutlined />),
+  getItem('Campaigns', '/admin/campaigns', <GroupOutlined />),
+  // getItem('Investment', 'sub2', <FunnelPlotOutlined />, [
+  //   getItem('Package', '6'),
+  //   getItem('History', '7'),
+  //   getItem('Dividend', '8'),
+  // ]),
+  // getItem('Manager', 'sub3', <TeamOutlined />, [
+  //   getItem('Admin', '9'),
+  //   getItem('Currency', '10'),
+  //   getItem('Chain', '11'),
+  //   getItem('Wallet', '12'),
+  //   getItem('County', '13'),
+  // ]),
+  // getItem('Team Wallet', '14', <WalletOutlined />),
+  // getItem('Admin Claim Deposit', 'sub4', <DollarOutlined />, [getItem('History', '15'), getItem('Claim', '16')]),
+  // getItem('Check hash deposit', '17', <CheckCircleOutlined />),
 ]
 
 const AdminLayout = ({ children }: any) => {
   const [collapsed, setCollapsed] = useState(false)
+  const router = useRouter()
 
   const userMenu = (
     <Menu>
       <Menu.Item key="1">Item 1</Menu.Item>
       <Menu.Item key="2">Item 2</Menu.Item>
-      <Menu.Item key="3">Item 3</Menu.Item>
       <Menu.Divider />
       <Menu.Item key="3">Logout</Menu.Item>
     </Menu>
@@ -161,9 +191,30 @@ const AdminLayout = ({ children }: any) => {
 
         <Sider trigger={null} collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)} width={240}>
           <div className="logo">
-            <img src="/logo2.png" alt="logo2" />
+            <Link href="/admin">
+              <img src="/logo2.png" alt="logo2" />
+            </Link>
           </div>
-          <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />
+          <Menu
+            theme="dark"
+            defaultSelectedKeys={['/admin']}
+            mode="inline"
+            items={items}
+            onClick={(e) => router.push(e.key)}
+          />
+          {/* <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
+            <Menu.Item key="/admin" icon={<HomeOutlined />}>
+              <Link href="/admin">Admin</Link>
+            </Menu.Item>
+
+            <Menu.SubMenu key="/campaigns" title="Campaigns" icon={<GroupOutlined />}>
+              <Link href="/admin/campaigns">Campaigns</Link>
+              <Menu.Item key="/admin/campaigns/create">
+                <Link href="/admin/campaigns/create">Create Campaigns</Link>
+              </Menu.Item>
+            </Menu.SubMenu>
+          </Menu> */}
+          ;
         </Sider>
 
         <Layout className="site-layout">
@@ -203,7 +254,8 @@ const AdminLayout = ({ children }: any) => {
               minHeight: 280,
             }}
           >
-            Content
+            <BreadCrumbs />
+            {children}
           </Content>
         </Layout>
       </Layout>
