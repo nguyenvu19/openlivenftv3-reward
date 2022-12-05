@@ -154,6 +154,7 @@ function getItem(label: React.ReactNode, key: React.Key, icon?: React.ReactNode,
 const items: MenuItem[] = [
   getItem('Admin', '/admin', <HomeOutlined />),
   getItem('Campaigns', '/admin/campaigns', <GroupOutlined />),
+  getItem('Pool', '/admin/pool', <DollarOutlined />),
   // getItem('Investment', 'sub2', <FunnelPlotOutlined />, [
   //   getItem('Package', '6'),
   //   getItem('History', '7'),

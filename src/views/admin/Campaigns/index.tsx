@@ -170,7 +170,7 @@ const WCampaigns = styled.div`
   }
 
   .anticon {
-    margin: 0;
+    margin: 0 !important;
   }
 
   .ant-table-tbody {

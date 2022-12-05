@@ -1,4 +1,4 @@
-import CampaignsCreate from 'views/admin/CampaignsCreate'
+import CampaignsCreate from 'views/admin/Campaigns/CampaignsCreate'
 import AdminLayout from 'components/Admin/Layout'
 
 const AdminCreateCampaigns = () => {
