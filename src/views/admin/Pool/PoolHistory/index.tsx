@@ -1,11 +1,10 @@
+import { Button, Col, Form, Input, Row } from 'antd'
 import React from 'react'
-import { Button, Col, Form, Input, Row, DatePicker, Space } from 'antd'
-import type { DatePickerProps } from 'antd'
 
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
 
-const WCampaignsCreate = styled.div`
+const WPoolHistory = styled.div`
   width: 100%;
   padding: 20px;
   background-color: rgb(255, 255, 255);
@@ -84,60 +83,34 @@ const WCampaignsCreate = styled.div`
   }
 `
 
-const CampaignsCreate: React.FC = () => {
+const PoolHistory: React.FC = () => {
   const [form] = Form.useForm()
+
   const router = useRouter()
+  const { query, pathname } = router
 
   const handleSubmit = (values) => {
     const data = {}
   }
 
-  const onChangeStart: DatePickerProps['onChange'] = (date, dateString) => {
-    console.log(date, dateString)
-  }
-
-  const onChangeEnd: DatePickerProps['onChange'] = (date, dateString) => {
-    console.log(date, dateString)
+  const handleHistory = (poolId) => {
+    router.replace(``)
   }
 
   return (
-    <WCampaignsCreate>
+    <WPoolHistory>
       <div className="zodi-control-page">
-        <h1>Create Campaigns</h1>
+        <h1>History pool</h1>
         <Button type="primary" size="large" onClick={() => router.back()}>
           Back
         </Button>
       </div>
 
-      <Form form={form} onFinish={handleSubmit}>
-        <Row gutter={32}>
-          <Col offset={4}>
-            <Form.Item name="Start time" label="Start time" rules={[{ required: true }]}>
-              <Space direction="vertical">
-                <DatePicker onChange={onChangeStart} />
-              </Space>
-            </Form.Item>
-
-            <Form.Item name="End time" label="End time" rules={[{ required: true }]}>
-              <Space direction="vertical">
-                <DatePicker onChange={onChangeEnd} />
-              </Space>
-            </Form.Item>
-
-            <Form.Item name="Total Reward" label="Total Reward" rules={[{ required: true }]}>
-              <Input size="middle" placeholder="Total Reward" autoComplete="true" />
-            </Form.Item>
-          </Col>
-        </Row>
-
-        <Form.Item className="action" style={{ textAlign: 'center' }}>
-          <Button size="large" type="primary" htmlType="submit" className="primary-button">
-            Create campaign
-          </Button>
-        </Form.Item>
-      </Form>
-    </WCampaignsCreate>
+      <Button type="primary" size="large" onClick={handleHistory}>
+        History
+      </Button>
+    </WPoolHistory>
   )
 }
 
-export default CampaignsCreate
+export default PoolHistory

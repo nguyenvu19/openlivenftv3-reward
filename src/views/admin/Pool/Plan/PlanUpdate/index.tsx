@@ -1,11 +1,12 @@
+import { Button, Col, Form, Input, Row, Select } from 'antd'
+import { Option } from 'antd/lib/mentions'
+
 import React from 'react'
-import { Button, Col, Form, Input, Row, DatePicker, Space } from 'antd'
-import type { DatePickerProps } from 'antd'
 
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
 
-const WCampaignsCreate = styled.div`
+const WPlanUpdate = styled.div`
   width: 100%;
   padding: 20px;
   background-color: rgb(255, 255, 255);
@@ -76,6 +77,10 @@ const WCampaignsCreate = styled.div`
         margin-left: 0;
         text-align: left;
 
+        ${({ theme }) => theme.mediaQueries.sm} {
+          text-align: right;
+        }
+
         .ant-form-item-required {
           justify-content: flex-start;
         }
@@ -84,7 +89,7 @@ const WCampaignsCreate = styled.div`
   }
 `
 
-const CampaignsCreate: React.FC = () => {
+const PlanUpdate: React.FC = () => {
   const [form] = Form.useForm()
   const router = useRouter()
 
@@ -92,18 +97,10 @@ const CampaignsCreate: React.FC = () => {
     const data = {}
   }
 
-  const onChangeStart: DatePickerProps['onChange'] = (date, dateString) => {
-    console.log(date, dateString)
-  }
-
-  const onChangeEnd: DatePickerProps['onChange'] = (date, dateString) => {
-    console.log(date, dateString)
-  }
-
   return (
-    <WCampaignsCreate>
+    <WPlanUpdate>
       <div className="zodi-control-page">
-        <h1>Create Campaigns</h1>
+        <h1>Update plan</h1>
         <Button type="primary" size="large" onClick={() => router.back()}>
           Back
         </Button>
@@ -111,33 +108,46 @@ const CampaignsCreate: React.FC = () => {
 
       <Form form={form} onFinish={handleSubmit}>
         <Row gutter={32}>
-          <Col offset={4}>
-            <Form.Item name="Start time" label="Start time" rules={[{ required: true }]}>
-              <Space direction="vertical">
-                <DatePicker onChange={onChangeStart} />
-              </Space>
+          <Col span={16} offset={4}>
+            <Form.Item name="Pool" label="Pool">
+              <Select allowClear size="large" placeholder="Selected Pool">
+                {/* {listCurrency?.map((item) => (
+                      <Option key={item._id} value={item._id}>
+                        {item.code}
+                      </Option>
+                    ))} */}
+                <Option key="1" value="selected">
+                  Selected Pool
+                </Option>
+
+                <Option key="2" value="selected">
+                  Selected Pool 2
+                </Option>
+
+                <Option key="3" value="selected">
+                  Selected Pool 3
+                </Option>
+              </Select>
             </Form.Item>
 
-            <Form.Item name="End time" label="End time" rules={[{ required: true }]}>
-              <Space direction="vertical">
-                <DatePicker onChange={onChangeEnd} />
-              </Space>
+            <Form.Item name="Periods" label="Periods">
+              <Input size="large" placeholder="Input Periods" autoComplete="true" />
             </Form.Item>
 
-            <Form.Item name="Total Reward" label="Total Reward" rules={[{ required: true }]}>
-              <Input size="middle" placeholder="Total Reward" autoComplete="true" />
+            <Form.Item name="APY" label="APY">
+              <Input size="large" placeholder="Input APY" autoComplete="true" />
             </Form.Item>
           </Col>
         </Row>
 
         <Form.Item className="action" style={{ textAlign: 'center' }}>
           <Button size="large" type="primary" htmlType="submit" className="primary-button">
-            Create campaign
+            Confirm
           </Button>
         </Form.Item>
       </Form>
-    </WCampaignsCreate>
+    </WPlanUpdate>
   )
 }
 
-export default CampaignsCreate
+export default PlanUpdate

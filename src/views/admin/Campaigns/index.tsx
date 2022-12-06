@@ -17,52 +17,32 @@ interface DataType {
 const columns: ColumnsType<DataType> = [
   {
     title: 'No 1',
-    width: 20,
     dataIndex: 'id',
-    key: 'id',
-    fixed: 'left',
+    width: 70,
   },
   {
     title: 'Status',
-    width: 20,
     dataIndex: 'status',
-    key: 'status',
-    fixed: 'left',
   },
   {
     title: 'Total Reward',
-    width: 40,
     dataIndex: 'reward',
-    key: 'reward',
-    fixed: 'left',
   },
   {
     title: 'Total Claimed',
-    width: 40,
     dataIndex: 'claimed',
-    key: 'claimed',
-    fixed: 'left',
   },
   {
     title: 'Start Date',
-    width: 40,
     dataIndex: 'start',
-    key: 'start',
-    fixed: 'left',
   },
   {
     title: 'End Date',
-    width: 40,
     dataIndex: 'end',
-    key: 'end',
-    fixed: 'left',
   },
 
   {
     title: 'Action',
-    key: 'operation',
-    fixed: 'right',
-    width: 100,
     render: () => (
       <Space size="middle">
         <Link href="/admin/campaigns/update">Update</Link>
@@ -254,7 +234,7 @@ const Campaigns: React.FC = () => {
       </Form>
 
       <div className="table-wrapper">
-        <Table columns={columns} dataSource={data} scroll={{ x: 1500, y: 300 }} />
+        <Table columns={columns} dataSource={data} rowKey={(record) => record.id} scroll={{ x: 1000 }} />
       </div>
     </WCampaigns>
   )

@@ -178,9 +178,9 @@ const AdminLayout = ({ children }: any) => {
 
   const userMenu = (
     <Menu>
-      <Menu.Item key="1">Item 1</Menu.Item>
+      {/* <Menu.Item key="1">Item 1</Menu.Item>
       <Menu.Item key="2">Item 2</Menu.Item>
-      <Menu.Divider />
+      <Menu.Divider /> */}
       <Menu.Item key="3">Logout</Menu.Item>
     </Menu>
   )
@@ -193,7 +193,7 @@ const AdminLayout = ({ children }: any) => {
         <Sider trigger={null} collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)} width={240}>
           <div className="logo">
             <Link href="/admin">
-              <img src="/logo2.png" alt="logo2" />
+              <img src="/logo-text.png" alt="logo" />
             </Link>
           </div>
           <Menu

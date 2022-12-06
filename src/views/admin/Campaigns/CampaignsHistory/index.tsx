@@ -73,6 +73,10 @@ const WCampaignsHistory = styled.div`
       ${({ theme }) => theme.mediaQueries.md} {
         margin-bottom: 0;
       }
+
+      .ant-form-item-row {
+        flex-direction: column;
+      }
     }
 
     .ant-row {
@@ -117,38 +121,27 @@ interface DataType {
 const columns: ColumnsType<DataType> = [
   {
     title: 'No 1',
-    width: 5,
     dataIndex: 'id',
-    key: 'id',
-    fixed: 'left',
+    width: 70,
   },
   {
     title: 'Campaign',
-    width: 7,
     dataIndex: 'campaign',
-    key: 'campaign',
-    fixed: 'left',
+    width: 80,
   },
   {
     title: 'Amount',
-    width: 6,
     dataIndex: 'amount',
-    key: 'amount',
-    fixed: 'left',
+    width: 80,
   },
   {
     title: 'TxH',
-    width: 40,
     dataIndex: 'txh',
-    key: 'txh',
-    fixed: 'left',
+    width: 360,
   },
   {
     title: 'Address',
-    width: 40,
     dataIndex: 'address',
-    key: 'address',
-    fixed: 'left',
   },
 ]
 
@@ -211,22 +204,24 @@ const CampaignsHistory: React.FC = () => {
         <Row>
           <Col>
             <Form.Item name="Address" label="Address">
-              <Input size="large" placeholder="Address" autoComplete="true" />
+              <Input size="middle" placeholder="Address" autoComplete="true" />
             </Form.Item>
 
             <Form.Item name="Campaign" label="Campaign">
-              <Input size="large" placeholder="Campaign" autoComplete="true" />
+              <Input size="middle" placeholder="Campaign" autoComplete="true" />
             </Form.Item>
 
-            <Space direction="vertical" size={12}>
-              <RangePicker />
-            </Space>
+            <Form.Item name="Date" label="Date">
+              <Space direction="vertical" size={12}>
+                <RangePicker />
+              </Space>
+            </Form.Item>
           </Col>
         </Row>
       </Form>
 
       <div className="table-wrapper">
-        <Table columns={columns} dataSource={data} scroll={{ x: 1500, y: 300 }} />
+        <Table columns={columns} dataSource={data} scroll={{ x: 1200 }} />
       </div>
     </WCampaignsHistory>
   )

@@ -1,11 +1,10 @@
+import { Button, Col, Form, Input, Row } from 'antd'
 import React from 'react'
-import { Button, Col, Form, Input, Row, DatePicker, Space } from 'antd'
-import type { DatePickerProps } from 'antd'
 
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
 
-const WCampaignsCreate = styled.div`
+const WPoolCreate = styled.div`
   width: 100%;
   padding: 20px;
   background-color: rgb(255, 255, 255);
@@ -63,6 +62,9 @@ const WCampaignsCreate = styled.div`
 
   .ant-form {
     .ant-row {
+      align-items: center;
+      justify-content: center;
+
       .ant-col {
         margin: 0;
 
@@ -72,9 +74,13 @@ const WCampaignsCreate = styled.div`
       }
 
       .ant-form-item-label {
-        min-width: 110px;
+        min-width: 167px;
         margin-left: 0;
         text-align: left;
+
+        ${({ theme }) => theme.mediaQueries.sm} {
+          text-align: right;
+        }
 
         .ant-form-item-required {
           justify-content: flex-start;
@@ -84,7 +90,7 @@ const WCampaignsCreate = styled.div`
   }
 `
 
-const CampaignsCreate: React.FC = () => {
+const PoolCreate: React.FC = () => {
   const [form] = Form.useForm()
   const router = useRouter()
 
@@ -92,18 +98,10 @@ const CampaignsCreate: React.FC = () => {
     const data = {}
   }
 
-  const onChangeStart: DatePickerProps['onChange'] = (date, dateString) => {
-    console.log(date, dateString)
-  }
-
-  const onChangeEnd: DatePickerProps['onChange'] = (date, dateString) => {
-    console.log(date, dateString)
-  }
-
   return (
-    <WCampaignsCreate>
+    <WPoolCreate>
       <div className="zodi-control-page">
-        <h1>Create Campaigns</h1>
+        <h1>Create pool</h1>
         <Button type="primary" size="large" onClick={() => router.back()}>
           Back
         </Button>
@@ -112,32 +110,24 @@ const CampaignsCreate: React.FC = () => {
       <Form form={form} onFinish={handleSubmit}>
         <Row gutter={32}>
           <Col offset={4}>
-            <Form.Item name="Start time" label="Start time" rules={[{ required: true }]}>
-              <Space direction="vertical">
-                <DatePicker onChange={onChangeStart} />
-              </Space>
+            <Form.Item name="Reward Address" label="Reward Address">
+              <Input size="large" placeholder="Input contract currency" autoComplete="true" />
             </Form.Item>
 
-            <Form.Item name="End time" label="End time" rules={[{ required: true }]}>
-              <Space direction="vertical">
-                <DatePicker onChange={onChangeEnd} />
-              </Space>
-            </Form.Item>
-
-            <Form.Item name="Total Reward" label="Total Reward" rules={[{ required: true }]}>
-              <Input size="middle" placeholder="Total Reward" autoComplete="true" />
+            <Form.Item name="Staked Token Address" label="Input contract currency">
+              <Input size="large" placeholder="Input contract currency" autoComplete="true" />
             </Form.Item>
           </Col>
         </Row>
 
         <Form.Item className="action" style={{ textAlign: 'center' }}>
           <Button size="large" type="primary" htmlType="submit" className="primary-button">
-            Create campaign
+            Confirm
           </Button>
         </Form.Item>
       </Form>
-    </WCampaignsCreate>
+    </WPoolCreate>
   )
 }
 
-export default CampaignsCreate
+export default PoolCreate
