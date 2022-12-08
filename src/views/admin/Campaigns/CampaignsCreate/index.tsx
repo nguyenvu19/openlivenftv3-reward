@@ -82,6 +82,14 @@ const WCampaignsCreate = styled.div`
       }
     }
   }
+
+  .ant-space {
+    width: 100%;
+
+    .ant-picker {
+      width: 100%;
+    }
+  }
 `
 
 const CampaignsCreate: React.FC = () => {
@@ -111,10 +119,10 @@ const CampaignsCreate: React.FC = () => {
 
       <Form form={form} onFinish={handleSubmit}>
         <Row gutter={32}>
-          <Col offset={4}>
+          <Col span={16} offset={4}>
             <Form.Item name="Start time" label="Start time" rules={[{ required: true }]}>
               <Space direction="vertical">
-                <DatePicker onChange={onChangeStart} />
+                <DatePicker onChange={onChangeStart} style={{ width: '100%' }} />
               </Space>
             </Form.Item>
 

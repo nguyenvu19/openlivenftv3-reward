@@ -1,4 +1,4 @@
-import PoolCreate from 'views/admin/Pool/PoolCreate'
+import PoolCreate from 'views/Admin/Pool/PoolCreate'
 import AdminLayout from 'components/Admin/Layout'
 
 const AdminCreatePool = () => {

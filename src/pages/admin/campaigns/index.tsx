@@ -1,4 +1,4 @@
-import AdminHomePage from 'views/admin/Campaigns'
+import AdminHomePage from 'views/Admin/Campaigns'
 import AdminLayout from 'components/Admin/Layout'
 
 const AdminCampaigns = () => {

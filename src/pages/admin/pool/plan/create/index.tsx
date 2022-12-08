@@ -1,4 +1,4 @@
-import PlanCreate from 'views/admin/Pool/Plan/PlanCreate'
+import PlanCreate from 'views/Admin/Pool/Plan/PlanCreate'
 import AdminLayout from 'components/Admin/Layout'
 
 const AdminCreatePlan = () => {

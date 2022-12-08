@@ -1,4 +1,4 @@
-import CampaignsHistory from 'views/admin/Campaigns/CampaignsHistory'
+import CampaignsHistory from 'views/Admin/Campaigns/CampaignsHistory'
 import AdminLayout from 'components/Admin/Layout'
 
 const AdminHistoryCampaigns = () => {

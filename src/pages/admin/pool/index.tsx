@@ -1,4 +1,4 @@
-import AdminHomePage from 'views/admin/Pool'
+import AdminHomePage from 'views/Admin/Pool'
 import AdminLayout from 'components/Admin/Layout'
 
 const AdminPool = () => {

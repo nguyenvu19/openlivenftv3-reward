@@ -1,4 +1,4 @@
-import PoolHistory from 'views/admin/Pool/PoolHistory'
+import PoolHistory from 'views/Admin/Pool/PoolHistory'
 import AdminLayout from 'components/Admin/Layout'
 
 const AdminHistoryPool = () => {

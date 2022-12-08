@@ -1,4 +1,4 @@
-import CampaignsUpdateRate from 'views/admin/Campaigns/CampaignsUpdateRate'
+import CampaignsUpdateRate from 'views/Admin/Campaigns/CampaignsUpdateRate'
 import AdminLayout from 'components/Admin/Layout'
 
 const AdminUpdateRateCampaigns = () => {

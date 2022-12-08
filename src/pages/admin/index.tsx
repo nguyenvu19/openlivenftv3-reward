@@ -1,4 +1,4 @@
-import AdminHomePage from 'views/admin/Home'
+import AdminHomePage from 'views/Admin/Home'
 import AdminLayout from 'components/Admin/Layout'
 
 const Admin = () => {

@@ -190,6 +190,26 @@ const WCampaigns = styled.div`
       color: rgb(255, 255, 255) !important;
     }
   }
+
+  .zodi-form-campaigns {
+    .ant-row {
+      display: flex;
+      flex-direction: column;
+
+      ${({ theme }) => theme.mediaQueries.sm} {
+        flex-direction: row;
+      }
+
+      .ant-form-item-row {
+        display: flex;
+
+        ${({ theme }) => theme.mediaQueries.sm} {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+    }
+  }
 `
 
 const Campaigns: React.FC = () => {
@@ -198,7 +218,7 @@ const Campaigns: React.FC = () => {
   return (
     <WCampaigns>
       <div className="zodi-control-page">
-        <h1>Admin Campaigns page</h1>
+        <h1>Campaign Summary</h1>
 
         <Link href="/admin/campaigns/create" className="add-campaigns">
           Add Campaigns
@@ -207,21 +227,21 @@ const Campaigns: React.FC = () => {
 
       <Form form={form} className="zodi-form-campaigns">
         <Row gutter={32}>
-          <Col span={6}>
+          <Col>
             <Form.Item
               name="title"
               label="Title"
               // onChange={(value) => handleSearchTitle(value.target.value)}
             >
-              <Input size="large" placeholder="Full title" autoComplete="true" />
+              <Input size="middle" placeholder="Full title" autoComplete="true" />
             </Form.Item>
           </Col>
-          <Col span={6}>
+          <Col>
             <Form.Item name="status" label="Lock status">
               <Select
                 showSearch
                 allowClear
-                size="large"
+                size="middle"
                 placeholder="All"
                 // onChange={(value) => handleSearchStatus(value)}
               >
