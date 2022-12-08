@@ -101,7 +101,7 @@ const CampaignsCreate: React.FC = () => {
   }
 
   return (
-    <WCampaignsCreate>
+    <WCampaignsCreate key={router.pathname.slice(7)}>
       <div className="zodi-control-page">
         <h1>Create Campaigns</h1>
         <Button type="primary" size="large" onClick={() => router.back()}>

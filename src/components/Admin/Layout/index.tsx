@@ -175,6 +175,7 @@ const items: MenuItem[] = [
 const AdminLayout = ({ children }: any) => {
   const [collapsed, setCollapsed] = useState(false)
   const router = useRouter()
+  console.log(router.pathname.slice(7))
 
   const userMenu = (
     <Menu>
@@ -198,7 +199,8 @@ const AdminLayout = ({ children }: any) => {
           </div>
           <Menu
             theme="dark"
-            defaultSelectedKeys={['/admin']}
+            defaultSelectedKeys={[router.pathname]}
+            key={router.pathname.slice(7)}
             mode="inline"
             items={items}
             onClick={(e) => router.push(e.key)}

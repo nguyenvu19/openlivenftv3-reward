@@ -7,10 +7,10 @@ const BreadCrumbs = () => {
 
   return (
     <Breadcrumb style={{ marginBottom: '1rem' }}>
-      {breadCrumb.map(function (route, index) {
+      {breadCrumb.map((route) => {
         return (
-          <Breadcrumb.Item>
-            <Link href={`/${route.toLocaleLowerCase()}`}>{route}</Link>
+          <Breadcrumb.Item key={route.toLocaleLowerCase()}>
+            <Link href={`/admin/${route.toLocaleLowerCase()}`}>{route}</Link>
           </Breadcrumb.Item>
         )
       })}
