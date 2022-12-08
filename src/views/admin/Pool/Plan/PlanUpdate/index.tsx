@@ -87,6 +87,17 @@ const WPlanUpdate = styled.div`
       }
     }
   }
+
+  .ant-form-item-control-input {
+    #Pool {
+      padding: 0;
+
+      ::placeholder {
+        color: rgba(0, 0, 0, 0.85);
+        font-size: 14px;
+      }
+    }
+  }
 `
 
 const PlanUpdate: React.FC = () => {
@@ -110,24 +121,7 @@ const PlanUpdate: React.FC = () => {
         <Row gutter={32}>
           <Col span={16} offset={4}>
             <Form.Item name="Pool" label="Pool">
-              <Select allowClear size="large" placeholder="Selected Pool">
-                {/* {listCurrency?.map((item) => (
-                      <Option key={item._id} value={item._id}>
-                        {item.code}
-                      </Option>
-                    ))} */}
-                <Option key="1" value="selected">
-                  Selected Pool
-                </Option>
-
-                <Option key="2" value="selected">
-                  Selected Pool 2
-                </Option>
-
-                <Option key="3" value="selected">
-                  Selected Pool 3
-                </Option>
-              </Select>
+              <Input readOnly bordered={false} placeholder="OPV NFT" />
             </Form.Item>
 
             <Form.Item name="Periods" label="Periods">

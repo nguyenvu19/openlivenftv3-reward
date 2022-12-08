@@ -256,7 +256,7 @@ const Pool: React.FC = () => {
               Update Pool
             </Link>
 
-            <Link href="/admin/pool/history/[poolId]" className="add-pool">
+            <Link href="/admin/pool/history/123" className="add-pool">
               History Pool
             </Link>
           </div>
