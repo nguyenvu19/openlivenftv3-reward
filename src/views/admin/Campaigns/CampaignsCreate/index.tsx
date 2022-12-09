@@ -1,9 +1,16 @@
-import React from 'react'
-import { Button, Col, Form, Input, Row, DatePicker, Space } from 'antd'
-import type { DatePickerProps } from 'antd'
+/* eslint-disable prefer-destructuring */
+import { Button, Col, DatePicker, Form, Input, Row, Space } from 'antd'
+import React, { useState } from 'react'
+import { toLocaleString } from 'utils'
 
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
+
+import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
+import useCatchTxErrorMessage from 'hooks/useCatchTxErrorMessage'
+import { useContractCampaigns } from 'hooks/useContract'
+import { useTransactionAdder } from 'state/transactions/hooks'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 
 const WCampaignsCreate = styled.div`
   width: 100%;
@@ -96,16 +103,46 @@ const CampaignsCreate: React.FC = () => {
   const [form] = Form.useForm()
   const router = useRouter()
 
-  const handleSubmit = (values) => {
-    const data = {}
-  }
+  const { account } = useActiveWeb3React()
 
-  const onChangeStart: DatePickerProps['onChange'] = (date, dateString) => {
-    console.log(date, dateString)
-  }
+  // console.log('account', account)
 
-  const onChangeEnd: DatePickerProps['onChange'] = (date, dateString) => {
-    console.log(date, dateString)
+  const [errorMess, setErrorMess] = useState('')
+  const [stakingLoading, setStakingLoading] = useState(false)
+  const [amount, setAmount] = useState<string | number>('')
+
+  const { callWithGasPrice } = useCallWithGasPrice()
+  const { fetchWithCatchTxError } = useCatchTxErrorMessage()
+  const contractCampaigns = useContractCampaigns()
+  const addTransaction = useTransactionAdder()
+
+  const handleSubmit = async (values) => {
+    const start = values.start._d.getTime().toString()
+    const end = values.end._d.getTime().toString()
+    const reward = values.reward
+
+    const createParams = {
+      start,
+      end,
+      totalReward: toLocaleString(reward * 1e18),
+    }
+    console.log(createParams)
+    setErrorMess('')
+    setStakingLoading(true)
+    const { txResponse, status, message } = await fetchWithCatchTxError(() =>
+      callWithGasPrice(contractCampaigns, 'addCampaign', [
+        [createParams.start, createParams.end, createParams.totalReward, 0],
+      ]),
+    )
+    setStakingLoading(false)
+    if (status) {
+      addTransaction(txResponse, {
+        summary: `Create Campaigns from ${createParams.start} to ${createParams.end}. Total reward: ${createParams.totalReward}`,
+      })
+      setAmount('')
+    } else {
+      setErrorMess(message)
+    }
   }
 
   return (
@@ -120,19 +157,15 @@ const CampaignsCreate: React.FC = () => {
       <Form form={form} onFinish={handleSubmit}>
         <Row gutter={32}>
           <Col span={16} offset={4}>
-            <Form.Item name="Start time" label="Start time" rules={[{ required: true }]}>
-              <Space direction="vertical">
-                <DatePicker onChange={onChangeStart} style={{ width: '100%' }} />
-              </Space>
+            <Form.Item name="start" label="Start time" rules={[{ required: true }]}>
+              <DatePicker style={{ width: '100%' }} autoComplete="true" />
             </Form.Item>
 
-            <Form.Item name="End time" label="End time" rules={[{ required: true }]}>
-              <Space direction="vertical">
-                <DatePicker onChange={onChangeEnd} />
-              </Space>
+            <Form.Item name="end" label="End time" rules={[{ required: true }]}>
+              <DatePicker style={{ width: '100%' }} autoComplete="true" />
             </Form.Item>
 
-            <Form.Item name="Total Reward" label="Total Reward" rules={[{ required: true }]}>
+            <Form.Item name="reward" label="Total Reward" rules={[{ required: true }]}>
               <Input size="middle" placeholder="Total Reward" autoComplete="true" />
             </Form.Item>
           </Col>

@@ -1,10 +1,18 @@
 import { Button, Col, Form, Input, Row, Select } from 'antd'
 import { Option } from 'antd/lib/mentions'
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
-import React from 'react'
+
+import React, { useState } from 'react'
 
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
+
+import { toLocaleString } from 'utils'
+
+import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
+import useCatchTxErrorMessage from 'hooks/useCatchTxErrorMessage'
+import { useContractCampaigns } from 'hooks/useContract'
+import { useTransactionAdder } from 'state/transactions/hooks'
 
 const WCampaignsUpdateRate = styled.div`
   width: 100%;
@@ -123,9 +131,51 @@ const WCampaignsUpdateRate = styled.div`
 const CampaignsUpdateRate: React.FC = () => {
   const [form] = Form.useForm()
   const router = useRouter()
+  // ID of campaign
+  const { campaignID } = router.query
 
-  const handleSubmit = (values) => {
-    const data = {}
+  const [errorMess, setErrorMess] = useState('')
+  const [stakingLoading, setStakingLoading] = useState(false)
+  const [amount, setAmount] = useState<string | number>('')
+
+  const { callWithGasPrice } = useCallWithGasPrice()
+  const { fetchWithCatchTxError } = useCatchTxErrorMessage()
+  const contractCampaigns = useContractCampaigns()
+  const addTransaction = useTransactionAdder()
+
+  const handleSubmit = async (values) => {
+    const rares = []
+    const opvQuantities = []
+    // eslint-disable-next-line array-callback-return
+    values.meta_data.map((data) => {
+      rares.push(parseInt(data.key))
+      opvQuantities.push(toLocaleString(data.value * 1e18))
+    })
+
+    const updateRateParams = {
+      rares,
+      opvQuantities,
+      campId: campaignID,
+    }
+    console.log(updateRateParams)
+    setErrorMess('')
+    setStakingLoading(true)
+    const { txResponse, status, message } = await fetchWithCatchTxError(() =>
+      callWithGasPrice(contractCampaigns, 'updateRateCampaign', [
+        updateRateParams.campId,
+        updateRateParams.rares,
+        updateRateParams.opvQuantities,
+      ]),
+    )
+    setStakingLoading(false)
+    if (status) {
+      addTransaction(txResponse, {
+        summary: `Update Campaigns  ${campaignID} `,
+      })
+      setAmount('')
+    } else {
+      setErrorMess(message)
+    }
   }
 
   return (
@@ -139,25 +189,8 @@ const CampaignsUpdateRate: React.FC = () => {
       <Form form={form} onFinish={handleSubmit}>
         <Row gutter={32}>
           <Col span={16} offset={4}>
-            <Form.Item name="Selected Campaigns" label="Campaigns" rules={[{ required: true }]}>
-              <Select allowClear size="large" placeholder="Selected Campaigns">
-                {/* {listCurrency?.map((item) => (
-                      <Option key={item._id} value={item._id}>
-                        {item.code}
-                      </Option>
-                    ))} */}
-                <Option key="1" value="selected">
-                  Selected Campaigns
-                </Option>
-
-                <Option key="2" value="selected">
-                  Selected Campaigns 2
-                </Option>
-
-                <Option key="3" value="selected">
-                  Selected Campaigns 3
-                </Option>
-              </Select>
+            <Form.Item name="campaignId" label="Campaign ID">
+              <Input size="large" placeholder={`${campaignID}`} readOnly />
             </Form.Item>
 
             <div className="custom-repeater-field">
@@ -169,7 +202,7 @@ const CampaignsUpdateRate: React.FC = () => {
                         <Form.Item
                           {...restField}
                           label="NFT Name"
-                          name="nft-name"
+                          name={[name, 'key']}
                           validateTrigger={['onChange', 'onBlur']}
                           rules={[
                             {
@@ -180,23 +213,35 @@ const CampaignsUpdateRate: React.FC = () => {
                           ]}
                         >
                           <Select allowClear size="large" placeholder="STAR">
-                            <Option key="1" value="star">
-                              star 1
+                            <Option key="1" value="1">
+                              1
                             </Option>
 
-                            <Option key="2" value="star">
-                              star 2
+                            <Option key="2" value="2">
+                              2
                             </Option>
 
-                            <Option key="3" value="star">
-                              star 3
+                            <Option key="3" value="3">
+                              3
+                            </Option>
+
+                            <Option key="4" value="4">
+                              4
+                            </Option>
+
+                            <Option key="5" value="5">
+                              5
+                            </Option>
+
+                            <Option key="6" value="6">
+                              6
                             </Option>
                           </Select>
                         </Form.Item>
 
                         <Form.Item
                           {...restField}
-                          name="opv-reward"
+                          name={[name, 'value']}
                           label="OPV Reward"
                           validateTrigger={['onChange', 'onBlur']}
                           rules={[

@@ -289,16 +289,18 @@ const PoolHistory: React.FC = () => {
 
         <div className="history-content-middle">
           <Form form={form}>
-            <Row>
-              <Col>
+            <Row gutter={32}>
+              <Col span={8}>
                 <Form.Item name="Address" label="Address">
                   <Input size="middle" autoComplete="true" />
                 </Form.Item>
-
+              </Col>
+              <Col span={8}>
                 <Form.Item name="Plan" label="Plan">
                   <Input size="middle" autoComplete="true" />
                 </Form.Item>
-
+              </Col>
+              <Col span={8}>
                 <Form.Item name="TxH" label="TxH">
                   <Input size="middle" autoComplete="true" />
                 </Form.Item>

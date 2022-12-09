@@ -4,9 +4,11 @@ import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
 import type { ColumnsType } from 'antd/es/table'
 
 import React from 'react'
+import { gql } from 'graphql-request'
 
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
+import { graphqlOpv } from '../../../../utils/graphql'
 
 const WCampaignsHistory = styled.div`
   width: 100%;
@@ -187,8 +189,35 @@ const CampaignsHistory: React.FC = () => {
   const [form] = Form.useForm()
   const router = useRouter()
 
+  // ID of campaign
+  const { campaignID } = router.query
+
   const handleSubmit = (values) => {
     const data2 = {}
+  }
+
+  // fetch nft detail graphql
+  const fetchOpvNftDetail = async (tokenId?: string) => {
+    const whereString = tokenId ? `tokenId: ${tokenId}` : ``
+    try {
+      const query = gql`
+        query opvNft {
+          opvNfts(where: { ${whereString} }) {  
+            id
+            owner
+            rareId
+            rareName
+            tokenUri
+            tokenId
+          }
+        } 
+      `
+      const data2 = await graphqlOpv.request(query)
+      return data2
+    } catch (error) {
+      console.error('Failed to fetch my nfts list', error)
+      return null
+    }
   }
 
   return (

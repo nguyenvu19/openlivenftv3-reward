@@ -1,9 +1,16 @@
-import { Button, Col, Form, Input, Row, Select } from 'antd'
-import React from 'react'
+/* eslint-disable prefer-destructuring */
+import { Button, Col, DatePicker, Form, Input, Row, Space } from 'antd'
+import React, { useState } from 'react'
 
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
-import { Option } from 'antd/lib/mentions'
+
+import { toLocaleString } from 'utils'
+
+import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
+import useCatchTxErrorMessage from 'hooks/useCatchTxErrorMessage'
+import { useContractCampaigns } from 'hooks/useContract'
+import { useTransactionAdder } from 'state/transactions/hooks'
 
 const WCampaignsUpdate = styled.div`
   width: 100%;
@@ -78,14 +85,59 @@ const WCampaignsUpdate = styled.div`
       }
     }
   }
+
+  .ant-space {
+    width: 100%;
+
+    .ant-picker {
+      width: 100%;
+    }
+  }
 `
 
 const CampaignsUpdate: React.FC = () => {
   const [form] = Form.useForm()
   const router = useRouter()
+  // ID of campaign
+  const { campaignID } = router.query
 
-  const handleSubmit = (values) => {
-    const data = {}
+  const [errorMess, setErrorMess] = useState('')
+  const [stakingLoading, setStakingLoading] = useState(false)
+  const [amount, setAmount] = useState<string | number>('')
+
+  const { callWithGasPrice } = useCallWithGasPrice()
+  const { fetchWithCatchTxError } = useCatchTxErrorMessage()
+  const contractCampaigns = useContractCampaigns()
+  const addTransaction = useTransactionAdder()
+
+  const handleSubmit = async (values) => {
+    const start = (values.start._d.getTime() / 1000).toFixed().toString()
+    const end = (values.end._d.getTime() / 1000).toFixed().toString()
+    const reward = values.reward
+
+    const updateParams = {
+      start,
+      end,
+      totalReward: toLocaleString(reward * 1e18),
+      campaignID,
+    }
+    setErrorMess('')
+    setStakingLoading(true)
+    const { txResponse, status, message } = await fetchWithCatchTxError(() =>
+      callWithGasPrice(contractCampaigns, 'modifyCampaign', [
+        updateParams.campaignID,
+        [updateParams.start, updateParams.end, updateParams.totalReward, 0],
+      ]),
+    )
+    setStakingLoading(false)
+    if (status) {
+      addTransaction(txResponse, {
+        summary: `Update Campaigns  ${campaignID} `,
+      })
+      setAmount('')
+    } else {
+      setErrorMess(message)
+    }
   }
   return (
     <WCampaignsUpdate>
@@ -98,43 +150,26 @@ const CampaignsUpdate: React.FC = () => {
       <Form form={form} onFinish={handleSubmit}>
         <Row gutter={32}>
           <Col span={16} offset={4}>
-            <Form.Item name="Selected Campaigns" label="Campaigns" rules={[{ required: true }]}>
-              <Select allowClear size="large" placeholder="Selected Campaigns">
-                {/* {listCurrency?.map((item) => (
-                      <Option key={item._id} value={item._id}>
-                        {item.code}
-                      </Option>
-                    ))} */}
-                <Option key="1" value="selected">
-                  Selected Campaigns
-                </Option>
-
-                <Option key="2" value="selected">
-                  Selected Campaigns 2
-                </Option>
-
-                <Option key="3" value="selected">
-                  Selected Campaigns 3
-                </Option>
-              </Select>
+            <Form.Item name="campaignId" label="Campaign ID">
+              <Input size="large" placeholder={`${campaignID}`} readOnly />
             </Form.Item>
 
-            <Form.Item name="Start time" label="Start time" rules={[{ required: true }]}>
-              <Input size="large" placeholder="Start time" autoComplete="true" />
+            <Form.Item name="start" label="Start time" rules={[{ required: true }]}>
+              <DatePicker style={{ width: '100%' }} />
             </Form.Item>
 
-            <Form.Item name="End time" label="End time" rules={[{ required: true }]}>
-              <Input size="large" placeholder="End time" autoComplete="true" />
+            <Form.Item name="end" label="End time" rules={[{ required: true }]}>
+              <DatePicker style={{ width: '100%' }} />
             </Form.Item>
 
-            <Form.Item name="Total Reward" label="Total Reward" rules={[{ required: true }]}>
+            <Form.Item name="reward" label="Total Reward" rules={[{ required: true }]}>
               <Input size="large" placeholder="Total Reward" autoComplete="true" />
             </Form.Item>
           </Col>
         </Row>
 
         <Form.Item className="action" style={{ textAlign: 'center' }}>
-          <Button size="large" type="default" htmlType="submit" className="primary-button">
+          <Button size="large" type="primary" htmlType="submit" className="primary-button">
             Modify Campaigns
           </Button>
         </Form.Item>

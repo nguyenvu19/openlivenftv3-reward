@@ -12,10 +12,13 @@ import {
   UserOutlined,
   WalletOutlined,
 } from '@ant-design/icons'
-import { Dropdown, Layout, Menu, MenuProps } from 'antd'
+import { Dropdown, Layout, Menu, MenuProps, Space } from 'antd'
 import styled from 'styled-components'
 import BreadCrumbs from 'components/BreadCrumbs'
 import { useRouter } from 'next/router'
+
+import TotalBalance from '../../Menu/UserMenu/Totalbalance'
+import UserMenu from '../../Menu/UserMenu'
 
 const { Header, Sider, Content } = Layout
 
@@ -138,6 +141,12 @@ const WAdminLayout = styled.div`
       flex: 0 0 80px !important;
     }
   }
+
+  .header-admin-right {
+    .UserMenu__LabelText-sc-28efc1ca-1 {
+      line-height: 1.5;
+    }
+  }
 `
 
 type MenuItem = Required<MenuProps>['items'][number]
@@ -155,21 +164,6 @@ const items: MenuItem[] = [
   getItem('Admin', '/admin', <HomeOutlined />),
   getItem('Campaigns', '/admin/campaigns', <GroupOutlined />),
   getItem('Pool', '/admin/pool', <DollarOutlined />),
-  // getItem('Investment', 'sub2', <FunnelPlotOutlined />, [
-  //   getItem('Package', '6'),
-  //   getItem('History', '7'),
-  //   getItem('Dividend', '8'),
-  // ]),
-  // getItem('Manager', 'sub3', <TeamOutlined />, [
-  //   getItem('Admin', '9'),
-  //   getItem('Currency', '10'),
-  //   getItem('Chain', '11'),
-  //   getItem('Wallet', '12'),
-  //   getItem('County', '13'),
-  // ]),
-  // getItem('Team Wallet', '14', <WalletOutlined />),
-  // getItem('Admin Claim Deposit', 'sub4', <DollarOutlined />, [getItem('History', '15'), getItem('Claim', '16')]),
-  // getItem('Check hash deposit', '17', <CheckCircleOutlined />),
 ]
 
 const AdminLayout = ({ children }: any) => {
@@ -178,12 +172,10 @@ const AdminLayout = ({ children }: any) => {
   console.log(router.pathname.slice(7))
 
   const userMenu = (
-    <Menu>
-      {/* <Menu.Item key="1">Item 1</Menu.Item>
-      <Menu.Item key="2">Item 2</Menu.Item>
-      <Menu.Divider /> */}
-      <Menu.Item key="3">Logout</Menu.Item>
-    </Menu>
+    <Space size={16}>
+      <TotalBalance />
+      <UserMenu />
+    </Space>
   )
 
   return (
@@ -231,20 +223,10 @@ const AdminLayout = ({ children }: any) => {
             </div>
 
             <div className="header-admin-right">
-              <Dropdown.Button
-                // style={{ float: 'right' }}
-                className="dropdown-btn"
-                overlay={userMenu}
-                icon={
-                  <UserOutlined
-                    style={{
-                      fontSize: '28px',
-                      backgroundColor: '#f0f0f0',
-                      borderRadius: '50%',
-                    }}
-                  />
-                }
-              />
+              <Space size={16}>
+                <TotalBalance />
+                <UserMenu />
+              </Space>
             </div>
           </Header>
 

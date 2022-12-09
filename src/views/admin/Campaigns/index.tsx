@@ -1,101 +1,26 @@
+import { useMemo } from 'react'
+
 import styled from 'styled-components'
 import Link from 'next/link'
 import { Col, Form, Input, Row, Select, Space, Table } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
 
+import { useCampaigns, usePollCoreCampaignsData } from 'state/campaigns/hooks'
+import useCountTime, { STEEP_COUNT } from 'hooks/useCountTime'
+import { CampaignItem } from 'state/campaigns/types'
+
 const { Option } = Select
 
 interface DataType {
   id: number
+  currentPool: number
+  start: number
+  finish: number
+  totalPool: number
+  duration: number
   status: string
-  reward: number
-  claimed: number
-  start: string
-  end: string
+  loading: boolean
 }
-
-const columns: ColumnsType<DataType> = [
-  {
-    title: 'No 1',
-    dataIndex: 'id',
-    width: 70,
-  },
-  {
-    title: 'Status',
-    dataIndex: 'status',
-  },
-  {
-    title: 'Total Reward',
-    dataIndex: 'reward',
-  },
-  {
-    title: 'Total Claimed',
-    dataIndex: 'claimed',
-  },
-  {
-    title: 'Start Date',
-    dataIndex: 'start',
-  },
-  {
-    title: 'End Date',
-    dataIndex: 'end',
-  },
-
-  {
-    title: 'Action',
-    render: () => (
-      <Space size="middle">
-        <Link href="/admin/campaigns/update">Update</Link>
-        <Link href="/admin/campaigns/setrate">Set rate</Link>
-        <Link href="/admin/campaigns/updaterate">Update rate</Link>
-        <Link href="/admin/campaigns/history">History</Link>
-      </Space>
-    ),
-  },
-]
-
-const data: DataType[] = [
-  {
-    id: 1,
-    status: 'Live',
-    reward: 1000000,
-    claimed: 2000,
-    start: '2022-10-10',
-    end: '2023-10-10',
-  },
-  {
-    id: 2,
-    status: 'Live',
-    reward: 1000000,
-    claimed: 2000,
-    start: '2022-10-10',
-    end: '2023-10-10',
-  },
-  {
-    id: 3,
-    status: 'Live',
-    reward: 1000000,
-    claimed: 2000,
-    start: '2022-10-10',
-    end: '2023-10-10',
-  },
-  {
-    id: 4,
-    status: 'Live',
-    reward: 1000000,
-    claimed: 2000,
-    start: '2022-10-10',
-    end: '2023-10-10',
-  },
-  {
-    id: 5,
-    status: 'Live',
-    reward: 1000000,
-    claimed: 2000,
-    start: '2022-10-10',
-    end: '2023-10-10',
-  },
-]
 
 const WCampaigns = styled.div`
   width: 100%;
@@ -215,6 +140,62 @@ const WCampaigns = styled.div`
 const Campaigns: React.FC = () => {
   const [form] = Form.useForm()
 
+  usePollCoreCampaignsData() // list campaign data
+
+  const { data: campaigns } = useCampaigns()
+
+  // Check status
+  const campaignsClone: DataType[] = useMemo(
+    () =>
+      campaigns?.map((campaign) => ({
+        ...campaign,
+        status: campaign.finish - campaign.start > 0 ? 'Live' : 'End',
+      })),
+    [campaigns],
+  )
+
+  const columns: ColumnsType<DataType> = [
+    {
+      title: 'No 1',
+      dataIndex: 'id',
+      width: 70,
+    },
+    {
+      title: 'Status',
+      dataIndex: 'status',
+    },
+    {
+      title: 'Total Reward',
+      dataIndex: 'totalPool',
+    },
+    {
+      title: 'Total Claimed',
+      dataIndex: 'currentPool',
+    },
+    {
+      title: 'Start Date',
+      dataIndex: 'start',
+    },
+    {
+      title: 'End Date',
+      dataIndex: 'finish',
+    },
+
+    {
+      title: 'Action',
+      dataIndex: 'id',
+
+      render: (id) => (
+        <Space size="middle">
+          <Link href={`/admin/campaigns/update/${id}`}>Update</Link>
+          <Link href={`/admin/campaigns/setrate/${id}`}>Set rate</Link>
+          <Link href={`/admin/campaigns/updaterate/${id}`}>Update rate</Link>
+          <Link href={`/admin/campaigns/history/${id}`}>History</Link>
+        </Space>
+      ),
+    },
+  ]
+
   return (
     <WCampaigns>
       <div className="zodi-control-page">
@@ -223,6 +204,13 @@ const Campaigns: React.FC = () => {
         <Link href="/admin/campaigns/create" className="add-campaigns">
           Add Campaigns
         </Link>
+
+        {/* <Link
+          href={{ pathname: '/admin/campaigns/create', query: { dataCampaigns: JSON.stringify(campaignsClone) } }}
+          className="add-campaigns"
+        >
+          Add Campaigns
+        </Link> */}
       </div>
 
       <Form form={form} className="zodi-form-campaigns">
@@ -254,7 +242,7 @@ const Campaigns: React.FC = () => {
       </Form>
 
       <div className="table-wrapper">
-        <Table columns={columns} dataSource={data} rowKey={(record) => record.id} scroll={{ x: 1000 }} />
+        <Table columns={columns} dataSource={campaignsClone} rowKey={(record) => record.id} scroll={{ x: 1400 }} />
       </div>
     </WCampaigns>
   )

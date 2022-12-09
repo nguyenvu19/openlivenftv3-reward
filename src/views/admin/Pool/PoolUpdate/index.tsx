@@ -100,6 +100,17 @@ const WPoolUpdate = styled.div`
       }
     }
   }
+
+  .ant-form-item-control-input {
+    .ant-input-borderless {
+      padding: 0;
+
+      ::placeholder {
+        color: rgba(0, 0, 0, 0.85);
+        font-size: 14px;
+      }
+    }
+  }
 `
 
 const PoolUpdate: React.FC = () => {
@@ -123,11 +134,8 @@ const PoolUpdate: React.FC = () => {
         <Form form={form} onFinish={handleSubmit}>
           <Row gutter={32}>
             <Col span={16} offset={4}>
-              <Form.Item>
-                <div className="pool-update-content-top">
-                  <p>Pool ID</p>
-                  <p>OPV NFT</p>
-                </div>
+              <Form.Item name="Pool ID" label="Pool" id="poolId">
+                <Input readOnly bordered={false} placeholder="OPV NFT" />
               </Form.Item>
 
               <Form.Item name="Reward Address" label="Reward Address">
@@ -141,7 +149,7 @@ const PoolUpdate: React.FC = () => {
           </Row>
 
           <Form.Item className="action" style={{ textAlign: 'center' }}>
-            <Button size="large" type="default" htmlType="submit" className="primary-button">
+            <Button size="large" type="primary" htmlType="submit" className="primary-button">
               Confirm
             </Button>
           </Form.Item>
