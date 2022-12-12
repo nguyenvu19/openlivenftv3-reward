@@ -1,13 +1,11 @@
 import { useMemo } from 'react'
 
-import styled from 'styled-components'
-import Link from 'next/link'
 import { Col, Form, Input, Row, Select, Space, Table } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
+import Link from 'next/link'
+import styled from 'styled-components'
 
 import { useCampaigns, usePollCoreCampaignsData } from 'state/campaigns/hooks'
-import useCountTime, { STEEP_COUNT } from 'hooks/useCountTime'
-import { CampaignItem } from 'state/campaigns/types'
 
 const { Option } = Select
 
