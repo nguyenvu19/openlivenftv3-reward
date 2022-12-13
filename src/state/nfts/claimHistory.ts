@@ -25,12 +25,35 @@ const graphNftClaimHistory = async (total: number, tokenId?: string) => {
   }
 }
 
+// fetch Campaigns detail graphql
+const graphCampaignsClaimHistory = async (total: number, campaignId?: string) => {
+  try {
+    const query = gql`
+      query campaignsClaimHistory($total: Int!) {
+        claims(first: $total, where: { campaignId: ${campaignId} }) {
+          amount
+          id
+          transactionHash
+          userAddress
+          campaignId
+        }
+      }
+    `
+    const data = await graphqlOpv.request(query, { total })
+    return data
+  } catch (error) {
+    console.error('Failed graphCampaignsClaimHistory', error)
+    return null
+  }
+}
+
 interface ResponseClaimHistory {
   total: number
   pageSize: number
   tokenId: string
   data: ClaimHistoryItemType[] | undefined | null
 }
+
 export const useNftClaimHistory = (
   tokenId?: string,
 ): {
@@ -69,4 +92,55 @@ export const useNftClaimHistory = (
   }, [fetchNftClaimHistory])
 
   return { nftClaimHistory, fetchNftClaimHistory, setParamsNftClaimHistory }
+}
+
+// Campaigns
+interface ResponseCampaignsClaimHistory {
+  total: number
+  pageSize: number
+  campaignId: string
+  data: ClaimHistoryItemType[] | undefined | null
+}
+
+export const useCampaignsClaimHistory = (
+  campaignId?: string,
+): {
+  campaignsClaimHistory: ResponseCampaignsClaimHistory
+  fetchCampaignsClaimHistory: () => void
+  setParamsCampaignsClaimHistory: (p: any) => void
+} => {
+  const [paramsCampaignsClaimHistory, setParamsCampaignsClaimHistory] = useState({
+    total: 10,
+    pageSize: 10,
+    campaignId,
+  })
+
+  const [campaignsClaimHistory, setCampaignsClaimHistory] = useState<ResponseCampaignsClaimHistory>({
+    ...paramsCampaignsClaimHistory,
+    data: undefined,
+  })
+
+  const fetchCampaignsClaimHistory = useCallback(async () => {
+    if (paramsCampaignsClaimHistory.campaignId) {
+      const result = await graphCampaignsClaimHistory(
+        paramsCampaignsClaimHistory.total,
+        paramsCampaignsClaimHistory.campaignId,
+      )
+      setCampaignsClaimHistory({
+        ...paramsCampaignsClaimHistory,
+        data: result?.claims || null,
+      })
+    }
+  }, [paramsCampaignsClaimHistory])
+
+  useEffect(() => {
+    if (campaignId) {
+      setParamsCampaignsClaimHistory((prev) => ({ ...prev, campaignId }))
+    }
+  }, [campaignId])
+  useEffect(() => {
+    fetchCampaignsClaimHistory()
+  }, [fetchCampaignsClaimHistory])
+
+  return { campaignsClaimHistory, fetchCampaignsClaimHistory, setParamsCampaignsClaimHistory }
 }
