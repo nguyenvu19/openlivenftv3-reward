@@ -22,8 +22,8 @@ export const getDefaultCampaign = (campaigns: CampaignItem[] = []): CampaignItem
     {
       id: 'INTRO_BUY_NFT',
       currentPool: 2.51,
-      start: 1666399933000,
-      finish: 1674175933000,
+      start: 1671037200000,
+      finish: 1672419600000,
       totalPool: 100000,
       duration: 7776000000,
       status: CAMPAIGN_STATUS.LIVE,
@@ -71,14 +71,13 @@ export const useDefaultCampaigns = () => {
 }
 
 export const useCampaigns = () => {
+  return useSelector(useMemo(() => campaignsSelector(), []))
+}
+
+export const useCampaignsWithDefault = () => {
   const campaigns = useSelector(useMemo(() => campaignsSelector(), []))
   return useMemo(() => {
-    let data
-    if (!campaigns?.data) {
-      data = getDefaultCampaign()
-    }
-    data = getDefaultCampaign(campaigns.data)
-
+    const data = getDefaultCampaign(campaigns?.data || [])
     return { data }
   }, [campaigns])
 }
