@@ -5,7 +5,6 @@ const WOpvBannerItem = styled.div`
   display: block;
   width: 100%;
   height: 100%;
-  max-height: 370px;
   position: relative;
 `
 

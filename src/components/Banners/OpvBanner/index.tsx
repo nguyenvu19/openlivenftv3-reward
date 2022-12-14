@@ -7,7 +7,6 @@ import OpvBannerItem from './OpvBannerItem'
 const WOpvBanner = styled.div`
   display: block;
   width: 100%;
-  max-height: 370px;
   position: relative;
 
   margin-bottom: 24px;
