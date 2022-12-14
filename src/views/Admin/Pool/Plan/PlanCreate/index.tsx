@@ -1,10 +1,15 @@
-import { Button, Col, Form, Input, Row, Select } from 'antd'
-import { Option } from 'antd/lib/mentions'
-
-import React from 'react'
+import { Button, Col, Form, Input, Row } from 'antd'
+import React, { useState } from 'react'
 
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
+
+import { toLocaleString } from 'utils'
+
+import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
+import useCatchTxErrorMessage from 'hooks/useCatchTxErrorMessage'
+import { useContractStaking } from 'hooks/useContract'
+import { useTransactionAdder } from 'state/transactions/hooks'
 
 const WPlanCreate = styled.div`
   width: 100%;
@@ -93,8 +98,46 @@ const PlanCreate: React.FC = () => {
   const [form] = Form.useForm()
   const router = useRouter()
 
-  const handleSubmit = (values) => {
-    const data = {}
+  const { poolId } = router.query
+
+  const [errorMess, setErrorMess] = useState('')
+  const [stakingLoading, setStakingLoading] = useState(false)
+  const [amount, setAmount] = useState<string | number>('')
+
+  const { callWithGasPrice } = useCallWithGasPrice()
+  const { fetchWithCatchTxError } = useCatchTxErrorMessage()
+  const contractStaking = useContractStaking()
+  const addTransaction = useTransactionAdder()
+
+  const handleSubmit = async (values) => {
+    const updatePoolParams = {
+      poolId,
+      planId: values.planId,
+      time: values.time,
+      periods: values.periods,
+      apy: values.apy,
+    }
+    console.log(updatePoolParams)
+
+    setErrorMess('')
+    setStakingLoading(true)
+
+    const { txResponse, status, message } = await fetchWithCatchTxError(() =>
+      callWithGasPrice(contractStaking, 'updatePlan', [
+        updatePoolParams.poolId,
+        updatePoolParams.planId,
+        [updatePoolParams.time, updatePoolParams.periods, updatePoolParams.apy],
+      ]),
+    )
+    setStakingLoading(false)
+    if (status) {
+      addTransaction(txResponse, {
+        summary: `Create plan `,
+      })
+      setAmount('')
+    } else {
+      setErrorMess(message)
+    }
   }
 
   return (
@@ -109,32 +152,27 @@ const PlanCreate: React.FC = () => {
       <Form form={form} onFinish={handleSubmit}>
         <Row gutter={32}>
           <Col span={16} offset={4}>
-            <Form.Item name="Pool" label="Pool">
-              <Select allowClear size="large" placeholder="Selected Pool">
-                {/* {listCurrency?.map((item) => (
-                      <Option key={item._id} value={item._id}>
-                        {item.code}
-                      </Option>
-                    ))} */}
-                <Option key="1" value="selected">
-                  Selected Pool
-                </Option>
-
-                <Option key="2" value="selected">
-                  Selected Pool 2
-                </Option>
-
-                <Option key="3" value="selected">
-                  Selected Pool 3
-                </Option>
-              </Select>
+            <Form.Item name="planId" label="Plan ID">
+              {/* <Select allowClear size="large" placeholder="Selected Plan">
+                {stakingList &&
+                  stakingList.map((item) => (
+                    <Option key={`${item.planId}`} value={`${item.planId}`}>
+                      {item.planId}
+                    </Option>
+                  ))}
+              </Select> */}
+              <Input size="large" placeholder="Input Plan ID" autoComplete="true" />
             </Form.Item>
 
-            <Form.Item name="Periods" label="Periods">
+            <Form.Item name="time" label="Time">
+              <Input size="large" placeholder="Input Time" autoComplete="true" />
+            </Form.Item>
+
+            <Form.Item name="periods" label="Periods">
               <Input size="large" placeholder="Input Periods" autoComplete="true" />
             </Form.Item>
 
-            <Form.Item name="APY" label="APY">
+            <Form.Item name="apy" label="APY">
               <Input size="large" placeholder="Input APY" autoComplete="true" />
             </Form.Item>
           </Col>

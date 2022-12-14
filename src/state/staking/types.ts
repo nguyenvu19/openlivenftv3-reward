@@ -25,3 +25,11 @@ export interface StakingHistory {
   userAddress: string
   poolStatus: STAKING_STATUS
 }
+
+export interface StakingPools {
+  id: string
+  lpAddress: string
+  lpTokenName: string
+  rewardAddress: string
+  rewardTokenName: string
+}

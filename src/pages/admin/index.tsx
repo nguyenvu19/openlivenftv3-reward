@@ -6,5 +6,4 @@ const Admin = () => {
 }
 
 Admin.mp = true
-Admin.Layout = () => <AdminLayout />
 export default Admin

@@ -6,113 +6,80 @@ import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
 
+import { useClaimWithdrawHistories, useClaimDepositHistories } from 'state/staking/fetchStakingHistory'
+import { useStakingTotalEarnedContract } from 'state/staking/hooks'
+
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
+
 const { RangePicker } = DatePicker
 
-// Table data
-interface DataType {
-  id: number
-  address: string
-  amount: number
-  plan: number
-  status: string
-  txh: string
-  start: string
-  end: string
-}
-
-const columns: ColumnsType<DataType> = [
+const columnsWithdraw = [
   {
-    title: 'No.',
-    dataIndex: 'id',
-    width: 70,
+    title: 'Pool ID',
+    dataIndex: 'poolId',
   },
   {
-    title: 'Address',
-    dataIndex: 'address',
+    title: 'Plan ID',
+    dataIndex: 'planId',
+  },
+  {
+    title: 'ID',
+    dataIndex: 'id',
+  },
+  {
+    title: 'Transaction Hash',
+    dataIndex: 'transactionHash',
+  },
+  {
+    title: 'User Address',
+    dataIndex: 'userAddress',
+  },
+  {
+    title: 'Create time',
+    dataIndex: 'createdTime',
+  },
+  {
+    title: 'Start time',
+    dataIndex: 'startTime',
+  },
+]
+
+const columnsDeposit = [
+  {
+    title: 'Pool ID',
+    dataIndex: 'poolId',
+  },
+  {
+    title: 'Plan ID',
+    dataIndex: 'planId',
+  },
+  {
+    title: 'ID',
+    dataIndex: 'id',
   },
   {
     title: 'Amount',
     dataIndex: 'amount',
-    width: 80,
-  },
-  {
-    title: 'Plan',
-    dataIndex: 'plan',
-    width: 80,
   },
   {
     title: 'Status',
     dataIndex: 'status',
-    width: 80,
   },
   {
-    title: 'TxH',
-    dataIndex: 'txh',
-    width: 360,
+    title: 'Transaction Hash',
+    dataIndex: 'transactionHash',
   },
   {
-    title: 'Start',
-    dataIndex: 'start',
-    width: 80,
-  },
-
-  {
-    title: 'End',
-    dataIndex: 'end',
-    width: 80,
-  },
-]
-
-const data: DataType[] = [
-  {
-    id: 1,
-    address: '0x6e664e9ba68387cbc527b0f401e3dd9ab24fb75d',
-    amount: 3,
-    plan: 1,
-    status: 'Holding',
-    txh: '0xd60e597b4659390a093108b0b62aeed72e47a38b39948a0182c32faeb32ba0f0',
-    start: '2022/10/10',
-    end: '2023/10/10',
+    title: 'User Address',
+    dataIndex: 'userAddress',
   },
   {
-    id: 2,
-    address: '0x6e664e9ba68387cbc527b0f401e3dd9ab24fb75d',
-    amount: 3,
-    plan: 1,
-    status: 'Holding',
-    txh: '0xd60e597b4659390a093108b0b62aeed72e47a38b39948a0182c32faeb32ba0f0',
-    start: '2022/10/10',
-    end: '2023/10/10',
+    title: 'Create time',
+    dataIndex: 'createdTime',
   },
   {
-    id: 3,
-    address: '0x6e664e9ba68387cbc527b0f401e3dd9ab24fb75d',
-    amount: 3,
-    plan: 1,
-    status: 'Holding',
-    txh: '0xd60e597b4659390a093108b0b62aeed72e47a38b39948a0182c32faeb32ba0f0',
-    start: '2022/10/10',
-    end: '2023/10/10',
-  },
-  {
-    id: 4,
-    address: '0x6e664e9ba68387cbc527b0f401e3dd9ab24fb75d',
-    amount: 3,
-    plan: 1,
-    status: 'Holding',
-    txh: '0xd60e597b4659390a093108b0b62aeed72e47a38b39948a0182c32faeb32ba0f0',
-    start: '2022/10/10',
-    end: '2023/10/10',
-  },
-  {
-    id: 5,
-    address: '0x6e664e9ba68387cbc527b0f401e3dd9ab24fb75d',
-    amount: 3,
-    plan: 1,
-    status: 'Holding',
-    txh: '0xd60e597b4659390a093108b0b62aeed72e47a38b39948a0182c32faeb32ba0f0',
-    start: '2022/10/10',
-    end: '2023/10/10',
+    title: 'End time',
+    dataIndex: 'endTime',
   },
 ]
 
@@ -250,6 +217,14 @@ const PoolHistory: React.FC = () => {
 
   const [form] = Form.useForm()
 
+  // Get data from withDraw history with graph
+  const { stakingWithdrawHistories } = useClaimWithdrawHistories()
+  const withdrawHistories = stakingWithdrawHistories.dataWithdraw
+
+  // Get data from withDraw history with graph
+  const { stakingDepositHistories } = useClaimDepositHistories()
+  const depositHistories = stakingDepositHistories.dataDeposit
+
   const router = useRouter()
   const { query, pathname } = router
 
@@ -310,7 +285,11 @@ const PoolHistory: React.FC = () => {
         </div>
 
         <div className="history-content-middle">
-          <Table columns={columns} dataSource={data} scroll={{ x: 1200 }} />
+          {selected === 'Deposit' ? (
+            <Table columns={columnsDeposit} dataSource={depositHistories} scroll={{ x: 2100 }} />
+          ) : (
+            <Table columns={columnsWithdraw} dataSource={withdrawHistories} scroll={{ x: 1800 }} />
+          )}
         </div>
       </div>
     </WPoolHistory>
