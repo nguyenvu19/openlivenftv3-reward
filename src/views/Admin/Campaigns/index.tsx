@@ -143,7 +143,7 @@ const Campaigns: React.FC = () => {
   const { data: campaigns } = useCampaigns()
 
   // Check status
-  const campaignsClone: DataType[] = useMemo(
+  const campaignsClone: any[] = useMemo(
     () =>
       campaigns?.map((campaign) => ({
         ...campaign,
@@ -152,7 +152,7 @@ const Campaigns: React.FC = () => {
     [campaigns],
   )
 
-  const columns: ColumnsType<DataType> = [
+  const columns: ColumnsType<any> = [
     {
       title: 'No 1',
       dataIndex: 'id',
