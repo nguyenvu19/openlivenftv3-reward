@@ -1,17 +1,8 @@
 import { Button, Col, DatePicker, Form, Input, Row, Space, Table } from 'antd'
-import type { ColumnsType } from 'antd/es/table'
 import { useCampaignsClaimHistory } from 'state/nfts/claimHistory'
 
-import { Flex, Link } from '@pancakeswap/uikit'
-import TxStatus from 'components/TxStatus'
-import { CONTRACT_ADDRESS } from 'config'
-import { ZERO_ADDRESS } from 'config/constants'
-import { formatCode } from 'helpers'
 import { useRouter } from 'next/router'
-import { ClaimHistoryItemType } from 'state/nfts/types'
 import styled from 'styled-components'
-import { getBlockExploreLink } from 'utils'
-import TableClaimHistoryAmount from '../../../MyNftDetail/components/FieldData/Amount'
 
 const WCampaignsHistory = styled.div`
   width: 100%;
@@ -141,73 +132,6 @@ const columns = [
     dataIndex: 'userAddress',
   },
 ]
-
-// const data: ClaimHistoryItemType[] = [
-//   {
-//     id: '1',
-//     tokenId: '1',
-//     amount: '3',
-//     transactionHash: '0xd60e597b4659390a093108b0b62aeed72e47a38b39948a0182c32faeb32ba0f0',
-//     userAddress: '0x6e664e9ba68387cbc527b0f401e3dd9ab24fb75d',
-//   },
-// ]
-
-// const columns: ColumnsType<ClaimHistoryItemType> = [
-//   {
-//     title: 'Amount',
-//     dataIndex: 'amount',
-//     render: (text) => (
-//       <div className="table-history-amount">
-//         <p>
-//           <TableClaimHistoryAmount amount={text} />
-//         </p>
-//       </div>
-//     ),
-//   },
-//   {
-//     title: 'Event',
-//     dataIndex: 'userAddress',
-//     render: (userAddress) => <p style={{ fontWeight: 700 }}>{userAddress === ZERO_ADDRESS ? 'Buy' : 'Reward'}</p>,
-//   },
-//   {
-//     title: 'Status',
-//     dataIndex: 'status',
-//     render: () => <TxStatus title="Completed" status="COMPLETED" />,
-//   },
-//   {
-//     title: 'From',
-//     dataIndex: 'from',
-//     render: () => (
-//       <Flex justifyContent="center">
-//         <Link external href={getBlockExploreLink(CONTRACT_ADDRESS, 'address')}>
-//           {formatCode(CONTRACT_ADDRESS, 5, 5)}
-//         </Link>
-//       </Flex>
-//     ),
-//   },
-//   {
-//     title: 'To',
-//     dataIndex: 'userAddress',
-//     render: (userAddress) => (
-//       <Flex justifyContent="center">
-//         <Link external href={getBlockExploreLink(userAddress, 'address')}>
-//           {formatCode(userAddress, 5, 5)}
-//         </Link>
-//       </Flex>
-//     ),
-//   },
-//   {
-//     title: 'Txh',
-//     dataIndex: 'transactionHash',
-//     render: (transactionHash) => (
-//       <Flex justifyContent="center">
-//         <Link external href={getBlockExploreLink(transactionHash, 'transaction')}>
-//           {formatCode(transactionHash, 5, 5)}
-//         </Link>
-//       </Flex>
-//     ),
-//   },
-// ]
 
 const CampaignsHistory: React.FC = () => {
   const [form] = Form.useForm()

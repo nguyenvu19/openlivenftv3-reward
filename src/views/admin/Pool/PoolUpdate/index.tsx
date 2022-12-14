@@ -1,8 +1,15 @@
 import { Button, Col, Form, Input, Row } from 'antd'
-import React from 'react'
+import React, { useState } from 'react'
 
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
+
+import { toLocaleString } from 'utils'
+
+import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
+import useCatchTxErrorMessage from 'hooks/useCatchTxErrorMessage'
+import { useContractStaking } from 'hooks/useContract'
+import { useTransactionAdder } from 'state/transactions/hooks'
 
 const WPoolUpdate = styled.div`
   width: 100%;
@@ -117,8 +124,42 @@ const PoolUpdate: React.FC = () => {
   const [form] = Form.useForm()
   const router = useRouter()
 
-  const handleSubmit = (values) => {
-    const data = {}
+  const { poolId } = router.query
+
+  const [errorMess, setErrorMess] = useState('')
+  const [stakingLoading, setStakingLoading] = useState(false)
+  const [amount, setAmount] = useState<string | number>('')
+
+  const { callWithGasPrice } = useCallWithGasPrice()
+  const { fetchWithCatchTxError } = useCatchTxErrorMessage()
+  const contractStaking = useContractStaking()
+  const addTransaction = useTransactionAdder()
+
+  const handleSubmit = async (values) => {
+    const updatePoolParams = {
+      poolId,
+      rewardAddress: values.rewardAddress,
+      lpAddress: values.lpAddress,
+    }
+    console.log(updatePoolParams)
+    setErrorMess('')
+    setStakingLoading(true)
+
+    const { txResponse, status, message } = await fetchWithCatchTxError(() =>
+      callWithGasPrice(contractStaking, 'updatePool', [
+        updatePoolParams.poolId,
+        [updatePoolParams.rewardAddress, updatePoolParams.lpAddress],
+      ]),
+    )
+    setStakingLoading(false)
+    if (status) {
+      addTransaction(txResponse, {
+        summary: `Create pool `,
+      })
+      setAmount('')
+    } else {
+      setErrorMess(message)
+    }
   }
 
   return (
@@ -134,16 +175,16 @@ const PoolUpdate: React.FC = () => {
         <Form form={form} onFinish={handleSubmit}>
           <Row gutter={32}>
             <Col span={16} offset={4}>
-              <Form.Item name="Pool ID" label="Pool" id="poolId">
-                <Input readOnly bordered={false} placeholder="OPV NFT" />
+              <Form.Item name="poolId" label="Pool ID" id="poolId">
+                <Input readOnly bordered={false} placeholder={`${router.query.poolId}`} />
               </Form.Item>
 
-              <Form.Item name="Reward Address" label="Reward Address">
+              <Form.Item name="rewardAddress" label="Reward Address">
                 <Input size="large" placeholder="Input contract currency" autoComplete="true" />
               </Form.Item>
 
-              <Form.Item name="Staked Token Address" label="Input contract currency">
-                <Input size="large" placeholder="Input contract currency" autoComplete="true" />
+              <Form.Item name="lpAddress" label="lpAddress">
+                <Input size="large" placeholder="Input lpAddress" autoComplete="true" />
               </Form.Item>
             </Col>
           </Row>
