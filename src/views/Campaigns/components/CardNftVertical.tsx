@@ -116,7 +116,7 @@ interface Props {
   [t: string]: any
 }
 const CardNftVertical: React.FC<Props> = ({ campaign, onClickCampaign, ...props }) => {
-  const { weekdays, days, hours, minutes, seconds, step } = useCountTime(campaign?.start, campaign.finish)
+  const { weekdays, days, hours, minutes, seconds, step } = useCountTime(campaign?.start, campaign?.finish)
 
   const renderCountdownCard = useMemo(() => {
     return (

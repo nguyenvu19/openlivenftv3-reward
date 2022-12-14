@@ -9,7 +9,6 @@ const Campaigns: React.FC<React.PropsWithChildren> = () => {
   usePollCoreCampaignsData() // list campaign data
 
   const { data: campaigns } = useCampaigns()
-  console.log(campaigns)
 
   return (
     <>

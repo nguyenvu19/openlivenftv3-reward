@@ -1,10 +1,12 @@
 import { useMemo } from 'react'
-import { Flex, Heading, Text } from '@pancakeswap/uikit'
+import { Flex, Text } from '@pancakeswap/uikit'
 import { FlexGap } from 'components/Layout/Flex'
 import styled from 'styled-components'
-import { CAMPAIGN_STATUS } from 'state/campaigns/types'
+import { CAMPAIGN_STATUS, CAMPAIGN_TYPE } from 'state/campaigns/types'
 import { EmptyStyled } from 'views/Campaigns/styled'
 import CardNftVertical from '../CardNftVertical'
+import CardIntroduceBuyNft from '../CardIntroduceBuyNft'
+import CardNftVerticalReferrer from '../CardNftVerticalReferrer'
 
 const WHoldNftComplete = styled.div`
   padding-bottom: 100px;
@@ -23,11 +25,20 @@ const HoldNftComplete = ({ campaigns }) => {
         </Text>
       </Flex>
       <FlexGap gap="30px" flexDirection="column">
+        <div id="RenderCardIntroBuyNftComplete" />
+
         {campaignEnd?.length > 0 ? (
           <>
-            {campaignEnd?.map((campaign) => (
-              <CardNftVertical key={campaign.finish} campaign={campaign} style={{ cursor: 'not-allowed' }} />
-            ))}
+            {campaignEnd?.map((campaign) => {
+              switch (campaign.type) {
+                case CAMPAIGN_TYPE.INTRO_BUY_NFT:
+                  return <CardIntroduceBuyNft key={campaign.id} campaign={campaign} />
+                case CAMPAIGN_TYPE.REFERRAL_TO_EARN:
+                  return <CardNftVerticalReferrer key={campaign.id} campaign={campaign} />
+                default:
+                  return <CardNftVertical key={campaign.finish} campaign={campaign} style={{ cursor: 'not-allowed' }} />
+              }
+            })}
           </>
         ) : (
           <EmptyStyled>No Data</EmptyStyled>

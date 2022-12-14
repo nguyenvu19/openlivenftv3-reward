@@ -7,7 +7,7 @@ import { AppState, useAppDispatch } from 'state'
 import { useFastRefreshEffect } from 'hooks/useRefreshEffect'
 import { campaignsSelector } from './selectors'
 import { fetchCampaignsPublicDataAsync } from '.'
-import { CampaignItem } from './types'
+import { CampaignItem, CAMPAIGN_STATUS, CAMPAIGN_TYPE } from './types'
 
 export const usePollCoreCampaignsData = () => {
   const dispatch = useAppDispatch()
@@ -17,8 +17,70 @@ export const usePollCoreCampaignsData = () => {
   }, [dispatch])
 }
 
+export const getDefaultCampaign = (campaigns: CampaignItem[] = []): CampaignItem[] => {
+  const defaultCampaign = [
+    {
+      id: 'INTRO_BUY_NFT',
+      currentPool: 2.51,
+      start: 1666399933000,
+      finish: 1674175933000,
+      totalPool: 100000,
+      duration: 7776000000,
+      status: CAMPAIGN_STATUS.LIVE,
+      loading: false,
+      type: CAMPAIGN_TYPE.INTRO_BUY_NFT,
+      position: 1,
+    },
+    {
+      id: 'REFERRAL_TO_EARN',
+      currentPool: 2.51,
+      totalPool: 100000,
+      duration: 7776000000,
+      status: CAMPAIGN_STATUS.LIVE,
+      loading: false,
+      type: CAMPAIGN_TYPE.REFERRAL_TO_EARN,
+      position: 2,
+    },
+  ]
+  const newCampaign = []
+  const currentTimestamp = new Date().getTime()
+  for (let i = 0; i < defaultCampaign.length; i++) {
+    const item = defaultCampaign[i]
+
+    let { status } = item
+    // check status coming, live, end
+    if (item.start && item.finish) {
+      if (currentTimestamp > item.finish) {
+        status = CAMPAIGN_STATUS.END
+      } else if (currentTimestamp > item.start && currentTimestamp < item.finish) {
+        status = CAMPAIGN_STATUS.LIVE
+      }
+    }
+
+    newCampaign.push({
+      ...item,
+      status,
+    })
+  }
+  const mapCampaignWithDefault = [...newCampaign, ...campaigns]
+  return mapCampaignWithDefault
+}
+
+export const useDefaultCampaigns = () => {
+  return useMemo(() => getDefaultCampaign([]), [])
+}
+
 export const useCampaigns = () => {
-  return useSelector(useMemo(() => campaignsSelector(), []))
+  const campaigns = useSelector(useMemo(() => campaignsSelector(), []))
+  return useMemo(() => {
+    let data
+    if (!campaigns?.data) {
+      data = getDefaultCampaign()
+    }
+    data = getDefaultCampaign(campaigns.data)
+
+    return { data }
+  }, [campaigns])
 }
 
 export const useCampaignItem = (campaignId?: string | number): CampaignItem | undefined => {
