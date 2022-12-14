@@ -34,11 +34,14 @@ const fetchCampaigns = async () => {
       if (count <= campaignsLength) {
         const currentTimestamp = new Date().getTime()
 
+        // check status coming, live, end
         let status = CAMPAIGN_STATUS.COMING
-        if (currentTimestamp > finish) {
-          status = CAMPAIGN_STATUS.END
-        } else if (currentTimestamp > start && currentTimestamp < finish) {
-          status = CAMPAIGN_STATUS.LIVE
+        if (start && finish) {
+          if (currentTimestamp > finish) {
+            status = CAMPAIGN_STATUS.END
+          } else if (currentTimestamp > start && currentTimestamp < finish) {
+            status = CAMPAIGN_STATUS.LIVE
+          }
         }
 
         const campaignItem = {

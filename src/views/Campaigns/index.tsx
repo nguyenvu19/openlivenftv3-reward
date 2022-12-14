@@ -1,6 +1,6 @@
 import { PageMeta } from 'components/Layout/Page'
 import Container from 'components/Layout/Container'
-import { useCampaigns, usePollCoreCampaignsData } from 'state/campaigns/hooks'
+import { useCampaignsWithDefault, usePollCoreCampaignsData } from 'state/campaigns/hooks'
 import OpvBanner from 'components/Banners/OpvBanner'
 import LiveAndUpComing from './components/LiveAndUpComing'
 import HoldNftComplete from './components/HoldNftComplete'
@@ -8,8 +8,7 @@ import HoldNftComplete from './components/HoldNftComplete'
 const Campaigns: React.FC<React.PropsWithChildren> = () => {
   usePollCoreCampaignsData() // list campaign data
 
-  const { data: campaigns } = useCampaigns()
-  console.log(campaigns)
+  const { data: campaigns } = useCampaignsWithDefault()
 
   return (
     <>

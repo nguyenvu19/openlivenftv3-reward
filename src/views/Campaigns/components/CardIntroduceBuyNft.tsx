@@ -3,9 +3,9 @@ import MediaCard from 'components/MediaCard'
 import styled from 'styled-components'
 import { CampaignItem, CAMPAIGN_STATUS } from 'state/campaigns/types'
 import { APP_USER_URL } from 'config'
-import CampaignImg from '../images/campaign-referrer.jpeg'
+import CampaignImg from '../images/campaign-introduce-buy-nft.jpeg'
 
-const WCardNftVerticalReferrer = styled.div`
+const WCardIntroduceBuyNft = styled.div`
   width: 100%;
   padding: 12px;
   background: #eefbff;
@@ -106,9 +106,9 @@ interface Props {
   campaign: CampaignItem
   onClickCampaign?: (campaign: CampaignItem) => void
 }
-const CardNftVerticalReferrer: React.FC<Props> = ({ campaign, ...props }) => {
+const CardIntroduceBuyNft: React.FC<Props> = ({ campaign, ...props }) => {
   return (
-    <WCardNftVerticalReferrer
+    <WCardIntroduceBuyNft
       // onClick={() => {
       //   if (onClickCampaign) onClickCampaign(campaign)
       // }}
@@ -120,7 +120,7 @@ const CardNftVerticalReferrer: React.FC<Props> = ({ campaign, ...props }) => {
       <div className="card-nft-right">
         <CardSubHeading>
           <Text color="textSubtle" fontWeight="700" fontSize={['16px', , '24px']} mb={['24px', , '12px']}>
-            REFERRAL TO EARN
+            GOLDEN TIME
           </Text>
           {(() => {
             if (campaign.status === CAMPAIGN_STATUS.END) return <span className="tag-name finish">Finish</span>
@@ -132,71 +132,63 @@ const CardNftVerticalReferrer: React.FC<Props> = ({ campaign, ...props }) => {
         <div className="card-hold-nft-body">
           <Grid gridTemplateColumns={['1fr 1fr', , '1fr 2fr']}>
             <Text fontSize={[13, , 16]} color="textSubtle" fontWeight={600} pr="8px">
-              Email Verification:
+              Buy an NFT card with OPV
             </Text>
-            <Flex alignItems="center">
-              <Text fontSize={[13, , 16]} bold color="textSubtle" fontWeight={700}>
-                20 OP
-              </Text>
-              <Box width="20px" ml="6px">
-                <Image width={30} height={30} src="/images2/tokens/OP.png" />
-              </Box>
-            </Flex>
           </Grid>
           <Grid gridTemplateColumns={['1fr 1fr', , '1fr 2fr']}>
             <Text fontSize={[13, , 16]} color="textSubtle" fontWeight={600} pr="8px">
-              KYC Verification:
+              Receive Bonus:
             </Text>
             <Flex alignItems="center">
               <Text fontSize={[13, , 16]} bold color="textSubtle" fontWeight={700}>
-                50 OP
+                5% OPV
               </Text>
               <Box width="20px" ml="6px">
-                <Image width={30} height={30} src="/images2/tokens/OP.png" />
-              </Box>
-            </Flex>
-          </Grid>
-          <Grid gridTemplateColumns={['1fr 1fr', , '1fr 2fr']}>
-            <Text fontSize={[13, , 16]} color="textSubtle" fontWeight={600} pr="8px">
-              F1 - KYC Verification:
-            </Text>
-            <Flex alignItems="center">
-              <Text fontSize={[13, , 16]} bold color="textSubtle" fontWeight={700}>
-                50 OP
-              </Text>
-              <Box width="20px" ml="6px">
-                <Image width={30} height={30} src="/images2/tokens/OP.png" />
-              </Box>
-            </Flex>
-          </Grid>
-          <Grid gridTemplateColumns={['1fr 1fr', , '1fr 2fr']}>
-            <Text fontSize={[13, , 16]} color="textSubtle" fontWeight={600} pr="8px">
-              F1 - Buy 1 NFT:
-            </Text>
-            <Flex alignItems="center">
-              <Text fontSize={[13, , 16]} bold color="textSubtle" fontWeight={700}>
-                50 OP
-              </Text>
-              <Box width="20px" ml="6px">
-                <Image width={30} height={30} src="/images2/tokens/OP.png" />
+                <Image width={30} height={30} src="/images2/tokens/OPV.png" />
               </Box>
             </Flex>
           </Grid>
 
-          <Grid gridTemplateColumns={['1fr', '1fr 2fr']} gridTemplateRows="26px" mt="6px">
-            <Text fontSize={[13, , 16]} color="textSubtle" fontWeight={600} style={{ whiteSpace: 'nowrap' }} pr="8px">
-              Swap OPoint to OPV
+          <Grid gridTemplateColumns={['1fr 1fr', , '1fr 2fr']}>
+            <Text fontSize={[13, , 16]} color="textSubtle" fontWeight={600} pr="8px">
+              Start:
             </Text>
             <Flex alignItems="center">
-              <Link href={APP_USER_URL} external target="_blank">
-                <Button scale="sm">Click to join now!</Button>
+              <Text fontSize={[13, , 16]} bold color="textSubtle" fontWeight={700}>
+                2022/12/15
+              </Text>
+              {/* <Box width="20px" ml="6px">
+                <Image width={30} height={30} src="/images2/tokens/OP.png" />
+              </Box> */}
+            </Flex>
+          </Grid>
+
+          <Grid gridTemplateColumns={['1fr 1fr', , '1fr 2fr']}>
+            <Text fontSize={[13, , 16]} color="textSubtle" fontWeight={600} pr="8px">
+              End:
+            </Text>
+            <Flex alignItems="center">
+              <Text fontSize={[13, , 16]} bold color="textSubtle" fontWeight={700}>
+                2022/12/31
+              </Text>
+              {/* <Box width="20px" ml="6px">
+                <Image width={30} height={30} src="/images2/tokens/OP.png" />
+              </Box> */}
+            </Flex>
+          </Grid>
+
+          <Grid gridTemplateColumns={['1fr', '1fr 2fr']} gridTemplateRows="26px" mt="6px">
+            <Text fontSize={[13, , 16]} color="textSubtle" fontWeight={600} style={{ whiteSpace: 'nowrap' }} pr="8px" />
+            <Flex alignItems="center">
+              <Link href="https://nft.openlive.finance/dashboard" external target="_blank">
+                <Button scale="sm">Join Now</Button>
               </Link>
             </Flex>
           </Grid>
         </div>
       </div>
-    </WCardNftVerticalReferrer>
+    </WCardIntroduceBuyNft>
   )
 }
 
-export default CardNftVerticalReferrer
+export default CardIntroduceBuyNft
