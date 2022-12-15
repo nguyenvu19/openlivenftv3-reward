@@ -1,16 +1,14 @@
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useEffect } from 'react'
 
-import { Form, Select, Space, Table, Button } from 'antd'
+import { Button, Form, Space, Table } from 'antd'
 import Link from 'next/link'
 import styled from 'styled-components'
 
-import { useTranslation } from '@pancakeswap/localization'
-
 import { useStakingListData } from 'state/staking/fetchStakingList'
 
-import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import { StakingItemType } from 'state/staking/types'
+import useGetOwner from 'hooks/useGetOwner'
+import { useAccount } from 'wagmi'
 
 const WPlanList = styled.div`
   width: 100%;
@@ -148,6 +146,16 @@ const WPlanList = styled.div`
 const PlanList: React.FC = () => {
   const [form] = Form.useForm()
   const router = useRouter()
+
+  const { address: account } = useAccount()
+
+  const { owner } = useGetOwner()
+
+  useEffect(() => {
+    if (!account && account !== owner) {
+      router.push('/admin')
+    }
+  }, [account, owner, router])
 
   const { poolId } = router.query
 
