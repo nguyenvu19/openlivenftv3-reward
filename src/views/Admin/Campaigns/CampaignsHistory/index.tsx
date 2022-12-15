@@ -1,10 +1,13 @@
-import { useMemo } from 'react'
+import { useEffect } from 'react'
 
 import { Button, Col, DatePicker, Form, Input, Row, Space, Table } from 'antd'
 import { useCampaignsClaimHistory } from 'state/nfts/claimHistory'
 
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
+
+import useGetOwner from 'hooks/useGetOwner'
+import { useAccount } from 'wagmi'
 
 const WCampaignsHistory = styled.div`
   width: 100%;
@@ -141,6 +144,16 @@ const columns = [
 const CampaignsHistory: React.FC = () => {
   const [form] = Form.useForm()
   const router = useRouter()
+
+  const { address: account } = useAccount()
+
+  const { owner } = useGetOwner()
+
+  useEffect(() => {
+    if (!account && account !== owner) {
+      router.push('/admin')
+    }
+  }, [account, owner, router])
 
   // ID of campaign
   const { campaignID } = router.query

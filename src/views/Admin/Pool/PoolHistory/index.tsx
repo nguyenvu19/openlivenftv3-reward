@@ -1,18 +1,18 @@
 import { Button, Checkbox, Col, DatePicker, Form, Input, Row, Space, Table } from 'antd'
 import type { CheckboxChangeEvent } from 'antd/es/checkbox'
 
-import type { ColumnsType } from 'antd/es/table'
-import React, { useState, useMemo } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
 
-import { useClaimWithdrawHistories, useClaimDepositHistories } from 'state/staking/fetchStakingHistory'
-import { useStakingTotalEarnedContract } from 'state/staking/hooks'
+import { useClaimDepositHistories, useClaimWithdrawHistories } from 'state/staking/fetchStakingHistory'
 
-import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import moment from 'moment'
 import { formatCode } from 'helpers/CommonHelper'
+import moment from 'moment'
+
+import useGetOwner from 'hooks/useGetOwner'
+import { useAccount } from 'wagmi'
 
 const { RangePicker } = DatePicker
 
@@ -145,10 +145,21 @@ const WPoolHistory = styled.div`
 `
 
 const PoolHistory: React.FC = () => {
+  const [form] = Form.useForm()
+  const router = useRouter()
   const checkList = ['Deposit', 'Withdraw']
+
   const [selected, setSelected] = useState('Deposit')
 
-  const [form] = Form.useForm()
+  const { address: account } = useAccount()
+
+  const { owner } = useGetOwner()
+
+  useEffect(() => {
+    if (!account && account !== owner) {
+      router.push('/admin')
+    }
+  }, [account, owner, router])
 
   const columnsDeposit = [
     {
@@ -293,9 +304,6 @@ const PoolHistory: React.FC = () => {
       })),
     [withdrawHistories],
   )
-
-  const router = useRouter()
-  const { query, pathname } = router
 
   const handleHistory = (poolId) => {
     router.replace(``)

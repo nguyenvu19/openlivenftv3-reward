@@ -1,6 +1,6 @@
 /* eslint-disable prefer-destructuring */
-import { Button, Col, DatePicker, Form, Input, Row, Space } from 'antd'
-import React, { useState } from 'react'
+import { Button, Col, DatePicker, Form, Input, Row } from 'antd'
+import React, { useEffect, useState } from 'react'
 import { toLocaleString } from 'utils'
 
 import { useRouter } from 'next/router'
@@ -10,7 +10,9 @@ import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
 import useCatchTxErrorMessage from 'hooks/useCatchTxErrorMessage'
 import { useContractCampaigns } from 'hooks/useContract'
 import { useTransactionAdder } from 'state/transactions/hooks'
-import useActiveWeb3React from 'hooks/useActiveWeb3React'
+
+import useGetOwner from 'hooks/useGetOwner'
+import { useAccount } from 'wagmi'
 
 const WCampaignsCreate = styled.div`
   width: 100%;
@@ -103,9 +105,15 @@ const CampaignsCreate: React.FC = () => {
   const [form] = Form.useForm()
   const router = useRouter()
 
-  const { account } = useActiveWeb3React()
+  const { address: account } = useAccount()
 
-  // console.log('account', account)
+  const { owner } = useGetOwner()
+
+  useEffect(() => {
+    if (!account && account !== owner) {
+      router.push('/admin')
+    }
+  }, [account, owner, router])
 
   const [errorMess, setErrorMess] = useState('')
   const [stakingLoading, setStakingLoading] = useState(false)
