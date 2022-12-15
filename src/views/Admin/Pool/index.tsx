@@ -168,15 +168,15 @@ const Pool: React.FC = () => {
   const [form] = Form.useForm()
   const router = useRouter()
 
-  // const { address: account } = useAccount()
+  const { address: account } = useAccount()
 
-  // const { owner } = useGetOwner()
+  const { owner } = useGetOwner()
 
-  // useEffect(() => {
-  //   if (!account && account !== owner) {
-  //     router.push('/admin')
-  //   }
-  // }, [account, owner, router])
+  useEffect(() => {
+    if (!account || account !== owner) {
+      router.push('/admin')
+    }
+  }, [account, owner, router])
 
   const { poolLists } = useClaimPools()
 
