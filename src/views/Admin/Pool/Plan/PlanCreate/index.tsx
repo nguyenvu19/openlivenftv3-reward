@@ -1,4 +1,4 @@
-import { Button, Col, Form, Input, Row } from 'antd'
+import { Button, Col, DatePicker, Form, Input, Row } from 'antd'
 import React, { useState } from 'react'
 
 import { useRouter } from 'next/router'
@@ -165,7 +165,7 @@ const PlanCreate: React.FC = () => {
             </Form.Item>
 
             <Form.Item name="time" label="Time">
-              <Input size="large" placeholder="Input Time" autoComplete="true" />
+              <DatePicker style={{ width: '100%' }} autoComplete="true" />
             </Form.Item>
 
             <Form.Item name="periods" label="Periods">

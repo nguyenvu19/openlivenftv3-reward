@@ -1,7 +1,8 @@
 import { Button, Checkbox, Col, DatePicker, Form, Input, Row, Space, Table } from 'antd'
 import type { CheckboxChangeEvent } from 'antd/es/checkbox'
+
 import type { ColumnsType } from 'antd/es/table'
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
@@ -10,39 +11,15 @@ import { useClaimWithdrawHistories, useClaimDepositHistories } from 'state/staki
 import { useStakingTotalEarnedContract } from 'state/staking/hooks'
 
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import moment from 'moment'
 
 const { RangePicker } = DatePicker
 
-const columnsWithdraw = [
-  {
-    title: 'Pool ID',
-    dataIndex: 'poolId',
-  },
-  {
-    title: 'Plan ID',
-    dataIndex: 'planId',
-  },
-  {
-    title: 'ID',
-    dataIndex: 'id',
-  },
-  {
-    title: 'Transaction Hash',
-    dataIndex: 'transactionHash',
-  },
-  {
-    title: 'User Address',
-    dataIndex: 'userAddress',
-  },
-  {
-    title: 'Create time',
-    dataIndex: 'createdTime',
-  },
-  {
-    title: 'Start time',
-    dataIndex: 'startTime',
-  },
-]
+export const getFullDate = (date: string): string => {
+  const dateAndTime = date.split('T')
+
+  return dateAndTime[0].split('-').reverse().join('-')
+}
 
 const columnsDeposit = [
   {
@@ -76,10 +53,69 @@ const columnsDeposit = [
   {
     title: 'Create time',
     dataIndex: 'createdTime',
+    render: (record) => {
+      return (
+        <div>
+          <p>{moment(record.invoice_id).format('DD/MM/YYYY')}</p>
+        </div>
+      )
+    },
   },
   {
     title: 'End time',
     dataIndex: 'endTime',
+    render: (record) => {
+      return (
+        <div>
+          <p>{moment(record.invoice_id).format('DD/MM/YYYY')}</p>
+        </div>
+      )
+    },
+  },
+]
+
+const columnsWithdraw = [
+  {
+    title: 'Pool ID',
+    dataIndex: 'poolId',
+  },
+  {
+    title: 'Plan ID',
+    dataIndex: 'planId',
+  },
+  {
+    title: 'ID',
+    dataIndex: 'id',
+  },
+  {
+    title: 'Transaction Hash',
+    dataIndex: 'transactionHash',
+  },
+  {
+    title: 'User Address',
+    dataIndex: 'userAddress',
+  },
+  {
+    title: 'Create time',
+    dataIndex: 'createdTime',
+    render: (record) => {
+      return (
+        <div>
+          <p>{moment(record.invoice_id).format('DD/MM/YYYY')}</p>
+        </div>
+      )
+    },
+  },
+  {
+    title: 'Start time',
+    dataIndex: 'startTime',
+    render: (record) => {
+      return (
+        <div>
+          <p>{moment(record.invoice_id).format('DD/MM/YYYY')}</p>
+        </div>
+      )
+    },
   },
 ]
 
@@ -217,13 +253,30 @@ const PoolHistory: React.FC = () => {
 
   const [form] = Form.useForm()
 
+  // Get data from deposit history with graph
+  const { stakingDepositHistories } = useClaimDepositHistories()
+  const depositHistories = stakingDepositHistories.dataDeposit
+
+  const depositHistoriesClone: any[] = useMemo(
+    () =>
+      depositHistories?.map((campaign) => ({
+        ...campaign,
+        amount: Number(campaign.amount).toLocaleString(),
+      })),
+    [depositHistories],
+  )
+
   // Get data from withDraw history with graph
   const { stakingWithdrawHistories } = useClaimWithdrawHistories()
   const withdrawHistories = stakingWithdrawHistories.dataWithdraw
 
-  // Get data from withDraw history with graph
-  const { stakingDepositHistories } = useClaimDepositHistories()
-  const depositHistories = stakingDepositHistories.dataDeposit
+  const withdrawHistoriesClone: any[] = useMemo(
+    () =>
+      withdrawHistories?.map((campaign) => ({
+        ...campaign,
+      })),
+    [withdrawHistories],
+  )
 
   const router = useRouter()
   const { query, pathname } = router
@@ -286,9 +339,9 @@ const PoolHistory: React.FC = () => {
 
         <div className="history-content-middle">
           {selected === 'Deposit' ? (
-            <Table columns={columnsDeposit} dataSource={depositHistories} scroll={{ x: 2100 }} />
+            <Table columns={columnsDeposit} dataSource={depositHistoriesClone} scroll={{ x: 2100 }} />
           ) : (
-            <Table columns={columnsWithdraw} dataSource={withdrawHistories} scroll={{ x: 1800 }} />
+            <Table columns={columnsWithdraw} dataSource={withdrawHistoriesClone} scroll={{ x: 1800 }} />
           )}
         </div>
       </div>

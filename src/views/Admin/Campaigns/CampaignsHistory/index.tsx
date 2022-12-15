@@ -1,3 +1,5 @@
+import { useMemo } from 'react'
+
 import { Button, Col, DatePicker, Form, Input, Row, Space, Table } from 'antd'
 import { useCampaignsClaimHistory } from 'state/nfts/claimHistory'
 
@@ -115,7 +117,7 @@ const columns = [
   {
     title: 'Campaign ID',
     dataIndex: 'campaignId',
-    width: 80,
+    width: 120,
   },
   {
     title: 'Amount',
@@ -141,7 +143,19 @@ const CampaignsHistory: React.FC = () => {
   const { campaignID } = router.query
 
   const { campaignsClaimHistory, setParamsCampaignsClaimHistory } = useCampaignsClaimHistory(String(campaignID))
-  console.log(campaignsClaimHistory)
+  // console.log(campaignsClaimHistory.data.map((campaign) => campaign.amount))
+
+  const campaignsClaimHistoryClone: any[] = useMemo(
+    () =>
+      campaignsClaimHistory?.data.map((campaign) => ({
+        ...campaign,
+        amount: Number(campaign.amount).toLocaleString(),
+      })),
+    [],
+  )
+
+  console.log(campaignsClaimHistoryClone)
+
   const handleSubmit = (values) => {
     const data2 = {}
   }
@@ -176,11 +190,7 @@ const CampaignsHistory: React.FC = () => {
       </Form>
 
       <div className="table-wrapper">
-        <Table
-          columns={columns}
-          dataSource={campaignsClaimHistory ? campaignsClaimHistory.data : []}
-          scroll={{ x: 1200 }}
-        />
+        <Table columns={columns} dataSource={campaignsClaimHistoryClone} scroll={{ x: 2000 }} />
       </div>
     </WCampaignsHistory>
   )
