@@ -17,6 +17,8 @@ import styled from 'styled-components'
 import BreadCrumbs from 'components/BreadCrumbs'
 import { useRouter } from 'next/router'
 
+import { useMatchBreakpoints } from '../../../../packages/uikit/src/contexts'
+
 import TotalBalance from '../../Menu/UserMenu/Totalbalance'
 import UserMenu from '../../Menu/UserMenu'
 
@@ -169,7 +171,8 @@ const items: MenuItem[] = [
 const AdminLayout = ({ children }: any) => {
   const [collapsed, setCollapsed] = useState(false)
   const router = useRouter()
-  console.log(router.pathname.slice(7))
+
+  const { isMobile, isTablet } = useMatchBreakpoints()
 
   const userMenu = (
     <Space size={16}>
@@ -183,7 +186,13 @@ const AdminLayout = ({ children }: any) => {
       <Layout style={{ minHeight: '100vh' }}>
         {/* Sidebar */}
 
-        <Sider trigger={null} collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)} width={240}>
+        <Sider
+          trigger={null}
+          collapsible
+          collapsed={isMobile || isTablet ? !collapsed : collapsed}
+          onCollapse={(value) => setCollapsed(value)}
+          width={240}
+        >
           <div className="logo">
             <Link href="/admin">
               <img src="/logo-text.png" alt="logo" />

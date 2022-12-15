@@ -179,7 +179,7 @@ const PlanUpdate: React.FC = () => {
                   </Option>
                 ))}
             </Select> */}
-            <Form.Item name="poolId" label="Plan ID" id="poolId">
+            <Form.Item name="poolId" label="Pool ID" id="poolId">
               <Input readOnly bordered={false} placeholder={`${poolId}`} />
             </Form.Item>
 
@@ -196,7 +196,7 @@ const PlanUpdate: React.FC = () => {
             </Form.Item>
 
             <Form.Item name="apy" label="APY">
-              <Input size="large" placeholder="Input APY" autoComplete="true" />
+              <Input addonBefore="%" size="large" placeholder="Input APY" autoComplete="true" />
             </Form.Item>
           </Col>
         </Row>

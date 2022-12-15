@@ -1,10 +1,14 @@
-import { useMemo } from 'react'
+import { useMemo, useEffect } from 'react'
 
 import { Col, Form, Row, Select, Space, Table } from 'antd'
 import Link from 'next/link'
 import styled from 'styled-components'
 
 import { useCampaigns, usePollCoreCampaignsData } from 'state/campaigns/hooks'
+import { useRouter } from 'next/router'
+
+import { useAccount } from 'wagmi'
+import useGetOwner from 'hooks/useGetOwner'
 
 const { Option } = Select
 
@@ -125,6 +129,17 @@ const WCampaigns = styled.div`
 
 const Campaigns: React.FC = () => {
   const [form] = Form.useForm()
+  const router = useRouter()
+
+  const { address: account } = useAccount()
+
+  const { owner } = useGetOwner()
+
+  useEffect(() => {
+    if (!account && account !== owner) {
+      router.push('/admin')
+    }
+  }, [account, owner, router])
 
   usePollCoreCampaignsData() // list campaign data
 
@@ -148,8 +163,6 @@ const Campaigns: React.FC = () => {
       })),
     [campaigns],
   )
-
-  console.log(campaignsClone)
 
   const columns = [
     {

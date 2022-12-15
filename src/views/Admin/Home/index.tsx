@@ -21,7 +21,6 @@ const WHome = styled.div`
   border: 1px solid rgb(233, 233, 233);
   height: 100%;
   min-height: 100vh;
-  margin-top: 10px;
   display: flex;
   align-items: center;
   justify-content: center;

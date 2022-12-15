@@ -151,7 +151,7 @@ const CampaignsUpdate: React.FC = () => {
         <Row gutter={32}>
           <Col span={16} offset={4}>
             <Form.Item name="campaignId" label="Campaign ID">
-              <Input size="large" placeholder={`${campaignID}`} readOnly />
+              <Input size="middle" placeholder={`${campaignID}`} readOnly />
             </Form.Item>
 
             <Form.Item name="start" label="Start time" rules={[{ required: true }]}>
@@ -163,7 +163,7 @@ const CampaignsUpdate: React.FC = () => {
             </Form.Item>
 
             <Form.Item name="reward" label="Total Reward" rules={[{ required: true }]}>
-              <Input size="large" placeholder="Total Reward" autoComplete="true" />
+              <Input size="middle" placeholder="Total Reward" autoComplete="true" />
             </Form.Item>
           </Col>
         </Row>

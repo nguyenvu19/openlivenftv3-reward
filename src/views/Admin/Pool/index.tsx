@@ -1,10 +1,15 @@
 /* eslint-disable react/button-has-type */
+import React, { useEffect } from 'react'
+
 import { Form, Select } from 'antd'
 import Link from 'next/link'
 import styled from 'styled-components'
 
 import { useClaimPools } from 'state/staking/fetchPoolList'
 import { useRouter } from 'next/router'
+
+import { useAccount } from 'wagmi'
+import useGetOwner from 'hooks/useGetOwner'
 
 const { Option } = Select
 
@@ -162,6 +167,16 @@ const WPool = styled.div`
 const Pool: React.FC = () => {
   const [form] = Form.useForm()
   const router = useRouter()
+
+  const { address: account } = useAccount()
+
+  const { owner } = useGetOwner()
+
+  useEffect(() => {
+    if (!account && account !== owner) {
+      router.push('/admin')
+    }
+  }, [account, owner, router])
 
   const { poolLists } = useClaimPools()
 
