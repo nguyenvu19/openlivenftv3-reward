@@ -169,6 +169,9 @@ const PlanList: React.FC = () => {
     {
       title: 'Total Pools Staked',
       dataIndex: 'totalStakedAmount',
+      render: (data) => {
+        return data.toLocaleString()
+      },
     },
 
     {

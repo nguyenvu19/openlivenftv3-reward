@@ -1,24 +1,12 @@
 import { useMemo } from 'react'
 
-import { Col, Form, Input, Row, Select, Space, Table } from 'antd'
-import type { ColumnsType } from 'antd/es/table'
+import { Col, Form, Row, Select, Space, Table } from 'antd'
 import Link from 'next/link'
 import styled from 'styled-components'
 
 import { useCampaigns, usePollCoreCampaignsData } from 'state/campaigns/hooks'
 
 const { Option } = Select
-
-interface DataType {
-  id: number
-  currentPool: number
-  start: number
-  finish: number
-  totalPool: number
-  duration: number
-  status: string
-  loading: boolean
-}
 
 const WCampaigns = styled.div`
   width: 100%;
@@ -148,11 +136,22 @@ const Campaigns: React.FC = () => {
       campaigns?.map((campaign) => ({
         ...campaign,
         status: campaign.finish - campaign.start > 0 ? 'Live' : 'End',
+        totalPool: Number(campaign.totalPool).toLocaleString(),
+
+        start: `${new Date(campaign.start).getDay()}/${new Date(campaign.start).getMonth()}/${new Date(
+          campaign.start,
+        ).getFullYear()}`,
+
+        finish: `${new Date(campaign.finish).getDay()}/${new Date(campaign.finish).getMonth()}/${new Date(
+          campaign.finish,
+        ).getFullYear()}`,
       })),
     [campaigns],
   )
 
-  const columns: ColumnsType<any> = [
+  console.log(campaignsClone)
+
+  const columns = [
     {
       title: 'No 1',
       dataIndex: 'id',
@@ -214,7 +213,7 @@ const Campaigns: React.FC = () => {
       <Form form={form} className="zodi-form-campaigns">
         <Row gutter={32}>
           <Col>
-            <Form.Item
+            {/* <Form.Item
               name="title"
               label="Title"
               // onChange={(value) => handleSearchTitle(value.target.value)}
@@ -234,7 +233,7 @@ const Campaigns: React.FC = () => {
                 <Option value>True</Option>
                 <Option value={false}>False</Option>
               </Select>
-            </Form.Item>
+            </Form.Item> */}
           </Col>
         </Row>
       </Form>
