@@ -145,9 +145,7 @@ const WAdminLayout = styled.div`
   }
 
   .header-admin-right {
-    .UserMenu__LabelText-sc-28efc1ca-1 {
-      line-height: 1.5;
-    }
+    line-height: 1.5;
   }
 `
 
