@@ -123,6 +123,9 @@ const columns = [
     title: 'Amount',
     dataIndex: 'amount',
     width: 80,
+    render: (data: any) => {
+      return (data / 1e18).toLocaleString()
+    },
   },
   {
     title: 'TxH',
@@ -143,18 +146,6 @@ const CampaignsHistory: React.FC = () => {
   const { campaignID } = router.query
 
   const { campaignsClaimHistory, setParamsCampaignsClaimHistory } = useCampaignsClaimHistory(String(campaignID))
-  // console.log(campaignsClaimHistory.data.map((campaign) => campaign.amount))
-
-  const campaignsClaimHistoryClone: any[] = useMemo(
-    () =>
-      campaignsClaimHistory?.data.map((campaign) => ({
-        ...campaign,
-        amount: Number(campaign.amount).toLocaleString(),
-      })),
-    [],
-  )
-
-  console.log(campaignsClaimHistoryClone)
 
   const handleSubmit = (values) => {
     const data2 = {}
@@ -190,7 +181,7 @@ const CampaignsHistory: React.FC = () => {
       </Form>
 
       <div className="table-wrapper">
-        <Table columns={columns} dataSource={campaignsClaimHistoryClone} scroll={{ x: 2000 }} />
+        <Table columns={columns} dataSource={campaignsClaimHistory.data} scroll={{ x: 2000 }} />
       </div>
     </WCampaignsHistory>
   )

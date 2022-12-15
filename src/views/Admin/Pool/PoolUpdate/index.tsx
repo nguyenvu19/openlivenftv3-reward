@@ -183,8 +183,8 @@ const PoolUpdate: React.FC = () => {
                 <Input size="large" placeholder="Input contract currency" autoComplete="true" />
               </Form.Item>
 
-              <Form.Item name="lpAddress" label="lpAddress">
-                <Input size="large" placeholder="Input lpAddress" autoComplete="true" />
+              <Form.Item name="lpAddress" label="IP Address">
+                <Input size="large" placeholder="Input IP Address" autoComplete="true" />
               </Form.Item>
             </Col>
           </Row>

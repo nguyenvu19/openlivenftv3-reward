@@ -190,7 +190,7 @@ const CampaignsUpdateRate: React.FC = () => {
         <Row gutter={32}>
           <Col span={16} offset={4}>
             <Form.Item name="campaignId" label="Campaign ID">
-              <Input size="large" placeholder={`${campaignID}`} readOnly />
+              <Input size="middle" placeholder={`${campaignID}`} readOnly />
             </Form.Item>
 
             <div className="custom-repeater-field">
@@ -212,7 +212,7 @@ const CampaignsUpdateRate: React.FC = () => {
                             },
                           ]}
                         >
-                          <Select allowClear size="large" placeholder="STAR">
+                          <Select allowClear size="middle" placeholder="STAR">
                             <Option key="1" value="1">
                               1
                             </Option>
@@ -252,7 +252,7 @@ const CampaignsUpdateRate: React.FC = () => {
                             },
                           ]}
                         >
-                          <Input size="large" placeholder="1000" autoComplete="true" />
+                          <Input size="middle" placeholder="1000" autoComplete="true" />
                         </Form.Item>
 
                         <MinusCircleOutlined className="dynamic-delete-button" onClick={() => remove(name)} />

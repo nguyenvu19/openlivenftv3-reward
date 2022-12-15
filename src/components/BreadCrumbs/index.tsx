@@ -5,6 +5,10 @@ import Link from 'next/link'
 const BreadCrumbs = () => {
   const breadCrumb = useBreadcrumbsPath()
 
+  function isNumeric(value) {
+    return /^-?\d+$/.test(value)
+  }
+
   return (
     <Breadcrumb style={{ marginBottom: '1rem' }}>
       {breadCrumb.map((route) => {

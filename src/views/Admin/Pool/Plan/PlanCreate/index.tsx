@@ -173,7 +173,7 @@ const PlanCreate: React.FC = () => {
             </Form.Item>
 
             <Form.Item name="apy" label="APY">
-              <Input size="large" placeholder="Input APY" autoComplete="true" />
+              <Input addonBefore="%" size="large" placeholder="Input APY" autoComplete="true" />
             </Form.Item>
           </Col>
         </Row>

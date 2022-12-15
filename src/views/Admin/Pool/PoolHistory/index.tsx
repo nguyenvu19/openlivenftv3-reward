@@ -12,112 +12,9 @@ import { useStakingTotalEarnedContract } from 'state/staking/hooks'
 
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import moment from 'moment'
+import { formatCode } from 'helpers/CommonHelper'
 
 const { RangePicker } = DatePicker
-
-export const getFullDate = (date: string): string => {
-  const dateAndTime = date.split('T')
-
-  return dateAndTime[0].split('-').reverse().join('-')
-}
-
-const columnsDeposit = [
-  {
-    title: 'Pool ID',
-    dataIndex: 'poolId',
-  },
-  {
-    title: 'Plan ID',
-    dataIndex: 'planId',
-  },
-  {
-    title: 'ID',
-    dataIndex: 'id',
-  },
-  {
-    title: 'Amount',
-    dataIndex: 'amount',
-  },
-  {
-    title: 'Status',
-    dataIndex: 'status',
-  },
-  {
-    title: 'Transaction Hash',
-    dataIndex: 'transactionHash',
-  },
-  {
-    title: 'User Address',
-    dataIndex: 'userAddress',
-  },
-  {
-    title: 'Create time',
-    dataIndex: 'createdTime',
-    render: (record) => {
-      return (
-        <div>
-          <p>{moment(record.invoice_id).format('DD/MM/YYYY')}</p>
-        </div>
-      )
-    },
-  },
-  {
-    title: 'End time',
-    dataIndex: 'endTime',
-    render: (record) => {
-      return (
-        <div>
-          <p>{moment(record.invoice_id).format('DD/MM/YYYY')}</p>
-        </div>
-      )
-    },
-  },
-]
-
-const columnsWithdraw = [
-  {
-    title: 'Pool ID',
-    dataIndex: 'poolId',
-  },
-  {
-    title: 'Plan ID',
-    dataIndex: 'planId',
-  },
-  {
-    title: 'ID',
-    dataIndex: 'id',
-  },
-  {
-    title: 'Transaction Hash',
-    dataIndex: 'transactionHash',
-  },
-  {
-    title: 'User Address',
-    dataIndex: 'userAddress',
-  },
-  {
-    title: 'Create time',
-    dataIndex: 'createdTime',
-    render: (record) => {
-      return (
-        <div>
-          <p>{moment(record.invoice_id).format('DD/MM/YYYY')}</p>
-        </div>
-      )
-    },
-  },
-  {
-    title: 'Start time',
-    dataIndex: 'startTime',
-    render: (record) => {
-      return (
-        <div>
-          <p>{moment(record.invoice_id).format('DD/MM/YYYY')}</p>
-        </div>
-      )
-    },
-  },
-]
 
 const WPoolHistory = styled.div`
   width: 100%;
@@ -253,6 +150,71 @@ const PoolHistory: React.FC = () => {
 
   const [form] = Form.useForm()
 
+  const columnsDeposit = [
+    {
+      title: 'Pool ID',
+      dataIndex: 'poolId',
+    },
+    {
+      title: 'Plan ID',
+      dataIndex: 'planId',
+    },
+    {
+      title: 'ID',
+      dataIndex: 'id',
+      render: (data) => {
+        return formatCode(data, 5, 3)
+      },
+    },
+    {
+      title: 'Amount',
+      dataIndex: 'amount',
+    },
+    {
+      title: 'Status',
+      dataIndex: 'status',
+      render: (data) => {
+        return Number(data) === 1 ? 'Live' : 'Ended'
+      },
+    },
+    {
+      title: 'Transaction Hash',
+      dataIndex: 'transactionHash',
+      render: (data) => {
+        return formatCode(data, 5, 3)
+      },
+    },
+    {
+      title: 'User Address',
+      dataIndex: 'userAddress',
+      render: (data) => {
+        return formatCode(data, 5, 3)
+      },
+    },
+    {
+      title: 'Create time',
+      dataIndex: 'createdTime',
+      render: (record) => {
+        return (
+          <div>
+            <p>{moment(record.invoice_id).format('DD/MM/YYYY')}</p>
+          </div>
+        )
+      },
+    },
+    {
+      title: 'End time',
+      dataIndex: 'endTime',
+      render: (record) => {
+        return (
+          <div>
+            <p>{moment(record.invoice_id).format('DD/MM/YYYY')}</p>
+          </div>
+        )
+      },
+    },
+  ]
+
   // Get data from deposit history with graph
   const { stakingDepositHistories } = useClaimDepositHistories()
   const depositHistories = stakingDepositHistories.dataDeposit
@@ -261,10 +223,64 @@ const PoolHistory: React.FC = () => {
     () =>
       depositHistories?.map((campaign) => ({
         ...campaign,
-        amount: Number(campaign.amount).toLocaleString(),
+        amount: (Number(campaign.amount) / 1e18).toLocaleString(),
       })),
     [depositHistories],
   )
+
+  const columnsWithdraw = [
+    {
+      title: 'Pool ID',
+      dataIndex: 'poolId',
+    },
+    {
+      title: 'Plan ID',
+      dataIndex: 'planId',
+    },
+    {
+      title: 'ID',
+      dataIndex: 'id',
+      render: (data) => {
+        return formatCode(data, 5, 3)
+      },
+    },
+    {
+      title: 'Transaction Hash',
+      dataIndex: 'transactionHash',
+      render: (data) => {
+        return formatCode(data, 5, 3)
+      },
+    },
+    {
+      title: 'User Address',
+      dataIndex: 'userAddress',
+      render: (data) => {
+        return formatCode(data, 5, 3)
+      },
+    },
+    {
+      title: 'Create time',
+      dataIndex: 'createdTime',
+      render: (record) => {
+        return (
+          <div>
+            <p>{moment(record.invoice_id).format('DD/MM/YYYY')}</p>
+          </div>
+        )
+      },
+    },
+    {
+      title: 'Start time',
+      dataIndex: 'startTime',
+      render: (record) => {
+        return (
+          <div>
+            <p>{moment(record.invoice_id).format('DD/MM/YYYY')}</p>
+          </div>
+        )
+      },
+    },
+  ]
 
   // Get data from withDraw history with graph
   const { stakingWithdrawHistories } = useClaimWithdrawHistories()
@@ -287,6 +303,10 @@ const PoolHistory: React.FC = () => {
 
   const handleCheckBox = (e: CheckboxChangeEvent) => {
     setSelected(e.target.value)
+  }
+
+  const handleSearch = (e) => {
+    return e.target.value
   }
 
   return (
@@ -320,7 +340,7 @@ const PoolHistory: React.FC = () => {
             <Row gutter={32}>
               <Col span={8}>
                 <Form.Item name="Address" label="Address">
-                  <Input size="middle" autoComplete="true" />
+                  <Input size="middle" autoComplete="true" onChange={handleSearch} />
                 </Form.Item>
               </Col>
               <Col span={8}>
@@ -339,9 +359,9 @@ const PoolHistory: React.FC = () => {
 
         <div className="history-content-middle">
           {selected === 'Deposit' ? (
-            <Table columns={columnsDeposit} dataSource={depositHistoriesClone} scroll={{ x: 2100 }} />
+            <Table columns={columnsDeposit} dataSource={depositHistoriesClone} scroll={{ x: 1000 }} />
           ) : (
-            <Table columns={columnsWithdraw} dataSource={withdrawHistoriesClone} scroll={{ x: 1800 }} />
+            <Table columns={columnsWithdraw} dataSource={withdrawHistoriesClone} scroll={{ x: 800 }} />
           )}
         </div>
       </div>
