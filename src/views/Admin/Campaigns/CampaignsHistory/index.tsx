@@ -7,7 +7,8 @@ import { useRouter } from 'next/router'
 import styled from 'styled-components'
 
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import useGetOwner from 'hooks/useGetOwner'
+import { useSelector } from 'react-redux'
+import { AppState } from '../../../../state/index'
 
 const WCampaignsHistory = styled.div`
   width: 100%;
@@ -146,11 +147,10 @@ const CampaignsHistory: React.FC = () => {
   const router = useRouter()
 
   const { account } = useActiveWeb3React()
-
-  const { owner } = useGetOwner()
+  const { owner } = useSelector((state: AppState) => state.admin)
 
   useEffect(() => {
-    if (!account || account !== owner) {
+    if (!account || account.toLowerCase() !== String(owner).toLowerCase()) {
       router.push('/admin')
     }
   }, [account, owner, router])

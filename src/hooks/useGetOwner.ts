@@ -3,7 +3,7 @@ import { useContractStaking } from 'hooks/useContract'
 
 const useGetOwner = () => {
   const contractStaking = useContractStaking()
-  const [owner, setOwner] = useState<any | undefined>(0)
+  const [owner, setOwner] = useState<any | undefined>('')
 
   const fetchOwner = useCallback(async () => {
     if (contractStaking) {

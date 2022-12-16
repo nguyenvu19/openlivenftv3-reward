@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import styled from 'styled-components'
 
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import useGetOwner from 'hooks/useGetOwner'
+import { useGetOwner } from 'state/admin/hook'
 
 import UserMenu from 'components/Menu/UserMenu'
 
@@ -30,8 +30,10 @@ const Home: React.FC = () => {
   const { owner } = useGetOwner()
 
   useEffect(() => {
-    if (!account || account !== owner) {
+    if (!account || account.toLowerCase() !== String(owner).toLowerCase()) {
       router.push('/admin')
+    } else {
+      router.push('/admin/campaigns')
     }
   }, [account, owner, router])
 

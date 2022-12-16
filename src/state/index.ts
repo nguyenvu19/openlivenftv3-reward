@@ -20,6 +20,7 @@ import nfts from './nfts/reducer'
 import tokenInfo from './tokenInfo/reducer'
 import farmsOpv from './farmsOpv/reducer'
 import staking from './staking/reducer'
+import admin from './admin/reducer'
 
 const PERSISTED_KEYS: string[] = ['user', 'transactions']
 
@@ -53,6 +54,8 @@ const persistedReducer = persistReducer(
     mint,
     burn,
     multicall,
+
+    admin,
   }),
 )
 

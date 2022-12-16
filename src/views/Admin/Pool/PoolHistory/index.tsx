@@ -12,7 +12,8 @@ import { formatCode } from 'helpers/CommonHelper'
 import moment from 'moment'
 
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import useGetOwner from 'hooks/useGetOwner'
+import { useSelector } from 'react-redux'
+import { AppState } from '../../../../state/index'
 
 const { RangePicker } = DatePicker
 
@@ -152,11 +153,10 @@ const PoolHistory: React.FC = () => {
   const [selected, setSelected] = useState('Deposit')
 
   const { account } = useActiveWeb3React()
-
-  const { owner } = useGetOwner()
+  const { owner } = useSelector((state: AppState) => state.admin)
 
   useEffect(() => {
-    if (!account || account !== owner) {
+    if (!account || account.toLowerCase() !== String(owner).toLowerCase()) {
       router.push('/admin')
     }
   }, [account, owner, router])

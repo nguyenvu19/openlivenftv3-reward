@@ -8,7 +8,8 @@ import { useRouter } from 'next/router'
 import { useCampaigns, usePollCoreCampaignsData } from 'state/campaigns/hooks'
 
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import useGetOwner from 'hooks/useGetOwner'
+import { useSelector } from 'react-redux'
+import { AppState } from '../../../state/index'
 
 const { Option } = Select
 
@@ -133,10 +134,10 @@ const Campaigns: React.FC = () => {
 
   const { account } = useActiveWeb3React()
 
-  const { owner } = useGetOwner()
+  const { owner } = useSelector((state: AppState) => state.admin)
 
   useEffect(() => {
-    if (!account || account !== owner) {
+    if (!account || account.toLowerCase() !== String(owner).toLowerCase()) {
       router.push('/admin')
     }
   }, [account, owner, router])

@@ -8,7 +8,8 @@ import styled from 'styled-components'
 import { useStakingListData } from 'state/staking/fetchStakingList'
 
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import useGetOwner from 'hooks/useGetOwner'
+import { useSelector } from 'react-redux'
+import { AppState } from '../../../../state/index'
 
 const WPlanList = styled.div`
   width: 100%;
@@ -127,7 +128,7 @@ const WPlanList = styled.div`
     }
 
     .ant-table-tbody {
-      .ant-table-cell:last-child {
+      .ant-space-item:last-child {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -137,7 +138,6 @@ const WPlanList = styled.div`
         text-shadow: rgb(0 0 0 / 12%) 0px -1px 0px;
         box-shadow: rgb(0 0 0 / 4%) 0px 2px;
         color: rgb(33, 37, 41) !important;
-        margin: 0 0 10px 0;
       }
     }
   }
@@ -149,10 +149,10 @@ const PlanList: React.FC = () => {
 
   const { account } = useActiveWeb3React()
 
-  const { owner } = useGetOwner()
+  const { owner } = useSelector((state: AppState) => state.admin)
 
   useEffect(() => {
-    if (!account || account !== owner) {
+    if (!account || account.toLowerCase() !== String(owner).toLowerCase()) {
       router.push('/admin')
     }
   }, [account, owner, router])
