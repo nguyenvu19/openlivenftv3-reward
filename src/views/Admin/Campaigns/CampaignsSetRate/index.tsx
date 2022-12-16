@@ -14,7 +14,7 @@ import useCatchTxErrorMessage from 'hooks/useCatchTxErrorMessage'
 import { useContractCampaigns } from 'hooks/useContract'
 import { useTransactionAdder } from 'state/transactions/hooks'
 
-import { useAccount } from 'wagmi'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import useGetOwner from 'hooks/useGetOwner'
 
 const WCampaignsSetRate = styled.div`
@@ -141,7 +141,7 @@ const CampaignsSetRate: React.FC = () => {
   const [stakingLoading, setStakingLoading] = useState(false)
   const [amount, setAmount] = useState<string | number>('')
 
-  const { address: account } = useAccount()
+  const { account } = useActiveWeb3React()
 
   const { owner } = useGetOwner()
 

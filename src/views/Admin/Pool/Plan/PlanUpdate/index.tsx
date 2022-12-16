@@ -10,8 +10,8 @@ import useCatchTxErrorMessage from 'hooks/useCatchTxErrorMessage'
 import { useContractStaking } from 'hooks/useContract'
 import { useTransactionAdder } from 'state/transactions/hooks'
 
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import useGetOwner from 'hooks/useGetOwner'
-import { useAccount } from 'wagmi'
 
 const WPlanUpdate = styled.div`
   width: 100%;
@@ -126,7 +126,7 @@ const PlanUpdate: React.FC = () => {
   const [stakingLoading, setStakingLoading] = useState(false)
   const [amount, setAmount] = useState<string | number>('')
 
-  const { address: account } = useAccount()
+  const { account } = useActiveWeb3React()
 
   const { owner } = useGetOwner()
 

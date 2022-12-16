@@ -7,8 +7,8 @@ import styled from 'styled-components'
 
 import { useStakingListData } from 'state/staking/fetchStakingList'
 
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import useGetOwner from 'hooks/useGetOwner'
-import { useAccount } from 'wagmi'
 
 const WPlanList = styled.div`
   width: 100%;
@@ -147,7 +147,7 @@ const PlanList: React.FC = () => {
   const [form] = Form.useForm()
   const router = useRouter()
 
-  const { address: account } = useAccount()
+  const { account } = useActiveWeb3React()
 
   const { owner } = useGetOwner()
 

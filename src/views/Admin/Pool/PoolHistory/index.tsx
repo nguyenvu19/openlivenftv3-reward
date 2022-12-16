@@ -11,8 +11,8 @@ import { useClaimDepositHistories, useClaimWithdrawHistories } from 'state/staki
 import { formatCode } from 'helpers/CommonHelper'
 import moment from 'moment'
 
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import useGetOwner from 'hooks/useGetOwner'
-import { useAccount } from 'wagmi'
 
 const { RangePicker } = DatePicker
 
@@ -151,7 +151,7 @@ const PoolHistory: React.FC = () => {
 
   const [selected, setSelected] = useState('Deposit')
 
-  const { address: account } = useAccount()
+  const { account } = useActiveWeb3React()
 
   const { owner } = useGetOwner()
 

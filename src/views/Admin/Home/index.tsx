@@ -1,18 +1,13 @@
 import React, { useEffect } from 'react'
 
-import styled from 'styled-components'
-import { Button, Col, Form, Input, Row } from 'antd'
+import { Form } from 'antd'
 import { useRouter } from 'next/router'
+import styled from 'styled-components'
 
-import { useWeb3React } from '@pancakeswap/wagmi'
-import { useAccount } from 'wagmi'
-
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import useGetOwner from 'hooks/useGetOwner'
 
-import { useContractFarm, useContractStaking } from 'hooks/useContract'
-
 import UserMenu from 'components/Menu/UserMenu'
-import ConnectWalletButton from 'components/ConnectWalletButton'
 
 const WHome = styled.div`
   width: 100%;
@@ -30,7 +25,7 @@ const Home: React.FC = () => {
   const [form] = Form.useForm()
   const router = useRouter()
 
-  const { address: account } = useAccount()
+  const { account } = useActiveWeb3React()
 
   const { owner } = useGetOwner()
 

@@ -1,13 +1,13 @@
-import { useMemo, useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 
 import { Col, Form, Row, Select, Space, Table } from 'antd'
 import Link from 'next/link'
 import styled from 'styled-components'
 
-import { useCampaigns, usePollCoreCampaignsData } from 'state/campaigns/hooks'
 import { useRouter } from 'next/router'
+import { useCampaigns, usePollCoreCampaignsData } from 'state/campaigns/hooks'
 
-import { useAccount } from 'wagmi'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import useGetOwner from 'hooks/useGetOwner'
 
 const { Option } = Select
@@ -131,7 +131,7 @@ const Campaigns: React.FC = () => {
   const [form] = Form.useForm()
   const router = useRouter()
 
-  const { address: account } = useAccount()
+  const { account } = useActiveWeb3React()
 
   const { owner } = useGetOwner()
 

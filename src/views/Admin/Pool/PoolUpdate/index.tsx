@@ -1,17 +1,15 @@
 import { Button, Col, Form, Input, Row } from 'antd'
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
-
-import { toLocaleString } from 'utils'
 
 import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
 import useCatchTxErrorMessage from 'hooks/useCatchTxErrorMessage'
 import { useContractStaking } from 'hooks/useContract'
 import { useTransactionAdder } from 'state/transactions/hooks'
 
-import { useAccount } from 'wagmi'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import useGetOwner from 'hooks/useGetOwner'
 
 const WPoolUpdate = styled.div`
@@ -129,7 +127,7 @@ const PoolUpdate: React.FC = () => {
 
   const { poolId } = router.query
 
-  const { address: account } = useAccount()
+  const { account } = useActiveWeb3React()
 
   const { owner } = useGetOwner()
 

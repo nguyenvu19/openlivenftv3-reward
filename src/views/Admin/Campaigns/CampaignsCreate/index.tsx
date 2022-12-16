@@ -12,7 +12,7 @@ import { useContractCampaigns } from 'hooks/useContract'
 import { useTransactionAdder } from 'state/transactions/hooks'
 
 import useGetOwner from 'hooks/useGetOwner'
-import { useAccount } from 'wagmi'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 
 const WCampaignsCreate = styled.div`
   width: 100%;
@@ -105,7 +105,7 @@ const CampaignsCreate: React.FC = () => {
   const [form] = Form.useForm()
   const router = useRouter()
 
-  const { address: account } = useAccount()
+  const { account } = useActiveWeb3React()
 
   const { owner } = useGetOwner()
 
