@@ -1,14 +1,15 @@
-import { useMemo, useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 
 import { Col, Form, Row, Select, Space, Table } from 'antd'
 import Link from 'next/link'
 import styled from 'styled-components'
 
-import { useCampaigns, usePollCoreCampaignsData } from 'state/campaigns/hooks'
 import { useRouter } from 'next/router'
+import { useCampaigns, usePollCoreCampaignsData } from 'state/campaigns/hooks'
 
-import { useAccount } from 'wagmi'
-import useGetOwner from 'hooks/useGetOwner'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import { useSelector } from 'react-redux'
+import { AppState } from '../../../state/index'
 
 const { Option } = Select
 
@@ -131,12 +132,12 @@ const Campaigns: React.FC = () => {
   const [form] = Form.useForm()
   const router = useRouter()
 
-  const { address: account } = useAccount()
+  const { account } = useActiveWeb3React()
 
-  const { owner } = useGetOwner()
+  const { owner } = useSelector((state: AppState) => state.admin)
 
   useEffect(() => {
-    if (!account || account !== owner) {
+    if (!account || account.toLowerCase() !== String(owner).toLowerCase()) {
       router.push('/admin')
     }
   }, [account, owner, router])

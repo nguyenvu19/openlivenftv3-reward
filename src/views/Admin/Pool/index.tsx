@@ -5,11 +5,12 @@ import { Form, Select } from 'antd'
 import Link from 'next/link'
 import styled from 'styled-components'
 
-import { useClaimPools } from 'state/staking/fetchPoolList'
 import { useRouter } from 'next/router'
+import { useClaimPools } from 'state/staking/fetchPoolList'
 
-import { useAccount } from 'wagmi'
-import useGetOwner from 'hooks/useGetOwner'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import { useSelector } from 'react-redux'
+import { AppState } from '../../../state/index'
 
 const { Option } = Select
 
@@ -168,12 +169,11 @@ const Pool: React.FC = () => {
   const [form] = Form.useForm()
   const router = useRouter()
 
-  const { address: account } = useAccount()
-
-  const { owner } = useGetOwner()
+  const { account } = useActiveWeb3React()
+  const { owner } = useSelector((state: AppState) => state.admin)
 
   useEffect(() => {
-    if (!account || account !== owner) {
+    if (!account || account.toLowerCase() !== String(owner).toLowerCase()) {
       router.push('/admin')
     }
   }, [account, owner, router])

@@ -14,8 +14,9 @@ import useCatchTxErrorMessage from 'hooks/useCatchTxErrorMessage'
 import { useContractCampaigns } from 'hooks/useContract'
 import { useTransactionAdder } from 'state/transactions/hooks'
 
-import { useAccount } from 'wagmi'
-import useGetOwner from 'hooks/useGetOwner'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import { useSelector } from 'react-redux'
+import { AppState } from '../../../../state/index'
 
 const WCampaignsSetRate = styled.div`
   width: 100%;
@@ -141,12 +142,12 @@ const CampaignsSetRate: React.FC = () => {
   const [stakingLoading, setStakingLoading] = useState(false)
   const [amount, setAmount] = useState<string | number>('')
 
-  const { address: account } = useAccount()
+  const { account } = useActiveWeb3React()
 
-  const { owner } = useGetOwner()
+  const { owner } = useSelector((state: AppState) => state.admin)
 
   useEffect(() => {
-    if (!account || account !== owner) {
+    if (!account || account.toLowerCase() !== String(owner).toLowerCase()) {
       router.push('/admin')
     }
   }, [account, owner, router])

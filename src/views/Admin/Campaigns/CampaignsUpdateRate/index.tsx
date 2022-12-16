@@ -1,8 +1,8 @@
+import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
 import { Button, Col, Form, Input, Row, Select } from 'antd'
 import { Option } from 'antd/lib/mentions'
-import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
 
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
@@ -14,8 +14,9 @@ import useCatchTxErrorMessage from 'hooks/useCatchTxErrorMessage'
 import { useContractCampaigns } from 'hooks/useContract'
 import { useTransactionAdder } from 'state/transactions/hooks'
 
-import { useAccount } from 'wagmi'
-import useGetOwner from 'hooks/useGetOwner'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import { useSelector } from 'react-redux'
+import { AppState } from '../../../../state/index'
 
 const WCampaignsUpdateRate = styled.div`
   width: 100%;
@@ -141,12 +142,11 @@ const CampaignsUpdateRate: React.FC = () => {
   const [stakingLoading, setStakingLoading] = useState(false)
   const [amount, setAmount] = useState<string | number>('')
 
-  const { address: account } = useAccount()
-
-  const { owner } = useGetOwner()
+  const { account } = useActiveWeb3React()
+  const { owner } = useSelector((state: AppState) => state.admin)
 
   useEffect(() => {
-    if (!account || account !== owner) {
+    if (!account || account.toLowerCase() !== String(owner).toLowerCase()) {
       router.push('/admin')
     }
   }, [account, owner, router])

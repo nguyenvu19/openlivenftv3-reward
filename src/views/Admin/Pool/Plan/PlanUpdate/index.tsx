@@ -1,4 +1,4 @@
-import { Button, Col, Form, Input, Row } from 'antd'
+import { Button, Col, Form, Input, Row, DatePicker } from 'antd'
 
 import React, { useEffect, useState } from 'react'
 
@@ -10,8 +10,9 @@ import useCatchTxErrorMessage from 'hooks/useCatchTxErrorMessage'
 import { useContractStaking } from 'hooks/useContract'
 import { useTransactionAdder } from 'state/transactions/hooks'
 
-import useGetOwner from 'hooks/useGetOwner'
-import { useAccount } from 'wagmi'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import { useSelector } from 'react-redux'
+import { AppState } from '../../../../../state/index'
 
 const WPlanUpdate = styled.div`
   width: 100%;
@@ -126,12 +127,12 @@ const PlanUpdate: React.FC = () => {
   const [stakingLoading, setStakingLoading] = useState(false)
   const [amount, setAmount] = useState<string | number>('')
 
-  const { address: account } = useAccount()
+  const { account } = useActiveWeb3React()
 
-  const { owner } = useGetOwner()
+  const { owner } = useSelector((state: AppState) => state.admin)
 
   useEffect(() => {
-    if (!account || account !== owner) {
+    if (!account || account.toLowerCase() !== String(owner).toLowerCase()) {
       router.push('/admin')
     }
   }, [account, owner, router])
@@ -145,7 +146,7 @@ const PlanUpdate: React.FC = () => {
     const updatePoolParams = {
       poolId,
       planId,
-      time: values.time,
+      time: (values.time._d.getTime() / 1000).toFixed().toString(),
       periods: values.periods,
       apy: values.apy,
     }
@@ -200,7 +201,7 @@ const PlanUpdate: React.FC = () => {
             </Form.Item>
 
             <Form.Item name="time" label="Time">
-              <Input size="large" placeholder="Input Time" autoComplete="true" />
+              <DatePicker style={{ width: '100%' }} autoComplete="true" />
             </Form.Item>
 
             <Form.Item name="periods" label="Periods">

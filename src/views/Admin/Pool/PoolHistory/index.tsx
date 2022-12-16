@@ -11,8 +11,9 @@ import { useClaimDepositHistories, useClaimWithdrawHistories } from 'state/staki
 import { formatCode } from 'helpers/CommonHelper'
 import moment from 'moment'
 
-import useGetOwner from 'hooks/useGetOwner'
-import { useAccount } from 'wagmi'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import { useSelector } from 'react-redux'
+import { AppState } from '../../../../state/index'
 
 const { RangePicker } = DatePicker
 
@@ -151,12 +152,11 @@ const PoolHistory: React.FC = () => {
 
   const [selected, setSelected] = useState('Deposit')
 
-  const { address: account } = useAccount()
-
-  const { owner } = useGetOwner()
+  const { account } = useActiveWeb3React()
+  const { owner } = useSelector((state: AppState) => state.admin)
 
   useEffect(() => {
-    if (!account || account !== owner) {
+    if (!account || account.toLowerCase() !== String(owner).toLowerCase()) {
       router.push('/admin')
     }
   }, [account, owner, router])
