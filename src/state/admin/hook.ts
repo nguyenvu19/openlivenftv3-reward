@@ -15,12 +15,12 @@ export const useGetOwner = () => {
       const owner1 = await contractStaking.owner()
       setOwnerContract(owner1)
     }
-  }, [contractStaking])
+    dispatch(setOwner({ owner: ownerContract }))
+  }, [contractStaking, dispatch, ownerContract])
 
   useEffect(() => {
     fetchOwner()
-    dispatch(setOwner({ owner: ownerContract }))
-  }, [dispatch, fetchOwner, ownerContract])
+  }, [fetchOwner])
 
   const { owner } = useSelector((state: AppState) => state.admin)
 
