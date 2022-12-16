@@ -35,8 +35,8 @@ const Home: React.FC = () => {
   const { owner } = useGetOwner()
 
   useEffect(() => {
-    if (account && account === owner) {
-      router.push('/admin/campaigns')
+    if (!account || account !== owner) {
+      router.push('/admin')
     }
   }, [account, owner, router])
 

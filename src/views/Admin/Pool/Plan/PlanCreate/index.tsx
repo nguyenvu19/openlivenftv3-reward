@@ -112,7 +112,7 @@ const PlanCreate: React.FC = () => {
   const { owner } = useGetOwner()
 
   useEffect(() => {
-    if (!account && account !== owner) {
+    if (!account || account !== owner) {
       router.push('/admin')
     }
   }, [account, owner, router])

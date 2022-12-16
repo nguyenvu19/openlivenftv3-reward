@@ -1,5 +1,5 @@
 import { Button, Col, Form, Input, Row } from 'antd'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
@@ -10,6 +10,9 @@ import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
 import useCatchTxErrorMessage from 'hooks/useCatchTxErrorMessage'
 import { useContractStaking } from 'hooks/useContract'
 import { useTransactionAdder } from 'state/transactions/hooks'
+
+import { useAccount } from 'wagmi'
+import useGetOwner from 'hooks/useGetOwner'
 
 const WPoolUpdate = styled.div`
   width: 100%;
@@ -126,6 +129,16 @@ const PoolUpdate: React.FC = () => {
 
   const { poolId } = router.query
 
+  const { address: account } = useAccount()
+
+  const { owner } = useGetOwner()
+
+  useEffect(() => {
+    if (!account || account !== owner) {
+      router.push('/admin')
+    }
+  }, [account, owner, router])
+
   const [errorMess, setErrorMess] = useState('')
   const [stakingLoading, setStakingLoading] = useState(false)
   const [amount, setAmount] = useState<string | number>('')
@@ -141,7 +154,6 @@ const PoolUpdate: React.FC = () => {
       rewardAddress: values.rewardAddress,
       lpAddress: values.lpAddress,
     }
-    console.log(updatePoolParams)
     setErrorMess('')
     setStakingLoading(true)
 
