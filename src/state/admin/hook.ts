@@ -1,25 +1,45 @@
 import { useCallback, useEffect } from 'react'
-import { useContractStaking } from 'hooks/useContract'
+import { useContractStaking, useContractCampaigns } from 'hooks/useContract'
 import { useDispatch, useSelector } from 'react-redux'
-import { setOwner } from './actions'
+import { setOwnerStaking, setOwnerContract } from './actions'
 import { AppState } from '../index'
 
-export const useGetOwner = () => {
+export const useGetOwnerStaking = () => {
   const dispatch = useDispatch()
   const contractStaking = useContractStaking()
 
-  const fetchOwner = useCallback(async () => {
+  const fetchOwnerStaking = useCallback(async () => {
     if (contractStaking) {
-      const owner = await contractStaking.owner()
-      dispatch(setOwner({ owner }))
+      const ownerStaking = await contractStaking.owner()
+      dispatch(setOwnerStaking({ ownerStaking }))
     }
   }, [contractStaking, dispatch])
 
   useEffect(() => {
-    fetchOwner()
-  }, [fetchOwner])
+    fetchOwnerStaking()
+  }, [fetchOwnerStaking])
 
-  const { owner } = useSelector((state: AppState) => state.admin)
+  const { ownerStake } = useSelector((state: AppState) => state.admin)
 
-  return { owner }
+  return { ownerStake }
+}
+
+export const useGetOwnerContract = () => {
+  const dispatch = useDispatch()
+  const contractContract = useContractCampaigns()
+
+  const fetchOwnerContract = useCallback(async () => {
+    if (contractContract) {
+      const ownerContract = await contractContract.owner()
+      dispatch(setOwnerContract({ ownerContract }))
+    }
+  }, [contractContract, dispatch])
+
+  useEffect(() => {
+    fetchOwnerContract()
+  }, [fetchOwnerContract])
+
+  const { ownerContract } = useSelector((state: AppState) => state.admin)
+
+  return { ownerContract }
 }

@@ -1,12 +1,12 @@
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { DollarOutlined, GroupOutlined, HomeOutlined, MenuOutlined } from '@ant-design/icons'
 import { Layout, Menu, MenuProps, Space, Spin } from 'antd'
 import styled from 'styled-components'
 import BreadCrumbs from 'components/BreadCrumbs'
 
-import { useGetOwner } from 'state/admin/hook'
+import { useGetOwnerStaking, useGetOwnerContract } from 'state/admin/hook'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import UserMenu from '../../Menu/UserMenu'
@@ -177,13 +177,67 @@ const items: MenuItem[] = [
 const AdminLayout = ({ children }: any) => {
   const router = useRouter()
   const { account } = useActiveWeb3React()
-  const { owner } = useGetOwner()
+
+  const { ownerStake } = useGetOwnerStaking()
+  const { ownerContract } = useGetOwnerContract()
+  const [checkOwner, setCheckOwner] = useState('')
 
   const [collapsed, setCollapsed] = useState(false)
 
+  // useEffect(() => {
+  //   switch (router.pathname) {
+  //     case '/admin/campaigns':
+  //       setCheckOwner(ownerContract)
+  //       break
+
+  //     case '/admin/pool':
+  //       setCheckOwner(ownerStaking)
+  //       break
+
+  //     default:
+  //       setCheckOwner('')
+  //       break
+  //   }
+  // }, [ownerContract, ownerStaking, router])
+
   const { isMobile, isTablet } = useMatchBreakpoints()
 
-  if (!owner) {
+  const [isOwner, setIsOwner] = useState(false)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    switch (router.pathname) {
+      case '/admin':
+        if (ownerContract || ownerStake) {
+          setIsOwner(
+            account?.toLowerCase() === ownerContract?.toLowerCase() ||
+              account?.toLowerCase() === ownerStake?.toLowerCase(),
+          )
+
+          setLoading(false)
+        }
+        break
+
+      case '/admin/campaigns':
+        if (ownerContract) {
+          setIsOwner(account?.toLowerCase() === ownerContract?.toLowerCase())
+          setLoading(false)
+        }
+        break
+
+      case '/admin/pool':
+        if (ownerStake) {
+          setIsOwner(account?.toLowerCase() === ownerStake?.toLowerCase())
+          setLoading(false)
+        }
+        break
+
+      default:
+        break
+    }
+  }, [account, ownerContract, ownerStake, router])
+
+  if (loading) {
     return (
       <RequireLoginStyled>
         <Spin />
@@ -197,7 +251,7 @@ const AdminLayout = ({ children }: any) => {
       </RequireLoginStyled>
     )
   }
-  if (account?.toLowerCase() !== owner?.toLowerCase()) {
+  if (!isOwner) {
     return <RequireLoginStyled>You do not have access to this site</RequireLoginStyled>
   }
   return (
@@ -225,18 +279,6 @@ const AdminLayout = ({ children }: any) => {
             items={items}
             onClick={(e) => router.push(e.key)}
           />
-          {/* <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-            <Menu.Item key="/admin" icon={<HomeOutlined />}>
-              <Link href="/admin">Admin</Link>
-            </Menu.Item>
-
-            <Menu.SubMenu key="/campaigns" title="Campaigns" icon={<GroupOutlined />}>
-              <Link href="/admin/campaigns">Campaigns</Link>
-              <Menu.Item key="/admin/campaigns/create">
-                <Link href="/admin/campaigns/create">Create Campaigns</Link>
-              </Menu.Item>
-            </Menu.SubMenu>
-          </Menu> */}
           ;
         </Sider>
 
@@ -272,8 +314,6 @@ const AdminLayout = ({ children }: any) => {
           </Content>
         </Layout>
       </Layout>
-
-      {/* <div className="inner">{children}</div> */}
     </WAdminLayout>
   )
 }

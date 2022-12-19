@@ -3,6 +3,7 @@ import type { CheckboxChangeEvent } from 'antd/es/checkbox'
 
 import React, { useMemo, useState } from 'react'
 
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
 
@@ -10,6 +11,8 @@ import { useClaimDepositHistories, useClaimWithdrawHistories } from 'state/staki
 
 import { formatCode } from 'helpers/CommonHelper'
 import moment from 'moment'
+import { getBlockExploreLink } from 'utils'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 
 const { RangePicker } = DatePicker
 
@@ -144,6 +147,7 @@ const WPoolHistory = styled.div`
 const PoolHistory: React.FC = () => {
   const [form] = Form.useForm()
   const router = useRouter()
+  const { chainId } = useActiveWeb3React()
   const checkList = ['Deposit', 'Withdraw']
 
   const [selected, setSelected] = useState('Deposit')
@@ -158,10 +162,14 @@ const PoolHistory: React.FC = () => {
       dataIndex: 'planId',
     },
     {
-      title: 'ID',
+      title: 'User',
       dataIndex: 'id',
       render: (data) => {
-        return formatCode(data, 5, 3)
+        return (
+          <a href={getBlockExploreLink(data, 'transaction', chainId)} target="_blank" rel="noreferrer">
+            {formatCode(data, 5, 5)}
+          </a>
+        )
       },
     },
     {
@@ -179,14 +187,22 @@ const PoolHistory: React.FC = () => {
       title: 'Transaction Hash',
       dataIndex: 'transactionHash',
       render: (data) => {
-        return formatCode(data, 5, 3)
+        return (
+          <a href={getBlockExploreLink(data, 'transaction', chainId)} target="_blank" rel="noreferrer">
+            {formatCode(data, 5, 5)}
+          </a>
+        )
       },
     },
     {
       title: 'User Address',
       dataIndex: 'userAddress',
       render: (data) => {
-        return formatCode(data, 5, 3)
+        return (
+          <a href={getBlockExploreLink(data, 'transaction', chainId)} target="_blank" rel="noreferrer">
+            {formatCode(data, 5, 5)}
+          </a>
+        )
       },
     },
     {
@@ -236,24 +252,36 @@ const PoolHistory: React.FC = () => {
       dataIndex: 'planId',
     },
     {
-      title: 'ID',
+      title: 'User',
       dataIndex: 'id',
       render: (data) => {
-        return formatCode(data, 5, 3)
+        return (
+          <a href={getBlockExploreLink(data, 'transaction', chainId)} target="_blank" rel="noreferrer">
+            {formatCode(data, 5, 5)}
+          </a>
+        )
       },
     },
     {
       title: 'Transaction Hash',
       dataIndex: 'transactionHash',
       render: (data) => {
-        return formatCode(data, 5, 3)
+        return (
+          <a href={getBlockExploreLink(data, 'transaction', chainId)} target="_blank" rel="noreferrer">
+            {formatCode(data, 5, 5)}
+          </a>
+        )
       },
     },
     {
       title: 'User Address',
       dataIndex: 'userAddress',
       render: (data) => {
-        return formatCode(data, 5, 3)
+        return (
+          <a href={getBlockExploreLink(data, 'transaction', chainId)} target="_blank" rel="noreferrer">
+            {formatCode(data, 5, 5)}
+          </a>
+        )
       },
     },
     {
@@ -307,7 +335,7 @@ const PoolHistory: React.FC = () => {
   return (
     <WPoolHistory>
       <div className="zodi-control-page">
-        <h1>History pool</h1>
+        <h1>Pool History</h1>
         <Button type="primary" size="large" onClick={() => router.back()}>
           Back
         </Button>
@@ -335,17 +363,17 @@ const PoolHistory: React.FC = () => {
             <Row gutter={32}>
               <Col span={8}>
                 <Form.Item name="Address" label="Address">
-                  <Input size="middle" autoComplete="true" onChange={handleSearch} />
+                  <Input size="middle" autoComplete="true" onChange={handleSearch} placeholder="Address" />
                 </Form.Item>
               </Col>
               <Col span={8}>
                 <Form.Item name="Plan" label="Plan">
-                  <Input size="middle" autoComplete="true" />
+                  <Input size="middle" autoComplete="true" placeholder="Plan" />
                 </Form.Item>
               </Col>
               <Col span={8}>
                 <Form.Item name="TxH" label="TxH">
-                  <Input size="middle" autoComplete="true" />
+                  <Input size="middle" autoComplete="true" placeholder="Transaction hash" />
                 </Form.Item>
               </Col>
             </Row>

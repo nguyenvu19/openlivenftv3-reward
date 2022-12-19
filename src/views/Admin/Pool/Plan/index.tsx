@@ -5,6 +5,7 @@ import Link from 'next/link'
 import styled from 'styled-components'
 
 import { useStakingListData } from 'state/staking/fetchStakingList'
+import { roundNumber } from 'helpers'
 
 const WPlanList = styled.div`
   width: 100%;
@@ -120,6 +121,10 @@ const WPlanList = styled.div`
       box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
       cursor: pointer;
       margin-top: 10px;
+
+      a {
+        color: rgb(255, 255, 255) !important;
+      }
     }
 
     .ant-table-tbody {
@@ -133,6 +138,10 @@ const WPlanList = styled.div`
         text-shadow: rgb(0 0 0 / 12%) 0px -1px 0px;
         box-shadow: rgb(0 0 0 / 4%) 0px 2px;
         color: rgb(33, 37, 41) !important;
+
+        a {
+          color: rgb(33, 37, 41) !important;
+        }
       }
     }
   }
@@ -148,7 +157,7 @@ const PlanList: React.FC = () => {
 
   const columns = [
     {
-      title: 'No 1',
+      title: 'No',
       dataIndex: 'planId',
     },
     {
@@ -158,12 +167,15 @@ const PlanList: React.FC = () => {
     {
       title: 'APY',
       dataIndex: 'apr',
+      render: (data) => {
+        return `${data}%`
+      },
     },
     {
       title: 'Total Pools Staked',
       dataIndex: 'totalStakedAmount',
       render: (data) => {
-        return data.toLocaleString()
+        return roundNumber(data, { decimals: 18 }).toLocaleString()
       },
     },
 
@@ -181,7 +193,7 @@ const PlanList: React.FC = () => {
   return (
     <WPlanList>
       <div className="zodi-control-page">
-        <h1>Plan list</h1>
+        <h1>Plan List</h1>
         <Button type="primary" size="large" onClick={() => router.back()}>
           Back
         </Button>

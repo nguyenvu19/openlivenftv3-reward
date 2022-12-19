@@ -1,3 +1,4 @@
 export interface Owner {
-  owner: string
+  ownerStake: string
+  ownerContract: string
 }

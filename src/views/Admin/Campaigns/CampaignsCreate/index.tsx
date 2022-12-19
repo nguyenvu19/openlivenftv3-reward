@@ -152,11 +152,11 @@ const CampaignsCreate: React.FC = () => {
       <Form form={form} onFinish={handleSubmit}>
         <Row gutter={32}>
           <Col span={16} offset={4}>
-            <Form.Item name="start" label="Start time" rules={[{ required: true }]}>
+            <Form.Item name="start" label="Start Time" rules={[{ required: true }]}>
               <DatePicker style={{ width: '100%' }} autoComplete="true" />
             </Form.Item>
 
-            <Form.Item name="end" label="End time" rules={[{ required: true }]}>
+            <Form.Item name="end" label="End Time" rules={[{ required: true }]}>
               <DatePicker style={{ width: '100%' }} autoComplete="true" />
             </Form.Item>
 
@@ -168,7 +168,7 @@ const CampaignsCreate: React.FC = () => {
 
         <Form.Item className="action" style={{ textAlign: 'center' }}>
           <Button size="large" type="primary" htmlType="submit" className="primary-button">
-            Create campaign
+            Create Campaign
           </Button>
         </Form.Item>
       </Form>
