@@ -19,9 +19,9 @@ export const useGetOwnerStaking = () => {
     fetchOwnerStaking()
   }, [fetchOwnerStaking])
 
-  const { owner } = useSelector((state: AppState) => state.admin)
+  const { ownerStake } = useSelector((state: AppState) => state.admin)
 
-  return { owner }
+  return { ownerStake }
 }
 
 export const useGetOwnerContract = () => {
@@ -39,7 +39,7 @@ export const useGetOwnerContract = () => {
     fetchOwnerContract()
   }, [fetchOwnerContract])
 
-  const { owner } = useSelector((state: AppState) => state.admin)
+  const { ownerContract } = useSelector((state: AppState) => state.admin)
 
-  return { owner }
+  return { ownerContract }
 }

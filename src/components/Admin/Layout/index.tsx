@@ -178,8 +178,8 @@ const AdminLayout = ({ children }: any) => {
   const router = useRouter()
   const { account } = useActiveWeb3React()
 
-  const { owner: ownerStaking } = useGetOwnerStaking()
-  const { owner: ownerContract } = useGetOwnerContract()
+  const { ownerStake } = useGetOwnerStaking()
+  const { ownerContract } = useGetOwnerContract()
   const [checkOwner, setCheckOwner] = useState('')
 
   const [collapsed, setCollapsed] = useState(false)
@@ -208,10 +208,10 @@ const AdminLayout = ({ children }: any) => {
   useEffect(() => {
     switch (router.pathname) {
       case '/admin':
-        if (ownerContract || ownerStaking) {
+        if (ownerContract || ownerStake) {
           setIsOwner(
             account?.toLowerCase() === ownerContract?.toLowerCase() ||
-              account?.toLowerCase() === ownerStaking?.toLowerCase(),
+              account?.toLowerCase() === ownerStake?.toLowerCase(),
           )
 
           setLoading(false)
@@ -226,8 +226,8 @@ const AdminLayout = ({ children }: any) => {
         break
 
       case '/admin/pool':
-        if (ownerStaking) {
-          setIsOwner(account?.toLowerCase() === ownerStaking?.toLowerCase())
+        if (ownerStake) {
+          setIsOwner(account?.toLowerCase() === ownerStake?.toLowerCase())
           setLoading(false)
         }
         break
@@ -235,7 +235,7 @@ const AdminLayout = ({ children }: any) => {
       default:
         break
     }
-  }, [account, ownerContract, ownerStaking, router])
+  }, [account, ownerContract, ownerStake, router])
 
   if (loading) {
     return (

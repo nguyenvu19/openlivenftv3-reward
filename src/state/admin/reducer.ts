@@ -3,16 +3,17 @@ import { setOwnerStaking, setOwnerContract } from './actions'
 import { Owner } from './types'
 
 export const initialState: Owner = {
-  owner: '',
+  ownerStake: '',
+  ownerContract: '',
 }
 
 export default createReducer<Owner>(initialState, (builder) =>
   builder
     .addCase(setOwnerStaking, (state, { payload }) => {
-      return { ...state, owner: payload.ownerStaking }
+      return { ...state, ownerStake: payload.ownerStaking }
     })
 
     .addCase(setOwnerContract, (state, { payload }) => {
-      return { ...state, owner: payload.ownerContract }
+      return { ...state, ownerContract: payload.ownerContract }
     }),
 )
