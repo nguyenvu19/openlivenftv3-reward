@@ -1,26 +1,17 @@
 import Link from 'next/link'
 import React, { useState } from 'react'
-
-import {
-  CheckCircleOutlined,
-  DollarOutlined,
-  FunnelPlotOutlined,
-  GroupOutlined,
-  HomeOutlined,
-  MenuOutlined,
-  TeamOutlined,
-  UserOutlined,
-  WalletOutlined,
-} from '@ant-design/icons'
-import { Dropdown, Layout, Menu, MenuProps, Space } from 'antd'
+import { useRouter } from 'next/router'
+import { DollarOutlined, GroupOutlined, HomeOutlined, MenuOutlined } from '@ant-design/icons'
+import { Layout, Menu, MenuProps, Space, Spin } from 'antd'
 import styled from 'styled-components'
 import BreadCrumbs from 'components/BreadCrumbs'
-import { useRouter } from 'next/router'
 
-import { useMatchBreakpoints } from '../../../../packages/uikit/src/contexts'
-
-import TotalBalance from '../../Menu/UserMenu/Totalbalance'
+import { useGetOwner } from 'state/admin/hook'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import ConnectWalletButton from 'components/ConnectWalletButton'
 import UserMenu from '../../Menu/UserMenu'
+import TotalBalance from '../../Menu/UserMenu/Totalbalance'
+import { useMatchBreakpoints } from '../../../../packages/uikit/src/contexts'
 
 const { Header, Sider, Content } = Layout
 
@@ -148,6 +139,13 @@ const WAdminLayout = styled.div`
     line-height: 1.5;
   }
 `
+const RequireLoginStyled = styled.div`
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
 
 type MenuItem = Required<MenuProps>['items'][number]
 
@@ -166,19 +164,39 @@ const items: MenuItem[] = [
   getItem('Pool', '/admin/pool', <DollarOutlined />),
 ]
 
+const userMenu = (
+  <Space size={16}>
+    <TotalBalance />
+    <UserMenu />
+  </Space>
+)
+
 const AdminLayout = ({ children }: any) => {
-  const [collapsed, setCollapsed] = useState(false)
   const router = useRouter()
+  const { account } = useActiveWeb3React()
+  const { owner } = useGetOwner()
+
+  const [collapsed, setCollapsed] = useState(false)
 
   const { isMobile, isTablet } = useMatchBreakpoints()
 
-  const userMenu = (
-    <Space size={16}>
-      <TotalBalance />
-      <UserMenu />
-    </Space>
-  )
-
+  if (!owner) {
+    return (
+      <RequireLoginStyled>
+        <Spin />
+      </RequireLoginStyled>
+    )
+  }
+  if (!account) {
+    return (
+      <RequireLoginStyled>
+        <ConnectWalletButton />
+      </RequireLoginStyled>
+    )
+  }
+  if (account?.toLowerCase() !== owner?.toLowerCase()) {
+    return <RequireLoginStyled>You do not have access to this site</RequireLoginStyled>
+  }
   return (
     <WAdminLayout>
       <Layout style={{ minHeight: '100vh' }}>

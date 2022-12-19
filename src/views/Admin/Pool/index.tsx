@@ -169,15 +169,6 @@ const Pool: React.FC = () => {
   const [form] = Form.useForm()
   const router = useRouter()
 
-  const { account } = useActiveWeb3React()
-  const { owner } = useSelector((state: AppState) => state.admin)
-
-  useEffect(() => {
-    if (!account || account.toLowerCase() !== String(owner).toLowerCase()) {
-      router.push('/admin')
-    }
-  }, [account, owner, router])
-
   const { poolLists } = useClaimPools()
 
   const handleAddPool = () => {

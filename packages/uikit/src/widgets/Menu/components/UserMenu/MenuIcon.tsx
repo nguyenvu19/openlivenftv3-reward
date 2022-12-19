@@ -15,14 +15,16 @@ const MenuIconWrapper = styled.div<{ borderColor: keyof Colors }>`
   justify-content: center;
   width: 52px;
   height: 52px;
-  z-index: 102;
+  z-index: 90;
+  /* z-index: 102; */
 `;
 
 const ProfileIcon = styled(Image)`
   left: 0;
   position: absolute;
   top: 0;
-  z-index: 102;
+  z-index: 90;
+  /* z-index: 102; */
 
   & > img {
     border-radius: 50%;

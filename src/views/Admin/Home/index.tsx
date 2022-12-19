@@ -1,13 +1,5 @@
-import React, { useEffect } from 'react'
-
-import { Form } from 'antd'
-import { useRouter } from 'next/router'
+import React from 'react'
 import styled from 'styled-components'
-
-import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import { useGetOwner } from 'state/admin/hook'
-
-import UserMenu from 'components/Menu/UserMenu'
 
 const WHome = styled.div`
   width: 100%;
@@ -22,30 +14,7 @@ const WHome = styled.div`
 `
 
 const Home: React.FC = () => {
-  const [form] = Form.useForm()
-  const router = useRouter()
-
-  const { account } = useActiveWeb3React()
-
-  const { owner } = useGetOwner()
-
-  useEffect(() => {
-    if (!account || account.toLowerCase() !== String(owner).toLowerCase()) {
-      router.push('/admin')
-    } else {
-      router.push('/admin/campaigns')
-    }
-  }, [account, owner, router])
-
-  return (
-    <WHome>
-      <Form form={form}>
-        <Form.Item className="action" style={{ textAlign: 'center' }}>
-          <UserMenu />
-        </Form.Item>
-      </Form>
-    </WHome>
-  )
+  return <WHome>Home Page</WHome>
 }
 
 export default Home
