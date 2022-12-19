@@ -137,6 +137,16 @@ const WAdminLayout = styled.div`
 
   .header-admin-right {
     line-height: 1.5;
+
+    .ant-space-item:last-child {
+      > div {
+        > div:last-child {
+          position: absolute;
+          inset: 0px 0px auto auto;
+          transform: translate(-31px, 61px) !important;
+        }
+      }
+    }
   }
 `
 const RequireLoginStyled = styled.div`
@@ -163,13 +173,6 @@ const items: MenuItem[] = [
   getItem('Campaigns', '/admin/campaigns', <GroupOutlined />),
   getItem('Pool', '/admin/pool', <DollarOutlined />),
 ]
-
-const userMenu = (
-  <Space size={16}>
-    <TotalBalance />
-    <UserMenu />
-  </Space>
-)
 
 const AdminLayout = ({ children }: any) => {
   const router = useRouter()

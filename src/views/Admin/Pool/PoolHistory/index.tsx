@@ -1,7 +1,7 @@
 import { Button, Checkbox, Col, DatePicker, Form, Input, Row, Space, Table } from 'antd'
 import type { CheckboxChangeEvent } from 'antd/es/checkbox'
 
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
@@ -10,10 +10,6 @@ import { useClaimDepositHistories, useClaimWithdrawHistories } from 'state/staki
 
 import { formatCode } from 'helpers/CommonHelper'
 import moment from 'moment'
-
-import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import { useSelector } from 'react-redux'
-import { AppState } from '../../../../state/index'
 
 const { RangePicker } = DatePicker
 
@@ -151,15 +147,6 @@ const PoolHistory: React.FC = () => {
   const checkList = ['Deposit', 'Withdraw']
 
   const [selected, setSelected] = useState('Deposit')
-
-  const { account } = useActiveWeb3React()
-  const { owner } = useSelector((state: AppState) => state.admin)
-
-  useEffect(() => {
-    if (!account || account.toLowerCase() !== String(owner).toLowerCase()) {
-      router.push('/admin')
-    }
-  }, [account, owner, router])
 
   const columnsDeposit = [
     {

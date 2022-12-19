@@ -1,15 +1,10 @@
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
 
 import { Button, Form, Space, Table } from 'antd'
 import Link from 'next/link'
 import styled from 'styled-components'
 
 import { useStakingListData } from 'state/staking/fetchStakingList'
-
-import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import { useSelector } from 'react-redux'
-import { AppState } from '../../../../state/index'
 
 const WPlanList = styled.div`
   width: 100%;
@@ -147,16 +142,6 @@ const PlanList: React.FC = () => {
   const [form] = Form.useForm()
   const router = useRouter()
 
-  const { account } = useActiveWeb3React()
-
-  const { owner } = useSelector((state: AppState) => state.admin)
-
-  useEffect(() => {
-    if (!account || account.toLowerCase() !== String(owner).toLowerCase()) {
-      router.push('/admin')
-    }
-  }, [account, owner, router])
-
   const { poolId } = router.query
 
   const { stakingList, fetchStakingList } = useStakingListData()
@@ -192,9 +177,6 @@ const PlanList: React.FC = () => {
       ),
     },
   ]
-  const handleSubmit = (values) => {
-    const data = {}
-  }
 
   return (
     <WPlanList>

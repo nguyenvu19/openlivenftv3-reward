@@ -234,7 +234,12 @@ const Campaigns: React.FC = () => {
       </Form>
 
       <div className="table-wrapper">
-        <Table columns={columns} dataSource={campaignsClone} rowKey={(record) => record.id} scroll={{ x: 1400 }} />
+        <Table
+          columns={columns}
+          dataSource={campaignsClone || []}
+          rowKey={(record) => record.id}
+          scroll={{ x: 1400 }}
+        />
       </div>
     </WCampaigns>
   )
