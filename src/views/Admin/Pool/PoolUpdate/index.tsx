@@ -162,7 +162,7 @@ const PoolUpdate: React.FC = () => {
   return (
     <WPoolUpdate>
       <div className="zodi-control-page">
-        <h1>Update pool</h1>
+        <h1>Update Pool</h1>
         <Button type="primary" size="large" onClick={() => router.back()}>
           Back
         </Button>
@@ -176,12 +176,12 @@ const PoolUpdate: React.FC = () => {
                 <Input readOnly bordered={false} placeholder={`${router.query.poolId}`} />
               </Form.Item>
 
-              <Form.Item name="rewardAddress" label="Reward Address">
-                <Input size="large" placeholder="Input contract currency" autoComplete="true" />
+              <Form.Item name="rewardAddress" label="Reward Address" rules={[{ required: true }]}>
+                <Input size="large" placeholder="Address" autoComplete="true" />
               </Form.Item>
 
-              <Form.Item name="lpAddress" label="IP Address">
-                <Input size="large" placeholder="Input IP Address" autoComplete="true" />
+              <Form.Item name="lpAddress" label="LP Address" rules={[{ required: true }]}>
+                <Input size="large" placeholder="Address" autoComplete="true" />
               </Form.Item>
             </Col>
           </Row>

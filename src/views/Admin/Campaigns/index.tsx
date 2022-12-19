@@ -69,6 +69,10 @@ const WCampaigns = styled.div`
       text-shadow: rgb(0 0 0 / 12%) 0px -1px 0px;
       box-shadow: rgb(0 0 0 / 4%) 0px 2px;
       color: rgb(33, 37, 41) !important;
+
+      a {
+        color: rgb(33, 37, 41) !important;
+      }
     }
 
     .ant-space-item:nth-child(2) {
@@ -78,6 +82,10 @@ const WCampaigns = styled.div`
       text-shadow: rgb(0 0 0 / 12%) 0px -1px 0px;
       box-shadow: rgb(0 0 0 / 4%) 0px 2px;
       color: rgb(255, 255, 255) !important;
+
+      a {
+        color: rgb(255, 255, 255) !important;
+      }
     }
 
     .ant-space-item:nth-child(3) {
@@ -87,6 +95,10 @@ const WCampaigns = styled.div`
       text-shadow: rgb(0 0 0 / 12%) 0px -1px 0px;
       box-shadow: rgb(0 0 0 / 4%) 0px 2px;
       color: rgb(33, 37, 41) !important;
+
+      a {
+        color: rgb(33, 37, 41) !important;
+      }
     }
 
     .ant-space-item:nth-child(4) {
@@ -96,6 +108,10 @@ const WCampaigns = styled.div`
       text-shadow: rgb(0 0 0 / 12%) 0px -1px 0px;
       box-shadow: rgb(0 0 0 / 4%) 0px 2px;
       color: rgb(255, 255, 255) !important;
+
+      a {
+        color: rgb(255, 255, 255) !important;
+      }
     }
   }
 
@@ -130,27 +146,35 @@ const Campaigns: React.FC = () => {
   // Check status
   const campaignsClone: any[] = useMemo(
     () =>
-      campaigns?.map((campaign) => ({
-        ...campaign,
-        status: campaign.finish - campaign.start > 0 ? 'Live' : 'End',
-        totalPool: Number(campaign.totalPool).toLocaleString(),
+      campaigns
+        ?.map((campaign) => ({
+          ...campaign,
 
-        start: `${new Date(campaign.start).getDay()}/${new Date(campaign.start).getMonth()}/${new Date(
-          campaign.start,
-        ).getFullYear()}`,
+          // id: campaign.id.sort((a, b) => a.id - b.id),
 
-        finish: `${new Date(campaign.finish).getDay()}/${new Date(campaign.finish).getMonth()}/${new Date(
-          campaign.finish,
-        ).getFullYear()}`,
-      })),
+          status: campaign.finish - campaign.start > 0 ? 'Live' : 'End',
+          totalPool: Number(campaign.totalPool).toLocaleString(),
+
+          start: `${new Date(campaign.start).getDay()}/${new Date(campaign.start).getMonth()}/${new Date(
+            campaign.start,
+          ).getFullYear()}`,
+
+          finish: `${new Date(campaign.finish).getDay()}/${new Date(campaign.finish).getMonth()}/${new Date(
+            campaign.finish,
+          ).getFullYear()}`,
+        }))
+        .sort((a, b) => a.id - b.id),
     [campaigns],
   )
 
   const columns = [
     {
-      title: 'No 1',
+      title: 'No ',
       dataIndex: 'id',
       width: 70,
+      sorter: {
+        compare: (a, b) => a.id - b.id,
+      },
     },
     {
       title: 'Status',

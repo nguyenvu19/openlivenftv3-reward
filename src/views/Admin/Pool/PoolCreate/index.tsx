@@ -146,16 +146,16 @@ const PoolCreate: React.FC = () => {
       <Form form={form} onFinish={handleSubmit}>
         <Row gutter={32}>
           <Col offset={4}>
-            <Form.Item name="poolId" label="Pool ID">
-              <Input size="large" placeholder="Input Pool ID" autoComplete="true" />
+            <Form.Item name="poolId" label="Pool ID" rules={[{ required: true }]}>
+              <Input size="large" placeholder="Pool ID" autoComplete="true" />
             </Form.Item>
 
-            <Form.Item name="rewardAddress" label="Reward Address">
-              <Input size="large" placeholder="Input contract currency" autoComplete="true" />
+            <Form.Item name="rewardAddress" label="Reward Address" rules={[{ required: true }]}>
+              <Input size="large" placeholder="Address" autoComplete="true" />
             </Form.Item>
 
-            <Form.Item name="lpAddress" label="IP Address">
-              <Input size="large" placeholder="Input IP Address" autoComplete="true" />
+            <Form.Item name="lpAddress" label="LP Address" rules={[{ required: true }]}>
+              <Input size="large" placeholder="Address" autoComplete="true" />
             </Form.Item>
           </Col>
         </Row>

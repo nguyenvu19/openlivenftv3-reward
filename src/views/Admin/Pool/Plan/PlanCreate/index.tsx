@@ -140,7 +140,7 @@ const PlanCreate: React.FC = () => {
   return (
     <WPlanCreate>
       <div className="zodi-control-page">
-        <h1>Create plan</h1>
+        <h1>Create Plan</h1>
         <Button type="primary" size="large" onClick={() => router.back()}>
           Back
         </Button>
@@ -149,7 +149,7 @@ const PlanCreate: React.FC = () => {
       <Form form={form} onFinish={handleSubmit}>
         <Row gutter={32}>
           <Col span={16} offset={4}>
-            <Form.Item name="planId" label="Plan ID">
+            <Form.Item name="planId" label="Plan ID" rules={[{ required: true }]}>
               {/* <Select allowClear size="large" placeholder="Selected Plan">
                 {stakingList &&
                   stakingList.map((item) => (
@@ -158,19 +158,19 @@ const PlanCreate: React.FC = () => {
                     </Option>
                   ))}
               </Select> */}
-              <Input size="large" placeholder="Input Plan ID" autoComplete="true" />
+              <Input size="large" placeholder="Plan ID" autoComplete="true" />
             </Form.Item>
 
-            <Form.Item name="time" label="Time">
+            <Form.Item name="time" label="Time" rules={[{ required: true }]}>
               <DatePicker style={{ width: '100%' }} autoComplete="true" />
             </Form.Item>
 
-            <Form.Item name="periods" label="Periods">
-              <Input size="large" placeholder="Input Periods" autoComplete="true" />
+            <Form.Item name="periods" label="Periods" rules={[{ required: true }]}>
+              <Input size="large" placeholder="Periods" autoComplete="true" />
             </Form.Item>
 
-            <Form.Item name="apy" label="APY">
-              <Input addonBefore="%" size="large" placeholder="Input APY" autoComplete="true" />
+            <Form.Item name="apy" label="APY" rules={[{ required: true }]}>
+              <Input addonBefore="%" size="large" placeholder="APY" autoComplete="true" />
             </Form.Item>
           </Col>
         </Row>

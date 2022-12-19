@@ -193,7 +193,7 @@ const Pool: React.FC = () => {
         poolLists.data.map((poolList) => (
           <>
             <div className="zodi-control-page">
-              <h1>Admin Pool page</h1>
+              <h1>Pools Manager</h1>
 
               <button className="add-pool" onClick={handleAddPool}>
                 Add New Pool

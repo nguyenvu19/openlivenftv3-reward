@@ -161,7 +161,7 @@ const PlanUpdate: React.FC = () => {
   return (
     <WPlanUpdate>
       <div className="zodi-control-page">
-        <h1>Update plan</h1>
+        <h1>Update Plan</h1>
         <Button type="primary" size="large" onClick={() => router.back()}>
           Back
         </Button>
@@ -186,16 +186,16 @@ const PlanUpdate: React.FC = () => {
               <Input readOnly bordered={false} placeholder={`${planId}`} />
             </Form.Item>
 
-            <Form.Item name="time" label="Time">
+            <Form.Item name="time" label="Time" rules={[{ required: true }]}>
               <DatePicker style={{ width: '100%' }} autoComplete="true" />
             </Form.Item>
 
-            <Form.Item name="periods" label="Periods">
-              <Input size="large" placeholder="Input Periods" autoComplete="true" />
+            <Form.Item name="periods" label="Periods" rules={[{ required: true }]}>
+              <Input size="large" placeholder="Periods" autoComplete="true" />
             </Form.Item>
 
-            <Form.Item name="apy" label="APY">
-              <Input addonBefore="%" size="large" placeholder="Input APY" autoComplete="true" />
+            <Form.Item name="apy" label="APY" rules={[{ required: true }]}>
+              <Input addonBefore="%" size="large" placeholder="APY" autoComplete="true" />
             </Form.Item>
           </Col>
         </Row>
