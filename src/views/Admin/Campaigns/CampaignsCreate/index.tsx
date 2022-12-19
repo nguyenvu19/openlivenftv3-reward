@@ -1,6 +1,6 @@
 /* eslint-disable prefer-destructuring */
 import { Button, Col, DatePicker, Form, Input, Row } from 'antd'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { toLocaleString } from 'utils'
 
 import { useRouter } from 'next/router'
@@ -10,10 +10,6 @@ import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
 import useCatchTxErrorMessage from 'hooks/useCatchTxErrorMessage'
 import { useContractCampaigns } from 'hooks/useContract'
 import { useTransactionAdder } from 'state/transactions/hooks'
-
-import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import { useSelector } from 'react-redux'
-import { AppState } from '../../../../state/index'
 
 const WCampaignsCreate = styled.div`
   width: 100%;
@@ -105,16 +101,6 @@ const WCampaignsCreate = styled.div`
 const CampaignsCreate: React.FC = () => {
   const [form] = Form.useForm()
   const router = useRouter()
-
-  const { account } = useActiveWeb3React()
-
-  const { owner } = useSelector((state: AppState) => state.admin)
-
-  useEffect(() => {
-    if (!account || account.toLowerCase() !== String(owner).toLowerCase()) {
-      router.push('/admin')
-    }
-  }, [account, owner, router])
 
   const [errorMess, setErrorMess] = useState('')
   const [stakingLoading, setStakingLoading] = useState(false)

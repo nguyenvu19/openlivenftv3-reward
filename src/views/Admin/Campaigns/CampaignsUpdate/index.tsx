@@ -1,6 +1,6 @@
 /* eslint-disable prefer-destructuring */
 import { Button, Col, DatePicker, Form, Input, Row } from 'antd'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
@@ -11,10 +11,6 @@ import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
 import useCatchTxErrorMessage from 'hooks/useCatchTxErrorMessage'
 import { useContractCampaigns } from 'hooks/useContract'
 import { useTransactionAdder } from 'state/transactions/hooks'
-
-import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import { useSelector } from 'react-redux'
-import { AppState } from '../../../../state/index'
 
 const WCampaignsUpdate = styled.div`
   width: 100%;
@@ -108,15 +104,6 @@ const CampaignsUpdate: React.FC = () => {
   const [errorMess, setErrorMess] = useState('')
   const [stakingLoading, setStakingLoading] = useState(false)
   const [amount, setAmount] = useState<string | number>('')
-
-  const { account } = useActiveWeb3React()
-  const { owner } = useSelector((state: AppState) => state.admin)
-
-  useEffect(() => {
-    if (!account || account.toLowerCase() !== String(owner).toLowerCase()) {
-      router.push('/admin')
-    }
-  }, [account, owner, router])
 
   const { callWithGasPrice } = useCallWithGasPrice()
   const { fetchWithCatchTxError } = useCatchTxErrorMessage()

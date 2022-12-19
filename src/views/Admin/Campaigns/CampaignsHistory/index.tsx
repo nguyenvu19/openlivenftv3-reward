@@ -1,14 +1,8 @@
-import { useEffect } from 'react'
-
 import { Button, Col, DatePicker, Form, Input, Row, Space, Table } from 'antd'
 import { useCampaignsClaimHistory } from 'state/nfts/claimHistory'
 
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
-
-import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import { useSelector } from 'react-redux'
-import { AppState } from '../../../../state/index'
 
 const WCampaignsHistory = styled.div`
   width: 100%;
@@ -145,15 +139,6 @@ const columns = [
 const CampaignsHistory: React.FC = () => {
   const [form] = Form.useForm()
   const router = useRouter()
-
-  const { account } = useActiveWeb3React()
-  const { owner } = useSelector((state: AppState) => state.admin)
-
-  useEffect(() => {
-    if (!account || account.toLowerCase() !== String(owner).toLowerCase()) {
-      router.push('/admin')
-    }
-  }, [account, owner, router])
 
   // ID of campaign
   const { campaignID } = router.query
