@@ -1,7 +1,8 @@
 /* eslint-disable prefer-destructuring */
 import { Button, Col, DatePicker, Form, Input, Row } from 'antd'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
+import moment from 'moment'
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
 
@@ -11,6 +12,7 @@ import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
 import useCatchTxErrorMessage from 'hooks/useCatchTxErrorMessage'
 import { useContractCampaigns } from 'hooks/useContract'
 import { useTransactionAdder } from 'state/transactions/hooks'
+import useCampaignItem from 'state/campaigns/useCampaignItem'
 
 const WCampaignsUpdate = styled.div`
   width: 100%;
@@ -99,8 +101,8 @@ const CampaignsUpdate: React.FC = () => {
   const [form] = Form.useForm()
   const router = useRouter()
   // ID of campaign
-  const { campaignID } = router.query
 
+  const [campaignID] = useState(router.query.campaignID)
   const [errorMess, setErrorMess] = useState('')
   const [stakingLoading, setStakingLoading] = useState(false)
   const [amount, setAmount] = useState<string | number>('')
@@ -110,9 +112,25 @@ const CampaignsUpdate: React.FC = () => {
   const contractCampaigns = useContractCampaigns()
   const addTransaction = useTransactionAdder()
 
+  const campaignItem = useCampaignItem(campaignID)
+  console.log('campaignItem', campaignItem)
+
+  const [isSetInitForm, setIsSetInitForm] = useState(false)
+  useEffect(() => {
+    if (campaignItem && !isSetInitForm) {
+      form.setFieldsValue({
+        campaignID: campaignItem.id,
+        start: moment(campaignItem.start),
+        end: moment(campaignItem.finish),
+        reward: campaignItem.totalPool,
+      })
+      setIsSetInitForm(true)
+    }
+  }, [campaignItem, form, isSetInitForm])
+
   const handleSubmit = async (values) => {
-    const start = (values.start._d.getTime() / 1000).toFixed().toString()
-    const end = (values.end._d.getTime() / 1000).toFixed().toString()
+    const start = (moment(values.start).toDate().getTime() / 1000).toFixed()
+    const end = (moment(values.end).toDate().getTime() / 1000).toFixed()
     const reward = values.reward
 
     const updateParams = {
@@ -121,6 +139,9 @@ const CampaignsUpdate: React.FC = () => {
       totalReward: toLocaleString(reward * 1e18),
       campaignID,
     }
+
+    console.log(updateParams)
+
     setErrorMess('')
     setStakingLoading(true)
     const { txResponse, status, message } = await fetchWithCatchTxError(() =>
@@ -151,15 +172,15 @@ const CampaignsUpdate: React.FC = () => {
         <Row gutter={32}>
           <Col span={16} offset={4}>
             <Form.Item name="campaignId" label="Campaign ID">
-              <Input size="middle" placeholder={`${campaignID}`} readOnly />
+              <Input size="middle" placeholder={`${router.query.campaignID}`} readOnly />
             </Form.Item>
 
             <Form.Item name="start" label="Start time" rules={[{ required: true }]}>
-              <DatePicker style={{ width: '100%' }} />
+              <DatePicker style={{ width: '100%' }} format="yyyy-MM-DD" />
             </Form.Item>
 
             <Form.Item name="end" label="End time" rules={[{ required: true }]}>
-              <DatePicker style={{ width: '100%' }} />
+              <DatePicker style={{ width: '100%' }} format="yyyy-MM-DD" />
             </Form.Item>
 
             <Form.Item name="reward" label="Total Reward" rules={[{ required: true }]}>
@@ -169,7 +190,7 @@ const CampaignsUpdate: React.FC = () => {
         </Row>
 
         <Form.Item className="action" style={{ textAlign: 'center' }}>
-          <Button size="large" type="primary" htmlType="submit" className="primary-button">
+          <Button size="large" type="primary" htmlType="submit" className="primary-button" loading={stakingLoading}>
             Modify Campaigns
           </Button>
         </Form.Item>

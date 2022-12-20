@@ -213,28 +213,48 @@ const CampaignsSetRate: React.FC = () => {
                           ]}
                         >
                           <Select allowClear size="middle" placeholder="STAR">
+                            <Option key="0" value="0">
+                              HEMATITE
+                            </Option>
+
                             <Option key="1" value="1">
-                              1
+                              AMBER
                             </Option>
 
                             <Option key="2" value="2">
-                              2
+                              ZICRON
                             </Option>
 
                             <Option key="3" value="3">
-                              3
+                              PERIDOT
                             </Option>
 
                             <Option key="4" value="4">
-                              4
+                              TOURMALINE
                             </Option>
 
                             <Option key="5" value="5">
-                              5
+                              TOPAZ
                             </Option>
 
                             <Option key="6" value="6">
-                              6
+                              BERYL
+                            </Option>
+
+                            <Option key="7" value="7">
+                              EMERALD
+                            </Option>
+
+                            <Option key="8" value="8">
+                              SPINEL
+                            </Option>
+
+                            <Option key="9" value="9">
+                              RUBY
+                            </Option>
+
+                            <Option key="10" value="10">
+                              STAR
                             </Option>
                           </Select>
                         </Form.Item>

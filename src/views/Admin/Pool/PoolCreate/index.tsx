@@ -145,8 +145,8 @@ const PoolCreate: React.FC = () => {
 
       <Form form={form} onFinish={handleSubmit}>
         <Row gutter={32}>
-          <Col offset={4}>
-            <Form.Item name="poolId" label="Pool ID" rules={[{ required: true }]}>
+          <Col span={16} offset={8}>
+            <Form.Item name="poolId" label="Pool ID" rules={[{ required: true }]} style={{ width: '100%' }}>
               <Input size="large" placeholder="Pool ID" autoComplete="true" />
             </Form.Item>
 
