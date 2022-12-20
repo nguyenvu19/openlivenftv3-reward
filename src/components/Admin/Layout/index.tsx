@@ -128,11 +128,20 @@ const WAdminLayout = styled.div`
     min-width: 0 !important;
     max-width: 0 !important;
     flex: 0 0 0 !important;
+
     ${({ theme }) => theme.mediaQueries.sm} {
       width: 80px;
       min-width: 80px !important;
       max-width: 80px !important;
       flex: 0 0 80px !important;
+    }
+
+    li {
+      a {
+        p {
+          display: none;
+        }
+      }
     }
   }
 
@@ -158,27 +167,69 @@ const RequireLoginStyled = styled.div`
   justify-content: center;
 `
 const WMenuStyled = styled.div`
-  color: #fff;
   list-style: none;
-  display: flex;
-  flex-direction: column;
+
+  background-color: #2d3446;
+  height: 100%;
+  padding: 45px 0;
+  display: none;
+
+  ${({ theme }) => theme.mediaQueries.sm} {
+    display: flex;
+    flex-direction: column;
+  }
+
   li {
     padding: 12px 24px;
+    margin-bottom: 8px;
+
     &.active {
       padding-left: 24px;
-      background-color: #1890ff;
+      background-color: rgba(0, 0, 0, 4);
       display: flex;
+      color: #fff;
       align-items: center;
       transition: border-color 0.3s, background 0.3s, padding 0.1s cubic-bezier(0.215, 0.61, 0.355, 1);
+
+      a {
+        color: #fff;
+      }
+    }
+
+    a {
+      color: rgb(120, 129, 149);
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+      &:hover {
+        color: #fff;
+      }
+
+      span {
+        margin-left: 10px;
+      }
+
+      p {
+        margin-left: 22px;
+      }
     }
   }
 `
 
-const items: {
+interface MenuItemType {
   key: string
   label: string
   icon: ReactElement
-}[] = [
+}
+
+export const getActiveMenuItem = ({ pathname, menuConfig }: { pathname: string; menuConfig: MenuItemType[] }) => {
+  if (pathname === '/admin') {
+    return menuConfig.find((menuItem) => pathname.startsWith(menuItem.key))
+  }
+  return menuConfig.slice(1).find((menuItem) => pathname.startsWith(menuItem.key))
+}
+
+const items: MenuItemType[] = [
   {
     key: '/admin',
     label: 'Admin',
@@ -206,7 +257,7 @@ const AdminLayout = ({ children }: any) => {
   const [collapsed, setCollapsed] = useState(false)
 
   const { isMobile, isTablet } = useMatchBreakpoints()
-
+  const activeMenuItem = getActiveMenuItem({ menuConfig: items, pathname: router.pathname })
   const [isOwner, setIsOwner] = useState(false)
   const [loading, setLoading] = useState(true)
 
@@ -242,23 +293,23 @@ const AdminLayout = ({ children }: any) => {
     }
   }, [account, ownerContract, ownerStake, router])
 
-  if (loading) {
-    return (
-      <RequireLoginStyled>
-        <Spin />
-      </RequireLoginStyled>
-    )
-  }
-  if (!account) {
-    return (
-      <RequireLoginStyled>
-        <ConnectWalletButton />
-      </RequireLoginStyled>
-    )
-  }
-  if (!isOwner) {
-    return <RequireLoginStyled>You do not have access to this site</RequireLoginStyled>
-  }
+  // if (loading) {
+  //   return (
+  //     <RequireLoginStyled>
+  //       <Spin />
+  //     </RequireLoginStyled>
+  //   )
+  // }
+  // if (!account) {
+  //   return (
+  //     <RequireLoginStyled>
+  //       <ConnectWalletButton />
+  //     </RequireLoginStyled>
+  //   )
+  // }
+  // if (!isOwner) {
+  //   return <RequireLoginStyled>You do not have access to this site</RequireLoginStyled>
+  // }
   return (
     <WAdminLayout>
       <Layout style={{ minHeight: '100vh' }}>
@@ -281,27 +332,19 @@ const AdminLayout = ({ children }: any) => {
             {items.map((item) => {
               const Icon = item.icon
               return (
-                <li key={item.key} className={router.pathname === item.key ? `active` : ''}>
+                <li key={item.key} className={activeMenuItem.key === item.key ? `active` : ''}>
                   <Link href={`${item.key}`}>
                     <a>
                       {Icon}
-                      {item.label}
+                      <p>{item.label}</p>
                     </a>
                   </Link>
                 </li>
               )
             })}
           </WMenuStyled>
-
-          <Menu
-            theme="dark"
-            key={router.pathname}
-            mode="inline"
-            items={items}
-            defaultSelectedKeys={[router.pathname]}
-            onClick={(e) => router.push(e.key)}
-          />
         </Sider>
+
         <Layout className="site-layout">
           <Header className="site-layout-background" style={{ padding: '0 31px' }}>
             <div className="header-admin-left">
