@@ -1,5 +1,5 @@
 /* eslint-disable react/button-has-type */
-import React, { useEffect } from 'react'
+import React from 'react'
 
 import { Form, Select } from 'antd'
 import Link from 'next/link'
@@ -7,10 +7,6 @@ import styled from 'styled-components'
 
 import { useRouter } from 'next/router'
 import { useClaimPools } from 'state/staking/fetchPoolList'
-
-import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import { useSelector } from 'react-redux'
-import { AppState } from '../../../state/index'
 
 const { Option } = Select
 
@@ -48,21 +44,47 @@ const WPool = styled.div`
       }
     }
 
-    button {
-      border-color: rgb(24, 144, 255);
-      background: rgb(24, 144, 255);
-      text-shadow: rgb(0 0 0 / 12%) 0px -1px 0px;
-      box-shadow: rgb(0 0 0 / 4%) 0px 2px;
-      color: rgb(255, 255, 255) !important;
-      padding: 8px 20px;
-      min-height: 38px;
-      max-height: 38px;
+    .zodi-control-page-right {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      border: none;
-      box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
-      cursor: pointer;
+
+      button {
+        border-color: rgb(24, 144, 255);
+        background: rgb(24, 144, 255);
+        text-shadow: rgb(0 0 0 / 12%) 0px -1px 0px;
+        box-shadow: rgb(0 0 0 / 4%) 0px 2px;
+        color: rgb(255, 255, 255) !important;
+        padding: 8px 20px;
+        min-height: 38px;
+        max-height: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
+        cursor: pointer;
+      }
+
+      a {
+        text-shadow: rgb(0 0 0 / 12%) 0px -1px 0px;
+        box-shadow: rgb(0 0 0 / 4%) 0px 2px;
+        padding: 8px 20px;
+        min-height: 38px;
+        max-height: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
+        cursor: pointer;
+        background-color: rgb(255, 193, 7);
+        border-color: rgb(255, 193, 7);
+        color: rgb(33, 37, 41) !important;
+        margin: 10px 0 0 0;
+
+        ${({ theme }) => theme.mediaQueries.lg} {
+          margin: 0 0 0 10px;
+        }
+      }
     }
   }
 
@@ -195,9 +217,15 @@ const Pool: React.FC = () => {
             <div className="zodi-control-page">
               <h1>Pools Manager</h1>
 
-              <button className="add-pool" onClick={handleAddPool}>
-                Add New Pool
-              </button>
+              <div className="zodi-control-page-right">
+                <button className="add-pool" onClick={handleAddPool}>
+                  Add New Pool
+                </button>
+
+                <Link href="/admin/pool/withdraw" className="withdraw-campaigns">
+                  Withdraw
+                </Link>
+              </div>
             </div>
             <div className="table-wrapper">
               <div className="table-top">
