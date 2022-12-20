@@ -1,5 +1,5 @@
 /* eslint-disable react/button-has-type */
-import React from 'react'
+import React, { Fragment } from 'react'
 
 import { Form, Select } from 'antd'
 import Link from 'next/link'
@@ -79,11 +79,7 @@ const WPool = styled.div`
         background-color: rgb(255, 193, 7);
         border-color: rgb(255, 193, 7);
         color: rgb(33, 37, 41) !important;
-        margin: 10px 0 0 0;
-
-        ${({ theme }) => theme.mediaQueries.lg} {
-          margin: 0 0 0 10px;
-        }
+        margin: 0 0 0 10px;
       }
     }
   }
@@ -117,21 +113,21 @@ const WPool = styled.div`
       .table-top-left {
         display: flex;
         margin-bottom: 10px;
+        flex-direction: column;
 
         ${({ theme }) => theme.mediaQueries.sm} {
-          align-items: center;
-          justify-content: center;
           margin-bottom: 0;
         }
 
-        h1 {
-          margin-right: 15px;
+        span {
+          margin-bottom: 5px;
         }
       }
 
       .table-top-right {
         display: flex;
         flex-direction: column;
+        align-items: center;
 
         ${({ theme }) => theme.mediaQueries.sm} {
           flex-direction: row;
@@ -192,6 +188,7 @@ const Pool: React.FC = () => {
   const router = useRouter()
 
   const { poolLists } = useClaimPools()
+  console.log(poolLists)
 
   const handleAddPool = () => {
     if (poolLists.data !== undefined) {
@@ -213,9 +210,9 @@ const Pool: React.FC = () => {
     <WPool>
       {poolLists.data !== undefined &&
         poolLists.data.map((poolList) => (
-          <>
+          <Fragment key={poolList.id}>
             <div className="zodi-control-page">
-              <h1>Pools Manager</h1>
+              <h1>Stake Pools</h1>
 
               <div className="zodi-control-page-right">
                 <button className="add-pool" onClick={handleAddPool}>
@@ -230,9 +227,12 @@ const Pool: React.FC = () => {
             <div className="table-wrapper">
               <div className="table-top">
                 <div className="table-top-left">
-                  <h1>Pool ID: {poolList.id}</h1>
-
+                  <span>Pool ID: {poolList.id}</span>
                   <span>OPV</span>
+                  <span>LP Address: {poolList.lpAddress}</span>
+                  <span>LP TokenName: {poolList.lpTokenName}</span>
+                  <span>Reward Address: {poolList.rewardAddress}</span>
+                  <span>Reward TokenName: {poolList.rewardTokenName}</span>
                 </div>
 
                 <div className="table-top-right">
@@ -250,7 +250,7 @@ const Pool: React.FC = () => {
                 </div>
               </div>
             </div>
-          </>
+          </Fragment>
         ))}
     </WPool>
   )

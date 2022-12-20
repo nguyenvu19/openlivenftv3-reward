@@ -41,6 +41,12 @@ const WCampaigns = styled.div`
 
     .zodi-control-page-right {
       display: flex;
+      flex-direction: column;
+
+      ${({ theme }) => theme.mediaQueries.lg} {
+        align-items: flex-end;
+        flex-direction: row;
+      }
 
       a {
         border-color: rgb(24, 144, 255);
@@ -170,13 +176,17 @@ const Campaigns: React.FC = () => {
           status: campaign.finish - campaign.start > 0 ? 'Live' : 'End',
           totalPool: Number(campaign.totalPool).toLocaleString(),
 
-          start: `${new Date(campaign.start).getDay()}/${new Date(campaign.start).getMonth()}/${new Date(
-            campaign.start,
-          ).getFullYear()}`,
+          // start: `${new Date(campaign.start).getDay()}/${new Date(campaign.start).getMonth()}/${new Date(
+          //   campaign.start,
+          // ).getFullYear()}`,
 
-          finish: `${new Date(campaign.finish).getDay()}/${new Date(campaign.finish).getMonth()}/${new Date(
+          start: `${new Date(campaign.start).getFullYear()}/${new Date(campaign.start).getMonth()}/${new Date(
+            campaign.start,
+          ).getDay()}`,
+
+          finish: `${new Date(campaign.finish).getFullYear()}/${new Date(campaign.finish).getMonth()}/${new Date(
             campaign.finish,
-          ).getFullYear()}`,
+          ).getDay()}`,
         }))
         .sort((a, b) => a.id - b.id),
     [campaigns],

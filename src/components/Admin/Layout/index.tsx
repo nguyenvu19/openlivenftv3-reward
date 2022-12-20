@@ -145,6 +145,14 @@ const WAdminLayout = styled.div`
     }
   }
 
+  .ant-layout-sider {
+    .ant-layout-sider-children {
+      li:first-child {
+        display: none;
+      }
+    }
+  }
+
   .header-admin-right {
     line-height: 1.5;
 
@@ -171,7 +179,7 @@ const WMenuStyled = styled.div`
 
   background-color: #2d3446;
   height: 100%;
-  padding: 45px 0;
+  padding: 55px 0;
   display: none;
 
   ${({ theme }) => theme.mediaQueries.sm} {
@@ -262,26 +270,35 @@ const AdminLayout = ({ children }: any) => {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    switch (router.pathname) {
-      case '/admin':
-        if (ownerContract || ownerStake) {
-          setIsOwner(
-            account?.toLowerCase() === ownerContract?.toLowerCase() ||
-              account?.toLowerCase() === ownerStake?.toLowerCase(),
-          )
+    const str = router.pathname.split('/')
+    switch (str[1]) {
+      // case '/admin':
+      //   if (ownerContract || ownerStake) {
+      //     setIsOwner(
+      //       account?.toLowerCase() === ownerContract?.toLowerCase() ||
+      //         account?.toLowerCase() === ownerStake?.toLowerCase(),
+      //     )
 
-          setLoading(false)
-        }
-        break
+      //     setLoading(false)
+      //   }
 
-      case '/admin/campaigns':
+      //   if (
+      //     account?.toLowerCase() === ownerContract?.toLowerCase() ||
+      //     account?.toLowerCase() === ownerStake?.toLowerCase()
+      //   ) {
+      //     router.push('/admin/campaigns')
+      //   }
+      //   break
+
+      case 'admin':
+      case 'campaigns':
         if (ownerContract) {
           setIsOwner(account?.toLowerCase() === ownerContract?.toLowerCase())
           setLoading(false)
         }
         break
 
-      case '/admin/pool':
+      case 'pool':
         if (ownerStake) {
           setIsOwner(account?.toLowerCase() === ownerStake?.toLowerCase())
           setLoading(false)

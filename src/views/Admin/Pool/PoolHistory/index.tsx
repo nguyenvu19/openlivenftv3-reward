@@ -211,7 +211,7 @@ const PoolHistory: React.FC = () => {
       render: (record) => {
         return (
           <div>
-            <p>{moment(record.invoice_id).format('DD/MM/YYYY')}</p>
+            <p>{moment(record.invoice_id).format('YYYY/MM/DD')}</p>
           </div>
         )
       },
@@ -222,7 +222,7 @@ const PoolHistory: React.FC = () => {
       render: (record) => {
         return (
           <div>
-            <p>{moment(record.invoice_id).format('DD/MM/YYYY')}</p>
+            <p>{moment(record.invoice_id).format('YYYY/MM/DD')}</p>
           </div>
         )
       },
@@ -290,7 +290,7 @@ const PoolHistory: React.FC = () => {
       render: (record) => {
         return (
           <div>
-            <p>{moment(record.invoice_id).format('DD/MM/YYYY')}</p>
+            <p>{moment(record.invoice_id).format('YYYY/MM/DD')}</p>
           </div>
         )
       },
@@ -301,7 +301,7 @@ const PoolHistory: React.FC = () => {
       render: (record) => {
         return (
           <div>
-            <p>{moment(record.invoice_id).format('DD/MM/YYYY')}</p>
+            <p>{moment(record.invoice_id).format('YYYY/MM/DD')}</p>
           </div>
         )
       },

@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
+
+import { useRouter } from 'next/router'
 
 const WHome = styled.div`
   width: 100%;
@@ -14,6 +16,11 @@ const WHome = styled.div`
 `
 
 const Home: React.FC = () => {
+  const router = useRouter()
+
+  useEffect(() => {
+    router.push('/admin/campaigns')
+  }, [router])
   return <WHome>Home Page</WHome>
 }
 

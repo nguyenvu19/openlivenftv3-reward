@@ -3,6 +3,7 @@ import { useCampaignsClaimHistory } from 'state/nfts/claimHistory'
 
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
+import { formatCode } from 'helpers/CommonHelper'
 
 const WCampaignsHistory = styled.div`
   width: 100%;
@@ -108,19 +109,17 @@ const { RangePicker } = DatePicker
 
 const columns = [
   {
-    title: 'No 1',
-    dataIndex: 'id',
-    width: 70,
+    title: 'No ',
+    key: 'index',
+    render: (text, record, index) => index,
   },
   {
     title: 'Campaign ID',
     dataIndex: 'campaignId',
-    width: 120,
   },
   {
     title: 'Amount',
     dataIndex: 'amount',
-    width: 80,
     render: (data: any) => {
       return (data / 1e18).toLocaleString()
     },
@@ -128,11 +127,12 @@ const columns = [
   {
     title: 'TxH',
     dataIndex: 'transactionHash',
-    width: 360,
+    render: (data) => formatCode(data, 5, 5),
   },
   {
     title: 'Address',
     dataIndex: 'userAddress',
+    render: (data) => formatCode(data, 5, 5),
   },
 ]
 
@@ -179,7 +179,7 @@ const CampaignsHistory: React.FC = () => {
       </Form>
 
       <div className="table-wrapper">
-        <Table columns={columns} dataSource={campaignsClaimHistory.data} scroll={{ x: 2000 }} />
+        <Table columns={columns} dataSource={campaignsClaimHistory.data} scroll={{ x: 600 }} />
       </div>
     </WCampaignsHistory>
   )
