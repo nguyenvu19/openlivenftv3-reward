@@ -24,7 +24,7 @@ const WCampaigns = styled.div`
     align-items: flex-start;
     margin-bottom: 32px;
 
-    ${({ theme }) => theme.mediaQueries.md} {
+    ${({ theme }) => theme.mediaQueries.lg} {
       align-items: flex-end;
       flex-direction: row;
     }
@@ -39,21 +39,36 @@ const WCampaigns = styled.div`
       }
     }
 
-    a {
-      border-color: rgb(24, 144, 255);
-      background: rgb(24, 144, 255);
-      text-shadow: rgb(0 0 0 / 12%) 0px -1px 0px;
-      box-shadow: rgb(0 0 0 / 4%) 0px 2px;
-      color: rgb(255, 255, 255) !important;
-      padding: 8px 20px;
-      min-height: 38px;
-      max-height: 38px;
+    .zodi-control-page-right {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      border: none;
-      box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
-      cursor: pointer;
+
+      a {
+        border-color: rgb(24, 144, 255);
+        background: rgb(24, 144, 255);
+        text-shadow: rgb(0 0 0 / 12%) 0px -1px 0px;
+        box-shadow: rgb(0 0 0 / 4%) 0px 2px;
+        color: rgb(255, 255, 255) !important;
+        padding: 8px 20px;
+        min-height: 38px;
+        max-height: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
+        cursor: pointer;
+      }
+
+      a:last-child {
+        background-color: rgb(255, 193, 7);
+        border-color: rgb(255, 193, 7);
+        color: rgb(33, 37, 41) !important;
+        margin: 10px 0 0 0;
+
+        ${({ theme }) => theme.mediaQueries.lg} {
+          margin: 0 0 0 10px;
+        }
+      }
     }
   }
 
@@ -217,9 +232,15 @@ const Campaigns: React.FC = () => {
       <div className="zodi-control-page">
         <h1>Campaign Summary</h1>
 
-        <Link href="/admin/campaigns/create" className="add-campaigns">
-          Add Campaigns
-        </Link>
+        <div className="zodi-control-page-right">
+          <Link href="/admin/campaigns/create" className="add-campaigns">
+            Add Campaigns
+          </Link>
+
+          <Link href="/admin/campaigns/withdraw" className="withdraw-campaigns">
+            Withdraw
+          </Link>
+        </div>
 
         {/* <Link
           href={{ pathname: '/admin/campaigns/create', query: { dataCampaigns: JSON.stringify(campaignsClone) } }}
