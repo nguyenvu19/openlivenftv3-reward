@@ -1,5 +1,6 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
+import React, { ReactElement, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { DollarOutlined, GroupOutlined, HomeOutlined, MenuOutlined } from '@ant-design/icons'
 import { Layout, Menu, MenuProps, Space, Spin } from 'antd'
@@ -156,22 +157,43 @@ const RequireLoginStyled = styled.div`
   align-items: center;
   justify-content: center;
 `
+const WMenuStyled = styled.div`
+  color: #fff;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  li {
+    padding: 12px 24px;
+    &.active {
+      padding-left: 24px;
+      background-color: #1890ff;
+      display: flex;
+      align-items: center;
+      transition: border-color 0.3s, background 0.3s, padding 0.1s cubic-bezier(0.215, 0.61, 0.355, 1);
+    }
+  }
+`
 
-type MenuItem = Required<MenuProps>['items'][number]
-
-function getItem(label: React.ReactNode, key: React.Key, icon?: React.ReactNode, children?: MenuItem[]): MenuItem {
-  return {
-    key,
-    icon,
-    children,
-    label,
-  } as MenuItem
-}
-
-const items: MenuItem[] = [
-  getItem('Admin', '/admin', <HomeOutlined />),
-  getItem('Campaigns', '/admin/campaigns', <GroupOutlined />),
-  getItem('Pool', '/admin/pool', <DollarOutlined />),
+const items: {
+  key: string
+  label: string
+  icon: ReactElement
+}[] = [
+  {
+    key: '/admin',
+    label: 'Admin',
+    icon: <HomeOutlined />,
+  },
+  {
+    key: '/admin/campaigns',
+    label: 'Campaigns',
+    icon: <GroupOutlined />,
+  },
+  {
+    key: '/admin/pool',
+    label: 'Pool',
+    icon: <DollarOutlined />,
+  },
 ]
 
 const AdminLayout = ({ children }: any) => {
@@ -180,25 +202,8 @@ const AdminLayout = ({ children }: any) => {
 
   const { ownerStake } = useGetOwnerStaking()
   const { ownerContract } = useGetOwnerContract()
-  const [checkOwner, setCheckOwner] = useState('')
 
   const [collapsed, setCollapsed] = useState(false)
-
-  // useEffect(() => {
-  //   switch (router.pathname) {
-  //     case '/admin/campaigns':
-  //       setCheckOwner(ownerContract)
-  //       break
-
-  //     case '/admin/pool':
-  //       setCheckOwner(ownerStaking)
-  //       break
-
-  //     default:
-  //       setCheckOwner('')
-  //       break
-  //   }
-  // }, [ownerContract, ownerStaking, router])
 
   const { isMobile, isTablet } = useMatchBreakpoints()
 
@@ -257,8 +262,6 @@ const AdminLayout = ({ children }: any) => {
   return (
     <WAdminLayout>
       <Layout style={{ minHeight: '100vh' }}>
-        {/* Sidebar */}
-
         <Sider
           trigger={null}
           collapsible
@@ -268,22 +271,38 @@ const AdminLayout = ({ children }: any) => {
         >
           <div className="logo">
             <Link href="/admin">
-              <img src="/logo-text.png" alt="logo" />
+              <a>
+                <img src="/logo-text.png" alt="logo" />
+              </a>
             </Link>
           </div>
+
+          <WMenuStyled>
+            {items.map((item) => {
+              const Icon = item.icon
+              return (
+                <li key={item.key} className={router.pathname === item.key ? `active` : ''}>
+                  <Link href={`${item.key}`}>
+                    <a>
+                      {Icon}
+                      {item.label}
+                    </a>
+                  </Link>
+                </li>
+              )
+            })}
+          </WMenuStyled>
+
           <Menu
             theme="dark"
-            defaultSelectedKeys={[router.pathname]}
-            key={router.pathname.slice(7)}
+            key={router.pathname}
             mode="inline"
             items={items}
+            defaultSelectedKeys={[router.pathname]}
             onClick={(e) => router.push(e.key)}
           />
-          ;
         </Sider>
-
         <Layout className="site-layout">
-          {/* Header */}
           <Header className="site-layout-background" style={{ padding: '0 31px' }}>
             <div className="header-admin-left">
               {React.createElement(collapsed ? MenuOutlined : MenuOutlined, {
