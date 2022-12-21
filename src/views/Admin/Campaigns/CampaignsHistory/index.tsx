@@ -1,9 +1,14 @@
 import { Button, Col, DatePicker, Form, Input, Row, Space, Table } from 'antd'
 import { useCampaignsClaimHistory } from 'state/nfts/claimHistory'
 
+import { useMemo, useState } from 'react'
 import { useRouter } from 'next/router'
+
 import styled from 'styled-components'
+
 import { formatCode } from 'helpers/CommonHelper'
+import { getBlockExploreLink } from 'utils'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 
 const WCampaignsHistory = styled.div`
   width: 100%;
@@ -107,43 +112,72 @@ const WCampaignsHistory = styled.div`
 
 const { RangePicker } = DatePicker
 
-const columns = [
-  {
-    title: 'No ',
-    key: 'index',
-    render: (text, record, index) => index,
-  },
-  {
-    title: 'Campaign ID',
-    dataIndex: 'campaignId',
-  },
-  {
-    title: 'Amount',
-    dataIndex: 'amount',
-    render: (data: any) => {
-      return (data / 1e18).toLocaleString()
-    },
-  },
-  {
-    title: 'TxH',
-    dataIndex: 'transactionHash',
-    render: (data) => formatCode(data, 5, 5),
-  },
-  {
-    title: 'Address',
-    dataIndex: 'userAddress',
-    render: (data) => formatCode(data, 5, 5),
-  },
-]
-
 const CampaignsHistory: React.FC = () => {
+  const [searchAddress, setSearchAddress] = useState('')
+
   const [form] = Form.useForm()
   const router = useRouter()
+  const { chainId } = useActiveWeb3React()
 
   // ID of campaign
   const { campaignID } = router.query
 
   const { campaignsClaimHistory, setParamsCampaignsClaimHistory } = useCampaignsClaimHistory(String(campaignID))
+
+  const campaignsClaimHistoryClone: any[] = useMemo(
+    () =>
+      campaignsClaimHistory.data
+        ?.map((campaign) => ({
+          ...campaign,
+        }))
+        .filter((item) => item.userAddress.includes(searchAddress)),
+    [campaignsClaimHistory.data, searchAddress],
+  )
+
+  const columns = [
+    {
+      title: 'No ',
+      key: 'index',
+      render: (text, record, index) => index,
+    },
+    {
+      title: 'Campaign ID',
+      dataIndex: 'campaignId',
+    },
+    {
+      title: 'Amount',
+      dataIndex: 'amount',
+      render: (data: any) => {
+        return (data / 1e18).toLocaleString()
+      },
+    },
+    {
+      title: 'TxH',
+      dataIndex: 'transactionHash',
+      render: (data) => {
+        return (
+          <a href={getBlockExploreLink(data, 'transaction', chainId)} target="_blank" rel="noreferrer">
+            {formatCode(data, 5, 5)}
+          </a>
+        )
+      },
+    },
+    {
+      title: 'Address',
+      dataIndex: 'userAddress',
+      render: (data) => {
+        return (
+          <a href={getBlockExploreLink(data, 'transaction', chainId)} target="_blank" rel="noreferrer">
+            {formatCode(data, 5, 5)}
+          </a>
+        )
+      },
+    },
+  ]
+
+  const handleSearchAddress = (e) => {
+    setSearchAddress(e.target.value)
+  }
 
   const handleSubmit = (values) => {
     const data2 = {}
@@ -162,24 +196,29 @@ const CampaignsHistory: React.FC = () => {
         <Row>
           <Col>
             <Form.Item name="Address" label="Address">
-              <Input size="middle" placeholder="Address" autoComplete="true" />
+              <Input size="middle" placeholder="Address" autoComplete="true" onChange={handleSearchAddress} />
             </Form.Item>
-
+            {/* 
             <Form.Item name="Campaign" label="Campaign">
-              <Input size="middle" placeholder="Campaign" autoComplete="true" />
+              <Input size="middle" placeholder="Campaign" autoComplete="true" onChange={handleSearchCampaign} />
             </Form.Item>
 
             <Form.Item name="Date" label="Date">
               <Space direction="vertical" size={12}>
                 <RangePicker />
               </Space>
-            </Form.Item>
+            </Form.Item> */}
           </Col>
         </Row>
       </Form>
 
       <div className="table-wrapper">
-        <Table columns={columns} dataSource={campaignsClaimHistory.data} scroll={{ x: 600 }} />
+        <Table
+          pagination={{ pageSize: campaignsClaimHistory.pageSize, total: campaignsClaimHistory.total }}
+          columns={columns}
+          dataSource={campaignsClaimHistoryClone}
+          scroll={{ x: 600 }}
+        />
       </div>
     </WCampaignsHistory>
   )

@@ -67,6 +67,7 @@ const graphStakingClaimWithdrawHistories = async () => {
       query stakingClaimPools {
         stakingWithdrawHistories {
           id
+          amount
           planId
           poolId
           startTime
