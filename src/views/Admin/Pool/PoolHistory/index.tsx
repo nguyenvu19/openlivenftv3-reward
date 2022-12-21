@@ -122,6 +122,8 @@ const WPoolHistory = styled.div`
       margin-bottom: 10px;
 
       .ant-row {
+        margin-bottom: 8px;
+
         .ant-col {
           ${({ theme }) => theme.mediaQueries.sm} {
             margin: 0 !important;
@@ -145,6 +147,10 @@ const WPoolHistory = styled.div`
 `
 
 const PoolHistory: React.FC = () => {
+  const [searchAddress, setSearchAddress] = useState('')
+  const [searchPlan, setSearchPlan] = useState('')
+  const [searchTxH, setSearchTxH] = useState('')
+
   const [form] = Form.useForm()
   const router = useRouter()
   const { chainId } = useActiveWeb3React()
@@ -161,17 +167,17 @@ const PoolHistory: React.FC = () => {
       title: 'Plan ID',
       dataIndex: 'planId',
     },
-    {
-      title: 'User',
-      dataIndex: 'id',
-      render: (data) => {
-        return (
-          <a href={getBlockExploreLink(data, 'transaction', chainId)} target="_blank" rel="noreferrer">
-            {formatCode(data, 5, 5)}
-          </a>
-        )
-      },
-    },
+    // {
+    //   title: 'User',
+    //   dataIndex: 'id',
+    //   render: (data) => {
+    //     return (
+    //       <a href={getBlockExploreLink(data, 'transaction', chainId)} target="_blank" rel="noreferrer">
+    //         {formatCode(data, 5, 5)}
+    //       </a>
+    //     )
+    //   },
+    // },
     {
       title: 'Amount',
       dataIndex: 'amount',
@@ -211,7 +217,7 @@ const PoolHistory: React.FC = () => {
       render: (record) => {
         return (
           <div>
-            <p>{moment(record.invoice_id).format('YYYY/MM/DD')}</p>
+            <p>{moment(record.invoice_id).format('YYYY/MM/DD HH:mm:ss')}</p>
           </div>
         )
       },
@@ -222,7 +228,7 @@ const PoolHistory: React.FC = () => {
       render: (record) => {
         return (
           <div>
-            <p>{moment(record.invoice_id).format('YYYY/MM/DD')}</p>
+            <p>{moment(record.invoice_id).format('YYYY/MM/DD HH:mm:ss')}</p>
           </div>
         )
       },
@@ -235,11 +241,28 @@ const PoolHistory: React.FC = () => {
 
   const depositHistoriesClone: any[] = useMemo(
     () =>
-      depositHistories?.map((campaign) => ({
-        ...campaign,
-        amount: (Number(campaign.amount) / 1e18).toLocaleString(),
-      })),
-    [depositHistories],
+      depositHistories
+        ?.map((campaign) => ({
+          ...campaign,
+          amount: (Number(campaign.amount) / 1e18).toLocaleString(),
+        }))
+        .filter((item: any) => {
+          if (searchAddress !== '') {
+            return item.userAddress.includes(searchAddress)
+          }
+
+          if (searchPlan !== '') {
+            return String(item.planId).includes(searchPlan)
+          }
+
+          if (searchTxH !== '') {
+            return item.transactionHash.includes(searchTxH)
+          }
+
+          return item
+        }),
+
+    [depositHistories, searchAddress, searchPlan, searchTxH],
   )
 
   const columnsWithdraw = [
@@ -251,16 +274,20 @@ const PoolHistory: React.FC = () => {
       title: 'Plan ID',
       dataIndex: 'planId',
     },
+    // {
+    //   title: 'User',
+    //   dataIndex: 'id',
+    //   render: (data) => {
+    //     return (
+    //       <a href={getBlockExploreLink(data, 'transaction', chainId)} target="_blank" rel="noreferrer">
+    //         {formatCode(data, 5, 5)}
+    //       </a>
+    //     )
+    //   },
+    // },
     {
-      title: 'User',
-      dataIndex: 'id',
-      render: (data) => {
-        return (
-          <a href={getBlockExploreLink(data, 'transaction', chainId)} target="_blank" rel="noreferrer">
-            {formatCode(data, 5, 5)}
-          </a>
-        )
-      },
+      title: 'Amount',
+      dataIndex: 'amount',
     },
     {
       title: 'Transaction Hash',
@@ -290,7 +317,7 @@ const PoolHistory: React.FC = () => {
       render: (record) => {
         return (
           <div>
-            <p>{moment(record.invoice_id).format('YYYY/MM/DD')}</p>
+            <p>{moment(record.invoice_id).format('YYYY/MM/DD HH:mm:ss')}</p>
           </div>
         )
       },
@@ -301,7 +328,7 @@ const PoolHistory: React.FC = () => {
       render: (record) => {
         return (
           <div>
-            <p>{moment(record.invoice_id).format('YYYY/MM/DD')}</p>
+            <p>{moment(record.invoice_id).format('YYYY/MM/DD HH:mm:ss')}</p>
           </div>
         )
       },
@@ -328,8 +355,16 @@ const PoolHistory: React.FC = () => {
     setSelected(e.target.value)
   }
 
-  const handleSearch = (e) => {
-    return e.target.value
+  const handleSearchAddress = (e) => {
+    setSearchAddress(e.target.value)
+  }
+
+  const handleSearchPlan = (e) => {
+    setSearchPlan(e.target.value)
+  }
+
+  const handleSearchTxH = (e) => {
+    setSearchTxH(e.target.value)
   }
 
   return (
@@ -351,40 +386,38 @@ const PoolHistory: React.FC = () => {
             )
           })}
 
-          <Form.Item name="Date" label="Date">
+          {/* <Form.Item name="Date" label="Date">
             <Space direction="vertical" size={12}>
               <RangePicker />
             </Space>
-          </Form.Item>
+          </Form.Item> */}
         </div>
 
         <div className="history-content-middle">
           <Form form={form}>
-            <Row gutter={32}>
-              <Col span={8}>
-                <Form.Item name="Address" label="Address">
-                  <Input size="middle" autoComplete="true" onChange={handleSearch} placeholder="Address" />
-                </Form.Item>
-              </Col>
-              <Col span={8}>
-                <Form.Item name="Plan" label="Plan">
-                  <Input size="middle" autoComplete="true" placeholder="Plan" />
-                </Form.Item>
-              </Col>
-              <Col span={8}>
-                <Form.Item name="TxH" label="TxH">
-                  <Input size="middle" autoComplete="true" placeholder="Transaction hash" />
-                </Form.Item>
-              </Col>
+            <Row>
+              <Form.Item name="Address" label="Address">
+                <Input size="middle" autoComplete="true" onChange={handleSearchAddress} placeholder="Address" />
+              </Form.Item>
+            </Row>
+            <Row>
+              <Form.Item name="Plan" label="Plan">
+                <Input size="middle" autoComplete="true" onChange={handleSearchPlan} placeholder="Plan" />
+              </Form.Item>
+            </Row>
+            <Row>
+              <Form.Item name="TxH" label="TxH">
+                <Input size="middle" autoComplete="true" onChange={handleSearchTxH} placeholder="Transaction hash" />
+              </Form.Item>
             </Row>
           </Form>
         </div>
 
         <div className="history-content-middle">
           {selected === 'Deposit' ? (
-            <Table columns={columnsDeposit} dataSource={depositHistoriesClone} scroll={{ x: 1000 }} />
+            <Table columns={columnsDeposit} dataSource={depositHistoriesClone} scroll={{ x: 1200 }} />
           ) : (
-            <Table columns={columnsWithdraw} dataSource={withdrawHistoriesClone} scroll={{ x: 800 }} />
+            <Table columns={columnsWithdraw} dataSource={withdrawHistoriesClone} scroll={{ x: 1000 }} />
           )}
         </div>
       </div>

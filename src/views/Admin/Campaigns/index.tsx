@@ -3,6 +3,9 @@ import { useEffect, useMemo } from 'react'
 import { Col, Form, Row, Space, Table } from 'antd'
 import Link from 'next/link'
 import styled from 'styled-components'
+
+import { formatDate } from 'helpers'
+
 import { useCampaigns, usePollCoreCampaignsData } from 'state/campaigns/hooks'
 
 const WCampaigns = styled.div`
@@ -180,13 +183,11 @@ const Campaigns: React.FC = () => {
           //   campaign.start,
           // ).getFullYear()}`,
 
-          start: `${new Date(campaign.start).getFullYear()}/${new Date(campaign.start).getMonth()}/${new Date(
-            campaign.start,
-          ).getDay()}`,
-
-          finish: `${new Date(campaign.finish).getFullYear()}/${new Date(campaign.finish).getMonth()}/${new Date(
-            campaign.finish,
-          ).getDay()}`,
+          // start: `${new Date(campaign.start).getFullYear()}/${new Date(campaign.start).getMonth()}/${new Date(
+          //   campaign.start,
+          // ).getDay()}`,
+          start: formatDate(campaign.start),
+          finish: formatDate(campaign.finish),
         }))
         .sort((a, b) => a.id - b.id),
     [campaigns],

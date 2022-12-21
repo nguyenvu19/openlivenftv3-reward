@@ -106,7 +106,7 @@ const WPool = styled.div`
       justify-content: space-between;
       margin-bottom: 30px;
 
-      ${({ theme }) => theme.mediaQueries.sm} {
+      ${({ theme }) => theme.mediaQueries.md} {
         flex-direction: row;
       }
 
@@ -127,9 +127,9 @@ const WPool = styled.div`
       .table-top-right {
         display: flex;
         flex-direction: column;
-        align-items: center;
 
         ${({ theme }) => theme.mediaQueries.sm} {
+          align-items: center;
           flex-direction: row;
         }
 
@@ -188,7 +188,6 @@ const Pool: React.FC = () => {
   const router = useRouter()
 
   const { poolLists } = useClaimPools()
-  console.log(poolLists)
 
   const handleAddPool = () => {
     if (poolLists.data !== undefined) {

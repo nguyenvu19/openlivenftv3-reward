@@ -4,7 +4,7 @@ import React, { ReactElement, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { DollarOutlined, GroupOutlined, HomeOutlined, MenuOutlined } from '@ant-design/icons'
 import { Layout, Menu, MenuProps, Space, Spin } from 'antd'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import BreadCrumbs from 'components/BreadCrumbs'
 
 import { useGetOwnerStaking, useGetOwnerContract } from 'state/admin/hook'
@@ -15,6 +15,18 @@ import TotalBalance from '../../Menu/UserMenu/Totalbalance'
 import { useMatchBreakpoints } from '../../../../packages/uikit/src/contexts'
 
 const { Header, Sider, Content } = Layout
+
+const turnLeft = keyframes`
+  from {
+    display: block;
+    transform: translateX(0);
+  }
+
+  to {
+    display: none;
+    transform: translateX(-100px);
+  }
+`
 
 const WAdminLayout = styled.div`
   font-family: Roboto, sans-serif;
@@ -124,16 +136,18 @@ const WAdminLayout = styled.div`
   }
 
   .ant-layout-sider-collapsed {
-    width: 0;
+    width: 0 !important;
     min-width: 0 !important;
     max-width: 0 !important;
     flex: 0 0 0 !important;
+    animation: ${turnLeft} 0.2s linear forwards;
 
     ${({ theme }) => theme.mediaQueries.sm} {
       width: 80px;
       min-width: 80px !important;
       max-width: 80px !important;
       flex: 0 0 80px !important;
+      animation: none !important;
     }
 
     li {
@@ -180,7 +194,6 @@ const WMenuStyled = styled.div`
   background-color: #2d3446;
   height: 100%;
   padding: 55px 0;
-  display: none;
 
   ${({ theme }) => theme.mediaQueries.sm} {
     display: flex;
@@ -310,23 +323,23 @@ const AdminLayout = ({ children }: any) => {
     }
   }, [account, ownerContract, ownerStake, router])
 
-  if (loading) {
-    return (
-      <RequireLoginStyled>
-        <Spin />
-      </RequireLoginStyled>
-    )
-  }
-  if (!account) {
-    return (
-      <RequireLoginStyled>
-        <ConnectWalletButton />
-      </RequireLoginStyled>
-    )
-  }
-  if (!isOwner) {
-    return <RequireLoginStyled>You do not have access to this site</RequireLoginStyled>
-  }
+  // if (loading) {
+  //   return (
+  //     <RequireLoginStyled>
+  //       <Spin />
+  //     </RequireLoginStyled>
+  //   )
+  // }
+  // if (!account) {
+  //   return (
+  //     <RequireLoginStyled>
+  //       <ConnectWalletButton />
+  //     </RequireLoginStyled>
+  //   )
+  // }
+  // if (!isOwner) {
+  //   return <RequireLoginStyled>You do not have access to this site</RequireLoginStyled>
+  // }
   return (
     <WAdminLayout>
       <Layout style={{ minHeight: '100vh' }}>
