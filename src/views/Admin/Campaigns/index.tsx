@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react'
+import { useMemo } from 'react'
 
 import { Col, Form, Row, Space, Table } from 'antd'
 import Link from 'next/link'

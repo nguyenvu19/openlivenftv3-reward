@@ -1,9 +1,8 @@
-import { Button, Checkbox, Col, DatePicker, Form, Input, Row, Space, Table } from 'antd'
+import { Button, Checkbox, Col, DatePicker, Form, Input, Row, Table } from 'antd'
 import type { CheckboxChangeEvent } from 'antd/es/checkbox'
 
 import React, { useMemo, useState } from 'react'
 
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
 
@@ -11,9 +10,8 @@ import { useClaimDepositHistories, useClaimWithdrawHistories } from 'state/staki
 
 import { formatDate } from 'helpers'
 import { formatCode } from 'helpers/CommonHelper'
-import moment from 'moment'
-import { getBlockExploreLink } from 'utils'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import { getBlockExploreLink } from 'utils'
 
 const { RangePicker } = DatePicker
 
