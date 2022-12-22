@@ -7,7 +7,6 @@ import styled from 'styled-components'
 import { formatDate } from 'helpers'
 
 import { useCampaigns, usePollCoreCampaignsData } from 'state/campaigns/hooks'
-import moment from 'moment'
 
 const { RangePicker } = DatePicker
 
@@ -170,9 +169,7 @@ const Campaigns: React.FC = () => {
 
   const { data: campaigns } = useCampaigns()
 
-  console.log(campaigns)
-
-  const [dateRange, setDateRange] = useState([moment(), moment()])
+  // const [dateRange, setDateRange] = useState([])
 
   const currentTime = new Date().getTime()
 
@@ -203,6 +200,7 @@ const Campaigns: React.FC = () => {
           // finish: formatDate(campaign.finish, 'yyyy-MM-DD'),
         }))
         .sort((a, b) => a.id - b.id),
+
     [campaigns, currentTime],
   )
 
@@ -265,10 +263,6 @@ const Campaigns: React.FC = () => {
     },
   ]
 
-  const handleSearchDate = (e) => {
-    console.log(e)
-  }
-
   return (
     <WCampaigns>
       <div className="zodi-control-page">
@@ -316,11 +310,6 @@ const Campaigns: React.FC = () => {
                 <Option value={false}>False</Option>
               </Select>
             </Form.Item> */}
-            <Form.Item name="range_picker" label="Date">
-              <Space direction="vertical" size={12}>
-                <RangePicker onChange={handleSearchDate} format="YYYY/MM/DD" />
-              </Space>
-            </Form.Item>
           </Col>
         </Row>
       </Form>

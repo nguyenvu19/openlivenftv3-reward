@@ -164,3 +164,70 @@ export const useClaimDepositHistories = (): {
 
   return { stakingDepositHistories, fetchStakingDepositHistories }
 }
+
+// fetch staking with deposit History graphql by date
+
+const graphStakingClaimDepositHistoriesByDate = async (start: string, end: string) => {
+  console.log(start, end)
+  const whereStr = `
+    {${start ? `createdTime_lte: "${start}"` : ''}
+    ${end ? `endTime_lte: "${end}"` : ''}}
+  `
+  try {
+    const query = gql`
+      query stakingDepositHistoriesByDate {
+        stakingDepositHistories(
+          where: ${whereStr}
+        ) {
+          createdTime
+          endTime
+          startTime
+          id
+          amount
+          apr
+          planId
+          poolId
+          status
+          transactionHash
+          userAddress
+        }
+      }
+    `
+    const data = await graphqlOpv.request(query)
+    return data
+  } catch (error) {
+    console.error('Failed graphStakingClaimDepositHistoriesByDate', error)
+    return null
+  }
+}
+
+interface ResponseClaimHistory {
+  dataDeposit: StakingHistory[] | undefined | null
+}
+
+export const useClaimDepositHistoriesByDate = (
+  start: string,
+  end: string,
+): {
+  stakingDepositHistories: ResponseClaimHistory
+  fetchStakingDepositHistories: () => void
+} => {
+  const [stakingDepositHistories, setStakingDepositHistories] = useState<ResponseClaimHistory>({
+    dataDeposit: undefined,
+  })
+
+  const fetchStakingDepositHistories = useCallback(async () => {
+    if (start) {
+      const result = await graphStakingClaimDepositHistoriesByDate(start, end)
+      setStakingDepositHistories({
+        dataDeposit: result || null,
+      })
+    }
+  }, [end, start])
+
+  useEffect(() => {
+    fetchStakingDepositHistories()
+  }, [fetchStakingDepositHistories])
+
+  return { stakingDepositHistories, fetchStakingDepositHistories }
+}

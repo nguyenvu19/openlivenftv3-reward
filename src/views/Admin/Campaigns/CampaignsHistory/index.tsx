@@ -176,7 +176,7 @@ const CampaignsHistory: React.FC = () => {
   ]
 
   const handleSearchAddress = (e) => {
-    setSearchAddress(e.target.value)
+    setSearchAddress(e.target.value.toLowerCase())
   }
 
   const handleSubmit = (values) => {

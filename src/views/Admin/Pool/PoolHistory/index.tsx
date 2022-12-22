@@ -1,4 +1,4 @@
-import { Button, Checkbox, Col, DatePicker, Form, Input, Row, Table } from 'antd'
+import { Button, Checkbox, Col, DatePicker, Form, Input, Row, Table, Space } from 'antd'
 import type { CheckboxChangeEvent } from 'antd/es/checkbox'
 
 import React, { useMemo, useState } from 'react'
@@ -6,7 +6,11 @@ import React, { useMemo, useState } from 'react'
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
 
-import { useClaimDepositHistories, useClaimWithdrawHistories } from 'state/staking/fetchStakingHistory'
+import {
+  useClaimDepositHistories,
+  useClaimWithdrawHistories,
+  useClaimDepositHistoriesByDate,
+} from 'state/staking/fetchStakingHistory'
 
 import { formatDate } from 'helpers'
 import { formatCode } from 'helpers/CommonHelper'
@@ -149,6 +153,7 @@ const PoolHistory: React.FC = () => {
   const [searchAddress, setSearchAddress] = useState('')
   const [searchPlan, setSearchPlan] = useState('')
   const [searchTxH, setSearchTxH] = useState('')
+  const [dateRange, setDateRange] = useState([])
 
   const [form] = Form.useForm()
   const router = useRouter()
@@ -236,7 +241,7 @@ const PoolHistory: React.FC = () => {
 
   // Get data from deposit history with graph
   const { stakingDepositHistories } = useClaimDepositHistories()
-  const depositHistories = stakingDepositHistories.dataDeposit
+  const depositHistories = stakingDepositHistories?.dataDeposit
 
   const depositHistoriesClone: any[] = useMemo(
     () =>
@@ -262,6 +267,40 @@ const PoolHistory: React.FC = () => {
         }),
 
     [depositHistories, searchAddress, searchPlan, searchTxH],
+  )
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const { stakingDepositHistories: stakingDepositHistoriesByDate } = useClaimDepositHistoriesByDate(
+    dateRange && dateRange[0] ? String(dateRange[0]) : '',
+    dateRange && dateRange[0] ? String(dateRange[1]) : '',
+  )
+  const depositHistoriesByDate = stakingDepositHistoriesByDate?.dataDeposit?.stakingDepositHistories
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const depositHistoriesByDateClone: any[] = useMemo(
+    () =>
+      depositHistoriesByDate
+        ?.map((campaign) => ({
+          ...campaign,
+          amount: (Number(campaign.amount) / 1e18).toLocaleString(),
+        }))
+        .filter((item: any) => {
+          if (searchAddress !== '') {
+            return item.userAddress.includes(searchAddress)
+          }
+
+          if (searchPlan !== '') {
+            return String(item.planId).includes(searchPlan)
+          }
+
+          if (searchTxH !== '') {
+            return item.transactionHash.includes(searchTxH)
+          }
+
+          return item
+        }),
+
+    [depositHistoriesByDate, searchAddress, searchPlan, searchTxH],
   )
 
   const columnsWithdraw = [
@@ -321,17 +360,17 @@ const PoolHistory: React.FC = () => {
         )
       },
     },
-    {
-      title: 'Start time',
-      dataIndex: 'startTime',
-      render: (record) => {
-        return (
-          <div>
-            <p>{formatDate(record * 1000, 'yyyy-MM-DD')}</p>
-          </div>
-        )
-      },
-    },
+    // {
+    //   title: 'Start time',
+    //   dataIndex: 'startTime',
+    //   render: (record) => {
+    //     return (
+    //       <div>
+    //         <p>{formatDate(record * 1000, 'yyyy-MM-DD')}</p>
+    //       </div>
+    //     )
+    //   },
+    // },
   ]
 
   // Get data from withDraw history with graph
@@ -383,6 +422,10 @@ const PoolHistory: React.FC = () => {
     setSearchTxH(e.target.value.toLowerCase())
   }
 
+  const handleSearchDate = (e) => {
+    setDateRange(e?.map((time) => Date.parse(time._d) / 1000))
+  }
+
   return (
     <WPoolHistory>
       <div className="zodi-control-page">
@@ -407,6 +450,12 @@ const PoolHistory: React.FC = () => {
               <RangePicker />
             </Space>
           </Form.Item> */}
+
+          <Form.Item name="range_picker" label="Date">
+            <Space direction="vertical" size={12}>
+              <RangePicker format="YYYY/MM/DD" onChange={handleSearchDate} />
+            </Space>
+          </Form.Item>
         </div>
 
         <div className="history-content-middle">
@@ -435,7 +484,11 @@ const PoolHistory: React.FC = () => {
 
         <div className="history-content-middle">
           {selected === 'Deposit' ? (
-            <Table columns={columnsDeposit} dataSource={depositHistoriesClone} scroll={{ x: 1200 }} />
+            <Table
+              columns={columnsDeposit}
+              dataSource={dateRange && dateRange[0] ? depositHistoriesByDateClone : depositHistoriesClone}
+              scroll={{ x: 1200 }}
+            />
           ) : (
             <Table columns={columnsWithdraw} dataSource={withdrawHistoriesClone} scroll={{ x: 1000 }} />
           )}
