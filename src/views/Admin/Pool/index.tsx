@@ -1,14 +1,14 @@
 /* eslint-disable react/button-has-type */
 import React, { Fragment } from 'react'
 
-import { Form, Select } from 'antd'
+import { Table, Form, Select } from 'antd'
 import Link from 'next/link'
 import styled from 'styled-components'
 
 import { useRouter } from 'next/router'
 import { useClaimPools } from 'state/staking/fetchPoolList'
-
-const { Option } = Select
+import { formatCode } from 'helpers'
+import { getBlockExploreLink } from 'utils'
 
 const WPool = styled.div`
   width: 100%;
@@ -22,7 +22,7 @@ const WPool = styled.div`
     padding: 35px;
   }
 
-  .zodi-control-page {
+  .admin-pool-page {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -44,7 +44,7 @@ const WPool = styled.div`
       }
     }
 
-    .zodi-control-page-right {
+    .admin-pool-head-action {
       display: flex;
 
       button {
@@ -84,21 +84,6 @@ const WPool = styled.div`
     }
   }
 
-  .anticon {
-    margin: 0 !important;
-  }
-
-  .ant-table-tbody {
-    .ant-space-item:nth-child(1) {
-      padding: 8px 12px;
-      background-color: rgb(255, 193, 7);
-      border-color: rgb(255, 193, 7);
-      text-shadow: rgb(0 0 0 / 12%) 0px -1px 0px;
-      box-shadow: rgb(0 0 0 / 4%) 0px 2px;
-      color: rgb(33, 37, 41) !important;
-    }
-  }
-
   .table-wrapper {
     .table-top {
       display: flex;
@@ -109,84 +94,68 @@ const WPool = styled.div`
       ${({ theme }) => theme.mediaQueries.md} {
         flex-direction: row;
       }
+    }
+  }
 
-      .table-top-left {
-        display: flex;
-        margin-bottom: 10px;
-        flex-direction: column;
+  .admin-pool-action {
+    display: flex;
+    flex-direction: column;
 
-        ${({ theme }) => theme.mediaQueries.sm} {
-          margin-bottom: 0;
-        }
+    ${({ theme }) => theme.mediaQueries.sm} {
+      align-items: center;
+      flex-direction: row;
+    }
 
-        span {
-          margin-bottom: 5px;
-        }
+    a:nth-child(1) {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 12px;
+      background-color: rgb(255, 193, 7);
+      border-color: rgb(255, 193, 7);
+      text-shadow: rgb(0 0 0 / 12%) 0px -1px 0px;
+      box-shadow: rgb(0 0 0 / 4%) 0px 2px;
+      color: rgb(33, 37, 41) !important;
+      margin: 0 0 10px 0;
+
+      ${({ theme }) => theme.mediaQueries.sm} {
+        margin: 0 10px 0 0;
       }
+    }
 
-      .table-top-right {
-        display: flex;
-        flex-direction: column;
+    a:nth-child(2) {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 12px;
+      border-color: rgb(23, 162, 184);
+      background: rgb(23, 162, 184);
+      text-shadow: rgb(0 0 0 / 12%) 0px -1px 0px;
+      box-shadow: rgb(0 0 0 / 4%) 0px 2px;
+      color: rgb(255, 255, 255) !important;
+      margin: 0 0 10px 0;
 
-        ${({ theme }) => theme.mediaQueries.sm} {
-          align-items: center;
-          flex-direction: row;
-        }
-
-        a:nth-child(1) {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          padding: 8px 12px;
-          background-color: rgb(255, 193, 7);
-          border-color: rgb(255, 193, 7);
-          text-shadow: rgb(0 0 0 / 12%) 0px -1px 0px;
-          box-shadow: rgb(0 0 0 / 4%) 0px 2px;
-          color: rgb(33, 37, 41) !important;
-          margin: 0 0 10px 0;
-
-          ${({ theme }) => theme.mediaQueries.sm} {
-            margin: 0 10px 0 0;
-          }
-        }
-
-        a:nth-child(2) {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          padding: 8px 12px;
-          border-color: rgb(23, 162, 184);
-          background: rgb(23, 162, 184);
-          text-shadow: rgb(0 0 0 / 12%) 0px -1px 0px;
-          box-shadow: rgb(0 0 0 / 4%) 0px 2px;
-          color: rgb(255, 255, 255) !important;
-          margin: 0 0 10px 0;
-
-          ${({ theme }) => theme.mediaQueries.sm} {
-            margin: 0 10px 0 0;
-          }
-        }
-
-        button {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          padding: 8px 12px;
-          border: none;
-          border-color: rgb(30, 160, 48);
-          background: rgb(30, 160, 48);
-          color: rgb(255, 255, 255) !important;
-          cursor: pointer;
-        }
+      ${({ theme }) => theme.mediaQueries.sm} {
+        margin: 0 10px 0 0;
       }
+    }
+
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 12px;
+      border: none;
+      border-color: rgb(30, 160, 48);
+      background: rgb(30, 160, 48);
+      color: rgb(255, 255, 255) !important;
+      cursor: pointer;
     }
   }
 `
 
 const Pool: React.FC = () => {
-  const [form] = Form.useForm()
   const router = useRouter()
-
   const { poolLists } = useClaimPools()
 
   const handleAddPool = () => {
@@ -205,52 +174,81 @@ const Pool: React.FC = () => {
     }
   }
 
+  const columns = [
+    {
+      title: 'No.',
+      dataIndex: 'id',
+      render: (text, record, index) => index + 1,
+    },
+    {
+      title: 'Pool ID',
+      dataIndex: 'id',
+    },
+    {
+      title: 'LP Token',
+      dataIndex: 'lpTokenName',
+      render: (_, record) => (
+        <a href={getBlockExploreLink(record.lpAddress, 'token')} target="_blank" rel="noreferrer">
+          <div>{record.lpTokenName}</div>
+          <div>({formatCode(record.lpAddress, 5, 5)})</div>
+        </a>
+      ),
+    },
+    {
+      title: 'Reward Token',
+      dataIndex: 'lpTokenName',
+      render: (_, record) => (
+        <a href={getBlockExploreLink(record.rewardAddress, 'token')} target="_blank" rel="noreferrer">
+          <div>{record.rewardTokenName}</div>
+          <div>({formatCode(record.rewardAddress, 5, 5)})</div>
+        </a>
+      ),
+    },
+    {
+      title: 'Actions',
+      dataIndex: 'action',
+      render: (_, record) => (
+        <>
+          <div className="admin-pool-action">
+            <Link href={`/admin/pool/update/${record.id}`} className="update-pool">
+              Update Pool
+            </Link>
+
+            <Link href={`/admin/pool/history/${record.id}`} className="history-pool">
+              History Pool
+            </Link>
+
+            <button className="list-pool" id={record.id} onClick={handleShowPlan}>
+              Show Plan
+            </button>
+          </div>
+        </>
+      ),
+    },
+  ]
+
   return (
     <WPool>
-      {poolLists.data !== undefined &&
-        poolLists.data.map((poolList) => (
-          <Fragment key={poolList.id}>
-            <div className="zodi-control-page">
-              <h1>Stake Pools</h1>
+      <div className="admin-pool-page">
+        <h1>Stake Pools</h1>
+        <div className="admin-pool-head-action">
+          <button className="add-pool" onClick={handleAddPool}>
+            Add New Pool
+          </button>
 
-              <div className="zodi-control-page-right">
-                <button className="add-pool" onClick={handleAddPool}>
-                  Add New Pool
-                </button>
-
-                <Link href="/admin/pool/withdraw" className="withdraw-campaigns">
-                  Withdraw
-                </Link>
-              </div>
-            </div>
-            <div className="table-wrapper">
-              <div className="table-top">
-                <div className="table-top-left">
-                  <span>Pool ID: {poolList.id}</span>
-                  <span>OPV</span>
-                  <span>LP Address: {poolList.lpAddress}</span>
-                  <span>LP TokenName: {poolList.lpTokenName}</span>
-                  <span>Reward Address: {poolList.rewardAddress}</span>
-                  <span>Reward TokenName: {poolList.rewardTokenName}</span>
-                </div>
-
-                <div className="table-top-right">
-                  <Link href={`/admin/pool/update/${poolList.id}`} className="update-pool">
-                    Update Pool
-                  </Link>
-
-                  <Link href={`/admin/pool/history/${poolList.id}`} className="history-pool">
-                    History Pool
-                  </Link>
-
-                  <button className="list-pool" id={poolList.id} onClick={handleShowPlan}>
-                    Show Plan
-                  </button>
-                </div>
-              </div>
-            </div>
-          </Fragment>
-        ))}
+          <Link href="/admin/pool/withdraw" className="withdraw-campaigns">
+            Withdraw
+          </Link>
+        </div>
+      </div>
+      <div className="table-wrapper">
+        <Table
+          columns={columns}
+          rowKey={(record) => record.id}
+          scroll={{ x: 900 }}
+          dataSource={poolLists?.data || []}
+        />
+      </div>
     </WPool>
   )
 }

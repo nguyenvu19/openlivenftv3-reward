@@ -263,7 +263,7 @@ const items: MenuItemType[] = [
   },
   {
     key: '/admin/pool',
-    label: 'Pool',
+    label: 'Stake Pool',
     icon: <DollarOutlined />,
   },
 ]
