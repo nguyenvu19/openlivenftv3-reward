@@ -168,7 +168,6 @@ export const useClaimDepositHistories = (): {
 // fetch staking with deposit History graphql by date
 
 const graphStakingClaimDepositHistoriesByDate = async (start: string, end: string) => {
-  console.log(start, end)
   const whereStr = `
     {${start ? `createdTime_lte: "${start}"` : ''}
     ${end ? `endTime_lte: "${end}"` : ''}}
@@ -202,7 +201,7 @@ const graphStakingClaimDepositHistoriesByDate = async (start: string, end: strin
 }
 
 interface ResponseClaimHistory {
-  dataDeposit: StakingHistory[] | undefined | null
+  dataDeposit: { stakingDepositHistories: StakingHistory[] } | undefined | null
 }
 
 export const useClaimDepositHistoriesByDate = (
