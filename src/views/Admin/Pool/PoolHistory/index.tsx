@@ -217,7 +217,7 @@ const PoolHistory: React.FC = () => {
       render: (record) => {
         return (
           <div>
-            <p>{moment(record.invoice_id).format('YYYY/MM/DD HH:mm:ss')}</p>
+            <p>{moment(record.invoice_id).format('YYYY/MM/DD')}</p>
           </div>
         )
       },
@@ -228,7 +228,7 @@ const PoolHistory: React.FC = () => {
       render: (record) => {
         return (
           <div>
-            <p>{moment(record.invoice_id).format('YYYY/MM/DD HH:mm:ss')}</p>
+            <p>{moment(record.invoice_id).format('YYYY/MM/DD')}</p>
           </div>
         )
       },
@@ -317,7 +317,7 @@ const PoolHistory: React.FC = () => {
       render: (record) => {
         return (
           <div>
-            <p>{moment(record.invoice_id).format('YYYY/MM/DD HH:mm:ss')}</p>
+            <p>{moment(record.invoice_id).format('YYYY/MM/DD')}</p>
           </div>
         )
       },
@@ -328,7 +328,7 @@ const PoolHistory: React.FC = () => {
       render: (record) => {
         return (
           <div>
-            <p>{moment(record.invoice_id).format('YYYY/MM/DD HH:mm:ss')}</p>
+            <p>{moment(record.invoice_id).format('YYYY/MM/DD')}</p>
           </div>
         )
       },
@@ -395,20 +395,24 @@ const PoolHistory: React.FC = () => {
 
         <div className="history-content-middle">
           <Form form={form}>
-            <Row>
-              <Form.Item name="Address" label="Address">
-                <Input size="middle" autoComplete="true" onChange={handleSearchAddress} placeholder="Address" />
-              </Form.Item>
-            </Row>
-            <Row>
-              <Form.Item name="Plan" label="Plan">
-                <Input size="middle" autoComplete="true" onChange={handleSearchPlan} placeholder="Plan" />
-              </Form.Item>
-            </Row>
-            <Row>
-              <Form.Item name="TxH" label="TxH">
-                <Input size="middle" autoComplete="true" onChange={handleSearchTxH} placeholder="Transaction hash" />
-              </Form.Item>
+            <Row gutter={8}>
+              <Col span={8}>
+                <Form.Item name="Address" label="Address">
+                  <Input size="middle" autoComplete="true" onChange={handleSearchAddress} placeholder="Address" />
+                </Form.Item>
+              </Col>
+
+              <Col span={8}>
+                <Form.Item name="Plan" label="Plan">
+                  <Input size="middle" autoComplete="true" onChange={handleSearchPlan} placeholder="Plan" />
+                </Form.Item>
+              </Col>
+
+              <Col span={8}>
+                <Form.Item name="TxH" label="TxH">
+                  <Input size="middle" autoComplete="true" onChange={handleSearchTxH} placeholder="Transaction hash" />
+                </Form.Item>
+              </Col>
             </Row>
           </Form>
         </div>
