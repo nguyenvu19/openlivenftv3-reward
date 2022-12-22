@@ -167,7 +167,7 @@ const CampaignsHistory: React.FC = () => {
       dataIndex: 'userAddress',
       render: (data) => {
         return (
-          <a href={getBlockExploreLink(data, 'transaction', chainId)} target="_blank" rel="noreferrer">
+          <a href={getBlockExploreLink(data, 'address', chainId)} target="_blank" rel="noreferrer">
             {formatCode(data, 5, 5)}
           </a>
         )

@@ -74,7 +74,12 @@ const WPoolCreate = styled.div`
         margin: 0;
 
         ${({ theme }) => theme.mediaQueries.sm} {
-          margin-left: 16.66666667%;
+        }
+
+        .ant-form-item-control-input {
+          ${({ theme }) => theme.mediaQueries.sm} {
+            margin-left: 20px;
+          }
         }
       }
 
@@ -144,8 +149,8 @@ const PoolCreate: React.FC = () => {
       </div>
 
       <Form form={form} onFinish={handleSubmit}>
-        <Row gutter={32}>
-          <Col span={16} offset={8}>
+        <Row gutter={8}>
+          <Col span={16}>
             <Form.Item name="poolId" label="Pool ID" rules={[{ required: true }]} style={{ width: '100%' }}>
               <Input size="large" placeholder="Pool ID" autoComplete="true" />
             </Form.Item>
@@ -161,7 +166,7 @@ const PoolCreate: React.FC = () => {
         </Row>
 
         <Form.Item className="action" style={{ textAlign: 'center' }}>
-          <Button size="large" type="primary" htmlType="submit" className="primary-button">
+          <Button size="large" type="primary" htmlType="submit" className="primary-button" loading={stakingLoading}>
             Confirm
           </Button>
         </Form.Item>

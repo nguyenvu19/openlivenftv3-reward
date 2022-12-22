@@ -157,7 +157,6 @@ const CampaignsUpdateRate: React.FC = () => {
       opvQuantities,
       campId: campaignID,
     }
-    console.log(updateRateParams)
     setErrorMess('')
     setStakingLoading(true)
     const { txResponse, status, message } = await fetchWithCatchTxError(() =>
@@ -293,7 +292,7 @@ const CampaignsUpdateRate: React.FC = () => {
         </Row>
 
         <Form.Item className="action" style={{ textAlign: 'center' }}>
-          <Button size="large" type="default" htmlType="submit" className="primary-button">
+          <Button size="large" type="default" htmlType="submit" className="primary-button" loading={stakingLoading}>
             Confirm
           </Button>
         </Form.Item>

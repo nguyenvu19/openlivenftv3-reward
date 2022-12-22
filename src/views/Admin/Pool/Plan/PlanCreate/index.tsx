@@ -176,7 +176,7 @@ const PlanCreate: React.FC = () => {
         </Row>
 
         <Form.Item className="action" style={{ textAlign: 'center' }}>
-          <Button size="large" type="primary" htmlType="submit" className="primary-button">
+          <Button size="large" type="primary" htmlType="submit" className="primary-button" loading={stakingLoading}>
             Confirm
           </Button>
         </Form.Item>

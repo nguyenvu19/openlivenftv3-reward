@@ -76,7 +76,12 @@ const WPoolWithdraw = styled.div`
         margin: 0;
 
         ${({ theme }) => theme.mediaQueries.sm} {
-          margin-left: 16.66666667%;
+        }
+
+        .ant-form-item-control-input {
+          ${({ theme }) => theme.mediaQueries.sm} {
+            margin-left: 20px;
+          }
         }
       }
 
@@ -144,15 +149,15 @@ const PoolWithdraw: React.FC = () => {
   return (
     <WPoolWithdraw>
       <div className="zodi-control-page">
-        <h1>Withdraw pool</h1>
+        <h1>Withdraw Pool</h1>
         <Button type="primary" size="large" onClick={() => router.back()}>
           Back
         </Button>
       </div>
 
       <Form form={form} onFinish={handleSubmit}>
-        <Row gutter={32}>
-          <Col offset={4}>
+        <Row>
+          <Col span={16}>
             <Form.Item name="coinAddress" label="Coin Address" rules={[{ required: true }]}>
               <Input size="middle" placeholder="Coin Address" autoComplete="true" />
             </Form.Item>
@@ -168,7 +173,7 @@ const PoolWithdraw: React.FC = () => {
         </Row>
 
         <Form.Item className="action" style={{ textAlign: 'center' }}>
-          <Button size="large" type="primary" htmlType="submit" className="primary-button">
+          <Button size="large" type="primary" htmlType="submit" className="primary-button" loading={stakingLoading}>
             Withdraw Confirm
           </Button>
         </Form.Item>

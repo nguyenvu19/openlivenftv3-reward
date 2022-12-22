@@ -84,6 +84,10 @@ const WPool = styled.div`
     }
   }
 
+  .anticon {
+    margin: 0 !important;
+  }
+
   .table-wrapper {
     .table-top {
       display: flex;

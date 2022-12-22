@@ -128,18 +128,16 @@ const WPlanList = styled.div`
     }
 
     .ant-table-tbody {
-      .ant-space-item:last-child {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 8px 12px;
-        background-color: rgb(255, 193, 7);
-        border-color: rgb(255, 193, 7);
-        text-shadow: rgb(0 0 0 / 12%) 0px -1px 0px;
-        box-shadow: rgb(0 0 0 / 4%) 0px 2px;
-        color: rgb(33, 37, 41) !important;
-
+      .ant-table-cell:last-child {
         a {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 8px 12px;
+          background-color: rgb(255, 193, 7);
+          border-color: rgb(255, 193, 7);
+          text-shadow: rgb(0 0 0 / 12%) 0px -1px 0px;
+          box-shadow: rgb(0 0 0 / 4%) 0px 2px;
           color: rgb(33, 37, 41) !important;
         }
       }
@@ -182,11 +180,7 @@ const PlanList: React.FC = () => {
     {
       title: 'Action',
       key: 'planID',
-      render: (data, item) => (
-        <Space size="middle">
-          <Link href={`/admin/pool/${poolId}/plan/update/${item.planId}`}>Update</Link>
-        </Space>
-      ),
+      render: (data, item) => <Link href={`/admin/pool/${poolId}/plan/update/${item.planId}`}>Update</Link>,
     },
   ]
 

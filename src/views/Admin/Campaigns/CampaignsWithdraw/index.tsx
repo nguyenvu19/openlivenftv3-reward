@@ -169,7 +169,7 @@ const CampaignsWithdraw: React.FC = () => {
         </Row>
 
         <Form.Item className="action" style={{ textAlign: 'center' }}>
-          <Button size="large" type="primary" htmlType="submit" className="primary-button">
+          <Button size="large" type="primary" htmlType="submit" className="primary-button" loading={stakingLoading}>
             Withdraw Campaign
           </Button>
         </Form.Item>

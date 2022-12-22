@@ -205,7 +205,7 @@ const PoolHistory: React.FC = () => {
       dataIndex: 'userAddress',
       render: (data) => {
         return (
-          <a href={getBlockExploreLink(data, 'transaction', chainId)} target="_blank" rel="noreferrer">
+          <a href={getBlockExploreLink(data, 'address', chainId)} target="_blank" rel="noreferrer">
             {formatCode(data, 5, 5)}
           </a>
         )
@@ -305,7 +305,7 @@ const PoolHistory: React.FC = () => {
       dataIndex: 'userAddress',
       render: (data) => {
         return (
-          <a href={getBlockExploreLink(data, 'transaction', chainId)} target="_blank" rel="noreferrer">
+          <a href={getBlockExploreLink(data, 'address', chainId)} target="_blank" rel="noreferrer">
             {formatCode(data, 5, 5)}
           </a>
         )
@@ -341,10 +341,27 @@ const PoolHistory: React.FC = () => {
 
   const withdrawHistoriesClone: any[] = useMemo(
     () =>
-      withdrawHistories?.map((campaign) => ({
-        ...campaign,
-      })),
-    [withdrawHistories],
+      withdrawHistories
+        ?.map((campaign) => ({
+          ...campaign,
+          amount: (Number(campaign.amount) / 1e18).toLocaleString(),
+        }))
+        .filter((item: any) => {
+          if (searchAddress !== '') {
+            return item.userAddress.includes(searchAddress)
+          }
+
+          if (searchPlan !== '') {
+            return String(item.planId).includes(searchPlan)
+          }
+
+          if (searchTxH !== '') {
+            return item.transactionHash.includes(searchTxH)
+          }
+
+          return item
+        }),
+    [searchAddress, searchPlan, searchTxH, withdrawHistories],
   )
 
   const handleHistory = (poolId) => {
