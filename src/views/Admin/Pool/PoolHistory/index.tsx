@@ -372,15 +372,15 @@ const PoolHistory: React.FC = () => {
   }
 
   const handleSearchAddress = (e) => {
-    setSearchAddress(e.target.value)
+    setSearchAddress(e.target.value.toLowerCase())
   }
 
   const handleSearchPlan = (e) => {
-    setSearchPlan(e.target.value)
+    setSearchPlan(e.target.value.toLowerCase())
   }
 
   const handleSearchTxH = (e) => {
-    setSearchTxH(e.target.value)
+    setSearchTxH(e.target.value.toLowerCase())
   }
 
   return (

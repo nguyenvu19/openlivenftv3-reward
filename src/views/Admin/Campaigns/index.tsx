@@ -1,12 +1,15 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 
-import { Col, Form, Row, Space, Table } from 'antd'
+import { Col, Form, Row, Space, Table, DatePicker } from 'antd'
 import Link from 'next/link'
 import styled from 'styled-components'
 
 import { formatDate } from 'helpers'
 
 import { useCampaigns, usePollCoreCampaignsData } from 'state/campaigns/hooks'
+import moment from 'moment'
+
+const { RangePicker } = DatePicker
 
 const WCampaigns = styled.div`
   width: 100%;
@@ -167,6 +170,12 @@ const Campaigns: React.FC = () => {
 
   const { data: campaigns } = useCampaigns()
 
+  console.log(campaigns)
+
+  const [dateRange, setDateRange] = useState([moment(), moment()])
+
+  const currentTime = new Date().getTime()
+
   // Check status
   const campaignsClone: any[] = useMemo(
     () =>
@@ -176,7 +185,7 @@ const Campaigns: React.FC = () => {
 
           // id: campaign.id.sort((a, b) => a.id - b.id),
 
-          status: campaign.finish - campaign.start > 0 ? 'Live' : 'End',
+          status: campaign.finish - currentTime > 0 ? 'Live' : 'Ended',
           totalPool: Number(campaign.totalPool).toLocaleString(),
 
           // start: `${new Date(campaign.start).getDay()}/${new Date(campaign.start).getMonth()}/${new Date(
@@ -190,11 +199,11 @@ const Campaigns: React.FC = () => {
           // finish: `${new Date(campaign.finish).getFullYear()}/${new Date(campaign.finish).getMonth()}/${new Date(
           //   campaign.finish,
           // ).getDay()}`,
-          start: formatDate(campaign.start, 'yyyy-MM-DD'),
-          finish: formatDate(campaign.finish, 'yyyy-MM-DD'),
+          // start: formatDate(campaign.start, 'yyyy-MM-DD'),
+          // finish: formatDate(campaign.finish, 'yyyy-MM-DD'),
         }))
         .sort((a, b) => a.id - b.id),
-    [campaigns],
+    [campaigns, currentTime],
   )
 
   const columns = [
@@ -221,10 +230,24 @@ const Campaigns: React.FC = () => {
     {
       title: 'Start Date',
       dataIndex: 'start',
+      render: (record) => {
+        return (
+          <div>
+            <p>{formatDate(record, 'yyyy-MM-DD')}</p>
+          </div>
+        )
+      },
     },
     {
       title: 'End Date',
       dataIndex: 'finish',
+      render: (record) => {
+        return (
+          <div>
+            <p>{formatDate(record, 'yyyy-MM-DD')}</p>
+          </div>
+        )
+      },
     },
 
     {
@@ -241,6 +264,10 @@ const Campaigns: React.FC = () => {
       ),
     },
   ]
+
+  const handleSearchDate = (e) => {
+    console.log(e)
+  }
 
   return (
     <WCampaigns>
@@ -289,6 +316,11 @@ const Campaigns: React.FC = () => {
                 <Option value={false}>False</Option>
               </Select>
             </Form.Item> */}
+            <Form.Item name="range_picker" label="Date">
+              <Space direction="vertical" size={12}>
+                <RangePicker onChange={handleSearchDate} format="YYYY/MM/DD" />
+              </Space>
+            </Form.Item>
           </Col>
         </Row>
       </Form>
