@@ -9,6 +9,7 @@ import styled from 'styled-components'
 
 import { useClaimDepositHistories, useClaimWithdrawHistories } from 'state/staking/fetchStakingHistory'
 
+import { formatDate } from 'helpers'
 import { formatCode } from 'helpers/CommonHelper'
 import moment from 'moment'
 import { getBlockExploreLink } from 'utils'
@@ -217,7 +218,7 @@ const PoolHistory: React.FC = () => {
       render: (record) => {
         return (
           <div>
-            <p>{moment(record.invoice_id).format('YYYY/MM/DD')}</p>
+            <p>{formatDate(record * 1000, 'yyyy-MM-DD')}</p>
           </div>
         )
       },
@@ -228,7 +229,7 @@ const PoolHistory: React.FC = () => {
       render: (record) => {
         return (
           <div>
-            <p>{moment(record.invoice_id).format('YYYY/MM/DD')}</p>
+            <p>{formatDate(record * 1000, 'yyyy-MM-DD')}</p>
           </div>
         )
       },
@@ -317,7 +318,7 @@ const PoolHistory: React.FC = () => {
       render: (record) => {
         return (
           <div>
-            <p>{moment(record.invoice_id).format('YYYY/MM/DD')}</p>
+            <p>{formatDate(record * 1000, 'yyyy-MM-DD')}</p>
           </div>
         )
       },
@@ -328,7 +329,7 @@ const PoolHistory: React.FC = () => {
       render: (record) => {
         return (
           <div>
-            <p>{moment(record.invoice_id).format('YYYY/MM/DD')}</p>
+            <p>{formatDate(record * 1000, 'yyyy-MM-DD')}</p>
           </div>
         )
       },
