@@ -62,9 +62,14 @@ export const useStakingHistory = (
 
 // fetch staking with draw History graphql
 const graphStakingClaimWithdrawHistories = async (createdTimeFrom, createdTimeTo) => {
+  const currentTimeHours = new Date().getHours()
+  const currentTimeMinute = new Date().getMinutes()
+  const currentTimeSecond = new Date().getSeconds()
+  const currentTime = currentTimeHours * 60 * 60 + currentTimeMinute * 60 + currentTimeSecond
+
   const whereString = `
   where: {
-    ${createdTimeFrom ? `createdTime_gte: "${createdTimeFrom}"` : ''}
+    ${createdTimeFrom ? `createdTime_gte: "${createdTimeFrom - currentTime}"` : ''}
     ${createdTimeTo ? `createdTime_lte: "${createdTimeTo}"` : ''}
   },
 `
@@ -193,8 +198,13 @@ export const useClaimDepositHistories = (): {
 // fetch staking with deposit History graphql by date
 
 const graphStakingClaimDepositHistoriesByDate = async (start: string, end: string) => {
+  const currentTimeHours = new Date().getHours()
+  const currentTimeMinute = new Date().getMinutes()
+  const currentTimeSecond = new Date().getSeconds()
+  const currentTime = currentTimeHours * 60 * 60 + currentTimeMinute * 60 + currentTimeSecond
+
   const whereStr = `
-    {${start ? `createdTime_gte: "${start}"` : ''}
+    {${start ? `createdTime_gte: "${Number(start) - currentTime}"` : ''}
     ${end ? `endTime_lte: "${end}"` : ''}}
   `
   try {

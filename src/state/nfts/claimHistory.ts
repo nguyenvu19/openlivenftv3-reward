@@ -79,6 +79,11 @@ const graphCampaignsClaimHistory = async (
   createdTimeFrom?: string,
   createdTimeTo?: string,
 ) => {
+  const currentTimeHours = new Date().getHours()
+  const currentTimeMinute = new Date().getMinutes()
+  const currentTimeSecond = new Date().getSeconds()
+  const currentTime = currentTimeHours * 60 * 60 + currentTimeMinute * 60 + currentTimeSecond
+
   try {
     const query = !createdTimeFrom
       ? gql`
@@ -97,7 +102,9 @@ const graphCampaignsClaimHistory = async (
     `
       : gql`
     query campaignsClaimHistory {
-      claims(first: $total,where: {campaignId: ${campaignId}, createdTime_gte: "${createdTimeFrom}", createdTime_lte: "${createdTimeTo}"}) {
+      claims(first: $total,where: {campaignId: ${campaignId}, createdTime_gte: "${
+          Number(createdTimeFrom) - currentTime
+        }", createdTime_lte: "${createdTimeTo}"}) {
         campaignId
         createdTime
         id
