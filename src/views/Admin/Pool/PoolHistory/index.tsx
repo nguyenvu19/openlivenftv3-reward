@@ -174,7 +174,8 @@ const PoolHistory: React.FC = () => {
   const [searchAddress, setSearchAddress] = useState('')
   const [searchPlan, setSearchPlan] = useState('')
   const [searchTxH, setSearchTxH] = useState('')
-  const [dateRange, setDateRange] = useState([])
+  const [dateRangeDeposit, setDateRangeDeposit] = useState([])
+  const [dateRangeWithdraw, setDateRangeWithdraw] = useState('')
 
   const [form] = Form.useForm()
   const router = useRouter()
@@ -298,8 +299,8 @@ const PoolHistory: React.FC = () => {
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const { stakingDepositHistories: stakingDepositHistoriesByDate } = useClaimDepositHistoriesByDate(
-    dateRange && dateRange[0] ? String(dateRange[0]) : '',
-    dateRange && dateRange[0] ? String(dateRange[1]) : '',
+    dateRangeDeposit && dateRangeDeposit[0] ? String(dateRangeDeposit[0]) : '',
+    dateRangeDeposit && dateRangeDeposit[0] ? String(dateRangeDeposit[1]) : '',
   )
   const depositHistoriesByDate = stakingDepositHistoriesByDate?.dataDeposit?.stakingDepositHistories
 
@@ -401,7 +402,7 @@ const PoolHistory: React.FC = () => {
   ]
 
   // Get data from withDraw history with graph
-  const { stakingWithdrawHistories } = useClaimWithdrawHistories()
+  const { stakingWithdrawHistories } = useClaimWithdrawHistories(dateRangeWithdraw)
   const withdrawHistories = stakingWithdrawHistories.dataWithdraw
 
   const withdrawHistoriesClone: any[] = useMemo(
@@ -429,10 +430,6 @@ const PoolHistory: React.FC = () => {
     [searchAddress, searchPlan, searchTxH, withdrawHistories],
   )
 
-  const handleHistory = (poolId) => {
-    router.replace(``)
-  }
-
   const handleCheckBox = (e: CheckboxChangeEvent) => {
     setSelected(e.target.value)
   }
@@ -449,8 +446,12 @@ const PoolHistory: React.FC = () => {
     setSearchTxH(e.target.value.toLowerCase())
   }
 
-  const handleSearchDate = (e) => {
-    setDateRange(e?.map((time) => Date.parse(time._d) / 1000))
+  const handleSearchDateDeposit = (e) => {
+    setDateRangeDeposit(e?.map((time) => Date.parse(time._d) / 1000))
+  }
+
+  const handleSearchDateWithdraw = (e) => {
+    setDateRangeWithdraw(String(Date.parse(e) / 1000))
   }
 
   return (
@@ -479,9 +480,15 @@ const PoolHistory: React.FC = () => {
           </Form.Item> */}
 
           <Form.Item name="range_picker" label="Date">
-            <Space direction="vertical" size={12}>
-              <RangePicker format="YYYY/MM/DD" onChange={handleSearchDate} />
-            </Space>
+            {selected === 'Deposit' ? (
+              <Space direction="vertical" size={12}>
+                <RangePicker format="YYYY/MM/DD" onChange={handleSearchDateDeposit} />
+              </Space>
+            ) : (
+              <Space direction="vertical" size={12}>
+                <DatePicker format="YYYY/MM/DD" onChange={handleSearchDateWithdraw} />
+              </Space>
+            )}
           </Form.Item>
         </div>
 
@@ -522,7 +529,9 @@ const PoolHistory: React.FC = () => {
               />
               <Table
                 columns={columnsDeposit}
-                dataSource={dateRange && dateRange[0] ? depositHistoriesByDateClone : depositHistoriesClone}
+                dataSource={
+                  dateRangeDeposit && dateRangeDeposit[0] ? depositHistoriesByDateClone : depositHistoriesClone
+                }
                 scroll={{ x: 1200 }}
               />
             </div>

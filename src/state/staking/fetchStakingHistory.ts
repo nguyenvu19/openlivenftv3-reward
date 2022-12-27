@@ -61,11 +61,33 @@ export const useStakingHistory = (
 }
 
 // fetch staking with draw History graphql
-const graphStakingClaimWithdrawHistories = async () => {
+const graphStakingClaimWithdrawHistories = async (createdTime) => {
+  const whereString = `
+  where: {
+    ${createdTime ? `createdTime_lte: "${createdTime}"` : ''}
+  },
+`
   try {
-    const query = gql`
+    console.log(createdTime)
+    const query =
+      createdTime === 'NaN'
+        ? gql`
+            query stakingClaimPools {
+              stakingWithdrawHistories {
+                id
+                amount
+                planId
+                poolId
+                startTime
+                transactionHash
+                userAddress
+                createdTime
+              }
+            }
+          `
+        : gql`
       query stakingClaimPools {
-        stakingWithdrawHistories {
+        stakingWithdrawHistories(${whereString}) {
           id
           amount
           planId
@@ -89,7 +111,9 @@ interface ResponseClaimStakingWithdrawHistories {
   dataWithdraw: StakingHistory[] | undefined | null
 }
 
-export const useClaimWithdrawHistories = (): {
+export const useClaimWithdrawHistories = (
+  createdTime: string,
+): {
   stakingWithdrawHistories: ResponseClaimStakingWithdrawHistories
   fetchStakingWithdrawHistories: () => void
 } => {
@@ -98,11 +122,11 @@ export const useClaimWithdrawHistories = (): {
   })
 
   const fetchStakingWithdrawHistories = useCallback(async () => {
-    const result = await graphStakingClaimWithdrawHistories()
+    const result = await graphStakingClaimWithdrawHistories(createdTime)
     setStakingWithdrawHistories({
       dataWithdraw: result?.stakingWithdrawHistories || null,
     })
-  }, [])
+  }, [createdTime])
 
   useEffect(() => {
     fetchStakingWithdrawHistories()

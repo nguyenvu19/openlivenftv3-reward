@@ -188,7 +188,6 @@ const Campaigns: React.FC = () => {
   const tableRef = useRef(null)
   useEffect(() => {
     const table = tableRef.current.querySelector('table')
-    console.log(table)
     table.setAttribute('id', 'table-to-xls')
   }, [tableRef])
 
