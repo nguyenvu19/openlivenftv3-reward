@@ -175,7 +175,7 @@ const PoolHistory: React.FC = () => {
   const [searchPlan, setSearchPlan] = useState('')
   const [searchTxH, setSearchTxH] = useState('')
   const [dateRangeDeposit, setDateRangeDeposit] = useState([])
-  const [dateRangeWithdraw, setDateRangeWithdraw] = useState('')
+  const [dateRangeWithdraw, setDateRangeWithdraw] = useState([])
 
   const [form] = Form.useForm()
   const router = useRouter()
@@ -402,7 +402,11 @@ const PoolHistory: React.FC = () => {
   ]
 
   // Get data from withDraw history with graph
-  const { stakingWithdrawHistories } = useClaimWithdrawHistories(dateRangeWithdraw)
+  const { stakingWithdrawHistories } = useClaimWithdrawHistories(
+    dateRangeWithdraw && dateRangeWithdraw[0] ? String(dateRangeWithdraw[0]) : '',
+    dateRangeWithdraw && dateRangeWithdraw[0] ? String(dateRangeWithdraw[1]) : '',
+  )
+
   const withdrawHistories = stakingWithdrawHistories.dataWithdraw
 
   const withdrawHistoriesClone: any[] = useMemo(
@@ -451,7 +455,7 @@ const PoolHistory: React.FC = () => {
   }
 
   const handleSearchDateWithdraw = (e) => {
-    setDateRangeWithdraw(String(Date.parse(e) / 1000))
+    setDateRangeWithdraw(e?.map((time) => Date.parse(time._d) / 1000))
   }
 
   return (
@@ -486,7 +490,7 @@ const PoolHistory: React.FC = () => {
               </Space>
             ) : (
               <Space direction="vertical" size={12}>
-                <DatePicker format="YYYY/MM/DD" onChange={handleSearchDateWithdraw} />
+                <RangePicker format="YYYY/MM/DD" onChange={handleSearchDateWithdraw} />
               </Space>
             )}
           </Form.Item>

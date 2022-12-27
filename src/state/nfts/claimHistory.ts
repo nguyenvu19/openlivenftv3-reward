@@ -25,28 +25,6 @@ const graphNftClaimHistory = async (total: number, tokenId?: string) => {
   }
 }
 
-// fetch Campaigns detail graphql
-const graphCampaignsClaimHistory = async (total: number, campaignId?: string) => {
-  try {
-    const query = gql`
-      query campaignsClaimHistory($total: Int!) {
-        claims(first: $total, where: { campaignId: ${campaignId} }) {
-          amount
-          id
-          transactionHash
-          userAddress
-          campaignId
-        }
-      }
-    `
-    const data = await graphqlOpv.request(query, { total })
-    return data
-  } catch (error) {
-    console.error('Failed graphCampaignsClaimHistory', error)
-    return null
-  }
-}
-
 interface ResponseClaimHistory {
   total: number
   pageSize: number
@@ -94,6 +72,51 @@ export const useNftClaimHistory = (
   return { nftClaimHistory, fetchNftClaimHistory, setParamsNftClaimHistory }
 }
 
+// fetch Campaigns detail graphql
+const graphCampaignsClaimHistory = async (
+  total: number,
+  campaignId?: string,
+  createdTimeFrom?: string,
+  createdTimeTo?: string,
+) => {
+  try {
+    const query = !createdTimeFrom
+      ? gql`
+      query campaignsClaimHistory($total: Int!) {
+        claims(first: $total, where: { campaignId: ${campaignId} }) {
+          campaignId
+          createdTime
+          id
+          tokenId
+          totalDays
+          transactionHash
+          userAddress
+          amount
+        }
+      }
+    `
+      : gql`
+    query campaignsClaimHistory {
+      claims(first: $total,where: {campaignId: ${campaignId}, createdTime_gte: "${createdTimeFrom}", createdTime_lte: "${createdTimeTo}"}) {
+        campaignId
+        createdTime
+        id
+        tokenId
+        totalDays
+        transactionHash
+        userAddress
+        amount
+      }
+    }
+  `
+    const data = await graphqlOpv.request(query, { total })
+    return data
+  } catch (error) {
+    console.error('Failed graphCampaignsClaimHistory', error)
+    return null
+  }
+}
+
 // Campaigns
 interface ResponseCampaignsClaimHistory {
   total: number
@@ -104,6 +127,8 @@ interface ResponseCampaignsClaimHistory {
 
 export const useCampaignsClaimHistory = (
   campaignId?: string,
+  createdTimeFrom?: string,
+  createdTimeTo?: string,
 ): {
   campaignsClaimHistory: ResponseCampaignsClaimHistory
   fetchCampaignsClaimHistory: () => void
@@ -125,13 +150,15 @@ export const useCampaignsClaimHistory = (
       const result = await graphCampaignsClaimHistory(
         paramsCampaignsClaimHistory.total,
         paramsCampaignsClaimHistory.campaignId,
+        createdTimeFrom,
+        createdTimeTo,
       )
       setCampaignsClaimHistory({
         ...paramsCampaignsClaimHistory,
         data: result?.claims || null,
       })
     }
-  }, [paramsCampaignsClaimHistory])
+  }, [createdTimeFrom, createdTimeTo, paramsCampaignsClaimHistory])
 
   useEffect(() => {
     if (campaignId) {

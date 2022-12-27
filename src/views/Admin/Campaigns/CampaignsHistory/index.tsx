@@ -11,6 +11,7 @@ import ReactHTMLTableToExcel from 'react-html-table-to-excel'
 import { formatCode } from 'helpers/CommonHelper'
 import { getBlockExploreLink } from 'utils'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import { formatDate } from 'helpers'
 
 const WCampaignsHistory = styled.div`
   width: 100%;
@@ -135,6 +136,7 @@ const { RangePicker } = DatePicker
 
 const CampaignsHistory: React.FC = () => {
   const [searchAddress, setSearchAddress] = useState('')
+  const [dateRange, setDateRange] = useState([])
 
   const [form] = Form.useForm()
   const router = useRouter()
@@ -149,7 +151,11 @@ const CampaignsHistory: React.FC = () => {
   // ID of campaign
   const { campaignID } = router.query
 
-  const { campaignsClaimHistory, setParamsCampaignsClaimHistory } = useCampaignsClaimHistory(String(campaignID))
+  const { campaignsClaimHistory, setParamsCampaignsClaimHistory } = useCampaignsClaimHistory(
+    String(campaignID),
+    dateRange && dateRange[0] ? String(dateRange[0]) : '',
+    dateRange && dateRange[0] ? String(dateRange[1]) : '',
+  )
 
   const campaignsClaimHistoryClone: any[] = useMemo(
     () =>
@@ -200,10 +206,25 @@ const CampaignsHistory: React.FC = () => {
         )
       },
     },
+    {
+      title: 'Create time',
+      dataIndex: 'createdTime',
+      render: (record) => {
+        return (
+          <div>
+            <p>{formatDate(record * 1000, 'yyyy-MM-DD')}</p>
+          </div>
+        )
+      },
+    },
   ]
 
   const handleSearchAddress = (e) => {
     setSearchAddress(e.target.value.toLowerCase())
+  }
+
+  const handleSearchDate = (e) => {
+    setDateRange(e?.map((time) => Date.parse(time._d) / 1000))
   }
 
   const handleSubmit = (values) => {
@@ -225,16 +246,16 @@ const CampaignsHistory: React.FC = () => {
             <Form.Item name="Address" label="Address">
               <Input size="middle" placeholder="Address" autoComplete="true" onChange={handleSearchAddress} />
             </Form.Item>
-            {/* 
-            <Form.Item name="Campaign" label="Campaign">
+
+            {/* <Form.Item name="Campaign" label="Campaign">
               <Input size="middle" placeholder="Campaign" autoComplete="true" onChange={handleSearchCampaign} />
-            </Form.Item>
+            </Form.Item> */}
 
             <Form.Item name="Date" label="Date">
               <Space direction="vertical" size={12}>
-                <RangePicker />
+                <RangePicker format="YYYY/MM/DD" onChange={handleSearchDate} />
               </Space>
-            </Form.Item> */}
+            </Form.Item>
           </Col>
         </Row>
       </Form>
