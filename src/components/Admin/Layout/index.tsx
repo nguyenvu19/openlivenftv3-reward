@@ -323,23 +323,23 @@ const AdminLayout = ({ children }: any) => {
     }
   }, [account, ownerContract, ownerStake, router])
 
-  // if (loading) {
-  //   return (
-  //     <RequireLoginStyled>
-  //       <Spin />
-  //     </RequireLoginStyled>
-  //   )
-  // }
-  // if (!account) {
-  //   return (
-  //     <RequireLoginStyled>
-  //       <ConnectWalletButton />
-  //     </RequireLoginStyled>
-  //   )
-  // }
-  // if (!isOwner) {
-  //   return <RequireLoginStyled>You do not have access to this site</RequireLoginStyled>
-  // }
+  if (loading) {
+    return (
+      <RequireLoginStyled>
+        <Spin />
+      </RequireLoginStyled>
+    )
+  }
+  if (!account) {
+    return (
+      <RequireLoginStyled>
+        <ConnectWalletButton />
+      </RequireLoginStyled>
+    )
+  }
+  if (!isOwner) {
+    return <RequireLoginStyled>You do not have access to this site</RequireLoginStyled>
+  }
   return (
     <WAdminLayout>
       <Layout style={{ minHeight: '100vh' }}>
