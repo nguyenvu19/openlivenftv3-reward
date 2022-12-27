@@ -1,8 +1,11 @@
+import { useEffect, useRef } from 'react'
 import { useRouter } from 'next/router'
 
 import { Button, Form, Space, Table } from 'antd'
 import Link from 'next/link'
 import styled from 'styled-components'
+
+import ReactHTMLTableToExcel from 'react-html-table-to-excel'
 
 import { useStakingListData } from 'state/staking/fetchStakingList'
 import { roundNumber } from 'helpers'
@@ -142,6 +145,25 @@ const WPlanList = styled.div`
         }
       }
     }
+
+    .table-wrapper {
+      #table-xls-button {
+        border-color: rgb(41, 190, 84);
+        background: rgb(41, 190, 84);
+        text-shadow: rgb(0 0 0 / 12%) 0px -1px 0px;
+        box-shadow: rgb(0 0 0 / 4%) 0px 2px;
+        color: rgb(255, 255, 255) !important;
+        padding: 8px 20px;
+        min-height: 38px;
+        max-height: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
+        cursor: pointer;
+      }
+    }
   }
 `
 
@@ -150,6 +172,12 @@ const PlanList: React.FC = () => {
   const router = useRouter()
 
   const { poolId } = router.query
+
+  const tableRef = useRef(null)
+  useEffect(() => {
+    const table = tableRef.current.querySelector('table')
+    table.setAttribute('id', 'table-to-xls')
+  }, [tableRef])
 
   const { stakingList, fetchStakingList } = useStakingListData()
 
@@ -194,7 +222,18 @@ const PlanList: React.FC = () => {
       </div>
 
       <div className="table-content">
-        <Table columns={columns} dataSource={stakingList || []} scroll={{ x: 700 }} />
+        <div className="table-wrapper" ref={tableRef}>
+          <ReactHTMLTableToExcel
+            id="table-xls-button"
+            className="download-table-xls-button"
+            table="table-to-xls"
+            sheet="Sales report"
+            filename="Plan List"
+            buttonText="Export CSV"
+          />
+          <Table columns={columns} dataSource={stakingList || []} scroll={{ x: 700 }} />
+        </div>
+
         <div className="add-pool">
           <Link href={`/admin/pool//${poolId}/plan/create`}>New plan</Link>
         </div>

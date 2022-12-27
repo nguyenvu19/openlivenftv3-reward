@@ -1,13 +1,16 @@
 /* eslint-disable react/button-has-type */
-import React, { Fragment } from 'react'
+import { useEffect, useRef } from 'react'
 
-import { Table, Form, Select } from 'antd'
+import { Table } from 'antd'
 import Link from 'next/link'
 import styled from 'styled-components'
 
 import { useRouter } from 'next/router'
-import { useClaimPools } from 'state/staking/fetchPoolList'
+
+import ReactHTMLTableToExcel from 'react-html-table-to-excel'
+
 import { formatCode } from 'helpers'
+import { useClaimPools } from 'state/staking/fetchPoolList'
 import { getBlockExploreLink } from 'utils'
 
 const WPool = styled.div`
@@ -156,11 +159,36 @@ const WPool = styled.div`
       cursor: pointer;
     }
   }
+
+  .table-wrapper {
+    #table-xls-button {
+      border-color: rgb(41, 190, 84);
+      background: rgb(41, 190, 84);
+      text-shadow: rgb(0 0 0 / 12%) 0px -1px 0px;
+      box-shadow: rgb(0 0 0 / 4%) 0px 2px;
+      color: rgb(255, 255, 255) !important;
+      padding: 8px 20px;
+      min-height: 38px;
+      max-height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
+      cursor: pointer;
+    }
+  }
 `
 
 const Pool: React.FC = () => {
   const router = useRouter()
   const { poolLists } = useClaimPools()
+
+  const tableRef = useRef(null)
+  useEffect(() => {
+    const table = tableRef.current.querySelector('table')
+    table.setAttribute('id', 'table-to-xls')
+  }, [tableRef])
 
   const handleAddPool = () => {
     if (poolLists.data !== undefined) {
@@ -245,7 +273,15 @@ const Pool: React.FC = () => {
           </Link>
         </div>
       </div>
-      <div className="table-wrapper">
+      <div className="table-wrapper" ref={tableRef}>
+        <ReactHTMLTableToExcel
+          id="table-xls-button"
+          className="download-table-xls-button"
+          table="table-to-xls"
+          sheet="Sales report"
+          filename="Stake Pools"
+          buttonText="Export CSV"
+        />
         <Table
           columns={columns}
           rowKey={(record) => record.id}

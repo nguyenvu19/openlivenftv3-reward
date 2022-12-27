@@ -1,10 +1,12 @@
 import { Button, Checkbox, Col, DatePicker, Form, Input, Row, Table, Space } from 'antd'
 import type { CheckboxChangeEvent } from 'antd/es/checkbox'
 
-import React, { useMemo, useState } from 'react'
+import React, { useMemo, useState, useEffect, useRef } from 'react'
 
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
+
+import ReactHTMLTableToExcel from 'react-html-table-to-excel'
 
 import {
   useClaimDepositHistories,
@@ -147,6 +149,25 @@ const WPoolHistory = styled.div`
       }
     }
   }
+
+  .table-wrapper {
+    #table-xls-button {
+      border-color: rgb(41, 190, 84);
+      background: rgb(41, 190, 84);
+      text-shadow: rgb(0 0 0 / 12%) 0px -1px 0px;
+      box-shadow: rgb(0 0 0 / 4%) 0px 2px;
+      color: rgb(255, 255, 255) !important;
+      padding: 8px 20px;
+      min-height: 38px;
+      max-height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
+      cursor: pointer;
+    }
+  }
 `
 
 const PoolHistory: React.FC = () => {
@@ -158,9 +179,15 @@ const PoolHistory: React.FC = () => {
   const [form] = Form.useForm()
   const router = useRouter()
   const { chainId } = useActiveWeb3React()
-  const checkList = ['Deposit', 'Withdraw']
 
+  const checkList = ['Deposit', 'Withdraw']
   const [selected, setSelected] = useState('Deposit')
+
+  const tableRef = useRef(null)
+  useEffect(() => {
+    const table = tableRef.current.querySelector('table')
+    table.setAttribute('id', 'table-to-xls')
+  }, [tableRef])
 
   const columnsDeposit = [
     {
@@ -459,7 +486,7 @@ const PoolHistory: React.FC = () => {
         </div>
 
         <div className="history-content-middle">
-          <Form form={form}>
+          <Form form={form} layout="vertical">
             <Row gutter={8}>
               <Col span={8}>
                 <Form.Item name="Address" label="Address">
@@ -484,13 +511,33 @@ const PoolHistory: React.FC = () => {
 
         <div className="history-content-middle">
           {selected === 'Deposit' ? (
-            <Table
-              columns={columnsDeposit}
-              dataSource={dateRange && dateRange[0] ? depositHistoriesByDateClone : depositHistoriesClone}
-              scroll={{ x: 1200 }}
-            />
+            <div className="table-wrapper" ref={tableRef}>
+              <ReactHTMLTableToExcel
+                id="table-xls-button"
+                className="download-table-xls-button"
+                table="table-to-xls"
+                sheet="Sales report"
+                filename="Pool History Deposit"
+                buttonText="Export CSV"
+              />
+              <Table
+                columns={columnsDeposit}
+                dataSource={dateRange && dateRange[0] ? depositHistoriesByDateClone : depositHistoriesClone}
+                scroll={{ x: 1200 }}
+              />
+            </div>
           ) : (
-            <Table columns={columnsWithdraw} dataSource={withdrawHistoriesClone} scroll={{ x: 1000 }} />
+            <div className="table-wrapper" ref={tableRef}>
+              <ReactHTMLTableToExcel
+                id="table-xls-button"
+                className="download-table-xls-button"
+                table="table-to-xls"
+                sheet="Sales report"
+                filename="Pool History Withdraw"
+                buttonText="Export CSV"
+              />
+              <Table columns={columnsWithdraw} dataSource={withdrawHistoriesClone} scroll={{ x: 1000 }} />
+            </div>
           )}
         </div>
       </div>

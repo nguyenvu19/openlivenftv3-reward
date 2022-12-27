@@ -1,8 +1,9 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
 import { Col, Form, Row, Space, Table, DatePicker } from 'antd'
 import Link from 'next/link'
 import styled from 'styled-components'
+import ReactHTMLTableToExcel from 'react-html-table-to-excel'
 
 import { formatDate } from 'helpers'
 
@@ -160,10 +161,36 @@ const WCampaigns = styled.div`
       }
     }
   }
+
+  .table-wrapper {
+    #table-xls-button {
+      border-color: rgb(41, 190, 84);
+      background: rgb(41, 190, 84);
+      text-shadow: rgb(0 0 0 / 12%) 0px -1px 0px;
+      box-shadow: rgb(0 0 0 / 4%) 0px 2px;
+      color: rgb(255, 255, 255) !important;
+      padding: 8px 20px;
+      min-height: 38px;
+      max-height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
+      cursor: pointer;
+    }
+  }
 `
 
 const Campaigns: React.FC = () => {
   const [form] = Form.useForm()
+
+  const tableRef = useRef(null)
+  useEffect(() => {
+    const table = tableRef.current.querySelector('table')
+    console.log(table)
+    table.setAttribute('id', 'table-to-xls')
+  }, [tableRef])
 
   usePollCoreCampaignsData() // list campaign data
 
@@ -314,7 +341,15 @@ const Campaigns: React.FC = () => {
         </Row>
       </Form>
 
-      <div className="table-wrapper">
+      <div className="table-wrapper" ref={tableRef}>
+        <ReactHTMLTableToExcel
+          id="table-xls-button"
+          className="download-table-xls-button"
+          table="table-to-xls"
+          sheet="Sales report"
+          filename="Campaign Summary"
+          buttonText="Export CSV"
+        />
         <Table
           columns={columns}
           dataSource={campaignsClone || []}
