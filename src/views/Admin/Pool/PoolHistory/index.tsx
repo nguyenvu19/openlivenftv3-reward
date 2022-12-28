@@ -169,6 +169,11 @@ const WPoolHistory = styled.div`
   }
 `
 
+const WExportCsv = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`
+
 const PoolHistory: React.FC = () => {
   const [searchAddress, setSearchAddress] = useState('')
   const [searchPlan, setSearchPlan] = useState('')
@@ -522,20 +527,24 @@ const PoolHistory: React.FC = () => {
         <div className="history-content-middle">
           {selected === 'Deposit' ? (
             <div className="table-wrapper" ref={tableRef}>
-              <ReactHTMLTableToExcel
-                id="table-xls-button"
-                className="download-table-xls-button"
-                table="table-to-xls"
-                sheet="Sales report"
-                filename="Pool History Deposit"
-                buttonText="Export CSV"
-              />
+              <WExportCsv>
+                <ReactHTMLTableToExcel
+                  id="table-xls-button"
+                  className="download-table-xls-button"
+                  table="table-to-xls"
+                  sheet="Sales report"
+                  filename="Pool History Deposit"
+                  buttonText="Export CSV"
+                />
+              </WExportCsv>
+
               <Table
                 columns={columnsDeposit}
                 dataSource={
                   dateRangeDeposit && dateRangeDeposit[0] ? depositHistoriesByDateClone : depositHistoriesClone
                 }
-                scroll={{ x: 1200 }}
+                scroll={{ x: 800 }}
+                pagination={{ defaultPageSize: 10, showSizeChanger: true, pageSizeOptions: ['10', '20', '30'] }}
               />
             </div>
           ) : (
@@ -548,7 +557,12 @@ const PoolHistory: React.FC = () => {
                 filename="Pool History Withdraw"
                 buttonText="Export CSV"
               />
-              <Table columns={columnsWithdraw} dataSource={withdrawHistoriesClone} scroll={{ x: 1000 }} />
+              <Table
+                columns={columnsWithdraw}
+                dataSource={withdrawHistoriesClone}
+                scroll={{ x: 800 }}
+                pagination={{ defaultPageSize: 10, showSizeChanger: true, pageSizeOptions: ['10', '20', '30'] }}
+              />
             </div>
           )}
         </div>

@@ -181,6 +181,11 @@ const WCampaigns = styled.div`
   }
 `
 
+const WExportCsv = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`
+
 const Campaigns: React.FC = () => {
   const [form] = Form.useForm()
 
@@ -340,19 +345,23 @@ const Campaigns: React.FC = () => {
       </Form>
 
       <div className="table-wrapper" ref={tableRef}>
-        <ReactHTMLTableToExcel
-          id="table-xls-button"
-          className="download-table-xls-button"
-          table="table-to-xls"
-          sheet="Sales report"
-          filename="Campaign Summary"
-          buttonText="Export CSV"
-        />
+        <WExportCsv>
+          <ReactHTMLTableToExcel
+            id="table-xls-button"
+            className="download-table-xls-button"
+            table="table-to-xls"
+            sheet="Sales report"
+            filename="Campaign Summary"
+            buttonText="Export CSV"
+          />
+        </WExportCsv>
+
         <Table
           columns={columns}
           dataSource={campaignsClone || []}
           rowKey={(record) => record.id}
-          scroll={{ x: 1400 }}
+          scroll={{ x: 1000 }}
+          pagination={{ defaultPageSize: 10, showSizeChanger: true, pageSizeOptions: ['10', '20', '30'] }}
         />
       </div>
     </WCampaigns>

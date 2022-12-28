@@ -131,6 +131,11 @@ const WCampaignsHistory = styled.div`
   }
 `
 
+const WExportCsv = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`
+
 const { RangePicker } = DatePicker
 
 const CampaignsHistory: React.FC = () => {
@@ -260,19 +265,22 @@ const CampaignsHistory: React.FC = () => {
       </Form>
 
       <div className="table-wrapper" ref={tableRef}>
-        <ReactHTMLTableToExcel
-          id="table-xls-button"
-          className="download-table-xls-button"
-          table="table-to-xls"
-          sheet="Sales report"
-          filename="History Claim Reward"
-          buttonText="Export CSV"
-        />
+        <WExportCsv>
+          <ReactHTMLTableToExcel
+            id="table-xls-button"
+            className="download-table-xls-button"
+            table="table-to-xls"
+            sheet="Sales report"
+            filename="History Claim Reward"
+            buttonText="Export CSV"
+          />
+        </WExportCsv>
+
         <Table
-          pagination={{ pageSize: campaignsClaimHistory.pageSize, total: campaignsClaimHistory.total }}
           columns={columns}
           dataSource={campaignsClaimHistoryClone}
           scroll={{ x: 600 }}
+          pagination={{ defaultPageSize: 10, showSizeChanger: true, pageSizeOptions: ['10', '20', '30'] }}
         />
       </div>
     </WCampaignsHistory>

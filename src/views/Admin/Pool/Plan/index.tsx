@@ -166,6 +166,11 @@ const WPlanList = styled.div`
   }
 `
 
+const WExportCsv = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`
+
 const PlanList: React.FC = () => {
   const [form] = Form.useForm()
   const router = useRouter()
@@ -222,14 +227,17 @@ const PlanList: React.FC = () => {
 
       <div className="table-content">
         <div className="table-wrapper" ref={tableRef}>
-          <ReactHTMLTableToExcel
-            id="table-xls-button"
-            className="download-table-xls-button"
-            table="table-to-xls"
-            sheet="Sales report"
-            filename="Plan List"
-            buttonText="Export CSV"
-          />
+          <WExportCsv>
+            <ReactHTMLTableToExcel
+              id="table-xls-button"
+              className="download-table-xls-button"
+              table="table-to-xls"
+              sheet="Sales report"
+              filename="Plan List"
+              buttonText="Export CSV"
+            />
+          </WExportCsv>
+
           <Table columns={columns} dataSource={stakingList || []} scroll={{ x: 700 }} />
         </div>
 

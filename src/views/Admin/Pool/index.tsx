@@ -179,6 +179,11 @@ const WPool = styled.div`
   }
 `
 
+const WExportCsv = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`
+
 const Pool: React.FC = () => {
   const router = useRouter()
   const { poolLists } = useClaimPools()
@@ -273,19 +278,23 @@ const Pool: React.FC = () => {
         </div>
       </div>
       <div className="table-wrapper" ref={tableRef}>
-        <ReactHTMLTableToExcel
-          id="table-xls-button"
-          className="download-table-xls-button"
-          table="table-to-xls"
-          sheet="Sales report"
-          filename="Stake Pools"
-          buttonText="Export CSV"
-        />
+        <WExportCsv>
+          <ReactHTMLTableToExcel
+            id="table-xls-button"
+            className="download-table-xls-button"
+            table="table-to-xls"
+            sheet="Sales report"
+            filename="Stake Pools"
+            buttonText="Export CSV"
+          />
+        </WExportCsv>
+
         <Table
           columns={columns}
           rowKey={(record) => record.id}
           scroll={{ x: 900 }}
           dataSource={poolLists?.data || []}
+          pagination={{ defaultPageSize: 10, showSizeChanger: true, pageSizeOptions: ['10', '20', '30'] }}
         />
       </div>
     </WPool>
