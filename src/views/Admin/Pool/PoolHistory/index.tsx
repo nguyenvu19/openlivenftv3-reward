@@ -300,7 +300,7 @@ const PoolHistory: React.FC = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const { stakingDepositHistories: stakingDepositHistoriesByDate } = useClaimDepositHistoriesByDate(
     dateRangeDeposit && dateRangeDeposit[0] ? String(dateRangeDeposit[0]) : '',
-    dateRangeDeposit && dateRangeDeposit[0] ? String(dateRangeDeposit[1]) : '',
+    dateRangeDeposit && dateRangeDeposit[1] ? String(dateRangeDeposit[1]) : '',
   )
   const depositHistoriesByDate = stakingDepositHistoriesByDate?.dataDeposit?.stakingDepositHistories
 
@@ -404,7 +404,7 @@ const PoolHistory: React.FC = () => {
   // Get data from withDraw history with graph
   const { stakingWithdrawHistories } = useClaimWithdrawHistories(
     dateRangeWithdraw && dateRangeWithdraw[0] ? String(dateRangeWithdraw[0]) : '',
-    dateRangeWithdraw && dateRangeWithdraw[0] ? String(dateRangeWithdraw[1]) : '',
+    dateRangeWithdraw && dateRangeWithdraw[1] ? String(dateRangeWithdraw[1]) : '',
   )
 
   const withdrawHistories = stakingWithdrawHistories.dataWithdraw

@@ -154,7 +154,7 @@ const CampaignsHistory: React.FC = () => {
   const { campaignsClaimHistory, setParamsCampaignsClaimHistory } = useCampaignsClaimHistory(
     String(campaignID),
     dateRange && dateRange[0] ? String(dateRange[0]) : '',
-    dateRange && dateRange[0] ? String(dateRange[1]) : '',
+    dateRange && dateRange[1] ? String(dateRange[1]) : '',
   )
 
   const campaignsClaimHistoryClone: any[] = useMemo(
