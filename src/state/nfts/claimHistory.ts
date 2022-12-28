@@ -104,7 +104,7 @@ const graphCampaignsClaimHistory = async (
     query campaignsClaimHistory {
       claims(first: $total,where: {campaignId: ${campaignId}, createdTime_gte: "${
           Number(createdTimeFrom) - currentTime
-        }", createdTime_lte: "${createdTimeTo}"}) {
+        }", createdTime_lte: "${Number(createdTimeTo) + currentTime}"}) {
         campaignId
         createdTime
         id

@@ -69,8 +69,8 @@ const graphStakingClaimWithdrawHistories = async (createdTimeFrom, createdTimeTo
 
   const whereString = `
   where: {
-    ${createdTimeFrom ? `createdTime_gte: "${createdTimeFrom - currentTime}"` : ''}
-    ${createdTimeTo ? `createdTime_lte: "${createdTimeTo}"` : ''}
+    ${createdTimeFrom ? `createdTime_gte: "${Number(createdTimeFrom) - currentTime}"` : ''}
+    ${createdTimeTo ? `createdTime_lte: "${Number(createdTimeTo) + currentTime}"` : ''}
   },
 `
   try {
@@ -205,7 +205,7 @@ const graphStakingClaimDepositHistoriesByDate = async (start: string, end: strin
 
   const whereStr = `
     {${start ? `createdTime_gte: "${Number(start) - currentTime}"` : ''}
-    ${end ? `endTime_lte: "${end}"` : ''}}
+    ${end ? `endTime_lte: "${Number(end) + currentTime}"` : ''}}
   `
   try {
     const query = gql`

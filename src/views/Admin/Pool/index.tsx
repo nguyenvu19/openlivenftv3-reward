@@ -294,7 +294,7 @@ const Pool: React.FC = () => {
           rowKey={(record) => record.id}
           scroll={{ x: 900 }}
           dataSource={poolLists?.data || []}
-          pagination={{ defaultPageSize: 10, showSizeChanger: true, pageSizeOptions: ['10', '20', '30'] }}
+          pagination={{ defaultPageSize: 10, showSizeChanger: true, pageSizeOptions: ['10', '30', '100'] }}
         />
       </div>
     </WPool>

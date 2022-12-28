@@ -73,7 +73,7 @@ const WPoolHistory = styled.div`
   }
 
   .anticon {
-    margin: 0;
+    margin: 0 !important;
   }
 
   .ant-form {
@@ -544,7 +544,7 @@ const PoolHistory: React.FC = () => {
                   dateRangeDeposit && dateRangeDeposit[0] ? depositHistoriesByDateClone : depositHistoriesClone
                 }
                 scroll={{ x: 800 }}
-                pagination={{ defaultPageSize: 10, showSizeChanger: true, pageSizeOptions: ['10', '20', '30'] }}
+                pagination={{ defaultPageSize: 10, showSizeChanger: true, pageSizeOptions: ['10', '30', '100'] }}
               />
             </div>
           ) : (
@@ -561,7 +561,7 @@ const PoolHistory: React.FC = () => {
                 columns={columnsWithdraw}
                 dataSource={withdrawHistoriesClone}
                 scroll={{ x: 800 }}
-                pagination={{ defaultPageSize: 10, showSizeChanger: true, pageSizeOptions: ['10', '20', '30'] }}
+                pagination={{ defaultPageSize: 10, showSizeChanger: true, pageSizeOptions: ['10', '30', '100'] }}
               />
             </div>
           )}

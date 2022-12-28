@@ -65,7 +65,7 @@ const WCampaignsHistory = styled.div`
   }
 
   .anticon {
-    margin: 0;
+    margin: 0 !important;
   }
 
   .ant-form-horizontal {
@@ -280,7 +280,7 @@ const CampaignsHistory: React.FC = () => {
           columns={columns}
           dataSource={campaignsClaimHistoryClone}
           scroll={{ x: 600 }}
-          pagination={{ defaultPageSize: 10, showSizeChanger: true, pageSizeOptions: ['10', '20', '30'] }}
+          pagination={{ defaultPageSize: 10, showSizeChanger: true, pageSizeOptions: ['10', '30', '100'] }}
         />
       </div>
     </WCampaignsHistory>

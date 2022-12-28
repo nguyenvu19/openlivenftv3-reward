@@ -361,7 +361,7 @@ const Campaigns: React.FC = () => {
           dataSource={campaignsClone || []}
           rowKey={(record) => record.id}
           scroll={{ x: 1000 }}
-          pagination={{ defaultPageSize: 10, showSizeChanger: true, pageSizeOptions: ['10', '20', '30'] }}
+          pagination={{ defaultPageSize: 10, showSizeChanger: true, pageSizeOptions: ['10', '30', '100'] }}
         />
       </div>
     </WCampaigns>
