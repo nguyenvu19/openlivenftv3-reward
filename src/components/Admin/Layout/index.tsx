@@ -124,7 +124,6 @@ const WAdminLayout = styled.div`
 
   .ant-layout-content {
     padding: 20px 20px 0px !important;
-    margin: 0 0 -32px 0 !important;
 
     .ant-breadcrumb {
       ol {
@@ -192,7 +191,8 @@ const WMenuStyled = styled.div`
   list-style: none;
 
   background-color: #2d3446;
-  height: 100%;
+  height: calc(100% - 70px);
+
   padding: 55px 0;
 
   ${({ theme }) => theme.mediaQueries.sm} {

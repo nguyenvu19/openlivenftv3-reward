@@ -19,7 +19,6 @@ const WCampaignsUpdate = styled.div`
   padding: 20px;
   background-color: rgb(255, 255, 255);
   border: 1px solid rgb(233, 233, 233);
-  height: 100%;
   margin-top: 10px;
 
   ${({ theme }) => theme.mediaQueries.sm} {
